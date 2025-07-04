@@ -1,0 +1,337 @@
+/* Main container for the checkout page */
+.checkoutContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 1rem; /* Adjusted padding for mobile */
+  font-family: var(--font-inter), sans-serif;
+}
+
+@media (min-width: 768px) {
+  .checkoutContainer {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .checkoutContainer {
+    background-color: #111827;
+  }
+}
+
+/* MOBILE-FIRST LAYOUT:
+  Using Flexbox to stack elements vertically on mobile.
+  'column-reverse' is a key mobile-centric trick: In the HTML, the form comes first, 
+  but this CSS rule displays the Order Summary (the second item) at the top on mobile screens.
+  This reassures the user of their purchase before they start filling in details.
+*/
+.checkoutGrid {
+  display: flex;
+  flex-direction: column-reverse; /* Show summary first on mobile */
+  gap: 1.5rem; /* Tighter gap for mobile */
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* On larger screens, switch to a two-column grid layout */
+@media (min-width: 850px) {
+  .checkoutGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Styling for the form and summary cards */
+.formWrapper, .summaryWrapper {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem; /* Default padding for mobile */
+}
+
+@media (min-width: 768px) {
+    .formWrapper, .summaryWrapper {
+        padding: 2rem; /* Larger padding for tablets and up */
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+  .formWrapper, .summaryWrapper {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+  }
+}
+
+/* Header styles adjusted for mobile */
+.title {
+  font-size: 1.5rem; /* Optimized font size for mobile */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 2.25rem; /* Larger title for tablets and up */
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .subtitle {
+        color: #9ca3af;
+    }
+}
+
+/* Form input styling */
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+    .formLabel {
+        color: #d1d5db;
+    }
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.75rem; /* Left padding for icon */
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #f9fafb;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    .formInput {
+        background-color: #374151;
+        border-color: #4b5563;
+        color: #e5e7eb;
+    }
+    .formInput::placeholder {
+        color: #9ca3af;
+    }
+}
+
+/* Submit Button */
+.submitButton {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  font-size: 1.125rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #1d4ed8;
+  transform: scale(1.02);
+}
+
+.submitButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Loading spinner for the button */
+.spinner {
+  animation: spin 1s linear infinite;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error message */
+.errorMessage {
+    color: #ef4444;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* --- Order Summary --- */
+.summaryTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .orderItem {
+        background-color: #374151;
+    }
+}
+
+.itemDetails h3 {
+    font-weight: 600;
+}
+
+.itemDetails p {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 700px) {
+    .itemDetails h3 {
+        font-size: 0.9rem;
+    }
+
+    .itemPrice{
+        font-size: 0.9rem;
+    }
+
+    .itemDetails p {
+        color: #6b7280;
+        font-size: 0.700rem;
+    }
+
+    .totalRow .totalPrice{
+        font-size: 1.5rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .itemDetails p {
+        color: #9ca3af;
+    }
+}
+
+.itemPrice {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 1.5rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .divider {
+        background-color: #374151;
+    }
+}
+
+.priceRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+}
+
+@media (prefers-color-scheme: dark) {
+    .priceRow {
+        color: #d1d5db;
+    }
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.totalLabel {
+    font-size: 1.25rem;
+}
+
+.totalPrice {
+    font-size: 1.75rem;
+    color: #2563eb;
+}
+
+@media (prefers-color-scheme: dark) {
+    .totalPrice {
+        color: #60a5fa;
+    }
+}
+
+/* Security Badge */
+.securityBadge {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background-color: #f0fdf4;
+    border-radius: 8px;
+}
+
+.securityBadge p {
+    font-size: 0.875rem;
+    color: #166534;
+}
+
+.securityBadge p strong {
+    color: #15803d;
+}
+
+@media (prefers-color-scheme: dark) {
+    .securityBadge {
+        background-color: #1f2937;
+        border: 1px solid #16a34a;
+    }
+    .securityBadge p, .securityBadge p strong {
+        color: #a7f3d0;
+    }
+}
