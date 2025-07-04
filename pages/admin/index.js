@@ -71,7 +71,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className={styles.card}>
-              <h2>Today's Customers</h2>
+              <h2>Today&apos;s Customers</h2>
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#28a745' }}>
                 {stats.todayCustomers}
               </p>
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className={styles.card}>
-              <h2>Today's Revenue</h2>
+              <h2>Today&apos;s Revenue</h2>
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#28a745' }}>
                 RM {stats.todayRevenue ? stats.todayRevenue.toFixed(2) : '0.00'}
               </p>

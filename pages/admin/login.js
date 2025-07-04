@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "@/styles/Home.module.css";
+import Link from "next/link";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -172,9 +173,9 @@ export default function Login() {
         </form>
 
         <div style={{ marginTop: '40px', textAlign: 'center' }}>
-          <a href="/" style={{ color: '#0070f3', textDecoration: 'none' }}>
+          <Link href="/" style={{ color: '#0070f3', textDecoration: 'none' }}>
             ← Back to Main Site
-          </a>
+          </Link>
         </div>
       </main>
     </div>
