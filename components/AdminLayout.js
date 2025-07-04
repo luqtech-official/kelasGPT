@@ -123,9 +123,9 @@ export default function AdminLayout({ children, title = 'Admin Dashboard' }) {
           marginTop: '40px',
           color: '#666'
         }}>
-          <link href="/" style={{ color: '#0070f3', textDecoration: 'none' }}>
+          <Link href="/" style={{ color: '#0070f3', textDecoration: 'none' }}>
             ← Back to Main Site
-          </link>
+          </Link>
         </footer>
       )}
     </div>
