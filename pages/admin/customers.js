@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AdminLayout from '@/components/AdminLayout';
 import styles from "@/styles/Customers.module.css";
 
@@ -19,11 +19,7 @@ export default function Customers() {
     hasPreviousPage: false
   });
 
-  useEffect(() => {
-    fetchCustomers();
-  }, [currentPage, searchTerm, statusFilter]);
-
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -64,7 +60,11 @@ export default function Customers() {
       });
       setLoading(false);
     }
-  };
+  }, [currentPage, searchTerm, statusFilter]);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [fetchCustomers]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
