@@ -42,3 +42,7 @@ next-env.d.ts
 
 # logs
 transaction.log
+
+#Context Helper Folder
+InContext*/
+CLAUDE.md
