@@ -1,168 +1,278 @@
-.page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+/*
+  Home.module.css
+  - Contains all styles for the conversion-focused sales page.
+  - Each section is clearly defined and styled for maximum impact and readability.
+  - Fully responsive design ensures a great experience on all devices.
+*/
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
+/* --- General Layout --- */
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+  width: 100%;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  width: 100%;
+  padding: 2rem 0;
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.section {
+  width: 100%;
+  padding: 4rem 0;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.section.grey {
+  background-color: var(--white);
+  border-top: 1px solid var(--secondary);
+  border-bottom: 1px solid var(--secondary);
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
-.ctas {
-  display: flex;
-  gap: 16px;
+.sectionHeader h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-  cursor: pointer;
-  display: flex;
+.sectionHeader p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+/* --- Hero Section --- */
+.hero {
+  text-align: center;
+  padding: 4rem 0 5rem;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #0052cc, #007bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  color: #495057;
+}
+
+/* --- CTA Button --- */
+.ctaButton {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  background-color: var(--primary);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-md);
+}
+
+.ctaButton:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaButtonSubtext {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* --- Pain Points / For Who Section --- */
+.painPointsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.painPointCard {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  border: 1px solid var(--secondary);
+}
+
+.painPointCard svg {
+  width: 40px;
+  height: 40px;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.painPointCard p {
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
+
+/* --- Features Section ("Why KelasGPT") --- */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
-}
-
-.footer {
-  grid-row-start: 3;
+.featureCard {
   display: flex;
-  gap: 24px;
+  align-items: flex-start;
+  gap: 1.5rem;
 }
 
-.footer a {
+.featureIcon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  background-color: #e7f0ff;
 }
 
-.footer img {
+.featureIcon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+}
+
+.featureCard h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.featureCard p {
+  color: #495057;
+}
+
+/* --- What You'll Learn Section --- */
+.learnGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.learnItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--secondary);
+  transition: all 0.2s ease;
+}
+
+.learnItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.learnItem svg {
+  width: 24px;
+  height: 24px;
+  color: var(--success);
   flex-shrink: 0;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+.learnItem h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
 }
 
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
+/* --- Pricing Section --- */
+.pricingBox {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+.price {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 1rem 0;
+  color: var(--primary);
+}
+
+.price span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.pricingBox p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+/* --- Final CTA / Imagine Section --- */
+.imagineBox {
+  background: linear-gradient(135deg, #0052cc, #007bff);
+  color: var(--white);
+  padding: 4rem 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.imagineBox h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.imagineBox p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  opacity: 0.9;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero p {
+    font-size: 1.1rem;
+  }
+  .sectionHeader h2, .imagineBox h2 {
+    font-size: 2rem;
+  }
+  .section {
+    padding: 3rem 0;
+  }
+  .learnGrid {
+    grid-template-columns: 1fr;
   }
 }

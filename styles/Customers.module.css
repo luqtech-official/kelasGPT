@@ -1,0 +1,78 @@
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.tableContainer {
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #f8f8f8;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.paid {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.refunded {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: #f8f8f8;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 500;
+}

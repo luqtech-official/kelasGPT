@@ -1,13 +1,39 @@
+/*
+  globals.css
+  - Defines the core design system for the application.
+  - Sets up CSS variables for a consistent color scheme, typography, and layout.
+  - Includes a modern CSS reset for cross-browser consistency.
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Color Palette */
+  --background: #f8f9fa; /* A light, clean off-white */
+  --foreground: #212529; /* A dark, readable text color */
+  --primary: #0052cc; /* A strong, trustworthy blue for primary actions */
+  --primary-hover: #0041a3; /* A darker shade for hover states */
+  --secondary: #e9ecef; /* A light grey for card backgrounds and dividers */
+  --accent: #17a2b8; /* A calming teal for accents and secondary info */
+  --white: #ffffff;
+  --success: #28a745; /* A vibrant green for success indicators */
+
+  /* Typography */
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+
+  /* Layout */
+  --border-radius: 12px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Modern CSS Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
@@ -19,15 +45,10 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  line-height: 1.6;
 }
 
 a {
@@ -35,8 +56,23 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Utility class for main content container */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
