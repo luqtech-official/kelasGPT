@@ -352,11 +352,20 @@ Values joined with pipe delimiter (`|`) and signed with checksum token.
   └── globals.css                  (Application-wide styles)
 
 /public/
+  ├── favicon.ico                  (Website favicon)
   ├── robots.txt                   (SEO crawler instructions)
-  └── social_noti.json             (Social proof data source)
+  ├── social_noti.json             (Social proof data source)
+  └── *.svg                        (Various SVG icons and graphics)
 
-/Briefing/                         (Project documentation)
-/transaction.log                   (Application logs)
+/InContext-Briefing/               (Project documentation)
+/InContext-ToDo/                  (Implementation todos and notes)
+/README.md                        (Next.js default documentation)
+/eslint.config.mjs                (ESLint configuration - ES module format)
+/jsconfig.json                    (JavaScript configuration for VS Code)
+/next.config.mjs                  (Next.js configuration - ES module format)
+/package.json                     (Node.js dependencies and scripts)
+/pdf_token_converter.log          (Application-specific log file)
+/transaction.log                  (Application logs)
 ```
 
 ### Performance and Security Features
@@ -389,11 +398,17 @@ Values joined with pipe delimiter (`|`) and signed with checksum token.
 5. **Cross-browser Testing**: Chrome, Firefox, Safari, Mobile browsers
 
 #### Code Quality Standards
-- **ESLint Integration**: Next.js configuration for code quality
+- **ESLint Integration**: Next.js configuration for code quality (eslint.config.mjs)
 - **Error Handling**: Comprehensive try-catch blocks with logging
 - **Input Validation**: Server-side validation for all user inputs
 - **Security Practices**: No sensitive data in client-side code
 - **Performance**: Optimized database queries and caching strategies
+
+#### Configuration Files
+- **next.config.mjs**: Next.js configuration in ES module format with environment variable exposure
+- **eslint.config.mjs**: ESLint configuration using FlatCompat for Next.js compatibility
+- **jsconfig.json**: JavaScript configuration for IDE support and path resolution
+- **package.json**: Dependencies include Next.js 15.3.4, React 19, Supabase client, Mailjet, and react-hot-toast
 
 ### Deployment and Production Notes
 
