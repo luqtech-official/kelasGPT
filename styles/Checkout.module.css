@@ -15,11 +15,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .checkoutContainer {
-    background-color: #111827;
-  }
-}
 
 /* MOBILE-FIRST LAYOUT:
   Using Flexbox to stack elements vertically on mobile.
@@ -58,12 +53,6 @@
     }
 }
 
-@media (prefers-color-scheme: dark) {
-  .formWrapper, .summaryWrapper {
-    background-color: #1f2937;
-    border: 1px solid #374151;
-  }
-}
 
 /* Header styles adjusted for mobile */
 .title {
@@ -84,11 +73,6 @@
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    .subtitle {
-        color: #9ca3af;
-    }
-}
 
 /* Form input styling */
 .formGroup {
@@ -102,11 +86,6 @@
   color: #374151;
 }
 
-@media (prefers-color-scheme: dark) {
-    .formLabel {
-        color: #d1d5db;
-    }
-}
 
 .inputWrapper {
   position: relative;
@@ -136,16 +115,6 @@
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-    .formInput {
-        background-color: #374151;
-        border-color: #4b5563;
-        color: #e5e7eb;
-    }
-    .formInput::placeholder {
-        color: #9ca3af;
-    }
-}
 
 /* Submit Button */
 .submitButton {
@@ -214,11 +183,6 @@
     border-radius: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-    .orderItem {
-        background-color: #374151;
-    }
-}
 
 .itemDetails h3 {
     font-weight: 600;
@@ -248,11 +212,6 @@
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    .itemDetails p {
-        color: #9ca3af;
-    }
-}
 
 .itemPrice {
     font-size: 1.125rem;
@@ -265,11 +224,6 @@
     margin: 1.5rem 0;
 }
 
-@media (prefers-color-scheme: dark) {
-    .divider {
-        background-color: #374151;
-    }
-}
 
 .priceRow {
     display: flex;
@@ -278,11 +232,6 @@
     color: #4b5563;
 }
 
-@media (prefers-color-scheme: dark) {
-    .priceRow {
-        color: #d1d5db;
-    }
-}
 
 .totalRow {
     display: flex;
@@ -300,11 +249,6 @@
     color: #2563eb;
 }
 
-@media (prefers-color-scheme: dark) {
-    .totalPrice {
-        color: #60a5fa;
-    }
-}
 
 /* Security Badge */
 .securityBadge {
@@ -326,12 +270,3 @@
     color: #15803d;
 }
 
-@media (prefers-color-scheme: dark) {
-    .securityBadge {
-        background-color: #1f2937;
-        border: 1px solid #16a34a;
-    }
-    .securityBadge p, .securityBadge p strong {
-        color: #a7f3d0;
-    }
-}
