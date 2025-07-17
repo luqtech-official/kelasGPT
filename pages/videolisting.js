@@ -49,13 +49,13 @@ export default function VideoListing() {
           title: "Persediaan Pertama: Menyediakan Persekitaran GPT",
           description: "Panduan langkah demi langkah untuk memulakan penggunaan GPT-4 dengan betul",
           duration: "15 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/8rABwKRsec4?si=PQkr3QUcMmovXIjQ"
         },
         {
           title: "Navigasi Antara Muka dan Ciri-ciri Asas",
           description: "Mengenali semua fungsi penting dan cara menggunakannya dengan efektif",
           duration: "18 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         }
       ]
     },
@@ -67,19 +67,19 @@ export default function VideoListing() {
           title: "Asas-asas Prompt yang Berkesan",
           description: "Pelajari struktur dan format prompt yang menghasilkan jawapan berkualiti tinggi",
           duration: "20 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Teknik Prompt Lanjutan untuk Hasil Spesifik",
           description: "Strategi mendalam untuk mendapatkan output yang tepat mengikut keperluan anda",
           duration: "25 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Prompt Templates untuk Pelbagai Kegunaan",
           description: "Template siap pakai untuk penulisan, analisis, pemecahan masalah dan banyak lagi",
           duration: "22 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         }
       ]
     },
@@ -91,19 +91,19 @@ export default function VideoListing() {
           title: "Automasi Penulisan Email dan Komunikasi",
           description: "Cara menggunakan GPT-4 untuk menulis email profesional dan komunikasi yang berkesan",
           duration: "16 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Analisis Data dan Laporan dengan GPT-4",
           description: "Menggunakan AI untuk menganalisis data dan menghasilkan laporan yang bermakna",
           duration: "28 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Strategi Pemasaran dan Kandungan Kreatif",
           description: "Menghasilkan idea kreatif dan strategi pemasaran yang menarik dengan bantuan AI",
           duration: "24 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         }
       ]
     },
@@ -115,19 +115,19 @@ export default function VideoListing() {
           title: "Menyepadukan GPT-4 dengan Tool Sedia Ada",
           description: "Panduan praktikal untuk menggabungkan GPT-4 dengan perisian dan platform yang anda gunakan",
           duration: "19 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Mencipta Workflow Automatik",
           description: "Membina sistem automatik yang menggunakan GPT-4 untuk tugas-tugas berulang",
           duration: "26 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Pengurusan Masa dan Produktiviti dengan AI",
           description: "Strategi menggunakan AI untuk meningkatkan pengurusan masa dan produktiviti harian",
           duration: "21 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         }
       ]
     },
@@ -139,19 +139,19 @@ export default function VideoListing() {
           title: "Multi-modal AI dan Penggunaan Gambar",
           description: "Menggunakan GPT-4 untuk menganalisis dan menghasilkan kandungan berdasarkan gambar",
           duration: "23 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "API Integration dan Pengaturcaraan Asas",
           description: "Cara menggunakan API GPT-4 untuk aplikasi yang lebih kompleks dan tersuai",
           duration: "30 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Etika AI dan Penggunaan Bertanggungjawab",
           description: "Memahami limitasi AI dan cara menggunakannya secara etika dan bertanggungjawab",
           duration: "17 minit",
-          url: "https://youtube.com"
+          url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         }
       ]
     }
@@ -258,7 +258,10 @@ export default function VideoListing() {
               <div className={styles.modalBody}>
                 <div className={styles.videoContainer}>
                   <iframe
-                    src={selectedVideo.url.replace('youtube.com', 'youtube.com/embed')}
+                    src={selectedVideo.url.includes('youtube.com/embed') ? 
+                      `${selectedVideo.url}&enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}` : 
+                      selectedVideo.url
+                    }
                     title={selectedVideo.title}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
