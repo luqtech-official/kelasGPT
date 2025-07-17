@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "@/styles/Checkout.module.css";
 import { getProductSettings, formatPrice } from "../lib/settings";
@@ -10,6 +10,11 @@ export default function Checkout({ productSettings }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
   const router = useRouter();
 
   // Memoize formatted price to prevent unnecessary recalculations
@@ -18,7 +23,21 @@ export default function Checkout({ productSettings }) {
     [productSettings.productPrice]
   );
 
-  // Client-side validation
+  // Input sanitization function
+  const sanitizeInput = useCallback((input) => {
+    if (!input) return '';
+    return input.replace(/[<>"']/g, '').trim();
+  }, []);
+
+  // Phone number formatting
+  const formatPhone = useCallback((value) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 3) return numbers;
+    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+  }, []);
+
+  // Client-side validation (updated to match server-side regex)
   const validateForm = useCallback((data) => {
     const errors = {};
     
@@ -30,18 +49,42 @@ export default function Checkout({ productSettings }) {
     
     if (!data.email?.trim()) {
       errors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(data.email)) {
       errors.email = 'Please enter a valid email address';
     }
     
     if (!data.phone?.trim()) {
       errors.phone = 'Phone number is required';
-    } else if (!/^01[0-9]{8,9}$/.test(data.phone)) {
+    } else if (!/^01[0-9]{8,9}$/.test(data.phone.replace(/[-\s]/g, ''))) {
       errors.phone = 'Please enter a valid Malaysian phone number';
     }
     
     return errors;
   }, []);
+
+  // Handle input changes
+  const handleInputChange = useCallback((field, value) => {
+    let sanitizedValue = sanitizeInput(value);
+    
+    // Apply phone formatting
+    if (field === 'phone') {
+      sanitizedValue = formatPhone(sanitizedValue);
+    }
+    
+    setFormData(prev => ({
+      ...prev,
+      [field]: sanitizedValue
+    }));
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[field]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  }, [sanitizeInput, formatPhone, validationErrors]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,8 +96,13 @@ export default function Checkout({ productSettings }) {
     setError(null);
     setValidationErrors({});
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
+    // Use controlled form data instead of FormData
+    const data = {
+      name: sanitizeInput(formData.name),
+      email: sanitizeInput(formData.email),
+      phone: sanitizeInput(formData.phone.replace(/[-\s]/g, '')), // Remove formatting for submission
+      honeypot: '' // Honeypot is always empty for real users
+    };
 
     // Client-side validation
     const errors = validateForm(data);
@@ -82,7 +130,19 @@ export default function Checkout({ productSettings }) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create payment session");
+        
+        // Enhanced error handling for structured API responses
+        let errorMessage = errorData.message || "Failed to create payment session";
+        
+        if (errorData.code === 'ORDER_PENDING' && errorData.waitTime) {
+          errorMessage = `${errorData.message} (${errorData.waitTime} minute(s) remaining)`;
+        } else if (errorData.code === 'ORDER_COMPLETED') {
+          errorMessage = `${errorData.message} Contact: ${errorData.supportEmail || 'support@kelasgpt.com'}`;
+        } else if (errorData.action && errorData.supportEmail) {
+          errorMessage = `${errorData.message} ${errorData.action} Contact: ${errorData.supportEmail}`;
+        }
+        
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
@@ -93,8 +153,14 @@ export default function Checkout({ productSettings }) {
       }
     } catch (err) {
       clearTimeout(timeout);
+      
+      // Enhanced error handling
       if (err.name === 'AbortError') {
-        setError('Request timed out. Please try again.');
+        setError('Request timed out. Please check your connection and try again.');
+      } else if (!navigator.onLine) {
+        setError('No internet connection. Please check your network and try again.');
+      } else if (err.message.includes('fetch') || err.message.includes('NetworkError')) {
+        setError('Network error. Please try again.');
       } else {
         setError(err.message);
       }
@@ -106,8 +172,17 @@ export default function Checkout({ productSettings }) {
     <>
       <Head>
         <title>Secure Checkout - KelasGPT</title>
+        <meta name="description" content="Complete your KelasGPT course purchase securely with FPX bank transfer" />
+        <meta name="robots" content="noindex, nofollow" />
+        <link rel="canonical" href="/checkout" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
+      <noscript>
+        <div style={{padding: '20px', background: '#f8d7da', color: '#721c24', textAlign: 'center'}}>
+          <p>JavaScript is required for secure checkout. Please enable JavaScript in your browser.</p>
+        </div>
+      </noscript>
 
       <div className={styles.checkoutContainer}>
         <div className={styles.checkoutGrid}>
@@ -118,11 +193,12 @@ export default function Checkout({ productSettings }) {
             <p className={styles.subtitle}>Complete your purchase in just a few steps.</p>
 
             <form onSubmit={handleSubmit}>
-              {/* This is a honeypot field to prevent spam. It's hidden from users. */}
-              <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
-                <label htmlFor="honeypot">Dont fill this out if youre human:</label>
-                <input type="text" id="honeypot" name="honeypot" tabIndex="-1" />
-              </div>
+              <fieldset disabled={loading} style={{ border: 'none', padding: 0, margin: 0 }}>
+                {/* This is a honeypot field to prevent spam. It's hidden from users. */}
+                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
+                  <label htmlFor="honeypot">Dont fill this out if youre human:</label>
+                  <input type="text" id="honeypot" name="honeypot" tabIndex="-1" />
+                </div>
 
               <div className={styles.formGroup}>
                 <label htmlFor="name" className={styles.formLabel}>
@@ -136,11 +212,21 @@ export default function Checkout({ productSettings }) {
                     name="name" 
                     maxLength="30" 
                     required 
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
                     className={`${styles.formInput} ${validationErrors.name ? styles.inputError : ''}`}
                     placeholder="John Doe"
+                    aria-describedby={validationErrors.name ? "name-error" : undefined}
+                    aria-invalid={validationErrors.name ? "true" : "false"}
                   />
                   {validationErrors.name && (
-                    <p className={styles.fieldError}>{validationErrors.name}</p>
+                    <p 
+                      className={styles.fieldError}
+                      id="name-error"
+                      role="alert"
+                    >
+                      {validationErrors.name}
+                    </p>
                   )}
                 </div>
               </div>
@@ -156,11 +242,21 @@ export default function Checkout({ productSettings }) {
                     id="email" 
                     name="email" 
                     required 
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     className={`${styles.formInput} ${validationErrors.email ? styles.inputError : ''}`}
                     placeholder="you@example.com"
+                    aria-describedby={validationErrors.email ? "email-error" : undefined}
+                    aria-invalid={validationErrors.email ? "true" : "false"}
                   />
                   {validationErrors.email && (
-                    <p className={styles.fieldError}>{validationErrors.email}</p>
+                    <p 
+                      className={styles.fieldError}
+                      id="email-error"
+                      role="alert"
+                    >
+                      {validationErrors.email}
+                    </p>
                   )}
                 </div>
               </div>
@@ -178,11 +274,21 @@ export default function Checkout({ productSettings }) {
                         pattern="^01[0-9]{8,9}$"
                         title="Please enter a valid Malaysian phone number, without the Country Code"
                         required
+                        value={formData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
                         className={`${styles.formInput} ${validationErrors.phone ? styles.inputError : ''}`}
-                        placeholder="0123456789"
+                        placeholder="012-345-6789"
+                        aria-describedby={validationErrors.phone ? "phone-error" : undefined}
+                        aria-invalid={validationErrors.phone ? "true" : "false"}
                     />
                     {validationErrors.phone && (
-                      <p className={styles.fieldError}>{validationErrors.phone}</p>
+                      <p 
+                        className={styles.fieldError}
+                        id="phone-error"
+                        role="alert"
+                      >
+                        {validationErrors.phone}
+                      </p>
                     )}
                 </div>
               </div>
@@ -202,7 +308,16 @@ export default function Checkout({ productSettings }) {
                 )}
               </button>
               
-              {error && <p className={styles.errorMessage}>{error}</p>}
+              {error && (
+                <p 
+                  className={styles.errorMessage}
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {error}
+                </p>
+              )}
+              </fieldset>
             </form>
           </div>
 

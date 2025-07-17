@@ -42,21 +42,14 @@ export default async function handler(req, res) {
       productPrice: productSettings.productPrice 
     });
 
-    // Check for double submission
-    const { data: existingCustomer, error: checkError } = await supabase
-      .from("customers")
-      .select("email_address")
-      .eq("email_address", email)
-      .maybeSingle();
-
-    if (checkError && checkError.code !== 'PGRST116') {
-      await logTransaction('ERROR', `Error checking duplicate customer for email: ${email}`, checkError);
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
-
-    if (existingCustomer) {
-      await logTransaction('WARN', `Duplicate submission attempt for email: ${email}`);
-      return res.status(409).json({ message: "Email already submitted" });
+    // Enhanced email validation with status checking
+    const emailValidation = await validateEmailStatus(email);
+    if (!emailValidation.canProceed) {
+      await logTransaction('WARN', `Email validation failed for: ${email}`, { 
+        reason: emailValidation.reason,
+        status: emailValidation.status 
+      });
+      return res.status(409).json(emailValidation.error);
     }
 
     // Save customer data
@@ -68,9 +61,19 @@ export default async function handler(req, res) {
       ip_address: req.headers["x-forwarded-for"] || req.connection.remoteAddress,
       user_agent: req.headers["user-agent"],
     };
+    
     const { data: customerResult, error: customerError } = await addCustomer(customerDataToInsert);
 
     if (customerError) {
+      // Handle race condition where email was submitted between validation and insert
+      if (customerError.code === '23505') { // Unique constraint violation
+        await logTransaction('WARN', `Race condition detected for email: ${email}`, customerError);
+        return res.status(409).json({ 
+          message: "Email already submitted. Please try again in a moment.",
+          code: "RACE_CONDITION"
+        });
+      }
+      
       await logTransaction('ERROR', 'Error saving customer to Supabase', customerError);
       return res.status(500).json({ message: "Internal Server Error" });
     }
@@ -229,5 +232,105 @@ export default async function handler(req, res) {
   } catch (error) {
     await logTransaction('ERROR', `Unhandled error in checkout for order ${orderNumber}`, { message: error.message, stack: error.stack });
     res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+/**
+ * Validates email status and determines if submission can proceed
+ * @param {string} email - Email address to validate
+ * @returns {Object} - Validation result with canProceed flag and error details
+ */
+async function validateEmailStatus(email) {
+  try {
+    // Check if email already exists with payment status
+    const { data: existingCustomer, error: checkError } = await supabase
+      .from("customers")
+      .select("email_address, payment_status, created_at")
+      .eq("email_address", email)
+      .maybeSingle();
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      await logTransaction('ERROR', `Error checking existing customer for email: ${email}`, checkError);
+      return {
+        canProceed: false,
+        reason: 'database_error',
+        error: { message: "Internal Server Error" }
+      };
+    }
+
+    if (!existingCustomer) {
+      // No existing customer, can proceed
+      return { canProceed: true };
+    }
+
+    const { payment_status, created_at } = existingCustomer;
+    
+    switch (payment_status) {
+      case 'pending':
+        // Check if pending order is older than 10 minutes
+        const orderAge = Date.now() - new Date(created_at).getTime();
+        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
+        
+        if (orderAge > tenMinutes) {
+          await logTransaction('INFO', `Allowing retry for old pending order: ${email}`, { 
+            orderAge: Math.round(orderAge / 1000 / 60), // minutes
+            status: payment_status 
+          });
+          return { canProceed: true };
+        }
+        
+        const remainingMinutes = Math.ceil((tenMinutes - orderAge) / 1000 / 60);
+        return {
+          canProceed: false,
+          reason: 'pending_order',
+          status: payment_status,
+          error: {
+            message: `Order in progress. Please wait ${remainingMinutes} more minute(s) or contact support if needed.`,
+            code: "ORDER_PENDING",
+            action: "If you don't receive confirmation within 10 minutes, contact support.",
+            supportEmail: "support@kelasgpt.com",
+            waitTime: remainingMinutes
+          }
+        };
+        
+      case 'paid':
+        return {
+          canProceed: false,
+          reason: 'already_paid',
+          status: payment_status,
+          error: {
+            message: "You've already purchased this course!",
+            code: "ORDER_COMPLETED",
+            action: "Check your email for the video link. Didn't receive it?",
+            supportEmail: "support@kelasgpt.com"
+          }
+        };
+        
+      case 'failed':
+        await logTransaction('INFO', `Customer retry after failed payment: ${email}`, { 
+          previousStatus: payment_status,
+          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
+        });
+        return { canProceed: true };
+        
+      default:
+        // Unknown status, allow to proceed but log
+        await logTransaction('WARN', `Unknown payment status for email: ${email}`, { 
+          status: payment_status,
+          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
+        });
+        return { canProceed: true };
+    }
+    
+  } catch (error) {
+    await logTransaction('ERROR', `Unexpected error in email validation for: ${email}`, { 
+      message: error.message, 
+      stack: error.stack 
+    });
+    return {
+      canProceed: false,
+      reason: 'validation_error',
+      error: { message: "Internal Server Error" }
+    };
   }
 }
