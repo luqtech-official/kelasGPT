@@ -167,6 +167,19 @@
     margin-top: 1rem;
 }
 
+/* Field-specific error styling */
+.fieldError {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
+.inputError {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
 /* --- Order Summary --- */
 .summaryTitle {
     font-size: 1.5rem;

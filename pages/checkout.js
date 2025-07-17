@@ -1,61 +1,84 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/router";
-import styles from "@/styles/Checkout.module.css"; // Use the new CSS module
+import styles from "@/styles/Checkout.module.css";
 import { getProductSettings, formatPrice } from "../lib/settings";
-
-// --- SVG Icons ---
-// Using inline SVGs for icons to avoid extra dependencies and allow easy styling.
-const UserIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-    <circle cx="12" cy="7" r="4"></circle>
-  </svg>
-);
-
-const MailIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-  </svg>
-);
-
-const PhoneIcon = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-    </svg>
-);
-
-const SecureShieldIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        <path d="m9 12 2 2 4-4"></path>
-    </svg>
-);
+import { UserIcon, MailIcon, PhoneIcon, SecureShieldIcon } from "../components/icons";
 
 
 export default function Checkout({ productSettings }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [validationErrors, setValidationErrors] = useState({});
   const router = useRouter();
+
+  // Memoize formatted price to prevent unnecessary recalculations
+  const formattedPrice = useMemo(() => 
+    formatPrice(productSettings.productPrice), 
+    [productSettings.productPrice]
+  );
+
+  // Client-side validation
+  const validateForm = useCallback((data) => {
+    const errors = {};
+    
+    if (!data.name?.trim()) {
+      errors.name = 'Name is required';
+    } else if (data.name.length > 30) {
+      errors.name = 'Name must be 30 characters or less';
+    }
+    
+    if (!data.email?.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (!data.phone?.trim()) {
+      errors.phone = 'Phone number is required';
+    } else if (!/^01[0-9]{8,9}$/.test(data.phone)) {
+      errors.phone = 'Please enter a valid Malaysian phone number';
+    }
+    
+    return errors;
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    // Prevent double submission
+    if (loading) return;
+    
     setLoading(true);
     setError(null);
+    setValidationErrors({});
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
+    // Client-side validation
+    const errors = validateForm(data);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      setLoading(false);
+      return;
+    }
+
+    // Request timeout and abort controller
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     try {
-      // This is a mock API call. Replace with your actual API endpoint.
       const response = await fetch("/api/create-payment-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        signal: controller.signal
       });
+
+      clearTimeout(timeout);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -64,14 +87,17 @@ export default function Checkout({ productSettings }) {
 
       const result = await response.json();
       if (result.payment_url) {
-        // Redirect to the actual payment gateway
         router.push(result.payment_url);
       } else {
-        // Fallback for simulated success if payment_url is not present
         router.push("/thankyou");
       }
     } catch (err) {
-      setError(err.message);
+      clearTimeout(timeout);
+      if (err.name === 'AbortError') {
+        setError('Request timed out. Please try again.');
+      } else {
+        setError(err.message);
+      }
       setLoading(false);
     }
   };
@@ -110,9 +136,12 @@ export default function Checkout({ productSettings }) {
                     name="name" 
                     maxLength="30" 
                     required 
-                    className={styles.formInput}
+                    className={`${styles.formInput} ${validationErrors.name ? styles.inputError : ''}`}
                     placeholder="John Doe"
                   />
+                  {validationErrors.name && (
+                    <p className={styles.fieldError}>{validationErrors.name}</p>
+                  )}
                 </div>
               </div>
 
@@ -127,9 +156,12 @@ export default function Checkout({ productSettings }) {
                     id="email" 
                     name="email" 
                     required 
-                    className={styles.formInput}
+                    className={`${styles.formInput} ${validationErrors.email ? styles.inputError : ''}`}
                     placeholder="you@example.com"
                   />
+                  {validationErrors.email && (
+                    <p className={styles.fieldError}>{validationErrors.email}</p>
+                  )}
                 </div>
               </div>
 
@@ -146,9 +178,12 @@ export default function Checkout({ productSettings }) {
                         pattern="^01[0-9]{8,9}$"
                         title="Please enter a valid Malaysian phone number, without the Country Code"
                         required
-                        className={styles.formInput}
+                        className={`${styles.formInput} ${validationErrors.phone ? styles.inputError : ''}`}
                         placeholder="0123456789"
                     />
+                    {validationErrors.phone && (
+                      <p className={styles.fieldError}>{validationErrors.phone}</p>
+                    )}
                 </div>
               </div>
 
@@ -182,14 +217,14 @@ export default function Checkout({ productSettings }) {
                     <p>{productSettings.productDescription}</p>
                     <p>Lifetime access to all modules.</p>
                 </div>
-                <p className={styles.itemPrice}>{formatPrice(productSettings.productPrice)}</p>
+                <p className={styles.itemPrice}>{formattedPrice}</p>
             </div>
 
             <div className={styles.divider}></div>
 
             <div className={styles.priceRow}>
                 <p>Subtotal</p>
-                <p>{formatPrice(productSettings.productPrice)}</p>
+                <p>{formattedPrice}</p>
             </div>
             <div className={styles.priceRow}>
                 <p>Discount</p>
@@ -200,7 +235,7 @@ export default function Checkout({ productSettings }) {
 
             <div className={styles.totalRow}>
                 <p className={styles.totalLabel}>Total</p>
-                <p className={styles.totalPrice}>{formatPrice(productSettings.productPrice)}</p>
+                <p className={styles.totalPrice}>{formattedPrice}</p>
             </div>
             
             <div className={styles.securityBadge}>

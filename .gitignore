@@ -46,3 +46,6 @@ transaction.log
 #Context Helper Folder
 InContext*/
 CLAUDE.md
+
+# Backup folder
+backup/

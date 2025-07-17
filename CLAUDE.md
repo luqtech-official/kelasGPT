@@ -426,3 +426,37 @@ Values joined with pipe delimiter (`|`) and signed with checksum token.
 5. **Monitoring**: Error tracking and performance monitoring setup
 
 This comprehensive documentation serves as the definitive guide for understanding, maintaining, and extending the KelasGPT sales platform.
+
+## 🚨 IMPORTANT: Backup Protocol
+
+### Backup Instructions
+**CRITICAL**: Whenever a user asks to "backup first" or mentions backing up files before making changes, follow this exact procedure:
+
+1. **Backup Process**:
+   - Copy all affected files to the `/backup/` folder
+   - Use the exact same filename (maintain file extensions)
+   - If backup files already exist, **replace them** with the current (pre-change) versions
+   - The backup folder is already configured in `.gitignore` and will not be committed
+
+2. **Backup Commands**:
+   ```bash
+   # Example for checkout module
+   cp pages/checkout.js backup/checkout.js
+   cp styles/Checkout.module.css backup/Checkout.module.css
+   ```
+
+3. **When to Backup**:
+   - User explicitly requests "backup first"
+   - Before major refactoring or optimization work
+   - Before implementing significant changes to core functionality
+   - Before applying performance optimizations
+
+4. **Backup Folder Structure**:
+   ```
+   /backup/
+   ├── checkout.js                  (Latest working version)
+   ├── Checkout.module.css          (Latest working version)
+   ├── [other-backed-up-files]      (As needed)
+   ```
+
+**Note**: The backup folder serves as a safety net for quick restoration if changes cause issues. Always backup the current working version before making modifications.
