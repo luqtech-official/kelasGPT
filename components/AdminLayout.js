@@ -87,7 +87,7 @@ export default function AdminLayout({ children, title = 'Admin Dashboard' }) {
             
             <div className={styles.userSection}>
               <span className={styles.userInfo}>
-                Welcome, {admin.username} ({admin.role})
+                Welcome, {admin.username}
               </span>
               <button 
                 onClick={handleLogout}

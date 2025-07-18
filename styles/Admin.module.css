@@ -537,6 +537,47 @@
   }
 }
 
+@media (max-width: 640px) {
+  .headerContent {
+    flex-direction: column;
+    align-items: stretch; /* full width */
+    gap: 0;
+    padding: 8px 0 0 0;
+  }
+
+  .userSection {
+    justify-content: flex-end;
+    padding: 0 16px 8px 16px;
+    order: 1;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    background: inherit;
+  }
+
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0;
+    width: 100%;
+    order: 2;
+    padding: 0 0 6px 0;
+    background: inherit;
+  }
+
+  .navLink {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 0;
+    font-size: 14px;
+    border-right: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .navLink:last-child {
+    border-right: none;
+  }
+}
+
 /* Login Page Styles */
 .loginContainer {
   min-height: 100vh;
@@ -985,6 +1026,55 @@
   background: rgba(139, 92, 246, 0.1);
   color: #7c3aed;
   border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* Email Status styles */
+.emailStatusContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.emailStatusBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.emailStatusIndicator {
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.resendButton {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-width: 24px;
+  height: 24px;
+}
+
+.resendButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.resendButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .statusDropdown {

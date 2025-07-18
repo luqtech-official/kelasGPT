@@ -23,6 +23,10 @@ export default function Customers() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [updating, setUpdating] = useState(null);
   const [confirmModal, setConfirmModal] = useState(null);
+  
+  // Email resend functionality
+  const [resendingEmail, setResendingEmail] = useState(null);
+  const [resendModal, setResendModal] = useState(null);
 
   const fetchCustomers = useCallback(async () => {
     try {
@@ -208,6 +212,72 @@ export default function Customers() {
     setConfirmModal(null);
   };
 
+  // Email resend functionality
+  const handleResendEmail = (customer) => {
+    setResendModal({
+      customer,
+      orderNumber: customer.order_number
+    });
+  };
+
+  const handleConfirmResendEmail = async () => {
+    if (!resendModal) return;
+
+    const { customer, orderNumber } = resendModal;
+    
+    try {
+      setResendingEmail(customer.customer_id);
+      setResendModal(null);
+
+      const response = await fetch('/api/admin/resend-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          order_number: orderNumber
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert(`Email resent successfully to ${customer.email_address}`);
+        // Refresh the customers list to update email status
+        fetchCustomers();
+      } else {
+        alert(`Failed to resend email: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Resend email error:', error);
+      alert('Failed to resend email. Please try again.');
+    } finally {
+      setResendingEmail(null);
+    }
+  };
+
+  const handleCancelResendEmail = () => {
+    setResendModal(null);
+  };
+
+  // Email status helper function
+  const getEmailStatusDisplay = (emailStatus) => {
+    if (!emailStatus) {
+      return { icon: '❓', text: 'No Email', color: '#9ca3af' };
+    }
+
+    switch (emailStatus.status) {
+      case 'sent':
+        return { icon: '✅', text: 'Sent', color: '#10b981' };
+      case 'sending':
+        return { icon: '⏳', text: 'Sending', color: '#f59e0b' };
+      case 'failed':
+        return { icon: '❌', text: 'Failed', color: '#ef4444' };
+      default:
+        return { icon: '❓', text: 'Unknown', color: '#9ca3af' };
+    }
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = () => setActiveDropdown(null);
@@ -312,6 +382,7 @@ export default function Customers() {
                   <tr>
                     <th className={styles.tableHeadCell}>Customer</th>
                     <th className={styles.tableHeadCell}>Contact</th>
+                    <th className={styles.tableHeadCell}>Email Status</th>
                     <th className={styles.tableHeadCell}>Status</th>
                     <th className={styles.tableHeadCell}>Order</th>
                     <th className={styles.tableHeadCell}>Amount</th>
@@ -331,6 +402,41 @@ export default function Customers() {
                       {/* Phone */}
                       <td className={styles.tableBodyCell}>
                         <div className={styles.phoneNumber}>{customer.phone_number}</div>
+                      </td>
+                      
+                      {/* Email Status */}
+                      <td className={styles.tableBodyCell}>
+                        <div className={styles.emailStatusContainer}>
+                          <div className={styles.emailStatusBadge}>
+                            {(() => {
+                              const emailStatus = getEmailStatusDisplay(customer.email_status);
+                              return (
+                                <span 
+                                  className={styles.emailStatusIndicator}
+                                  style={{ color: emailStatus.color }}
+                                >
+                                  {emailStatus.icon} {emailStatus.text}
+                                </span>
+                              );
+                            })()}
+                          </div>
+                          {customer.payment_status === 'paid' && (
+                            <button
+                              onClick={() => handleResendEmail(customer)}
+                              disabled={resendingEmail === customer.customer_id}
+                              className={styles.resendButton}
+                              title="Resend email"
+                            >
+                              {resendingEmail === customer.customer_id ? (
+                                <div className={styles.loginSpinner}></div>
+                              ) : (
+                                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                              )}
+                            </button>
+                          )}
+                        </div>
                       </td>
                       
                       {/* Interactive Status Badge */}
@@ -397,7 +503,7 @@ export default function Customers() {
                     </tr>
                   )) : (
                     <tr className={styles.tableBodyRow}>
-                      <td className={styles.tableBodyCell} colSpan={7} style={{ textAlign: 'center', color: '#9ca3af', padding: '40px' }}>
+                      <td className={styles.tableBodyCell} colSpan={8} style={{ textAlign: 'center', color: '#9ca3af', padding: '40px' }}>
                         No customers found matching your criteria
                       </td>
                     </tr>
@@ -459,6 +565,33 @@ export default function Customers() {
                 className={`${styles.confirmButton} ${styles.confirmDelete}`}
               >
                 Confirm Change
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Resend Email Modal */}
+      {resendModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3 className={styles.modalTitle}>Resend Email</h3>
+            <p className={styles.modalMessage}>
+              Are you sure you want to resend the purchase confirmation email to{' '}
+              <strong>{resendModal.customer.email_address}</strong>?
+            </p>
+            <div className={styles.modalButtons}>
+              <button
+                onClick={handleCancelResendEmail}
+                className={styles.cancelButton}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmResendEmail}
+                className={styles.confirmButton}
+              >
+                Resend Email
               </button>
             </div>
           </div>

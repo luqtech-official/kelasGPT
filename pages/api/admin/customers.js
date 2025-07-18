@@ -1,4 +1,4 @@
-import { supabase } from "../../../lib/supabase";
+import { supabase, getEmailStatusForCustomers } from "../../../lib/supabase";
 import { requireAuth } from "../../../lib/adminAuth";
 
 async function handler(req, res) {
@@ -28,7 +28,7 @@ async function getCustomers(req, res) {
     const limitNum = Math.min(100, Math.max(1, parseInt(limit))); // Max 100 per page
     const offset = (pageNum - 1) * limitNum;
 
-    // Build query
+    // Build query with email status
     let query = supabase
       .from('customers')
       .select(`
@@ -43,7 +43,11 @@ async function getCustomers(req, res) {
         user_agent,
         acquisition_source,
         notes,
-        metadata
+        metadata,
+        orders (
+          order_number,
+          total_amount
+        )
       `);
 
     // Add search filters
@@ -132,12 +136,16 @@ async function getCustomers(req, res) {
       }
     }
 
+    // Get email status for all customers
+    const emailStatusMap = await getEmailStatusForCustomers(customers);
+
     // Add calculated fields
     const enhancedCustomers = customers.map(customer => ({
       ...customer,
-      final_amount: customer.payment_status === 'paid' ? 99.00 : 0,
-      order_number: `ORD-${new Date(customer.created_at).getTime()}`,
-      masked_ip: customer.ip_address ? maskIPAddress(customer.ip_address) : null
+      final_amount: customer.orders?.[0]?.total_amount || (customer.payment_status === 'paid' ? 99.00 : 0),
+      order_number: customer.orders?.[0]?.order_number || `ORD-${new Date(customer.created_at).getTime()}`,
+      masked_ip: customer.ip_address ? maskIPAddress(customer.ip_address) : null,
+      email_status: emailStatusMap[customer.email_address] || null
     }));
 
     res.status(200).json({

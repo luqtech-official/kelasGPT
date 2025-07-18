@@ -10,7 +10,9 @@
       "Bash(git log:*)",
       "Bash(find:*)",
       "Bash(npm install:*)",
-      "WebFetch(domain:dev.mailjet.com)"
+      "WebFetch(domain:dev.mailjet.com)",
+      "WebFetch(domain:documentation.mailjet.com)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

@@ -115,6 +115,8 @@ export default async function handler(req, res) {
     const baseUrl = process.env.SECUREPAY_API_BASE_URL_SANDBOX;
     const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment-status`;
     const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/payment-callback`;
+    const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment/cancelled`;
+    const timeoutUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment/timeout`;
     const amount = productSettings.productPrice; // Use dynamic price
     
     const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
@@ -164,6 +166,8 @@ export default async function handler(req, res) {
       buyer_phone: phone,
       callback_url: callbackUrl,
       redirect_url: redirectUrl,
+      cancel_url: cancelUrl,
+      timeout_url: timeoutUrl,
       redirect_post: true, // Recommended in documentation
     };
 
@@ -308,6 +312,14 @@ async function validateEmailStatus(email) {
         
       case 'failed':
         await logTransaction('INFO', `Customer retry after failed payment: ${email}`, { 
+          previousStatus: payment_status,
+          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
+        });
+        return { canProceed: true };
+        
+      case 'abandoned':
+      case 'expired':
+        await logTransaction('INFO', `Customer retry after ${payment_status} session: ${email}`, { 
           previousStatus: payment_status,
           orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
         });

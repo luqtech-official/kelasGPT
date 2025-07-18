@@ -29,12 +29,10 @@ export default function Checkout({ productSettings }) {
     return input.replace(/[<>"']/g, '').trim();
   }, []);
 
-  // Phone number formatting
+  // No phone formatting - keep as user types
   const formatPhone = useCallback((value) => {
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 3) return numbers;
-    if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+    // Only allow digits, no formatting
+    return value.replace(/\D/g, '');
   }, []);
 
   // Client-side validation (updated to match server-side regex)
@@ -55,7 +53,7 @@ export default function Checkout({ productSettings }) {
     
     if (!data.phone?.trim()) {
       errors.phone = 'Phone number is required';
-    } else if (!/^01[0-9]{8,9}$/.test(data.phone.replace(/[-\s]/g, ''))) {
+    } else if (!/^01[0-9]{8,9}$/.test(data.phone)) {
       errors.phone = 'Please enter a valid Malaysian phone number';
     }
     
@@ -100,7 +98,7 @@ export default function Checkout({ productSettings }) {
     const data = {
       name: sanitizeInput(formData.name),
       email: sanitizeInput(formData.email),
-      phone: sanitizeInput(formData.phone.replace(/[-\s]/g, '')), // Remove formatting for submission
+      phone: sanitizeInput(formData.phone), // No formatting to remove
       honeypot: '' // Honeypot is always empty for real users
     };
 
@@ -272,12 +270,12 @@ export default function Checkout({ productSettings }) {
                         id="phone"
                         name="phone"
                         pattern="^01[0-9]{8,9}$"
-                        title="Please enter a valid Malaysian phone number, without the Country Code"
+                        title="Please enter a valid Malaysian phone number (10-11 digits starting with 01)"
                         required
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
                         className={`${styles.formInput} ${validationErrors.phone ? styles.inputError : ''}`}
-                        placeholder="012-345-6789"
+                        placeholder="01123456789"
                         aria-describedby={validationErrors.phone ? "phone-error" : undefined}
                         aria-invalid={validationErrors.phone ? "true" : "false"}
                     />

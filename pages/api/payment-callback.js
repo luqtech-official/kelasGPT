@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabase";
+import { supabase, logEmail, updateEmailStatus } from "../../lib/supabase";
 import crypto from 'crypto';
 import mailjet from '../../lib/mailjet';
 import { logTransaction } from "../../lib/logger";
@@ -91,12 +91,29 @@ export default async function handler(req, res) {
       await logTransaction('INFO', `Database updated for successful order ${order_number}`);
 
       // --- Send transactional email with Mailjet ---
+      let emailLogId = null;
       try {
         const customerName = order.customers.full_name;
         const customerEmail = order.customers.email_address;
         
         // Get product settings for email
         const productSettings = await getProductSettings();
+
+        // Log email attempt
+        const emailLogResult = await logEmail({
+          email_type: 'purchase_confirmation',
+          recipient_email: customerEmail,
+          recipient_name: customerName,
+          order_number: order_number,
+          status: 'sending',
+          provider: 'mailjet',
+          template_id: process.env.MJ_TEMPLATE_ID_PURCHASE_CONFIRMATION,
+          created_at: new Date().toISOString()
+        });
+
+        if (emailLogResult.data && emailLogResult.data[0]) {
+          emailLogId = emailLogResult.data[0].id;
+        }
 
         const emailRequest = mailjet.post('send', { 'version': 'v3.1' }).request({
           Messages: [{
@@ -115,10 +132,21 @@ export default async function handler(req, res) {
           }]
         });
 
-        await emailRequest;
+        const emailResponse = await emailRequest;
+        
+        // Update email status to sent
+        if (emailLogId) {
+          await updateEmailStatus(emailLogId, 'sent');
+        }
+        
         await logTransaction('INFO', `Purchase confirmation email sent to ${customerEmail} for order ${order_number}`);
 
       } catch (emailError) {
+        // Update email status to failed
+        if (emailLogId) {
+          await updateEmailStatus(emailLogId, 'failed', emailError.message);
+        }
+        
         await logTransaction('ERROR', `Mailjet API Error for order ${order_number}`, { statusCode: emailError.statusCode, response: emailError.response.data });
       }
 

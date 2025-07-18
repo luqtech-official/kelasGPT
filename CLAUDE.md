@@ -528,21 +528,29 @@ This comprehensive documentation serves as the definitive guide for understandin
 
 ## 🔄 **NEXT SESSION PRIORITIES**
 
+### **🚨 CRITICAL IMPLEMENTATION GAPS**
+1. **SecurePay Abandoned Session Handling** (CRITICAL - Missing from current implementation)
+   - **Issue**: Users who abandon payment sessions (close browser, timeout) leave orders as `pending` forever
+   - **Solution**: Implement `cancel_url` and `timeout_url` parameters in SecurePay API calls
+   - **Impact**: Better UX and proper order status management
+   - **Files to modify**: `pages/api/create-payment-session.js`, create new pages for cancellation/timeout
+   - **Documentation**: Already available in `/InContext-Briefing/DocForLLM.SecurePay MY API Guideline Updated.md`
+
 ### **High Priority Enhancements**
-1. **Email Status & Resend Functionality** (Ready to implement - Mailjet API research started)
+2. **Email Status & Resend Functionality** (Ready to implement - Mailjet API research started)
    - Add email delivery status tracking to customer management interface
    - Implement resend email functionality with proper Mailjet API integration
    - Add email events timeline for each customer order
    - Include email status column in customer table with visual indicators
 
 ### **Security Enhancements** (Optional but recommended)
-2. **Fix Payment Timing Attack** - Use `crypto.timingSafeEqual()` in payment callback validation
-3. **Enable Transaction Logging** - Activate production logging for comprehensive audit trail
-4. **Add Rate Limiting** - Implement API endpoint protection against DoS attacks
+3. **Fix Payment Timing Attack** - Use `crypto.timingSafeEqual()` in payment callback validation
+4. **Enable Transaction Logging** - Activate production logging for comprehensive audit trail
+5. **Add Rate Limiting** - Implement API endpoint protection against DoS attacks
 
 ### **Admin Settings Page** (Future enhancement)
-5. **Complete Settings Redesign** - Apply same modern minimalist design to admin settings page
-6. **Email Template Management** - Allow dynamic editing of Mailjet email templates
+6. **Complete Settings Redesign** - Apply same modern minimalist design to admin settings page
+7. **Email Template Management** - Allow dynamic editing of Mailjet email templates
 
 **Current State**: All critical work complete, beautiful modern admin interface fully implemented, platform ready for production launch
 
