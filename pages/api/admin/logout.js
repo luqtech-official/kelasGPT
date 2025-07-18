@@ -55,8 +55,8 @@ export default async function handler(req, res) {
     
     if (isProduction) {
       res.setHeader('Set-Cookie', [
-        'admin_session=; HttpOnly; Secure; Path=/admin; Max-Age=0; SameSite=Strict',
-        'admin_user=; Secure; Path=/admin; Max-Age=0; SameSite=Strict'
+        'admin_session=; HttpOnly; Secure; Path=/; Max-Age=0; SameSite=Strict',
+        'admin_user=; Secure; Path=/; Max-Age=0; SameSite=Strict'
       ]);
     } else {
       res.setHeader('Set-Cookie', [

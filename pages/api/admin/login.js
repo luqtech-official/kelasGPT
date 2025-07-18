@@ -101,10 +101,10 @@ export default async function handler(req, res) {
     const isProduction = process.env.NODE_ENV === 'production';
     
     if (isProduction) {
-      // Production: Secure, HttpOnly, Strict SameSite, /admin path
+      // Production: Secure, HttpOnly, root path for consistency
       res.setHeader('Set-Cookie', [
-        `admin_session=${sessionToken}; HttpOnly; Secure; Path=/admin; Max-Age=86400; SameSite=Strict`,
-        `admin_user=${admin.username}; Secure; Path=/admin; Max-Age=86400; SameSite=Strict`
+        `admin_session=${sessionToken}; HttpOnly; Secure; Path=/; Max-Age=86400; SameSite=Strict`,
+        `admin_user=${admin.username}; Secure; Path=/; Max-Age=86400; SameSite=Strict`
       ]);
     } else {
       // Development: Relaxed settings for localhost
