@@ -19,22 +19,51 @@ export default async function handler(req, res) {
     }
 
     if (sessionToken) {
-      // Remove session from admin_sessions table
-      const { error } = await supabase
-        .from('admin_sessions')
-        .delete()
-        .eq('session_token', sessionToken);
+      // Try to remove session from new admin_sessions table first
+      let sessionCleared = false;
+      try {
+        const { error } = await supabase
+          .from('admin_sessions')
+          .delete()
+          .eq('session_token', sessionToken);
 
-      if (error) {
-        console.error('Error clearing admin session:', error);
+        if (!error) {
+          sessionCleared = true;
+          console.log('Session cleared from admin_sessions table');
+        }
+      } catch (newSystemError) {
+        console.log('New session system not available, using fallback');
+      }
+
+      // Fallback to old session system
+      if (!sessionCleared) {
+        const { error } = await supabase
+          .from('admin')
+          .update({ session_data: null })
+          .eq('session_data->>token', sessionToken);
+
+        if (error) {
+          console.error('Error clearing admin session (fallback):', error);
+        } else {
+          console.log('Session cleared using fallback system');
+        }
       }
     }
 
-    // Clear cookies
-    res.setHeader('Set-Cookie', [
-      'admin_session=; HttpOnly; Secure; Path=/admin; Max-Age=0; SameSite=Strict',
-      'admin_user=; Path=/admin; Max-Age=0; SameSite=Strict'
-    ]);
+    // Clear cookies (adjust for environment)
+    const isProduction = process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      res.setHeader('Set-Cookie', [
+        'admin_session=; HttpOnly; Secure; Path=/admin; Max-Age=0; SameSite=Strict',
+        'admin_user=; Secure; Path=/admin; Max-Age=0; SameSite=Strict'
+      ]);
+    } else {
+      res.setHeader('Set-Cookie', [
+        'admin_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax',
+        'admin_user=; Path=/; Max-Age=0; SameSite=Lax'
+      ]);
+    }
 
     res.status(200).json({ message: 'Logout successful' });
 

@@ -41,38 +41,78 @@ export default async function handler(req, res) {
     const sessionExpiry = new Date();
     sessionExpiry.setHours(sessionExpiry.getHours() + 24); // 24 hour session
 
-    // Create new session in admin_sessions table
-    const { error: sessionError } = await supabase
-      .from('admin_sessions')
-      .insert({
-        admin_id: admin.admin_id,
-        session_token: sessionToken,
+    // Try to create session in new admin_sessions table
+    let sessionCreated = false;
+    try {
+      const { error: sessionError } = await supabase
+        .from('admin_sessions')
+        .insert({
+          admin_id: admin.admin_id,
+          session_token: sessionToken,
+          expires_at: sessionExpiry.toISOString(),
+          ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+          user_agent: req.headers['user-agent']
+        });
+
+      if (!sessionError) {
+        sessionCreated = true;
+        console.log('Session created in new admin_sessions table');
+      }
+    } catch (newSystemError) {
+      console.log('New session system not available, using fallback');
+    }
+
+    // Fallback to old session system if new system not available
+    if (!sessionCreated) {
+      const sessionData = {
+        token: sessionToken,
         expires_at: sessionExpiry.toISOString(),
         ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
         user_agent: req.headers['user-agent']
-      });
+      };
 
-    if (sessionError) {
-      console.error('Error creating admin session:', sessionError);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      const { error: fallbackError } = await supabase
+        .from('admin')
+        .update({
+          last_login_at: new Date().toISOString(),
+          session_data: sessionData
+        })
+        .eq('admin_id', admin.admin_id);
+
+      if (fallbackError) {
+        console.error('Error creating session (fallback):', fallbackError);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+      console.log('Session created using fallback system');
+    } else {
+      // Update admin last login time (only if new system worked)
+      const { error: updateError } = await supabase
+        .from('admin')
+        .update({ last_login_at: new Date().toISOString() })
+        .eq('admin_id', admin.admin_id);
+
+      if (updateError) {
+        console.error('Error updating admin last login:', updateError);
+        // Continue anyway - this is not critical
+      }
     }
 
-    // Update admin last login time
-    const { error: updateError } = await supabase
-      .from('admin')
-      .update({ last_login_at: new Date().toISOString() })
-      .eq('admin_id', admin.admin_id);
-
-    if (updateError) {
-      console.error('Error updating admin last login:', updateError);
-      // Continue anyway - this is not critical
+    // Set secure HTTP-only cookies (production-ready)
+    const isProduction = process.env.NODE_ENV === 'production';
+    
+    if (isProduction) {
+      // Production: Secure, HttpOnly, Strict SameSite, /admin path
+      res.setHeader('Set-Cookie', [
+        `admin_session=${sessionToken}; HttpOnly; Secure; Path=/admin; Max-Age=86400; SameSite=Strict`,
+        `admin_user=${admin.username}; Secure; Path=/admin; Max-Age=86400; SameSite=Strict`
+      ]);
+    } else {
+      // Development: Relaxed settings for localhost
+      res.setHeader('Set-Cookie', [
+        `admin_session=${sessionToken}; HttpOnly; Path=/; Max-Age=86400; SameSite=Lax`,
+        `admin_user=${admin.username}; Path=/; Max-Age=86400; SameSite=Lax`
+      ]);
     }
-
-    // Set secure HTTP-only cookie
-    res.setHeader('Set-Cookie', [
-      `admin_session=${sessionToken}; HttpOnly; Secure; Path=/admin; Max-Age=86400; SameSite=Strict`,
-      `admin_user=${admin.username}; Path=/admin; Max-Age=86400; SameSite=Strict`
-    ]);
 
     // Log successful login
     console.log(`Successful admin login: ${username} from IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
