@@ -49,3 +49,9 @@ CLAUDE.md
 
 # Backup folder
 backup/
+
+# Migration files (contain sensitive setup instructions)
+*MIGRATION*.md
+*migration*.md
+*setup*.md
+*SETUP*.md

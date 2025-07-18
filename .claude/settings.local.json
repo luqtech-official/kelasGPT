@@ -6,7 +6,10 @@
       "Bash(rg:*)",
       "Bash(ls:*)",
       "Bash(mkdir:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(git log:*)",
+      "Bash(find:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }

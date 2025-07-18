@@ -19,11 +19,11 @@ export default async function handler(req, res) {
     }
 
     if (sessionToken) {
-      // Clear session from database
+      // Remove session from admin_sessions table
       const { error } = await supabase
-        .from('admin')
-        .update({ session_data: null })
-        .eq('session_data->>token', sessionToken);
+        .from('admin_sessions')
+        .delete()
+        .eq('session_token', sessionToken);
 
       if (error) {
         console.error('Error clearing admin session:', error);

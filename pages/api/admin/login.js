@@ -1,5 +1,6 @@
 import { supabase } from "../../../lib/supabase";
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -27,11 +28,10 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Verify password using simple hash comparison
-    // Note: In production, consider using bcrypt for better security
-    const passwordHash = crypto.createHash('sha256').update(password).digest('hex');
+    // Verify password using bcrypt
+    const isValidPassword = await bcrypt.compare(password, admin.password_hash);
     
-    if (passwordHash !== admin.password_hash) {
+    if (!isValidPassword) {
       console.warn(`Failed login attempt for username: ${username} from IP: ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -41,25 +41,31 @@ export default async function handler(req, res) {
     const sessionExpiry = new Date();
     sessionExpiry.setHours(sessionExpiry.getHours() + 24); // 24 hour session
 
-    // Update admin record with session data
-    const sessionData = {
-      token: sessionToken,
-      expires_at: sessionExpiry.toISOString(),
-      ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      user_agent: req.headers['user-agent']
-    };
+    // Create new session in admin_sessions table
+    const { error: sessionError } = await supabase
+      .from('admin_sessions')
+      .insert({
+        admin_id: admin.admin_id,
+        session_token: sessionToken,
+        expires_at: sessionExpiry.toISOString(),
+        ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        user_agent: req.headers['user-agent']
+      });
 
+    if (sessionError) {
+      console.error('Error creating admin session:', sessionError);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
+    // Update admin last login time
     const { error: updateError } = await supabase
       .from('admin')
-      .update({
-        last_login_at: new Date().toISOString(),
-        session_data: sessionData
-      })
+      .update({ last_login_at: new Date().toISOString() })
       .eq('admin_id', admin.admin_id);
 
     if (updateError) {
-      console.error('Error updating admin session:', updateError);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      console.error('Error updating admin last login:', updateError);
+      // Continue anyway - this is not critical
     }
 
     // Set secure HTTP-only cookie

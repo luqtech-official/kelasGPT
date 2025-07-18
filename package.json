@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
+    "bcryptjs": "^3.0.2",
     "next": "15.3.4",
     "node-mailjet": "^6.0.8",
     "react": "^19.0.0",
