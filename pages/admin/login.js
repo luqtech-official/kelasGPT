@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Admin.module.css";
 import Link from "next/link";
 
 export default function Login() {
@@ -86,22 +86,25 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.loginContainer}>
       <Head>
         <title>Admin Login - KelasGPT</title>
         <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Admin Login</h1>
-        <p className={styles.description}>
-          Access the KelasGPT administrative dashboard
-        </p>
+      <div className={styles.loginCard}>
+        <div className={styles.loginHeader}>
+          <h1 className={styles.loginTitle}>Admin Portal</h1>
+          <p className={styles.loginSubtitle}>
+            Secure access to KelasGPT dashboard
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto' }}>
-          <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="username" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <div className={styles.formGroup}>
+            <label htmlFor="username" className={styles.formLabel}>
               Username
             </label>
             <input 
@@ -112,18 +115,14 @@ export default function Login() {
               onChange={handleInputChange}
               required 
               disabled={loading}
-              style={{ 
-                width: '100%', 
-                padding: '10px', 
-                border: '1px solid #ddd', 
-                borderRadius: '4px',
-                fontSize: '16px'
-              }}
+              className={styles.formInput}
+              autoComplete="username"
+              placeholder="Enter your username"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="password" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.formLabel}>
               Password
             </label>
             <input 
@@ -134,50 +133,51 @@ export default function Login() {
               onChange={handleInputChange}
               required 
               disabled={loading}
-              style={{ 
-                width: '100%', 
-                padding: '10px', 
-                border: '1px solid #ddd', 
-                borderRadius: '4px',
-                fontSize: '16px'
-              }}
+              className={styles.formInput}
+              autoComplete="current-password"
+              placeholder="Enter your password"
             />
           </div>
 
           {error && (
-            <div style={{ 
-              color: 'red', 
-              marginBottom: '20px', 
-              padding: '10px', 
-              border: '1px solid red', 
-              borderRadius: '4px',
-              backgroundColor: '#ffebee'
-            }}>
+            <div className={styles.errorMessage}>
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               {error}
             </div>
           )}
 
           <button 
             type="submit" 
-            className={styles.primary}
+            className={styles.loginButton}
             disabled={loading}
-            style={{ 
-              width: '100%', 
-              padding: '12px',
-              fontSize: '16px',
-              opacity: loading ? 0.6 : 1
-            }}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <div className={styles.loginSpinner}></div>
+                Signing in...
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                Sign In to Dashboard
+              </>
+            )}
           </button>
         </form>
 
-        <div style={{ marginTop: '40px', textAlign: 'center' }}>
-          <Link href="/" style={{ color: '#0070f3', textDecoration: 'none' }}>
-            ← Back to Main Site
+        <div className={styles.loginFooter}>
+          <Link href="/" className={styles.backToSite}>
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Main Site
           </Link>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

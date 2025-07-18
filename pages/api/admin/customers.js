@@ -182,7 +182,7 @@ async function updateCustomer(req, res) {
     if (payment_status && !validStatuses.includes(payment_status)) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid payment status'
+        message: `Invalid payment status. Valid options: ${validStatuses.join(', ')}`
       });
     }
 

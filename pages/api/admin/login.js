@@ -15,11 +15,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Get admin user from database
+    // Get admin user from database (case-insensitive username lookup)
     const { data: admin, error: adminError } = await supabase
       .from('admin')
       .select('admin_id, username, password_hash, role, email')
-      .eq('username', username)
+      .ilike('username', username)
       .single();
 
     if (adminError || !admin) {
