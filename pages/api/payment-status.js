@@ -12,8 +12,18 @@ export default async function handler(req, res) {
   });
 
   if (req.method === 'POST') {
-    // Handle POST redirect from SecurePay - data comes in query parameters
-    const { order_number, payment_status, merchant_reference_number, amount, fpx_status_message, fpx_debit_auth_code } = req.query;
+    // Handle POST redirect from SecurePay - data comes in request body
+    const { 
+      order_number, 
+      payment_status, 
+      merchant_reference_number, 
+      transaction_amount,
+      fpx_status_message, 
+      fpx_debit_auth_code 
+    } = req.body;
+    
+    // Use transaction_amount as the amount for consistency
+    const amount = transaction_amount;
     
     await logTransaction('INFO', `SecurePay POST redirect received`, { 
       order_number, 
@@ -22,13 +32,23 @@ export default async function handler(req, res) {
       amount,
       fpx_status_message,
       fpx_debit_auth_code,
-      fullQuery: req.query
+      fullBody: req.body,
+      transaction_amount: req.body.transaction_amount
     });
 
     // Check if this is a cancellation and redirect to appropriate page
     const isCancellation = fpx_status_message?.includes('Cancel') || 
                           fpx_status_message?.includes('cancel') ||
-                          fpx_debit_auth_code === '1C';
+                          fpx_debit_auth_code === '1C' ||
+                          (payment_status === 'false' && fpx_debit_auth_code === '1C');
+    
+    await logTransaction('INFO', `🔍 CANCELLATION DETECTION`, {
+      isCancellation,
+      payment_status,
+      fpx_debit_auth_code,
+      fpx_status_message,
+      order_number
+    });
     
     if (isCancellation) {
       // Redirect to cancellation page
