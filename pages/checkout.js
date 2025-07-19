@@ -26,7 +26,8 @@ export default function Checkout({ productSettings }) {
   // Input sanitization function
   const sanitizeInput = useCallback((input) => {
     if (!input) return '';
-    return input.replace(/[<>"']/g, '').trim();
+    // Only remove dangerous HTML characters, preserve spaces
+    return input.replace(/[<>"']/g, '');
   }, []);
 
   // No phone formatting - keep as user types
