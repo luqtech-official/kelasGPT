@@ -2,11 +2,13 @@ import { logTransaction } from "../../lib/logger";
 
 export default async function handler(req, res) {
   // Log all incoming requests to understand SecurePay's redirect behavior
-  await logTransaction('INFO', `Payment status endpoint accessed`, { 
+  await logTransaction('INFO', `🔥 PAYMENT STATUS ENDPOINT ACCESSED 🔥`, { 
     method: req.method,
     body: req.body,
     query: req.query,
-    headers: req.headers
+    userAgent: req.headers['user-agent'],
+    referer: req.headers.referer,
+    timestamp: new Date().toISOString()
   });
 
   if (req.method === 'POST') {
@@ -31,10 +33,12 @@ export default async function handler(req, res) {
     if (isCancellation) {
       // Redirect to cancellation page
       const redirectUrl = `/payment/cancelled?order_number=${encodeURIComponent(order_number || '')}&payment_status=${encodeURIComponent(payment_status || '')}&merchant_reference_number=${encodeURIComponent(merchant_reference_number || '')}&amount=${encodeURIComponent(amount || '')}`;
+      await logTransaction('INFO', `🔀 REDIRECTING TO CANCELLATION PAGE`, { redirectUrl, order_number });
       return res.redirect(302, redirectUrl);
     } else {
       // Redirect to the actual payment status page with query parameters
       const redirectUrl = `/payment-status?order_number=${encodeURIComponent(order_number || '')}&payment_status=${encodeURIComponent(payment_status || '')}&merchant_reference_number=${encodeURIComponent(merchant_reference_number || '')}&amount=${encodeURIComponent(amount || '')}`;
+      await logTransaction('INFO', `🔀 REDIRECTING TO PAYMENT STATUS PAGE`, { redirectUrl, order_number });
       return res.redirect(302, redirectUrl);
     }
   }
@@ -44,9 +48,11 @@ export default async function handler(req, res) {
     const queryString = new URLSearchParams(req.query).toString();
     const redirectUrl = `/payment-status${queryString ? `?${queryString}` : ''}`;
     
+    await logTransaction('INFO', `🔀 GET REDIRECT TO PAYMENT STATUS`, { redirectUrl, query: req.query });
     return res.redirect(302, redirectUrl);
   }
 
   // Method not allowed
+  await logTransaction('ERROR', `❌ METHOD NOT ALLOWED on payment-status`, { method: req.method });
   return res.status(405).json({ message: 'Method Not Allowed' });
 }

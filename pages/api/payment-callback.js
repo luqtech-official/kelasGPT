@@ -195,6 +195,13 @@ export default async function handler(req, res) {
       
       const orderStatus = isCancellation ? 'cancelled' : 'failed';
       
+      await logTransaction('INFO', `Cancellation detection for order ${order_number}`, {
+        isCancellation,
+        orderStatus,
+        fpx_status_message: callbackData.fpx_status_message,
+        fpx_debit_auth_code: callbackData.fpx_debit_auth_code
+      });
+      
       const { error: updateError } = await supabase
         .from('orders')
         .update({ order_status: orderStatus })
@@ -202,6 +209,8 @@ export default async function handler(req, res) {
 
       if (updateError) {
         await logTransaction('ERROR', `Error updating failed order status for ${order_number}`, updateError);
+      } else {
+        await logTransaction('INFO', `Successfully updated order status to ${orderStatus} for order ${order_number}`);
       }
       
       // Also update customer status
@@ -212,13 +221,22 @@ export default async function handler(req, res) {
         .single();
         
       if (order && !orderError) {
-        await supabase
+        const { error: customerUpdateError } = await supabase
           .from('customers')
           .update({ payment_status: orderStatus })
           .eq('customer_id', order.customer_id);
+          
+        if (customerUpdateError) {
+          await logTransaction('ERROR', `Error updating customer status for order ${order_number}`, customerUpdateError);
+        } else {
+          await logTransaction('INFO', `Successfully updated customer status to ${orderStatus} for order ${order_number}`);
+        }
+      } else {
+        await logTransaction('ERROR', `Could not find order for customer update: ${order_number}`, orderError);
       }
     }
 
+    await logTransaction('INFO', `Callback processing completed successfully for order ${order_number}`);
     res.status(200).json({ message: 'Callback received and processed successfully' });
 
   } catch (error) {
