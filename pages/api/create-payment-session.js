@@ -336,10 +336,7 @@ async function validateEmailStatus(email) {
     }
     
   } catch (error) {
-    await logTransaction('ERROR', `Unexpected error in email validation for: ${email}`, { 
-      message: error.message, 
-      stack: error.stack 
-    });
+    logger.error({ message: error.message, stack: error.stack }, `Unexpected error in email validation for: ${email}`);
     return {
       canProceed: false,
       reason: 'validation_error',

@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         await logTransaction('ERROR', `Failed to update cancelled payment status: ${order_number}`, statusUpdateResult);
         // Continue with redirect even if database update fails
       } else {
-        await logTransaction('INFO', `Successfully updated payment status to cancelled: ${order_number}`);
+        logger.info(`Successfully updated payment status to cancelled: ${order_number}`);
       }
     }
 

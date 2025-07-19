@@ -228,10 +228,7 @@ export default async function handler(req, res) {
     res.status(200).json({ message: 'Callback received and processed successfully' });
 
   } catch (error) {
-    await logTransaction('ERROR', `Unhandled error in callback for order ${order_number}`, { 
-      message: error.message, 
-      stack: error.stack 
-    });
+    logger.error({ message: error.message, stack: error.stack }, `Unhandled error in callback for order ${order_number}`);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }

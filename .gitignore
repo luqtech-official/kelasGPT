@@ -10,6 +10,12 @@
 !.yarn/releases
 !.yarn/versions
 
+#Documentation
+review-finding.md
+humanfeedback.md
+InContext*/
+CLAUDE.md
+
 # testing
 /coverage
 
@@ -23,7 +29,7 @@
 # misc
 .DS_Store
 *.pem
-humanfeedback.md
+
 
 # debug
 npm-debug.log*
@@ -48,9 +54,7 @@ next-env.d.ts
 transaction.log
 *.log
 
-#Context Helper Folder
-InContext*/
-CLAUDE.md
+
 
 # Backup folder
 backup/

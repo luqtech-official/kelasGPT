@@ -73,6 +73,6 @@ export default async function handler(req, res) {
   }
 
   // Method not allowed
-  await logTransaction('ERROR', `❌ METHOD NOT ALLOWED on payment-status`, { method: req.method });
+  logger.error({ method: req.method }, `❌ METHOD NOT ALLOWED on payment-status`);
   return res.status(405).json({ message: 'Method Not Allowed' });
 }
