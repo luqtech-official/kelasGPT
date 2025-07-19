@@ -226,11 +226,7 @@ export default async function handler(req, res) {
         throw fetchError;
       }
 
-      await logTransaction('INFO', `Admin updated customer successfully`, {
-        admin: authResult.admin.username,
-        customerId: customer_id,
-        updatedFields: Object.keys(updateData).concat(payment_status ? ['payment_status'] : [])
-      });
+      logger.info({ admin: authResult.admin.username, customerId: customer_id, updatedFields: Object.keys(updateData).concat(payment_status ? ['payment_status'] : []) }, `Admin updated customer successfully`);
 
       res.status(200).json({
         success: true,

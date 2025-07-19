@@ -209,6 +209,7 @@ export default async function handler(req, res) {
       
       // ✅ FIXED: Use validated payment status update (SQL ambiguity resolved)
       const statusUpdateResult = await updatePaymentStatusValidated(
+        logger,
         order_number, 
         newStatus
       );

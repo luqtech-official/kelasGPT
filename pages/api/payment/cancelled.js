@@ -27,6 +27,7 @@ export default async function handler(req, res) {
       await logTransaction('INFO', `Updating payment status to cancelled for order: ${order_number}`);
       
       const statusUpdateResult = await updatePaymentStatusValidated(
+        logger,
         order_number, 
         PAYMENT_STATES.CANCELLED,
         merchant_reference_number
