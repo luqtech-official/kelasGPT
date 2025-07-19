@@ -727,6 +727,15 @@
   animation: spin 1s linear infinite;
 }
 
+.buttonSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 .loginFooter {
   margin-top: 24px;
   text-align: center;
@@ -857,9 +866,15 @@
   align-items: center;
 }
 
-.searchInput {
+/* ✅ SEARCH DEBOUNCE: Container and input styles */
+.searchContainer {
+  position: relative;
   flex: 1;
   min-width: 200px;
+}
+
+.searchInput {
+  width: 100%;
   padding: 10px 14px;
   border: 2px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
@@ -873,6 +888,33 @@
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.searchInputSearching {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.02);
+}
+
+.searchIndicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.searchSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(245, 158, 11, 0.2);
+  border-top: 2px solid #f59e0b;
+  border-radius: 50%;
+  animation: searchSpin 1s linear infinite;
+}
+
+@keyframes searchSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .filterSelect {
@@ -1311,7 +1353,7 @@
     flex-wrap: nowrap;
   }
 
-  .searchInput {
+  .searchContainer {
     min-width: 300px;
   }
 

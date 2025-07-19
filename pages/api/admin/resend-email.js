@@ -1,19 +1,14 @@
 import { supabase, logEmail, updateEmailStatus } from "../../../lib/supabase";
 import mailjet from '../../../lib/mailjet';
-import { requireAuth } from "../../../lib/adminAuth";
+import { requireAuthWithCSRF } from "../../../lib/adminAuth";
 import { getProductSettings } from "../../../lib/settings";
 
-export default async function handler(req, res) {
+async function resendEmailHandler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    // Require authentication
-    const authResult = await requireAuth(req, res);
-    if (!authResult.success) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
 
     const { order_number } = req.body;
 
@@ -131,3 +126,5 @@ export default async function handler(req, res) {
     });
   }
 }
+
+export default requireAuthWithCSRF(resendEmailHandler);

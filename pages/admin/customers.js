@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import AdminLayout from '@/components/AdminLayout';
 import styles from "@/styles/Admin.module.css";
+import { useSearchDebounce } from '@/lib/hooks/useDebounce';
 
 const CUSTOMERS_PER_PAGE = 10;
 
@@ -10,6 +11,10 @@ export default function Customers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("all");
+  
+  // ✅ PERFORMANCE: Debounce search to prevent excessive API calls
+  const { debouncedSearchTerm, isSearching } = useSearchDebounce(searchTerm, 400);
+  const [csrfToken, setCsrfToken] = useState(null);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
@@ -28,6 +33,20 @@ export default function Customers() {
   const [resendingEmail, setResendingEmail] = useState(null);
   const [resendModal, setResendModal] = useState(null);
 
+  const fetchCSRFToken = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/csrf-token');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          setCsrfToken(result.csrfToken);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching CSRF token:', error);
+    }
+  }, []);
+
   const fetchCustomers = useCallback(async () => {
     try {
       setLoading(true);
@@ -36,7 +55,7 @@ export default function Customers() {
       const params = new URLSearchParams({
         page: currentPage.toString(),
         limit: CUSTOMERS_PER_PAGE.toString(),
-        search: searchTerm,
+        search: debouncedSearchTerm,  // ✅ Use debounced value for API calls
         status: statusFilter
       });
 
@@ -46,7 +65,13 @@ export default function Customers() {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error('Failed to parse JSON response:', jsonError);
+        throw new Error('Server returned invalid response format');
+      }
       
       if (result.success) {
         setCustomers(result.data.customers);
@@ -69,15 +94,16 @@ export default function Customers() {
       });
       setLoading(false);
     }
-  }, [currentPage, searchTerm, statusFilter]);
+  }, [currentPage, debouncedSearchTerm, statusFilter]);  // ✅ Use debounced value in dependency
 
   useEffect(() => {
+    fetchCSRFToken();
     fetchCustomers();
-  }, [fetchCustomers]);
+  }, [fetchCSRFToken, fetchCustomers]);
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
+    setSearchTerm(event.target.value);  // ✅ Immediate UI update for responsiveness
+    setCurrentPage(1);                  // ✅ Reset pagination immediately
   };
 
   const handleStatusFilter = (event) => {
@@ -155,21 +181,27 @@ export default function Customers() {
         title: `Change Status to ${newStatus.toUpperCase()}`,
         message: `Are you sure you want to change ${customer.full_name}'s payment status from "${customer.payment_status}" to "${newStatus}"? This action will affect their access to the product.`
       });
+      setActiveDropdown(null);
     } else {
-      await updateCustomerStatus(customer.customer_id, newStatus);
+      try {
+        await updateCustomerStatus(customer.customer_id, newStatus);
+        setActiveDropdown(null); // Only close dropdown after successful update
+      } catch (error) {
+        // Error is already handled in updateCustomerStatus, but keep dropdown open
+        console.error('Status update failed, keeping dropdown open:', error);
+      }
     }
-    
-    setActiveDropdown(null);
   };
 
-  const updateCustomerStatus = async (customerId, newStatus) => {
+  async function updateCustomerStatus(customerId, newStatus) {
     try {
       setUpdating(customerId);
-      
+
       const response = await fetch('/api/admin/customers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
         },
         body: JSON.stringify({
           customer_id: customerId,
@@ -177,34 +209,47 @@ export default function Customers() {
         }),
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error('Failed to parse JSON response:', jsonError);
+        throw new Error('Server returned invalid response format');
+      }
 
       if (!response.ok) {
         throw new Error(result.message || 'Failed to update status');
       }
 
       // Update the customer in the local state
-      setCustomers(prev => prev.map(customer => 
-        customer.customer_id === customerId 
-          ? { ...customer, payment_status: newStatus, updated_at: new Date().toISOString() }
-          : customer
+      setCustomers(prev => prev.map(customer => customer.customer_id === customerId
+        ? { ...customer, payment_status: newStatus, updated_at: new Date().toISOString() }
+        : customer
       ));
 
       // Show success feedback
       console.log('Status updated successfully');
-      
+
     } catch (error) {
       console.error('Error updating status:', error);
       alert('Failed to update status: ' + error.message);
+      throw error; // Re-throw to allow caller to handle
     } finally {
       setUpdating(null);
-      setConfirmModal(null);
+      // Only close confirm modal if it exists (successful updates)
+      // Keep it open on errors so user can retry
     }
-  };
+  }
 
-  const handleConfirmStatusChange = () => {
+  const handleConfirmStatusChange = async () => {
     if (confirmModal) {
-      updateCustomerStatus(confirmModal.customer.customer_id, confirmModal.newStatus);
+      try {
+        await updateCustomerStatus(confirmModal.customer.customer_id, confirmModal.newStatus);
+        setConfirmModal(null); // Only close modal on success
+      } catch (error) {
+        // Error is already shown in updateCustomerStatus, keep modal open for retry
+        console.error('Status change failed, keeping modal open for retry:', error);
+      }
     }
   };
 
@@ -233,13 +278,20 @@ export default function Customers() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
         },
         body: JSON.stringify({
           order_number: orderNumber
         })
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error('Failed to parse JSON response:', jsonError);
+        throw new Error('Server returned invalid response format');
+      }
 
       if (result.success) {
         alert(`Email resent successfully to ${customer.email_address}`);
@@ -290,7 +342,7 @@ export default function Customers() {
       // Build query parameters for export
       const params = new URLSearchParams({
         export: 'true',
-        search: searchTerm,
+        search: debouncedSearchTerm,  // ✅ Use debounced value for export consistency
         status: statusFilter
       });
 
@@ -335,13 +387,20 @@ export default function Customers() {
 
       {/* Filters */}
       <div className={styles.filtersRow}>
-        <input
-          type="text"
-          placeholder="Search by name, email, or phone..."
-          className={styles.searchInput}
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search by name, email, or phone..."
+            className={`${styles.searchInput} ${isSearching ? styles.searchInputSearching : ''}`}
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          {isSearching && (
+            <div className={styles.searchIndicator}>
+              <div className={styles.searchSpinner}></div>
+            </div>
+          )}
+        </div>
         
         <select 
           value={statusFilter} 
@@ -368,7 +427,7 @@ export default function Customers() {
 
       {/* Loading State */}
       {loading ? (
-        <div className={styles.loadingSpinner}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '60px', color: '#6b7280', fontSize: '14px', flexDirection: 'column', gap: '12px' }}>
           <div className={styles.loadingSpinner}></div>
           Loading customer data...
         </div>
@@ -381,9 +440,9 @@ export default function Customers() {
                 <thead className={styles.tableHead}>
                   <tr>
                     <th className={styles.tableHeadCell}>Customer</th>
+                    <th className={styles.tableHeadCell}>Status</th>
                     <th className={styles.tableHeadCell}>Contact</th>
                     <th className={styles.tableHeadCell}>Email Status</th>
-                    <th className={styles.tableHeadCell}>Status</th>
                     <th className={styles.tableHeadCell}>Order</th>
                     <th className={styles.tableHeadCell}>Amount</th>
                     <th className={styles.tableHeadCell}>Date</th>
@@ -428,7 +487,7 @@ export default function Customers() {
                               title="Resend email"
                             >
                               {resendingEmail === customer.customer_id ? (
-                                <div className={styles.loginSpinner}></div>
+                                <div className={styles.buttonSpinner}></div>
                               ) : (
                                 <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -454,7 +513,7 @@ export default function Customers() {
                             }}
                           >
                             {updating === customer.customer_id ? (
-                              <div className={styles.loginSpinner}></div>
+                              <div className={styles.buttonSpinner}></div>
                             ) : (
                               customer.payment_status
                             )}
