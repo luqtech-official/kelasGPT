@@ -2,87 +2,312 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Checkout.module.css";
+import { TimeoutIcon } from "../../components/icons";
 
 export default function PaymentTimeoutPage() {
   const router = useRouter();
   const { query } = router;
   const [orderNumber, setOrderNumber] = useState('');
-  const [message, setMessage] = useState('Loading...');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (router.isReady) {
-      const orderNum = query.order_number || '';
-      setOrderNumber(orderNum);
-      
-      if (orderNum) {
-        setMessage(`Your payment session for order #${orderNum} has expired. No charges have been made to your account.`);
-      } else {
-        setMessage('Your payment session has expired. No charges have been made to your account.');
-      }
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        setOrderNumber(query.order_number || '');
+      }, 600);
+
+      return () => clearTimeout(timer);
     }
   }, [router.isReady, query]);
 
   const handleRetryPayment = () => {
-    // Redirect to checkout page to start fresh
     router.push('/checkout');
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.checkoutContainer}>
       <Head>
         <title>Payment Session Expired - KelasGPT</title>
         <meta name="description" content="Your payment session has expired. Please try again." />
+        <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Payment Session Expired</h1>
-        <p className={styles.description}>{message}</p>
-        
-        <div className={styles.grid}>
-          <div className={styles.card}>
-            <h3>What happened?</h3>
-            <p>Your payment session timed out due to inactivity. This is a security measure to protect your transaction.</p>
-          </div>
-          
-          <div className={styles.card}>
-            <h3>Your account is safe</h3>
-            <p>No charges were made to your account. Your banking information remains secure.</p>
-          </div>
-          
-          <div className={styles.card}>
-            <h3>Next steps</h3>
-            <p>Simply start a new payment session. Your order details will be preserved.</p>
-          </div>
-        </div>
+      <div className={styles.formWrapper} style={{maxWidth: '600px', textAlign: 'center'}}>
+        {isLoading ? (
+          <>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem'}}>
+              <div className={styles.spinner}></div>
+            </div>
+            <h1 className={styles.title}>Loading...</h1>
+            <p className={styles.subtitle}>Please wait a moment</p>
+          </>
+        ) : (
+          <>
+            {/* Status Header */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '2.5rem',
+              paddingBottom: '2rem',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                margin: '0 auto 1rem',
+                borderRadius: '50%',
+                backgroundColor: '#f3f4f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                color: '#6b7280'
+              }}>
+                ○
+              </div>
+              
+              <h1 style={{
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                color: '#111827',
+                margin: '0 0 0.5rem 0',
+                letterSpacing: '-0.025em'
+              }}>
+                Session Expired
+              </h1>
+              
+              <p style={{
+                fontSize: '0.875rem',
+                color: '#6b7280',
+                margin: '0 0 1rem 0',
+                lineHeight: '1.5'
+              }}>
+                Your payment session has timed out for security reasons. No charges were made to your account.
+              </p>
+              
+              {orderNumber && (
+                <div style={{
+                  fontSize: '0.75rem',
+                  fontFamily: 'ui-monospace, SFMono-Regular, monospace',
+                  color: '#9ca3af',
+                  backgroundColor: '#f9fafb',
+                  padding: '0.375rem 0.75rem',
+                  borderRadius: '4px',
+                  display: 'inline-block',
+                  border: '1px solid #f3f4f6'
+                }}>
+                  Order #{orderNumber}
+                </div>
+              )}
+            </div>
 
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <button 
-            onClick={handleRetryPayment}
-            className={styles.primary}
-            style={{ textDecoration: 'none', border: 'none', padding: '0.75rem 1.5rem', cursor: 'pointer' }}
-          >
-            Start New Payment
-          </button>
-          
-          <Link href="/" legacyBehavior>
-            <a className={styles.secondary}>Back to Home</a>
-          </Link>
-        </div>
+            {/* Information Section */}
+            <div style={{marginBottom: '2.5rem'}}>
+              <div style={{
+                backgroundColor: '#fafafa',
+                border: '1px solid #e5e7eb',
+                borderRadius: '6px',
+                overflow: 'hidden'
+              }}>
+                <div style={{padding: '1.25rem 1.5rem'}}>
+                  <h3 style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    color: '#374151',
+                    margin: '0 0 1rem 0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>
+                    Session Information
+                  </h3>
+                  <div style={{space: '1rem'}}>
+                    <div style={{marginBottom: '1rem'}}>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: '#111827',
+                        margin: '0 0 0.25rem 0',
+                        fontWeight: '500'
+                      }}>
+                        Security first
+                      </p>
+                      <p style={{
+                        fontSize: '0.8rem',
+                        color: '#6b7280',
+                        margin: '0',
+                        lineHeight: '1.4'
+                      }}>
+                        Sessions automatically expire after 15 minutes to protect your financial information.
+                      </p>
+                    </div>
+                    <div style={{marginBottom: '1rem'}}>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: '#111827',
+                        margin: '0 0 0.25rem 0',
+                        fontWeight: '500'
+                      }}>
+                        No charges made
+                      </p>
+                      <p style={{
+                        fontSize: '0.8rem',
+                        color: '#6b7280',
+                        margin: '0',
+                        lineHeight: '1.4'
+                      }}>
+                        Your payment method was not charged. You can safely start a new session.
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: '#111827',
+                        margin: '0 0 0.25rem 0',
+                        fontWeight: '500'
+                      }}>
+                      Quick restart
+                      </p>
+                      <p style={{
+                        fontSize: '0.8rem',
+                        color: '#6b7280',
+                        margin: '0',
+                        lineHeight: '1.4'
+                      }}>
+                        Starting a new session is easy! Your course details are saved and ready.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.9rem', color: '#666' }}>
-            Payment sessions automatically expire after 15 minutes of inactivity for your security.
-          </p>
-          <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>
-            Need help? Contact us at{' '}
-            <a href="mailto:support@kelasgpt.com" style={{ color: '#0070f3' }}>
-              support@kelasgpt.com
-            </a>
-          </p>
-        </div>
-      </main>
+            {/* Action Buttons */}
+            <div style={{marginBottom: '2.5rem'}}>
+              <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+                <div style={{textAlign: 'center'}}>
+                  <button 
+                    onClick={handleRetryPayment}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      borderRadius: '6px',
+                      border: '1px solid #111827',
+                      backgroundColor: '#111827',
+                      color: 'white',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      minWidth: '160px',
+                      height: '44px',
+                      boxSizing: 'border-box'
+                    }}
+                  >
+                    Try Again
+                  </button>
+                  <p style={{
+                    fontSize: '0.75rem',
+                    color: '#9ca3af',
+                    margin: '0.5rem 0 0 0'
+                  }}>
+                    (Go to Checkout Page)
+                  </p>
+                </div>
+                
+                <div style={{textAlign: 'center'}}>
+                  <Link href="/" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    borderRadius: '6px',
+                    textDecoration: 'none',
+                    backgroundColor: 'white',
+                    color: '#6b7280',
+                    border: '1px solid #d1d5db',
+                    transition: 'all 0.15s ease',
+                    minWidth: '160px',
+                    height: '44px',
+                    boxSizing: 'border-box'
+                  }}>
+                    Return Home
+                  </Link>
+                  <p style={{
+                    fontSize: '0.75rem',
+                    color: '#9ca3af',
+                    margin: '0.5rem 0 0 0'
+                  }}>
+                    (Back to Main Page)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Support Section */}
+            <div style={{
+              paddingTop: '2rem',
+              borderTop: '1px solid #f3f4f6',
+              textAlign: 'center'
+            }}>
+              <h4 style={{
+                fontSize: '0.8rem',
+                fontWeight: '600',
+                color: '#9ca3af',
+                margin: '0 0 1rem 0',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em'
+              }}>
+                Support
+              </h4>
+              <div style={{display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
+                <div style={{textAlign: 'center'}}>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: '#374151',
+                    marginBottom: '0.25rem'
+                  }}>
+                    Email:
+                  </div>
+                  <a href="mailto:support@kelasgpt.com" style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    transition: 'color 0.15s ease'
+                  }}>
+                    support@kelasgpt.com
+                  </a>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: '#374151',
+                    marginBottom: '0.25rem'
+                  }}>
+                    WhatsApp:
+                  </div>
+                  <a href="https://wa.me/60123456789" style={{
+                    color: '#059669',
+                    textDecoration: 'underline',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    transition: 'color 0.15s ease'
+                  }}>
+                    +012-345 6789
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

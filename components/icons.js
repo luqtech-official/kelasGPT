@@ -27,7 +27,49 @@ export const SecureShieldIcon = memo(() => (
   </svg>
 ));
 
+export const CancelledIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="m15 9-6 6"></path>
+    <path d="m9 9 6 6"></path>
+  </svg>
+));
+
+export const TimeoutIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <polyline points="12,6 12,12 16,14"></polyline>
+  </svg>
+));
+
+export const SuccessIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="m9 12 2 2 4-4"></path>
+  </svg>
+));
+
+export const FailedIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="m15 9-6 6"></path>
+    <path d="m9 9 6 6"></path>
+  </svg>
+));
+
+export const ProcessingIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M12 6v6l4 2"></path>
+  </svg>
+));
+
 UserIcon.displayName = 'UserIcon';
 MailIcon.displayName = 'MailIcon';
 PhoneIcon.displayName = 'PhoneIcon';
 SecureShieldIcon.displayName = 'SecureShieldIcon';
+CancelledIcon.displayName = 'CancelledIcon';
+TimeoutIcon.displayName = 'TimeoutIcon';
+SuccessIcon.displayName = 'SuccessIcon';
+FailedIcon.displayName = 'FailedIcon';
+ProcessingIcon.displayName = 'ProcessingIcon';

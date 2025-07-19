@@ -1,6 +1,7 @@
 import { supabase } from '../../../lib/supabase';
 import { logTransaction } from '../../../lib/logger';
 import { requireAuth } from '../../../lib/adminAuth';
+import { updatePaymentStatusBulk, PAYMENT_STATES } from '../../../lib/paymentStatus';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,102 +15,131 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Authentication required' });
     }
 
-    await logTransaction('INFO', 'Starting session cleanup process', { admin: authResult.admin.username });
+    await logTransaction('INFO', 'Starting atomic session cleanup process', { 
+      admin: authResult.admin.username 
+    });
 
     // Define time thresholds
     const now = new Date();
     const thirtyMinutesAgo = new Date(now.getTime() - 30 * 60 * 1000); // 30 minutes ago
     const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 24 hours ago
 
-    // Step 1: Mark recent pending orders (15-30 minutes old) as 'abandoned'
-    const { data: recentAbandoned, error: recentError } = await supabase
+    // ✅ NEW: Step 1 - Find pending orders older than 30 minutes (to abandon)
+    const { data: pendingCustomers, error: pendingError } = await supabase
       .from('customers')
-      .update({ 
-        payment_status: 'abandoned',
-        updated_at: now.toISOString()
-      })
-      .eq('payment_status', 'pending')
-      .lt('created_at', thirtyMinutesAgo.toISOString())
-      .select('customer_id, email_address, created_at');
+      .select('customer_id, email_address, created_at')
+      .eq('payment_status', PAYMENT_STATES.PENDING)
+      .lt('created_at', thirtyMinutesAgo.toISOString());
 
-    if (recentError) {
-      await logTransaction('ERROR', 'Error marking recent orders as abandoned', recentError);
-      return res.status(500).json({ message: 'Error during session cleanup' });
+    if (pendingError) {
+      await logTransaction('ERROR', 'Error finding pending customers for abandonment', pendingError);
+      return res.status(500).json({ message: 'Error during session cleanup - pending query' });
     }
 
-    // Step 2: Mark old abandoned orders (24+ hours old) as 'expired'
-    const { data: expiredOrders, error: expiredError } = await supabase
+    // ✅ NEW: Step 2 - Find abandoned orders older than 24 hours (to expire)
+    const { data: abandonedCustomers, error: abandonedError } = await supabase
       .from('customers')
-      .update({ 
-        payment_status: 'expired',
-        updated_at: now.toISOString()
-      })
-      .eq('payment_status', 'abandoned')
-      .lt('created_at', oneDayAgo.toISOString())
-      .select('customer_id, email_address, created_at');
+      .select('customer_id, email_address, created_at')
+      .eq('payment_status', PAYMENT_STATES.ABANDONED)
+      .lt('created_at', oneDayAgo.toISOString());
 
-    if (expiredError) {
-      await logTransaction('ERROR', 'Error marking old orders as expired', expiredError);
-      return res.status(500).json({ message: 'Error during session cleanup' });
+    if (abandonedError) {
+      await logTransaction('ERROR', 'Error finding abandoned customers for expiration', abandonedError);
+      return res.status(500).json({ message: 'Error during session cleanup - abandoned query' });
     }
 
-    // Step 3: Update corresponding orders table
-    if (recentAbandoned && recentAbandoned.length > 0) {
-      const customerIds = recentAbandoned.map(c => c.customer_id);
-      const { error: orderUpdateError } = await supabase
-        .from('orders')
-        .update({ 
-          order_status: 'abandoned',
-          updated_at: now.toISOString()
-        })
-        .in('customer_id', customerIds);
+    let recentAbandonedCount = 0;
+    let expiredCount = 0;
 
-      if (orderUpdateError) {
-        await logTransaction('ERROR', 'Error updating orders to abandoned status', orderUpdateError);
+    // ✅ NEW: Process pending → abandoned atomically
+    if (pendingCustomers && pendingCustomers.length > 0) {
+      const customerIds = pendingCustomers.map(c => c.customer_id);
+      
+      await logTransaction('INFO', `Processing ${customerIds.length} pending customers for abandonment`, {
+        customerIds: customerIds.slice(0, 5), // Log first 5 for debugging
+        totalCount: customerIds.length
+      });
+
+      const abandonResult = await updatePaymentStatusBulk(customerIds, PAYMENT_STATES.ABANDONED);
+      
+      if (abandonResult.success) {
+        recentAbandonedCount = abandonResult.count;
+        await logTransaction('INFO', `Successfully marked ${recentAbandonedCount} orders as abandoned`);
+      } else {
+        await logTransaction('ERROR', 'Bulk abandonment update failed', abandonResult.error);
+        return res.status(500).json({ 
+          message: 'Error during session cleanup - abandonment failed',
+          error: abandonResult.error 
+        });
       }
     }
 
-    if (expiredOrders && expiredOrders.length > 0) {
-      const customerIds = expiredOrders.map(c => c.customer_id);
-      const { error: orderUpdateError } = await supabase
-        .from('orders')
-        .update({ 
-          order_status: 'expired',
-          updated_at: now.toISOString()
-        })
-        .in('customer_id', customerIds);
+    // ✅ NEW: Process abandoned → expired atomically
+    if (abandonedCustomers && abandonedCustomers.length > 0) {
+      const customerIds = abandonedCustomers.map(c => c.customer_id);
+      
+      await logTransaction('INFO', `Processing ${customerIds.length} abandoned customers for expiration`, {
+        customerIds: customerIds.slice(0, 5), // Log first 5 for debugging
+        totalCount: customerIds.length
+      });
 
-      if (orderUpdateError) {
-        await logTransaction('ERROR', 'Error updating orders to expired status', orderUpdateError);
+      const expireResult = await updatePaymentStatusBulk(customerIds, PAYMENT_STATES.EXPIRED);
+      
+      if (expireResult.success) {
+        expiredCount = expireResult.count;
+        await logTransaction('INFO', `Successfully marked ${expiredCount} orders as expired`);
+      } else {
+        await logTransaction('ERROR', 'Bulk expiration update failed', expireResult.error);
+        return res.status(500).json({ 
+          message: 'Error during session cleanup - expiration failed',
+          error: expireResult.error 
+        });
       }
     }
 
     // Log cleanup results
-    const recentCount = recentAbandoned ? recentAbandoned.length : 0;
-    const expiredCount = expiredOrders ? expiredOrders.length : 0;
+    const totalProcessed = recentAbandonedCount + expiredCount;
 
-    await logTransaction('INFO', 'Session cleanup completed', {
-      recentAbandonedCount: recentCount,
-      expiredCount: expiredCount,
-      totalProcessed: recentCount + expiredCount
+    await logTransaction('INFO', 'Atomic session cleanup completed successfully', {
+      admin: authResult.admin.username,
+      recentAbandonedCount,
+      expiredCount,
+      totalProcessed,
+      thresholds: {
+        abandonmentThreshold: thirtyMinutesAgo.toISOString(),
+        expirationThreshold: oneDayAgo.toISOString()
+      }
     });
 
     // Return cleanup summary
     res.status(200).json({
+      success: true,
       message: 'Session cleanup completed successfully',
       summary: {
-        recentAbandoned: recentCount,
+        recentAbandoned: recentAbandonedCount,
         expired: expiredCount,
-        totalProcessed: recentCount + expiredCount
+        totalProcessed,
+        method: 'atomic_bulk_updates'
+      },
+      details: {
+        pendingCustomersFound: pendingCustomers?.length || 0,
+        abandonedCustomersFound: abandonedCustomers?.length || 0,
+        abandonmentThreshold: thirtyMinutesAgo.toISOString(),
+        expirationThreshold: oneDayAgo.toISOString()
       },
       timestamp: now.toISOString()
     });
 
   } catch (error) {
-    await logTransaction('ERROR', 'Unexpected error during session cleanup', { 
+    await logTransaction('ERROR', 'Unexpected error during atomic session cleanup', { 
       message: error.message, 
       stack: error.stack 
     });
-    res.status(500).json({ message: 'Internal Server Error' });
+    
+    res.status(500).json({ 
+      success: false,
+      message: 'Internal Server Error during cleanup',
+      error: error.message 
+    });
   }
 }

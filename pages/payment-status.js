@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Head from "next/head";
 import Link from "next/link";
-import styles from "@/styles/PaymentStatus.module.css";
+import styles from "@/styles/Checkout.module.css";
+import { SuccessIcon, FailedIcon, ProcessingIcon } from "../components/icons";
 
 export default function PaymentStatusPage() {
   const router = useRouter();
@@ -43,10 +44,10 @@ export default function PaymentStatusPage() {
 
   const getStatusIcon = () => {
     switch (status) {
-      case 'success': return '✅';
-      case 'failed': return '❌';
-      case 'processing': return '⏳';
-      default: return '⏳';
+      case 'success': return <SuccessIcon />;
+      case 'failed': return <FailedIcon />;
+      case 'processing': return <ProcessingIcon />;
+      default: return <ProcessingIcon />;
     }
   };
 
@@ -60,101 +61,405 @@ export default function PaymentStatusPage() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.checkoutContainer}>
       <Head>
         <title>{getStatusTitle()} - KelasGPT</title>
         <meta name="description" content="Your payment status for KelasGPT course" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.card}>
+      <div className={styles.formWrapper} style={{maxWidth: '600px', textAlign: 'center'}}>
         {isLoading ? (
           <>
-            <div className={styles.progressBar}>
-              <div className={styles.progressFill}></div>
-            </div>
-            <div className={`${styles.statusIcon} ${styles.processing}`}>
-              <div className={styles.loadingSpinner}></div>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem'}}>
+              <div className={styles.spinner}></div>
             </div>
             <h1 className={styles.title}>Processing...</h1>
-            <p className={styles.description}>Please wait while we verify your payment</p>
+            <p className={styles.subtitle}>Please wait while we verify your payment</p>
           </>
         ) : (
           <>
-            <div className={`${styles.statusIcon} ${styles[status]}`}>
-              {getStatusIcon()}
-            </div>
-            
-            <h1 className={styles.title}>{getStatusTitle()}</h1>
-            <p className={styles.description}>{message}</p>
-            
-            {orderNumber && (
-              <div className={styles.orderNumber}>
-                Order: {orderNumber}
+            {/* Status Header */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '2.5rem',
+              paddingBottom: '2rem',
+              borderBottom: '1px solid #e5e7eb'
+            }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                margin: '0 auto 1rem',
+                borderRadius: '50%',
+                backgroundColor: status === 'success' ? '#dcfce7' : status === 'failed' ? '#fee2e2' : '#dbeafe',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                color: status === 'success' ? '#16a34a' : status === 'failed' ? '#dc2626' : '#2563eb'
+              }}>
+                {status === 'success' ? '✓' : status === 'failed' ? '✕' : '○'}
               </div>
-            )}
-
-            <div className={styles.infoGrid}>
-              {status === 'success' && (
-                <>
-                  <div className={`${styles.infoCard} ${styles.success}`}>
-                    <h3>🎉 What&apos;s Next?</h3>
-                    <p>Check your email for the course access link. It should arrive within 2-3 minutes.</p>
-                  </div>
-                  <div className={`${styles.infoCard} ${styles.info}`}>
-                    <h3>📧 Didn&apos;t receive the email?</h3>
-                    <p>Check your spam folder or contact our support team for immediate assistance.</p>
-                  </div>
-                </>
-              )}
-
-              {status === 'failed' && (
-                <>
-                  <div className={`${styles.infoCard} ${styles.warning}`}>
-                    <h3>💳 No charges made</h3>
-                    <p>Your payment method was not charged. You can safely try again.</p>
-                  </div>
-                  <div className={`${styles.infoCard} ${styles.info}`}>
-                    <h3>🔄 Common solutions</h3>
-                    <p>Try a different payment method or contact your bank if the issue persists.</p>
-                  </div>
-                </>
-              )}
-
-              {status === 'processing' && (
-                <div className={`${styles.infoCard} ${styles.info}`}>
-                  <h3>⏱️ Banking verification in progress</h3>
-                  <p>This usually takes 1-2 minutes. You&apos;ll receive confirmation via email once complete.</p>
+              
+              <h1 style={{
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                color: '#111827',
+                margin: '0 0 0.5rem 0',
+                letterSpacing: '-0.025em'
+              }}>
+                {getStatusTitle()}
+              </h1>
+              
+              <p style={{
+                fontSize: '0.875rem',
+                color: '#6b7280',
+                margin: '0 0 1rem 0',
+                lineHeight: '1.5'
+              }}>
+                {message}
+              </p>
+              
+              {orderNumber && (
+                <div style={{
+                  fontSize: '0.75rem',
+                  fontFamily: 'ui-monospace, SFMono-Regular, monospace',
+                  color: '#9ca3af',
+                  backgroundColor: '#f9fafb',
+                  padding: '0.375rem 0.75rem',
+                  borderRadius: '4px',
+                  display: 'inline-block',
+                  border: '1px solid #f3f4f6'
+                }}>
+                  Order {orderNumber}
                 </div>
               )}
             </div>
 
-            <div className={styles.buttonGroup}>
+            {/* Information Section */}
+            <div style={{marginBottom: '2.5rem'}}>
               {status === 'success' && (
-                <Link href="/videolisting" className={`${styles.button} ${styles.primaryButton}`}>
-                  Access Course
-                </Link>
+                <div style={{
+                  backgroundColor: '#fafafa',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{padding: '1.25rem 1.5rem'}}>
+                    <h3 style={{
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      color: '#374151',
+                      margin: '0 0 1rem 0',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>
+                      Next Steps
+                    </h3>
+                    <div style={{space: '1rem'}}>
+                      <div style={{marginBottom: '1rem'}}>
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#111827',
+                          margin: '0 0 0.25rem 0',
+                          fontWeight: '500'
+                        }}>
+                          Check your email for course access
+                        </p>
+                        <p style={{
+                          fontSize: '0.8rem',
+                          color: '#6b7280',
+                          margin: '0',
+                          lineHeight: '1.4'
+                        }}>
+                          Delivery typically takes 2-3 minutes
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#111827',
+                          margin: '0 0 0.25rem 0',
+                          fontWeight: '500'
+                        }}>
+                          Email not received?
+                        </p>
+                        <p style={{
+                          fontSize: '0.8rem',
+                          color: '#6b7280',
+                          margin: '0',
+                          lineHeight: '1.4'
+                        }}>
+                          Check spam folder or contact support
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
-              
+
               {status === 'failed' && (
-                <Link href="/checkout" className={`${styles.button} ${styles.primaryButton}`}>
-                  Try Again
-                </Link>
+                <div style={{
+                  backgroundColor: '#fafafa',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{padding: '1.25rem 1.5rem'}}>
+                    <h3 style={{
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      color: '#374151',
+                      margin: '0 0 1rem 0',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>
+                      Transaction Information
+                    </h3>
+                    <div style={{space: '1rem'}}>
+                      <div style={{marginBottom: '1rem'}}>
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#111827',
+                          margin: '0 0 0.25rem 0',
+                          fontWeight: '500'
+                        }}>
+                          No charges applied
+                        </p>
+                        <p style={{
+                          fontSize: '0.8rem',
+                          color: '#6b7280',
+                          margin: '0',
+                          lineHeight: '1.4'
+                        }}>
+                          Your payment method remains secure
+                        </p>
+                      </div>
+                      <div>
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#111827',
+                          margin: '0 0 0.25rem 0',
+                          fontWeight: '500'
+                        }}>
+                          Retry with different method
+                        </p>
+                        <p style={{
+                          fontSize: '0.8rem',
+                          color: '#6b7280',
+                          margin: '0',
+                          lineHeight: '1.4'
+                        }}>
+                          Contact your bank if issues persist
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
-              
-              <Link href="/" className={`${styles.button} ${styles.secondaryButton}`}>
-                Back to Home
-              </Link>
+
+              {status === 'processing' && (
+                <div style={{
+                  backgroundColor: '#fafafa',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '6px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{padding: '1.25rem 1.5rem'}}>
+                    <h3 style={{
+                      fontSize: '0.875rem',
+                      fontWeight: '600',
+                      color: '#374151',
+                      margin: '0 0 1rem 0',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>
+                      Verification in Progress
+                    </h3>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#6b7280',
+                      margin: '0',
+                      lineHeight: '1.5'
+                    }}>
+                      Processing with your financial institution. Typically takes 1-2 minutes. Email confirmation will follow.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
-            <div className={styles.supportInfo}>
-              <p>Need help? We&apos;re here for you!</p>
-              <p>
-                Email: <a href="mailto:support@kelasgpt.com">support@kelasgpt.com</a>
-              </p>
-              <p>
-                WhatsApp: <a href="https://wa.me/60123456789">+60 12-345 6789</a>
-              </p>
+            {/* Action Buttons */}
+            <div style={{marginBottom: '2.5rem'}}>
+              {status === 'success' && (
+                <div style={{textAlign: 'center', marginBottom: '1.5rem'}}>
+                  <p style={{
+                    fontSize: '0.875rem',
+                    color: '#6b7280',
+                    margin: '0 0 0.25rem 0',
+                    fontWeight: '500'
+                  }}>
+                    OR
+                  </p>
+                  <p style={{
+                    fontSize: '0.875rem',
+                    color: '#6b7280',
+                    margin: '0 0 0.5rem 0',
+                    lineHeight: '1.4'
+                  }}>
+                    If You Want to Jump into the course Right Away..
+                  </p>
+                  <p style={{
+                    fontSize: '0.875rem',
+                    color: '#6b7280',
+                    margin: '0'
+                  }}>
+                    Click <strong style={{color: '#374151'}}>Access Course</strong> Below
+                  </p>
+                </div>
+              )}
+              
+              <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+                {status === 'success' && (
+                  <Link href="/videolisting" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    borderRadius: '6px',
+                    textDecoration: 'none',
+                    backgroundColor: '#111827',
+                    color: 'white',
+                    border: '1px solid #111827',
+                    transition: 'all 0.15s ease',
+                    minWidth: '160px',
+                    height: '44px',
+                    boxSizing: 'border-box'
+                  }}>
+                    Access Course
+                  </Link>
+                )}
+                
+                {status === 'failed' && (
+                  <div style={{textAlign: 'center'}}>
+                    <Link href="/checkout" style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0.75rem 1.5rem',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      borderRadius: '6px',
+                      textDecoration: 'none',
+                      backgroundColor: '#111827',
+                      color: 'white',
+                      border: '1px solid #111827',
+                      transition: 'all 0.15s ease',
+                      minWidth: '160px',
+                      height: '44px',
+                      boxSizing: 'border-box'
+                    }}>
+                      Try Again
+                    </Link>
+                    <p style={{
+                      fontSize: '0.75rem',
+                      color: '#9ca3af',
+                      margin: '0.5rem 0 0 0'
+                    }}>
+                      (Go to Checkout Page)
+                    </p>
+                  </div>
+                )}
+                
+                <div style={{textAlign: 'center'}}>
+                  <Link href="/" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    borderRadius: '6px',
+                    textDecoration: 'none',
+                    backgroundColor: 'white',
+                    color: '#6b7280',
+                    border: '1px solid #d1d5db',
+                    transition: 'all 0.15s ease',
+                    minWidth: '160px',
+                    height: '44px',
+                    boxSizing: 'border-box'
+                  }}>
+                    Return Home
+                  </Link>
+                  <p style={{
+                    fontSize: '0.75rem',
+                    color: '#9ca3af',
+                    margin: '0.5rem 0 0 0'
+                  }}>
+                    (Back to Main Page)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Support Section */}
+            <div style={{
+              paddingTop: '2rem',
+              borderTop: '1px solid #f3f4f6',
+              textAlign: 'center'
+            }}>
+              <h4 style={{
+                fontSize: '0.8rem',
+                fontWeight: '600',
+                color: '#9ca3af',
+                margin: '0 0 1rem 0',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em'
+              }}>
+                Support
+              </h4>
+              <div style={{display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap'}}>
+                <div style={{textAlign: 'center'}}>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: '#374151',
+                    marginBottom: '0.25rem'
+                  }}>
+                    Email:
+                  </div>
+                  <a href="mailto:support@kelasgpt.com" style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    transition: 'color 0.15s ease'
+                  }}>
+                    support@kelasgpt.com
+                  </a>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                  <div style={{
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    color: '#374151',
+                    marginBottom: '0.25rem'
+                  }}>
+                    WhatsApp:
+                  </div>
+                  <a href="https://wa.me/60123456789" style={{
+                    color: '#059669',
+                    textDecoration: 'underline',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    transition: 'color 0.15s ease'
+                  }}>
+                    +012-345 6789
+                  </a>
+                </div>
+              </div>
             </div>
           </>
         )}

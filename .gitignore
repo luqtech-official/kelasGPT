@@ -43,6 +43,7 @@ next-env.d.ts
 
 # logs
 transaction.log
+*.log
 
 #Context Helper Folder
 InContext*/
@@ -56,3 +57,29 @@ backup/
 *migration*.md
 *setup*.md
 *SETUP*.md
+
+# Development and testing files
+*-BACKUP.js
+*BACKUP*.js
+*test*.js
+*Test*.js
+quick-test.*
+debug*
+VALIDATION*.md
+*validation*.js
+*validate*.js
+
+# Temporary files
+*.tmp
+*temp*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+.DS_Store

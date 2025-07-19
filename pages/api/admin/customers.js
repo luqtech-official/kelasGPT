@@ -1,288 +1,268 @@
-import { supabase, getEmailStatusForCustomers } from "../../../lib/supabase";
-import { requireAuth } from "../../../lib/adminAuth";
+import { requireAuth } from '../../../lib/adminAuth';
+import { getCustomersWithPaymentStatus, getCustomerWithPaymentStatus } from '../../../lib/paymentStatus';
+import { updatePaymentStatusValidated, getValidNextStates, PAYMENT_STATES } from '../../../lib/paymentStatus';
+import { supabase, getEmailStatusForCustomers } from '../../../lib/supabase';
+import { logTransaction } from '../../../lib/logger';
 
-async function handler(req, res) {
-  if (req.method === 'GET') {
-    return getCustomers(req, res);
-  } else if (req.method === 'POST') {
-    return updateCustomer(req, res);
-  } else {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+export default async function handler(req, res) {
+  // Require admin authentication
+  const authResult = await requireAuth(req, res);
+  if (!authResult.success) {
+    return res.status(401).json({ message: 'Authentication required' });
   }
-}
 
-async function getCustomers(req, res) {
-  try {
-    const {
-      page = 1,
-      limit = 10,
-      search = '',
-      status = 'all',
-      sortBy = 'created_at',
-      sortOrder = 'desc',
-      export: exportData = false
-    } = req.query;
-
-    // Validate and sanitize inputs
-    const pageNum = Math.max(1, parseInt(page));
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit))); // Max 100 per page
-    const offset = (pageNum - 1) * limitNum;
-
-    // Build query with email status
-    let query = supabase
-      .from('customers')
-      .select(`
-        customer_id,
-        full_name,
-        email_address,
-        phone_number,
-        payment_status,
-        created_at,
-        updated_at,
-        ip_address,
-        user_agent,
-        acquisition_source,
-        notes,
-        metadata,
-        orders (
-          order_number,
-          total_amount
-        )
-      `);
-
-    // Add search filters
-    if (search.trim()) {
-      const searchTerm = search.trim().toLowerCase();
-      query = query.or(`
-        full_name.ilike.%${searchTerm}%,
-        email_address.ilike.%${searchTerm}%,
-        phone_number.ilike.%${searchTerm}%
-      `);
-    }
-
-    // Add status filter
-    if (status !== 'all') {
-      query = query.eq('payment_status', status);
-    }
-
-    // Add sorting
-    const validSortFields = ['created_at', 'full_name', 'email_address', 'payment_status'];
-    const sortField = validSortFields.includes(sortBy) ? sortBy : 'created_at';
-    const sortDirection = sortOrder === 'asc' ? { ascending: true } : { ascending: false };
-    
-    query = query.order(sortField, sortDirection);
-
-    // For export, get all matching records
-    if (exportData === 'true') {
-      const { data: exportCustomers, error: exportError } = await query;
+  if (req.method === 'GET') {
+    try {
+      // ✅ NEW: Use view with computed payment status
+      const { data: customers, error } = await getCustomersWithPaymentStatus();
       
-      if (exportError) {
-        throw exportError;
+      if (error) {
+        console.error('Error fetching customers:', error);
+        return res.status(500).json({ message: 'Error fetching customers' });
       }
 
-      // Convert to CSV format
-      const csvData = convertToCSV(exportCustomers);
-      
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename=customers.csv');
-      return res.status(200).send(csvData);
-    }
+      // Get email statuses for all customers
+      const emailStatuses = await getEmailStatusForCustomers(customers || []);
 
-    // For regular pagination, get count first
-    const { count: totalCount, error: countError } = await supabase
-      .from('customers')
-      .select('*', { count: 'exact', head: true });
+      // Enhanced customer data with email status and valid transitions
+      const enhancedCustomers = (customers || []).map(customer => {
+        const emailStatus = emailStatuses[customer.email_address];
+        const validNextStates = getValidNextStates(customer.payment_status);
+        
+        return {
+          customer_id: customer.customer_id,
+          full_name: customer.full_name,
+          email_address: customer.email_address,
+          phone_number: customer.phone_number,
+          payment_status: customer.payment_status,
+          computed_payment_status: customer.computed_payment_status, // From database view
+          latest_order_number: customer.latest_order_number, // From database view
+          created_at: customer.created_at,
+          updated_at: customer.updated_at,
+          ip_address: customer.ip_address,
+          user_agent: customer.user_agent,
+          acquisition_source: customer.acquisition_source,
+          acquisition_campaign: customer.acquisition_campaign,
+          referrer_url: customer.referrer_url,
+          utm_source: customer.utm_source,
+          utm_medium: customer.utm_medium,
+          utm_campaign: customer.utm_campaign,
+          utm_term: customer.utm_term,
+          utm_content: customer.utm_content,
+          email_verified: customer.email_verified,
+          notes: customer.notes,
+          metadata: customer.metadata,
+          // Enhanced fields
+          email_status: emailStatus ? {
+            status: emailStatus.status,
+            sent_at: emailStatus.created_at,
+            delivered_at: emailStatus.delivered_at,
+            error_message: emailStatus.error_message
+          } : null,
+          valid_next_states: validNextStates, // What statuses admin can change to
+          consistency_check: customer.payment_status === customer.computed_payment_status, // Data consistency
+          // Computed fields for admin interface
+          total_amount: 0, // Will be computed from orders
+          final_amount: customer.payment_status === 'paid' ? 197.00 : 0, // Use actual product price
+          orders: [] // Will be populated below
+        };
+      });
 
-    if (countError) {
-      throw countError;
-    }
-
-    // Apply pagination
-    query = query.range(offset, offset + limitNum - 1);
-
-    const { data: customers, error: customersError } = await query;
-
-    if (customersError) {
-      throw customersError;
-    }
-
-    // Calculate additional metrics
-    const totalPages = Math.ceil(totalCount / limitNum);
-    
-    // Get filtered count for search results
-    let filteredCount = totalCount;
-    if (search.trim() || status !== 'all') {
-      let countQuery = supabase
-        .from('customers')
-        .select('*', { count: 'exact', head: true });
-
-      if (search.trim()) {
-        const searchTerm = search.trim().toLowerCase();
-        countQuery = countQuery.or(`
-          full_name.ilike.%${searchTerm}%,
-          email_address.ilike.%${searchTerm}%,
-          phone_number.ilike.%${searchTerm}%
-        `);
-      }
-
-      if (status !== 'all') {
-        countQuery = countQuery.eq('payment_status', status);
-      }
-
-      const { count: filtered, error: filteredError } = await countQuery;
-      
-      if (!filteredError) {
-        filteredCount = filtered;
-      }
-    }
-
-    // Get email status for all customers
-    const emailStatusMap = await getEmailStatusForCustomers(customers);
-
-    // Add calculated fields
-    const enhancedCustomers = customers.map(customer => ({
-      ...customer,
-      final_amount: customer.orders?.[0]?.total_amount || (customer.payment_status === 'paid' ? 99.00 : 0),
-      order_number: customer.orders?.[0]?.order_number || `ORD-${new Date(customer.created_at).getTime()}`,
-      masked_ip: customer.ip_address ? maskIPAddress(customer.ip_address) : null,
-      email_status: emailStatusMap[customer.email_address] || null
-    }));
-
-    res.status(200).json({
-      success: true,
-      data: {
-        customers: enhancedCustomers,
-        pagination: {
-          currentPage: pageNum,
-          totalPages: Math.ceil(filteredCount / limitNum),
-          totalCount,
-          filteredCount,
-          limit: limitNum,
-          hasNextPage: pageNum < Math.ceil(filteredCount / limitNum),
-          hasPreviousPage: pageNum > 1
+      // Get order information for each customer
+      for (const customer of enhancedCustomers) {
+        try {
+          const { data: orders, error: orderError } = await supabase
+            .from('orders')
+            .select('*')
+            .eq('customer_id', customer.customer_id)
+            .order('created_at', { ascending: false });
+            
+          if (!orderError && orders) {
+            customer.orders = orders;
+            customer.total_amount = orders.reduce((sum, order) => sum + (parseFloat(order.total_amount) || 0), 0);
+            
+            // Use the latest order's amount for final_amount if exists
+            if (orders.length > 0) {
+              customer.final_amount = customer.payment_status === 'paid' ? parseFloat(orders[0].total_amount) || 197.00 : 0;
+            }
+          }
+        } catch (orderError) {
+          console.error(`Error fetching orders for customer ${customer.customer_id}:`, orderError);
+          // Continue without order data
         }
       }
-    });
 
-  } catch (error) {
-    console.error('Get customers API error:', error);
-    res.status(500).json({ 
-      success: false,
-      message: 'Internal Server Error',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
+      await logTransaction('INFO', `Admin fetched ${enhancedCustomers.length} customers`, {
+        admin: authResult.admin.username,
+        customerCount: enhancedCustomers.length
+      });
+
+      res.status(200).json({
+        success: true,
+        data: enhancedCustomers,
+        meta: {
+          total: enhancedCustomers.length,
+          consistent_records: enhancedCustomers.filter(c => c.consistency_check).length,
+          inconsistent_records: enhancedCustomers.filter(c => !c.consistency_check).length
+        }
+      });
+
+    } catch (error) {
+      console.error('Customers API error:', error);
+      await logTransaction('ERROR', 'Admin customers fetch failed', {
+        admin: authResult.admin.username,
+        error: error.message
+      });
+      
+      res.status(500).json({ 
+        success: false, 
+        message: 'Internal server error' 
+      });
+    }
+  }
+
+  else if (req.method === 'POST') {
+    try {
+      const { customer_id, notes, payment_status } = req.body;
+
+      if (!customer_id) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Customer ID is required' 
+        });
+      }
+
+      // Get customer info first
+      const { data: customer, error: customerError } = await getCustomerWithPaymentStatus(customer_id);
+      
+      if (customerError || !customer) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Customer not found' 
+        });
+      }
+
+      let updateData = {
+        updated_at: new Date().toISOString()
+      };
+
+      // Handle notes update
+      if (notes !== undefined) {
+        updateData.notes = notes;
+      }
+
+      // ✅ NEW: Handle payment status update atomically
+      if (payment_status && payment_status !== customer.payment_status) {
+        await logTransaction('INFO', `Admin attempting to change payment status`, {
+          admin: authResult.admin.username,
+          customerId: customer_id,
+          customerEmail: customer.email_address,
+          fromStatus: customer.payment_status,
+          toStatus: payment_status,
+          latestOrderNumber: customer.latest_order_number
+        });
+
+        if (!customer.latest_order_number) {
+          return res.status(400).json({
+            success: false,
+            message: 'Cannot update payment status: No order found for this customer'
+          });
+        }
+
+        // Use atomic payment status update with admin override
+        const statusUpdateResult = await updatePaymentStatusValidated(
+          customer.latest_order_number,
+          payment_status,
+          null, // no transaction ID for admin updates
+          true  // admin override to bypass state validation
+        );
+
+        if (!statusUpdateResult.success) {
+          await logTransaction('ERROR', 'Admin payment status update failed', {
+            admin: authResult.admin.username,
+            customerId: customer_id,
+            orderNumber: customer.latest_order_number,
+            error: statusUpdateResult.error
+          });
+          
+          return res.status(400).json({
+            success: false,
+            message: `Payment status update failed: ${statusUpdateResult.error}`
+          });
+        }
+
+        await logTransaction('INFO', `Admin payment status update successful`, {
+          admin: authResult.admin.username,
+          customerId: customer_id,
+          orderNumber: customer.latest_order_number,
+          previousStatus: statusUpdateResult.data.previous_status,
+          newStatus: statusUpdateResult.data.new_status
+        });
+      }
+
+      // Update customer notes if provided
+      if (notes !== undefined) {
+        const { data: updatedCustomer, error: updateError } = await supabase
+          .from('customers')
+          .update({ notes: notes, updated_at: new Date().toISOString() })
+          .eq('customer_id', customer_id)
+          .select()
+          .single();
+
+        if (updateError) {
+          await logTransaction('ERROR', 'Customer notes update failed', {
+            admin: authResult.admin.username,
+            customerId: customer_id,
+            error: updateError
+          });
+          throw updateError;
+        }
+      }
+
+      // Get updated customer data
+      const { data: updatedCustomer, error: fetchError } = await getCustomerWithPaymentStatus(customer_id);
+      
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      await logTransaction('INFO', `Admin updated customer successfully`, {
+        admin: authResult.admin.username,
+        customerId: customer_id,
+        updatedFields: Object.keys(updateData).concat(payment_status ? ['payment_status'] : [])
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Customer updated successfully',
+        data: updatedCustomer
+      });
+
+    } catch (error) {
+      console.error('Update customer API error:', error);
+      await logTransaction('ERROR', 'Admin customer update failed', {
+        admin: authResult.admin.username,
+        error: error.message
+      });
+      
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to update customer' 
+      });
+    }
+  }
+
+  else {
+    res.status(405).json({ message: 'Method Not Allowed' });
   }
 }
 
-async function updateCustomer(req, res) {
-  try {
-    const { customer_id, notes, payment_status } = req.body;
-
-    if (!customer_id) {
-      return res.status(400).json({
-        success: false,
-        message: 'Customer ID is required'
-      });
-    }
-
-    // Validate payment status if provided
-    const validStatuses = ['pending', 'paid', 'failed', 'refunded'];
-    if (payment_status && !validStatuses.includes(payment_status)) {
-      return res.status(400).json({
-        success: false,
-        message: `Invalid payment status. Valid options: ${validStatuses.join(', ')}`
-      });
-    }
-
-    // Build update object
-    const updateData = {
-      updated_at: new Date().toISOString()
-    };
-
-    if (notes !== undefined) {
-      updateData.notes = notes;
-    }
-
-    if (payment_status) {
-      updateData.payment_status = payment_status;
-    }
-
-    const { data: updatedCustomer, error: updateError } = await supabase
-      .from('customers')
-      .update(updateData)
-      .eq('customer_id', customer_id)
-      .select()
-      .single();
-
-    if (updateError) {
-      throw updateError;
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Customer updated successfully',
-      data: updatedCustomer
-    });
-
-  } catch (error) {
-    console.error('Update customer API error:', error);
-    res.status(500).json({ 
-      success: false,
-      message: 'Internal Server Error',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-}
-
-// Helper function to mask IP addresses for privacy
-function maskIPAddress(ip) {
-  if (!ip) return null;
+// Helper function to get available status transitions
+export function getAvailableStatuses(currentStatus) {
+  const validNext = getValidNextStates(currentStatus);
   
-  if (ip.includes(':')) {
-    // IPv6 - mask last 4 groups
-    const parts = ip.split(':');
-    return parts.slice(0, 4).join(':') + ':XXXX:XXXX:XXXX:XXXX';
-  } else {
-    // IPv4 - mask last octet
-    const parts = ip.split('.');
-    return parts.slice(0, 3).join('.') + '.XXX';
-  }
+  // Add current status to allow "no change"
+  return [currentStatus, ...validNext].filter((status, index, arr) => 
+    arr.indexOf(status) === index // Remove duplicates
+  );
 }
-
-// Helper function to convert customers to CSV
-function convertToCSV(customers) {
-  if (!customers || customers.length === 0) {
-    return 'No data available';
-  }
-
-  const headers = [
-    'Customer ID',
-    'Full Name', 
-    'Email',
-    'Phone',
-    'Payment Status',
-    'Created At',
-    'IP Address',
-    'Acquisition Source',
-    'Notes'
-  ];
-
-  const csvRows = [
-    headers.join(','),
-    ...customers.map(customer => [
-      customer.customer_id,
-      `"${customer.full_name}"`,
-      customer.email_address,
-      customer.phone_number,
-      customer.payment_status,
-      customer.created_at,
-      maskIPAddress(customer.ip_address) || '',
-      customer.acquisition_source || '',
-      `"${(customer.notes || '').replace(/"/g, '""')}"`
-    ].join(','))
-  ];
-
-  return csvRows.join('\n');
-}
-
-export default requireAuth(handler);

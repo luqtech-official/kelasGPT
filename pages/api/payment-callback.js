@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import mailjet from '../../lib/mailjet';
 import { logTransaction } from "../../lib/logger";
 import { getProductSettings } from "../../lib/settings";
+import { updatePaymentStatusValidated, PAYMENT_STATES } from "../../lib/paymentStatus";
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -87,7 +88,31 @@ export default async function handler(req, res) {
     if (isPaymentSuccessful) {
       await logTransaction('INFO', `Payment for order ${order_number} was successful.`);
       
-      // --- Update database records and send email ---
+      // ✅ NEW: Use atomic payment status update
+      const statusUpdateResult = await updatePaymentStatusValidated(
+        order_number, 
+        PAYMENT_STATES.PAID, 
+        merchant_reference_number
+      );
+
+      if (!statusUpdateResult.success) {
+        // Handle duplicate callback gracefully
+        if (statusUpdateResult.validationError && statusUpdateResult.error.includes('Invalid transition')) {
+          await logTransaction('WARN', `Duplicate payment callback for already processed order: ${order_number}`, statusUpdateResult);
+          return res.status(200).json({ message: 'Order already processed successfully' });
+        }
+        
+        await logTransaction('ERROR', `Critical database update error for order ${order_number}`, statusUpdateResult);
+        return res.status(500).json({ message: 'Database update failed' });
+      }
+
+      await logTransaction('INFO', `Database updated atomically for successful order ${order_number}`, {
+        previousStatus: statusUpdateResult.data.previous_status,
+        newStatus: statusUpdateResult.data.new_status,
+        customerId: statusUpdateResult.data.customer_id
+      });
+
+      // Get order details for email
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .select(`order_id, customer_id, customers (full_name, email_address)`)
@@ -95,34 +120,10 @@ export default async function handler(req, res) {
         .single();
 
       if (orderError || !order) {
-        await logTransaction('ERROR', `Order not found for order_number: ${order_number}`, orderError);
-        return res.status(200).json({ message: 'Callback processed, but order not found.' });
+        await logTransaction('ERROR', `Order not found for email sending: ${order_number}`, orderError);
+        // Payment processed successfully, but can't send email - this is OK
+        return res.status(200).json({ message: 'Payment processed, email sending failed' });
       }
-
-      // Run database updates in parallel
-      const [orderUpdateResult, customerUpdateResult] = await Promise.all([
-        supabase
-          .from('orders')
-          .update({ order_status: 'paid', gateway_transaction_id: merchant_reference_number, updated_at: new Date().toISOString() })
-          .eq('order_number', order_number),
-        supabase
-          .from('customers')
-          .update({ payment_status: 'paid', updated_at: new Date().toISOString() })
-          .eq('customer_id', order.customer_id)
-      ]);
-
-      // Check for database update errors and handle them properly
-      if (orderUpdateResult.error || customerUpdateResult.error) {
-        await logTransaction('ERROR', `Critical database update error for order ${order_number}`, { 
-          orderError: orderUpdateResult.error, 
-          customerError: customerUpdateResult.error 
-        });
-        
-        // Return error response - don't send email if database updates failed
-        return res.status(500).json({ message: 'Database update failed' });
-      }
-
-      await logTransaction('INFO', `Database updated for successful order ${order_number}`);
 
       // --- Send transactional email with Mailjet ---
       let emailLogId = null;
@@ -181,7 +182,11 @@ export default async function handler(req, res) {
           await updateEmailStatus(emailLogId, 'failed', emailError.message);
         }
         
-        await logTransaction('ERROR', `Mailjet API Error for order ${order_number}`, { statusCode: emailError.statusCode, response: emailError.response.data });
+        await logTransaction('ERROR', `Mailjet API Error for order ${order_number}`, { 
+          statusCode: emailError.statusCode, 
+          response: emailError.response?.data 
+        });
+        // Continue - payment was successful even if email failed
       }
 
     } else {
@@ -193,54 +198,40 @@ export default async function handler(req, res) {
                             callbackData.fpx_status_message?.includes('cancel') ||
                             callbackData.fpx_debit_auth_code === '1C';
       
-      const orderStatus = isCancellation ? 'cancelled' : 'failed';
+      const newStatus = isCancellation ? PAYMENT_STATES.CANCELLED : PAYMENT_STATES.FAILED;
       
       await logTransaction('INFO', `Cancellation detection for order ${order_number}`, {
         isCancellation,
-        orderStatus,
+        newStatus,
         fpx_status_message: callbackData.fpx_status_message,
         fpx_debit_auth_code: callbackData.fpx_debit_auth_code
       });
       
-      const { error: updateError } = await supabase
-        .from('orders')
-        .update({ order_status: orderStatus })
-        .eq('order_number', order_number);
+      // ✅ NEW: Use atomic payment status update for failures too
+      const statusUpdateResult = await updatePaymentStatusValidated(
+        order_number, 
+        newStatus
+      );
 
-      if (updateError) {
-        await logTransaction('ERROR', `Error updating failed order status for ${order_number}`, updateError);
-      } else {
-        await logTransaction('INFO', `Successfully updated order status to ${orderStatus} for order ${order_number}`);
+      if (!statusUpdateResult.success) {
+        await logTransaction('ERROR', `Error updating failed payment status for order ${order_number}`, statusUpdateResult);
+        return res.status(500).json({ message: 'Database update failed for failed payment' });
       }
-      
-      // Also update customer status
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .select('customer_id')
-        .eq('order_number', order_number)
-        .single();
-        
-      if (order && !orderError) {
-        const { error: customerUpdateError } = await supabase
-          .from('customers')
-          .update({ payment_status: orderStatus })
-          .eq('customer_id', order.customer_id);
-          
-        if (customerUpdateError) {
-          await logTransaction('ERROR', `Error updating customer status for order ${order_number}`, customerUpdateError);
-        } else {
-          await logTransaction('INFO', `Successfully updated customer status to ${orderStatus} for order ${order_number}`);
-        }
-      } else {
-        await logTransaction('ERROR', `Could not find order for customer update: ${order_number}`, orderError);
-      }
+
+      await logTransaction('INFO', `Payment status updated atomically for failed order ${order_number}`, {
+        previousStatus: statusUpdateResult.data.previous_status,
+        newStatus: statusUpdateResult.data.new_status
+      });
     }
 
     await logTransaction('INFO', `Callback processing completed successfully for order ${order_number}`);
     res.status(200).json({ message: 'Callback received and processed successfully' });
 
   } catch (error) {
-    await logTransaction('ERROR', `Unhandled error in callback for order ${order_number}`, { message: error.message, stack: error.stack });
+    await logTransaction('ERROR', `Unhandled error in callback for order ${order_number}`, { 
+      message: error.message, 
+      stack: error.stack 
+    });
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }

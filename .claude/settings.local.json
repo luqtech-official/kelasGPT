@@ -13,7 +13,8 @@
       "WebFetch(domain:dev.mailjet.com)",
       "WebFetch(domain:documentation.mailjet.com)",
       "Bash(node:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
