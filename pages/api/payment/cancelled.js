@@ -1,4 +1,5 @@
 import { logTransaction } from "../../../lib/logger";
+import { updatePaymentStatusValidated, PAYMENT_STATES } from "../../../lib/paymentStatus";
 
 export default async function handler(req, res) {
   // Log all incoming requests to understand SecurePay's cancel redirect behavior
@@ -20,6 +21,24 @@ export default async function handler(req, res) {
       amount,
       fullQuery: req.query
     });
+
+    // Update payment status in database for cancelled payments
+    if (order_number) {
+      await logTransaction('INFO', `Updating payment status to cancelled for order: ${order_number}`);
+      
+      const statusUpdateResult = await updatePaymentStatusValidated(
+        order_number, 
+        PAYMENT_STATES.CANCELLED,
+        merchant_reference_number
+      );
+      
+      if (!statusUpdateResult.success) {
+        await logTransaction('ERROR', `Failed to update cancelled payment status: ${order_number}`, statusUpdateResult);
+        // Continue with redirect even if database update fails
+      } else {
+        await logTransaction('INFO', `Successfully updated payment status to cancelled: ${order_number}`);
+      }
+    }
 
     // Redirect to the actual payment cancelled page with query parameters
     const redirectUrl = `/payment/cancelled?order_number=${encodeURIComponent(order_number || '')}&payment_status=${encodeURIComponent(payment_status || '')}&merchant_reference_number=${encodeURIComponent(merchant_reference_number || '')}&amount=${encodeURIComponent(amount || '')}`;

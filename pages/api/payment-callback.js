@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     if (isPaymentSuccessful) {
       await logTransaction('INFO', `Payment for order ${order_number} was successful.`);
       
-      // ✅ NEW: Use atomic payment status update
+      // ✅ FIXED: Use validated payment status update (SQL ambiguity resolved)
       const statusUpdateResult = await updatePaymentStatusValidated(
         order_number, 
         PAYMENT_STATES.PAID, 
@@ -207,7 +207,7 @@ export default async function handler(req, res) {
         fpx_debit_auth_code: callbackData.fpx_debit_auth_code
       });
       
-      // ✅ NEW: Use atomic payment status update for failures too
+      // ✅ FIXED: Use validated payment status update (SQL ambiguity resolved)
       const statusUpdateResult = await updatePaymentStatusValidated(
         order_number, 
         newStatus
