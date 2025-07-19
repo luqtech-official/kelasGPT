@@ -65,14 +65,14 @@ export default async function handler(req, res) {
     const { data: customerResult, error: customerError } = await addCustomer(customerDataToInsert);
 
     if (customerError) {
-      // Handle race condition where email was submitted between validation and insert
-      if (customerError.code === '23505') { // Unique constraint violation
-        await logTransaction('WARN', `Race condition detected for email: ${email}`, customerError);
-        return res.status(409).json({ 
-          message: "Email already submitted. Please try again in a moment.",
-          code: "RACE_CONDITION"
-        });
-      }
+      // Handle race condition where email was submitted between validation and insert - TEMPORARILY DISABLED FOR TESTING
+      // if (customerError.code === '23505') { // Unique constraint violation
+      //   await logTransaction('WARN', `Race condition detected for email: ${email}`, customerError);
+      //   return res.status(409).json({ 
+      //     message: "Email already submitted. Please try again in a moment.",
+      //     code: "RACE_CONDITION"
+      //   });
+      // }
       
       await logTransaction('ERROR', 'Error saving customer to Supabase', customerError);
       return res.status(500).json({ message: "Internal Server Error" });
