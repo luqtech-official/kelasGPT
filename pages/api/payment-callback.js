@@ -35,20 +35,31 @@ export default async function handler(req, res) {
 
   try {
     // --- IMPORTANT: Signature Validation ---
-    const authToken = process.env.SECUREPAY_AUTH_TOKEN;
-    const signatureString = `${authToken}${order_number}${payment_status}${merchant_reference_number}${amount}`;
-    const expectedSignature = crypto.createHash('sha256').update(signatureString).digest('hex');
+    const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
+    
+    // Create signature data from callback parameters in alphabetical order (matching request format)
+    const callbackData = { ...req.body };
+    const receivedSignature = callbackData.signature;
+    delete callbackData.signature; // Remove signature from data before validation
+    
+    // Sort parameters alphabetically and join with pipe delimiter
+    const sortedKeys = Object.keys(callbackData).sort();
+    const signatureString = sortedKeys.map(key => callbackData[key]).join('|');
+    
+    // Use HMAC-SHA256 with checksum token (matching request algorithm)
+    const expectedSignature = crypto.createHmac('sha256', checksumToken).update(signatureString).digest('hex');
 
-    if (expectedSignature !== signature) {
-      await logTransaction('ERROR', `Invalid signature in callback for order ${order_number}`, { received: signature, expected: expectedSignature });
+    // Use timing-safe comparison to prevent timing attacks
+    if (!crypto.timingSafeEqual(Buffer.from(receivedSignature, 'hex'), Buffer.from(expectedSignature, 'hex'))) {
+      await logTransaction('ERROR', `Invalid signature in callback for order ${order_number}`, { received: receivedSignature, expected: expectedSignature });
       return res.status(400).json({ message: 'Invalid signature.' });
     }
 
     await logTransaction('INFO', `Signature validated for order ${order_number}`);
 
     // --- Signature is valid, proceed with business logic ---
-    // Handle different payment status formats (string 'true', boolean true, or 'success')
-    const isPaymentSuccessful = payment_status === 'true' || payment_status === true || payment_status === 'success';
+    // Handle SecurePay's actual payment status format (capital T "True")
+    const isPaymentSuccessful = payment_status === 'True' || payment_status === true || payment_status === 'success';
     
     if (isPaymentSuccessful) {
       await logTransaction('INFO', `Payment for order ${order_number} was successful.`);
