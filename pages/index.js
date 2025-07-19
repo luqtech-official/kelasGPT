@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
 
-// --- SVG Icon Components ---
+// --- SVG Icon Components ----
 // Using simple functional components for SVG icons for reusability and cleanliness.
 
 const CheckCircleIcon = (props) => (
