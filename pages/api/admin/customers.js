@@ -236,10 +236,7 @@ export default async function handler(req, res) {
 
     } catch (error) {
       console.error('Update customer API error:', error);
-      await logTransaction('ERROR', 'Admin customer update failed', {
-        admin: authResult.admin.username,
-        error: error.message
-      });
+      logger.error({ admin: authResult.admin.username, error: error.message }, 'Admin customer update failed');
       
       res.status(500).json({ 
         success: false, 

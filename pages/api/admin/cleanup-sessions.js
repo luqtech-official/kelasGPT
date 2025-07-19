@@ -100,16 +100,7 @@ export default async function handler(req, res) {
     // Log cleanup results
     const totalProcessed = recentAbandonedCount + expiredCount;
 
-    await logTransaction('INFO', 'Atomic session cleanup completed successfully', {
-      admin: authResult.admin.username,
-      recentAbandonedCount,
-      expiredCount,
-      totalProcessed,
-      thresholds: {
-        abandonmentThreshold: thirtyMinutesAgo.toISOString(),
-        expirationThreshold: oneDayAgo.toISOString()
-      }
-    });
+    logger.info({ admin: authResult.admin.username, recentAbandonedCount, expiredCount, totalProcessed, thresholds: { abandonmentThreshold: thirtyMinutesAgo.toISOString(), expirationThreshold: oneDayAgo.toISOString() } }, 'Atomic session cleanup completed successfully');
 
     // Return cleanup summary
     res.status(200).json({
