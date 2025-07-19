@@ -1,0 +1,40 @@
+import { logTransaction } from "../../../lib/logger";
+
+export default async function handler(req, res) {
+  // Log all incoming requests to understand SecurePay's timeout redirect behavior
+  await logTransaction('INFO', `Payment timeout endpoint accessed`, { 
+    method: req.method,
+    body: req.body,
+    query: req.query,
+    headers: req.headers
+  });
+
+  if (req.method === 'POST') {
+    // Handle POST redirect from SecurePay for timeout payments
+    const { order_number, payment_status, merchant_reference_number, amount } = req.query;
+    
+    await logTransaction('INFO', `SecurePay timeout POST redirect received`, { 
+      order_number, 
+      payment_status, 
+      merchant_reference_number, 
+      amount,
+      fullQuery: req.query
+    });
+
+    // Redirect to the actual payment timeout page with query parameters
+    const redirectUrl = `/payment/timeout?order_number=${encodeURIComponent(order_number || '')}&payment_status=${encodeURIComponent(payment_status || '')}&merchant_reference_number=${encodeURIComponent(merchant_reference_number || '')}&amount=${encodeURIComponent(amount || '')}`;
+    
+    return res.redirect(302, redirectUrl);
+  }
+
+  if (req.method === 'GET') {
+    // Handle GET requests by redirecting to the payment timeout page
+    const queryString = new URLSearchParams(req.query).toString();
+    const redirectUrl = `/payment/timeout${queryString ? `?${queryString}` : ''}`;
+    
+    return res.redirect(302, redirectUrl);
+  }
+
+  // Method not allowed
+  return res.status(405).json({ message: 'Method Not Allowed' });
+}
