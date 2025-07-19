@@ -188,13 +188,34 @@ export default async function handler(req, res) {
       // --- Handle failed payment ---
       await logTransaction('WARN', `Payment for order ${order_number} failed or was cancelled.`);
       
+      // Check if this is a user cancellation vs other failure
+      const isCancellation = callbackData.fpx_status_message?.includes('Cancel') || 
+                            callbackData.fpx_status_message?.includes('cancel') ||
+                            callbackData.fpx_debit_auth_code === '1C';
+      
+      const orderStatus = isCancellation ? 'cancelled' : 'failed';
+      
       const { error: updateError } = await supabase
         .from('orders')
-        .update({ order_status: 'failed' })
+        .update({ order_status: orderStatus })
         .eq('order_number', order_number);
 
       if (updateError) {
         await logTransaction('ERROR', `Error updating failed order status for ${order_number}`, updateError);
+      }
+      
+      // Also update customer status
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .select('customer_id')
+        .eq('order_number', order_number)
+        .single();
+        
+      if (order && !orderError) {
+        await supabase
+          .from('customers')
+          .update({ payment_status: orderStatus })
+          .eq('customer_id', order.customer_id);
       }
     }
 
