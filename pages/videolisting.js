@@ -36,18 +36,18 @@ export default function VideoListing() {
   }, [isModalOpen]);
   const courseModules = [
     {
-      title: "Pengenalan Asas GPT-4",
-      description: "Memahami asas-asas GPT-4 dan cara ia berfungsi dalam kehidupan harian",
+      title: "Pengenalan Asas AI dan LLM",
+      description: "Memahami asas-asas AI dan LLM dan cara ia berfungsi dalam kehidupan harian",
       videos: [
         {
-          title: "Apa itu GPT-4 dan Mengapa Ia Penting",
+          title: "Apa itu AI dan LLM dan Mengapa Ia Penting",
           description: "Pelajari tentang teknologi AI terkini dan bagaimana ia boleh mengubah cara anda bekerja",
           duration: "12 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Persediaan Pertama: Menyediakan Persekitaran GPT",
-          description: "Panduan langkah demi langkah untuk memulakan penggunaan GPT-4 dengan betul",
+          description: "Panduan langkah demi langkah untuk memulakan penggunaan AI dan LLM dengan betul",
           duration: "15 minit",
           url: "https://www.youtube.com/embed/8rABwKRsec4?si=PQkr3QUcMmovXIjQ"
         },
@@ -85,16 +85,16 @@ export default function VideoListing() {
     },
     {
       title: "Aplikasi Praktis dalam Perniagaan",
-      description: "Melaksanakan GPT-4 dalam operasi harian perniagaan untuk meningkatkan produktiviti",
+      description: "Melaksanakan AI dan LLM dalam operasi harian perniagaan untuk meningkatkan produktiviti",
       videos: [
         {
           title: "Automasi Penulisan Email dan Komunikasi",
-          description: "Cara menggunakan GPT-4 untuk menulis email profesional dan komunikasi yang berkesan",
+          description: "Cara menggunakan AI dan LLM untuk menulis email profesional dan komunikasi yang berkesan",
           duration: "16 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
-          title: "Analisis Data dan Laporan dengan GPT-4",
+          title: "Analisis Data dan Laporan dengan AI dan LLM",
           description: "Menggunakan AI untuk menganalisis data dan menghasilkan laporan yang bermakna",
           duration: "28 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
@@ -109,17 +109,17 @@ export default function VideoListing() {
     },
     {
       title: "Workflow dan Integrasi",
-      description: "Mengintegrasikan GPT-4 ke dalam alir kerja sedia ada dengan berkesan",
+      description: "Mengintegrasikan AI dan LLM ke dalam alir kerja sedia ada dengan berkesan",
       videos: [
         {
-          title: "Menyepadukan GPT-4 dengan Tool Sedia Ada",
-          description: "Panduan praktikal untuk menggabungkan GPT-4 dengan perisian dan platform yang anda gunakan",
+          title: "Menyepadukan AI dan LLM dengan Tool Sedia Ada",
+          description: "Panduan praktikal untuk menggabungkan AI dan LLM dengan perisian dan platform yang anda gunakan",
           duration: "19 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "Mencipta Workflow Automatik",
-          description: "Membina sistem automatik yang menggunakan GPT-4 untuk tugas-tugas berulang",
+          description: "Membina sistem automatik yang menggunakan AI dan LLM untuk tugas-tugas berulang",
           duration: "26 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
@@ -137,13 +137,13 @@ export default function VideoListing() {
       videos: [
         {
           title: "Multi-modal AI dan Penggunaan Gambar",
-          description: "Menggunakan GPT-4 untuk menganalisis dan menghasilkan kandungan berdasarkan gambar",
+          description: "Menggunakan AI dan LLM untuk menganalisis dan menghasilkan kandungan berdasarkan gambar",
           duration: "23 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
         {
           title: "API Integration dan Pengaturcaraan Asas",
-          description: "Cara menggunakan API GPT-4 untuk aplikasi yang lebih kompleks dan tersuai",
+          description: "Cara menggunakan API AI dan LLM untuk aplikasi yang lebih kompleks dan tersuai",
           duration: "30 minit",
           url: "https://www.youtube.com/embed/1jn_RpbPbEc?si=YFJtwcqrzIVJdzFQ"
         },
@@ -178,7 +178,7 @@ export default function VideoListing() {
             <h2>Selamat Datang ke Kursus KelasGPT</h2>
             <p>
               Terima kasih kerana menyertai KelasGPT. Di bawah adalah kandungan lengkap kursus yang telah anda beli. 
-              Setiap video direka untuk memberikan anda pemahaman mendalam tentang penggunaan GPT-4 dalam kehidupan 
+              Setiap video direka untuk memberikan anda pemahaman mendalam tentang penggunaan AI dan LLM dalam kehidupan 
               dan perniagaan harian. Klik pada mana-mana video untuk menontonnya.
             </p>
           </div>
