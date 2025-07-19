@@ -9,7 +9,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const callbackData = req.body;
+  // SecurePay sends data in query parameters, not body
+  const callbackData = req.query;
   
   // Log the raw callback data to understand SecurePay's actual format
   await logTransaction('INFO', `Raw callback data received`, { 
@@ -25,16 +26,23 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'Invalid callback data' });
   }
 
-  const { order_number, payment_status, merchant_reference_number, amount, signature } = callbackData;
+  // Extract parameters using SecurePay's actual parameter names
+  const { 
+    order_number, 
+    payment_status, 
+    merchant_reference_number, 
+    amount,
+    checksum
+  } = callbackData;
 
-  // Validate required fields
-  if (!order_number || !payment_status || !merchant_reference_number || !amount || !signature) {
+  // Validate required fields (using checksum instead of signature)
+  if (!order_number || !payment_status || !merchant_reference_number || !amount || !checksum) {
     await logTransaction('ERROR', 'Missing required callback fields', { 
       order_number: !!order_number, 
       payment_status: !!payment_status, 
       merchant_reference_number: !!merchant_reference_number, 
       amount: !!amount, 
-      signature: !!signature,
+      checksum: !!checksum,
       rawData: callbackData,
       allKeys: Object.keys(callbackData)
     });
@@ -48,28 +56,33 @@ export default async function handler(req, res) {
     const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
     
     // Create signature data from callback parameters in alphabetical order (matching request format)
-    const callbackData = { ...req.body };
-    const receivedSignature = callbackData.signature;
-    delete callbackData.signature; // Remove signature from data before validation
+    const callbackDataForValidation = { ...req.query };
+    const receivedSignature = callbackDataForValidation.checksum;
+    delete callbackDataForValidation.checksum; // Remove checksum from data before validation
     
     // Sort parameters alphabetically and join with pipe delimiter
-    const sortedKeys = Object.keys(callbackData).sort();
-    const signatureString = sortedKeys.map(key => callbackData[key]).join('|');
+    const sortedKeys = Object.keys(callbackDataForValidation).sort();
+    const signatureString = sortedKeys.map(key => callbackDataForValidation[key]).join('|');
     
     // Use HMAC-SHA256 with checksum token (matching request algorithm)
     const expectedSignature = crypto.createHmac('sha256', checksumToken).update(signatureString).digest('hex');
 
     // Use timing-safe comparison to prevent timing attacks
     if (!crypto.timingSafeEqual(Buffer.from(receivedSignature, 'hex'), Buffer.from(expectedSignature, 'hex'))) {
-      await logTransaction('ERROR', `Invalid signature in callback for order ${order_number}`, { received: receivedSignature, expected: expectedSignature });
+      await logTransaction('ERROR', `Invalid signature in callback for order ${order_number}`, { 
+        received: receivedSignature, 
+        expected: expectedSignature,
+        signatureString,
+        sortedKeys
+      });
       return res.status(400).json({ message: 'Invalid signature.' });
     }
 
     await logTransaction('INFO', `Signature validated for order ${order_number}`);
 
     // --- Signature is valid, proceed with business logic ---
-    // Handle SecurePay's actual payment status format (capital T "True")
-    const isPaymentSuccessful = payment_status === 'True' || payment_status === true || payment_status === 'success';
+    // Handle SecurePay's actual payment status format (lowercase "true")
+    const isPaymentSuccessful = payment_status === 'true' || payment_status === 'True' || payment_status === true || payment_status === 'success';
     
     if (isPaymentSuccessful) {
       await logTransaction('INFO', `Payment for order ${order_number} was successful.`);
