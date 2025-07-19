@@ -83,3 +83,8 @@ VALIDATION*.md
 # OS files
 Thumbs.db
 .DS_Store
+
+# Email templates (contain design/business content)
+mailjet-*.html
+*-email-template.html
+email-template*.html
