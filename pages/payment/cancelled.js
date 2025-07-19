@@ -156,7 +156,7 @@ export default function PaymentCancelledPage() {
                         margin: '0',
                         lineHeight: '1.4'
                       }}>
-                        The course will be here whenever you're ready to continue your learning journey.
+                        The course will be here whenever you&apos;re ready to continue your learning journey.
                       </p>
                     </div>
                     <div>
