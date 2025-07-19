@@ -11,6 +11,14 @@ export default async function handler(req, res) {
 
   const callbackData = req.body;
   
+  // Log the raw callback data to understand SecurePay's actual format
+  await logTransaction('INFO', `Raw callback data received`, { 
+    body: req.body,
+    query: req.query,
+    headers: req.headers,
+    method: req.method
+  });
+  
   // Validate required callback data fields
   if (!callbackData || typeof callbackData !== 'object') {
     await logTransaction('ERROR', 'Invalid callback data received', { callbackData });
@@ -26,7 +34,9 @@ export default async function handler(req, res) {
       payment_status: !!payment_status, 
       merchant_reference_number: !!merchant_reference_number, 
       amount: !!amount, 
-      signature: !!signature 
+      signature: !!signature,
+      rawData: callbackData,
+      allKeys: Object.keys(callbackData)
     });
     return res.status(400).json({ message: 'Missing required callback fields' });
   }

@@ -113,10 +113,11 @@ export default async function handler(req, res) {
     const uid = process.env.SECUREPAY_API_UID;
     const authToken = process.env.SECUREPAY_AUTH_TOKEN;
     const baseUrl = process.env.SECUREPAY_API_BASE_URL_SANDBOX;
-    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment-status`;
-    const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/payment-callback`;
-    const cancelUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment/cancelled`;
-    const timeoutUrl = `${process.env.NEXT_PUBLIC_APP_URL}/payment/timeout`;
+    const baseAppUrl = process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, ''); // Remove trailing slash
+    const redirectUrl = `${baseAppUrl}/payment-status`;
+    const callbackUrl = `${baseAppUrl}/api/payment-callback`;
+    const cancelUrl = `${baseAppUrl}/payment/cancelled`;
+    const timeoutUrl = `${baseAppUrl}/payment/timeout`;
     const amount = productSettings.productPrice; // Use dynamic price
     
     const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
