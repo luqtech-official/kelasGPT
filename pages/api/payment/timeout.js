@@ -1,30 +1,31 @@
-import { logTransaction } from "../../../lib/logger";
-import { updatePaymentStatusValidated, PAYMENT_STATES } from "../../../lib/paymentStatus";
+import { createLogger } from '../../../lib/pino-logger';
+import { updatePaymentStatusValidated, PAYMENT_STATES } from '../../../lib/paymentStatus';
 
 export default async function handler(req, res) {
+  const logger = createLogger(req);
   // Log all incoming requests to understand SecurePay's timeout redirect behavior
-  await logTransaction('INFO', `Payment timeout endpoint accessed`, { 
+  logger.info({ 
     method: req.method,
     body: req.body,
     query: req.query,
     headers: req.headers
-  });
+  }, `Payment timeout endpoint accessed`);
 
   if (req.method === 'POST') {
     // Handle POST redirect from SecurePay for timeout payments
     const { order_number, payment_status, merchant_reference_number, amount } = req.body;
     
-    await logTransaction('INFO', `SecurePay timeout POST redirect received`, { 
+    logger.info({ 
       order_number, 
       payment_status, 
       merchant_reference_number, 
       amount,
       fullQuery: req.query
-    });
+    }, `SecurePay timeout POST redirect received`);
 
     // Update payment status in database for timeout payments
     if (order_number) {
-      await logTransaction('INFO', `Updating payment status to expired for order: ${order_number}`);
+      logger.info(`Updating payment status to expired for order: ${order_number}`);
       
       const statusUpdateResult = await updatePaymentStatusValidated(
         logger,
@@ -34,7 +35,7 @@ export default async function handler(req, res) {
       );
       
       if (!statusUpdateResult.success) {
-        await logTransaction('ERROR', `Failed to update timeout payment status: ${order_number}`, statusUpdateResult);
+        logger.error({ statusUpdateResult }, `Failed to update timeout payment status: ${order_number}`);
         // Continue with redirect even if database update fails
       } else {
         logger.info(`Successfully updated payment status to expired: ${order_number}`);

@@ -2,9 +2,10 @@ import { requireAuth } from '../../../lib/adminAuth';
 import { getCustomersWithPaymentStatus, getCustomerWithPaymentStatus } from '../../../lib/paymentStatus';
 import { updatePaymentStatusValidated, getValidNextStates, PAYMENT_STATES } from '../../../lib/paymentStatus';
 import { supabase, getEmailStatusForCustomers } from '../../../lib/supabase';
-import { logTransaction } from '../../../lib/logger';
+import { createLogger } from '../../../lib/pino-logger';
 
 export default async function handler(req, res) {
+  const logger = createLogger(req);
   // Require admin authentication
   const authResult = await requireAuth(req, res);
   if (!authResult.success) {
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
       // ✅ NEW: Use view with computed payment status
-      const { data: customers, error } = await getCustomersWithPaymentStatus();
+      const { data: customers, error } = await getCustomersWithPaymentStatus(logger);
       
       if (error) {
         console.error('Error fetching customers:', error);
@@ -92,10 +93,7 @@ export default async function handler(req, res) {
         }
       }
 
-      await logTransaction('INFO', `Admin fetched ${enhancedCustomers.length} customers`, {
-        admin: authResult.admin.username,
-        customerCount: enhancedCustomers.length
-      });
+      logger.info({ admin: authResult.admin.username, customerCount: enhancedCustomers.length }, `Admin fetched ${enhancedCustomers.length} customers`);
 
       res.status(200).json({
         success: true,
@@ -109,10 +107,7 @@ export default async function handler(req, res) {
 
     } catch (error) {
       console.error('Customers API error:', error);
-      await logTransaction('ERROR', 'Admin customers fetch failed', {
-        admin: authResult.admin.username,
-        error: error.message
-      });
+      logger.error({ admin: authResult.admin.username, error: error.message }, 'Admin customers fetch failed');
       
       res.status(500).json({ 
         success: false, 
@@ -133,7 +128,7 @@ export default async function handler(req, res) {
       }
 
       // Get customer info first
-      const { data: customer, error: customerError } = await getCustomerWithPaymentStatus(customer_id);
+      const { data: customer, error: customerError } = await getCustomerWithPaymentStatus(logger, customer_id);
       
       if (customerError || !customer) {
         return res.status(404).json({ 
@@ -153,14 +148,7 @@ export default async function handler(req, res) {
 
       // ✅ NEW: Handle payment status update atomically
       if (payment_status && payment_status !== customer.payment_status) {
-        await logTransaction('INFO', `Admin attempting to change payment status`, {
-          admin: authResult.admin.username,
-          customerId: customer_id,
-          customerEmail: customer.email_address,
-          fromStatus: customer.payment_status,
-          toStatus: payment_status,
-          latestOrderNumber: customer.latest_order_number
-        });
+        logger.info({ admin: authResult.admin.username, customerId: customer_id, customerEmail: customer.email_address, fromStatus: customer.payment_status, toStatus: payment_status, latestOrderNumber: customer.latest_order_number }, `Admin attempting to change payment status`);
 
         if (!customer.latest_order_number) {
           return res.status(400).json({
@@ -171,6 +159,7 @@ export default async function handler(req, res) {
 
         // Use atomic payment status update with admin override
         const statusUpdateResult = await updatePaymentStatusValidated(
+          logger,
           customer.latest_order_number,
           payment_status,
           null, // no transaction ID for admin updates
@@ -178,12 +167,7 @@ export default async function handler(req, res) {
         );
 
         if (!statusUpdateResult.success) {
-          await logTransaction('ERROR', 'Admin payment status update failed', {
-            admin: authResult.admin.username,
-            customerId: customer_id,
-            orderNumber: customer.latest_order_number,
-            error: statusUpdateResult.error
-          });
+          logger.error({ admin: authResult.admin.username, customerId: customer_id, orderNumber: customer.latest_order_number, error: statusUpdateResult.error }, 'Admin payment status update failed');
           
           return res.status(400).json({
             success: false,
@@ -191,13 +175,7 @@ export default async function handler(req, res) {
           });
         }
 
-        await logTransaction('INFO', `Admin payment status update successful`, {
-          admin: authResult.admin.username,
-          customerId: customer_id,
-          orderNumber: customer.latest_order_number,
-          previousStatus: statusUpdateResult.data.previous_status,
-          newStatus: statusUpdateResult.data.new_status
-        });
+        logger.info({ admin: authResult.admin.username, customerId: customer_id, orderNumber: customer.latest_order_number, previousStatus: statusUpdateResult.data.previous_status, newStatus: statusUpdateResult.data.new_status }, `Admin payment status update successful`);
       }
 
       // Update customer notes if provided
@@ -210,17 +188,13 @@ export default async function handler(req, res) {
           .single();
 
         if (updateError) {
-          await logTransaction('ERROR', 'Customer notes update failed', {
-            admin: authResult.admin.username,
-            customerId: customer_id,
-            error: updateError
-          });
+          logger.error({ admin: authResult.admin.username, customerId: customer_id, error: updateError }, 'Customer notes update failed');
           throw updateError;
         }
       }
 
       // Get updated customer data
-      const { data: updatedCustomer, error: fetchError } = await getCustomerWithPaymentStatus(customer_id);
+      const { data: updatedCustomer, error: fetchError } = await getCustomerWithPaymentStatus(logger, customer_id);
       
       if (fetchError) {
         throw fetchError;

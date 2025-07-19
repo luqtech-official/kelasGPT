@@ -1,9 +1,10 @@
 import { supabase } from '../../../lib/supabase';
-import { logTransaction } from '../../../lib/logger';
+import { createLogger } from '../../../lib/pino-logger';
 import { requireAuth } from '../../../lib/adminAuth';
 import { updatePaymentStatusBulk, PAYMENT_STATES } from '../../../lib/paymentStatus';
 
 export default async function handler(req, res) {
+  const logger = createLogger(req);
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -15,9 +16,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ message: 'Authentication required' });
     }
 
-    await logTransaction('INFO', 'Starting atomic session cleanup process', { 
-      admin: authResult.admin.username 
-    });
+    logger.info({ admin: authResult.admin.username }, 'Starting atomic session cleanup process');
 
     // Define time thresholds
     const now = new Date();
@@ -32,7 +31,7 @@ export default async function handler(req, res) {
       .lt('created_at', thirtyMinutesAgo.toISOString());
 
     if (pendingError) {
-      await logTransaction('ERROR', 'Error finding pending customers for abandonment', pendingError);
+      logger.error({ error: pendingError }, 'Error finding pending customers for abandonment');
       return res.status(500).json({ message: 'Error during session cleanup - pending query' });
     }
 
@@ -44,7 +43,7 @@ export default async function handler(req, res) {
       .lt('created_at', oneDayAgo.toISOString());
 
     if (abandonedError) {
-      await logTransaction('ERROR', 'Error finding abandoned customers for expiration', abandonedError);
+      logger.error({ error: abandonedError }, 'Error finding abandoned customers for expiration');
       return res.status(500).json({ message: 'Error during session cleanup - abandoned query' });
     }
 
@@ -55,18 +54,15 @@ export default async function handler(req, res) {
     if (pendingCustomers && pendingCustomers.length > 0) {
       const customerIds = pendingCustomers.map(c => c.customer_id);
       
-      await logTransaction('INFO', `Processing ${customerIds.length} pending customers for abandonment`, {
-        customerIds: customerIds.slice(0, 5), // Log first 5 for debugging
-        totalCount: customerIds.length
-      });
+      logger.info({ customerIds: customerIds.slice(0, 5), totalCount: customerIds.length }, `Processing ${customerIds.length} pending customers for abandonment`);
 
-      const abandonResult = await updatePaymentStatusBulk(customerIds, PAYMENT_STATES.ABANDONED);
+      const abandonResult = await updatePaymentStatusBulk(logger, customerIds, PAYMENT_STATES.ABANDONED);
       
       if (abandonResult.success) {
         recentAbandonedCount = abandonResult.count;
-        await logTransaction('INFO', `Successfully marked ${recentAbandonedCount} orders as abandoned`);
+        logger.info(`Successfully marked ${recentAbandonedCount} orders as abandoned`);
       } else {
-        await logTransaction('ERROR', 'Bulk abandonment update failed', abandonResult.error);
+        logger.error({ error: abandonResult.error }, 'Bulk abandonment update failed');
         return res.status(500).json({ 
           message: 'Error during session cleanup - abandonment failed',
           error: abandonResult.error 
@@ -78,18 +74,15 @@ export default async function handler(req, res) {
     if (abandonedCustomers && abandonedCustomers.length > 0) {
       const customerIds = abandonedCustomers.map(c => c.customer_id);
       
-      await logTransaction('INFO', `Processing ${customerIds.length} abandoned customers for expiration`, {
-        customerIds: customerIds.slice(0, 5), // Log first 5 for debugging
-        totalCount: customerIds.length
-      });
+      logger.info({ customerIds: customerIds.slice(0, 5), totalCount: customerIds.length }, `Processing ${customerIds.length} abandoned customers for expiration`);
 
-      const expireResult = await updatePaymentStatusBulk(customerIds, PAYMENT_STATES.EXPIRED);
+      const expireResult = await updatePaymentStatusBulk(logger, customerIds, PAYMENT_STATES.EXPIRED);
       
       if (expireResult.success) {
         expiredCount = expireResult.count;
-        await logTransaction('INFO', `Successfully marked ${expiredCount} orders as expired`);
+        logger.info(`Successfully marked ${expiredCount} orders as expired`);
       } else {
-        await logTransaction('ERROR', 'Bulk expiration update failed', expireResult.error);
+        logger.error({ error: expireResult.error }, 'Bulk expiration update failed');
         return res.status(500).json({ 
           message: 'Error during session cleanup - expiration failed',
           error: expireResult.error 
@@ -122,10 +115,7 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    await logTransaction('ERROR', 'Unexpected error during atomic session cleanup', { 
-      message: error.message, 
-      stack: error.stack 
-    });
+    logger.error({ message: error.message, stack: error.stack }, 'Unexpected error during atomic session cleanup');
     
     res.status(500).json({ 
       success: false,
