@@ -10,14 +10,15 @@ export default async function handler(req, res) {
   });
 
   if (req.method === 'POST') {
-    // Handle POST redirect from SecurePay
-    const { order_number, payment_status, merchant_reference_number, amount } = req.body;
+    // Handle POST redirect from SecurePay - data comes in query parameters
+    const { order_number, payment_status, merchant_reference_number, amount } = req.query;
     
     await logTransaction('INFO', `SecurePay POST redirect received`, { 
       order_number, 
       payment_status, 
       merchant_reference_number, 
-      amount 
+      amount,
+      fullQuery: req.query
     });
 
     // Redirect to the actual payment status page with query parameters
