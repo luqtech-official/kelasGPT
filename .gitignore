@@ -16,6 +16,8 @@ Tasklist/
 review-finding.md
 humanfeedback.md
 CLAUDE.md
+.log
+TaskList.md
 
 # testing
 /coverage
