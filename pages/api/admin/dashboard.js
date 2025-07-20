@@ -3,6 +3,7 @@ import { requireAuth } from "../../../lib/adminAuth";
 import { getProductSettings } from "../../../lib/settings";
 
 async function handler(req, res) {
+  
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
