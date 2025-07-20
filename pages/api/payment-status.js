@@ -1,4 +1,5 @@
 import { createLogger } from '../../lib/pino-logger';
+import { supabase } from '../../lib/supabase';
 
 export default async function handler(req, res) {
   const logger = createLogger(req);
@@ -65,6 +66,32 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
+    // Check if this is a status query by order_number
+    if (req.query.order_number) {
+      try {
+        const { data: order, error } = await supabase
+          .from('orders')
+          .select('order_status, order_number, customer_id')
+          .eq('order_number', req.query.order_number)
+          .single();
+
+        if (error || !order) {
+          logger.warn({ order_number: req.query.order_number, error }, 'Order not found for status check');
+          return res.status(404).json({ message: 'Order not found' });
+        }
+
+        logger.info({ order_number: req.query.order_number, status: order.order_status }, 'Order status check');
+        return res.status(200).json({ 
+          payment_status: order.order_status,
+          order_number: order.order_number 
+        });
+        
+      } catch (error) {
+        logger.error({ error: error.message, order_number: req.query.order_number }, 'Error checking order status');
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    }
+    
     // Handle GET requests by redirecting to the payment status page
     const queryString = new URLSearchParams(req.query).toString();
     const redirectUrl = `/payment-status${queryString ? `?${queryString}` : ''}`;

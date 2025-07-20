@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     // Update payment status in database for cancelled payments
     if (order_number) {
-      logger.info(`Updating payment status to cancelled for order: ${order_number}`);
+      logger.info(`Starting database update for cancelled order: ${order_number}`);
       
       const statusUpdateResult = await updatePaymentStatusValidated(
         logger,
@@ -35,10 +35,10 @@ export default async function handler(req, res) {
       );
       
       if (!statusUpdateResult.success) {
-        logger.error({ statusUpdateResult }, `Failed to update cancelled payment status: ${order_number}`);
+        logger.error({ statusUpdateResult, order_number }, `Database update FAILED for cancelled order: ${order_number}`);
         // Continue with redirect even if database update fails
       } else {
-        logger.info(`Successfully updated payment status to cancelled: ${order_number}`);
+        logger.info(`Database update SUCCESS for cancelled order: ${order_number}`);
       }
     }
 
