@@ -34,29 +34,37 @@ export default async function handler(req, res) {
     queryKeys: Object.keys(req.query || {})
   }, `COMPLETE cancellation request data`);
 
-  // Try to extract order_number from multiple sources
+  // Try to extract order_number from multiple sources (prioritize query params)
   const bodyOrderNumber = req.body?.order_number;
   const queryOrderNumber = req.query?.order_number;
   const refererOrderNumber = extractFromReferer(req.headers.referer);
+  
+  // Prioritize query parameter (from our new cancel_url), then body, then referer
+  const finalOrderNumber = queryOrderNumber || bodyOrderNumber || refererOrderNumber;
   
   logger.info({ 
     bodyOrderNumber,
     queryOrderNumber, 
     refererOrderNumber,
+    finalOrderNumber,
     bodyData: req.body,
     queryData: req.query
   }, `Order number extraction attempts`);
 
   if (req.method === 'POST') {
     // Handle POST redirect from SecurePay for cancelled payments
-    const { order_number, payment_status, merchant_reference_number, amount } = req.body;
+    const { payment_status, merchant_reference_number, amount } = req.body;
+    
+    // Use our extracted order_number instead of body.order_number
+    const order_number = finalOrderNumber;
     
     logger.info({ 
       order_number, 
       payment_status, 
       merchant_reference_number, 
       amount,
-      fullQuery: req.query
+      fullQuery: req.query,
+      extractionSource: queryOrderNumber ? 'query' : bodyOrderNumber ? 'body' : refererOrderNumber ? 'referer' : 'none'
     }, `SecurePay cancel POST redirect received`);
 
     // Update payment status in database for cancelled payments
@@ -76,6 +84,12 @@ export default async function handler(req, res) {
       } else {
         logger.info(`Database update SUCCESS for cancelled order: ${order_number}`);
       }
+    } else {
+      logger.warn({ 
+        bodyData: req.body, 
+        queryData: req.query, 
+        referer: req.headers.referer 
+      }, `NO ORDER NUMBER FOUND - cannot update database for cancellation`);
     }
 
     // Redirect to the actual payment cancelled page with query parameters

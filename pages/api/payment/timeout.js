@@ -13,7 +13,10 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     // Handle POST redirect from SecurePay for timeout payments
-    const { order_number, payment_status, merchant_reference_number, amount } = req.body;
+    const { payment_status, merchant_reference_number, amount } = req.body;
+    
+    // Try to extract order_number from query params (from our new timeout_url) or body
+    const order_number = req.query?.order_number || req.body?.order_number;
     
     logger.info({ 
       order_number, 

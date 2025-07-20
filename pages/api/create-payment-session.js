@@ -109,8 +109,8 @@ export default async function handler(req, res) {
     const baseAppUrl = process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, ''); // Remove trailing slash
     const redirectUrl = `${baseAppUrl}/api/payment-status`;
     const callbackUrl = `${baseAppUrl}/api/payment-callback`;
-    const cancelUrl = `${baseAppUrl}/api/payment/cancelled`;
-    const timeoutUrl = `${baseAppUrl}/api/payment/timeout`;
+    const cancelUrl = `${baseAppUrl}/api/payment/cancelled?order_number=${orderNumber}`;
+    const timeoutUrl = `${baseAppUrl}/api/payment/timeout?order_number=${orderNumber}`;
     const amount = productSettings.productPrice; // Use dynamic price
     
     const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
