@@ -3,13 +3,49 @@ import { updatePaymentStatusValidated, PAYMENT_STATES } from '../../../lib/payme
 
 export default async function handler(req, res) {
   const logger = createLogger(req);
-  // Log all incoming requests to understand SecurePay's cancel redirect behavior
-  logger.info({ 
+  
+  // Helper function to extract order_number from referer
+  function extractFromReferer(referer) {
+    if (!referer) return null;
+    try {
+      const url = new URL(referer);
+      return url.searchParams.get('order_number') || 
+             url.pathname.match(/order[_-](\w+)/i)?.[1];
+    } catch {
+      return null;
+    }
+  }
+
+  // ENHANCED LOGGING: Capture everything SecurePay sends
+  logger.info({
     method: req.method,
     body: req.body,
     query: req.query,
-    headers: req.headers
-  }, `Payment cancelled endpoint accessed`);
+    url: req.url,
+    referer: req.headers.referer,
+    refererParsed: req.headers.referer ? (() => {
+      try { return new URL(req.headers.referer).searchParams.toString(); } catch { return null; }
+    })() : null,
+    userAgent: req.headers['user-agent'],
+    origin: req.headers.origin,
+    contentType: req.headers['content-type'],
+    allHeaderKeys: Object.keys(req.headers || {}),
+    bodyKeys: Object.keys(req.body || {}),
+    queryKeys: Object.keys(req.query || {})
+  }, `COMPLETE cancellation request data`);
+
+  // Try to extract order_number from multiple sources
+  const bodyOrderNumber = req.body?.order_number;
+  const queryOrderNumber = req.query?.order_number;
+  const refererOrderNumber = extractFromReferer(req.headers.referer);
+  
+  logger.info({ 
+    bodyOrderNumber,
+    queryOrderNumber, 
+    refererOrderNumber,
+    bodyData: req.body,
+    queryData: req.query
+  }, `Order number extraction attempts`);
 
   if (req.method === 'POST') {
     // Handle POST redirect from SecurePay for cancelled payments
