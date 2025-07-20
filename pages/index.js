@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { trackPageView, initializeLinkModification } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
 import styles from "@/styles/Home.module.css";
@@ -43,6 +45,14 @@ const RocketIcon = (props) => (
 
 
 export default function Home({ productSettings }) {
+  useEffect(() => {
+    // 🔥 PHASE 1: Multi-source visitor ID resolution
+    trackPageView('/');  // NOW: Checks URL params first, then localStorage, then creates new
+    
+    // 🚀 PHASE 2: Initialize link modification for social browsers
+    initializeLinkModification(); // Modifies checkout links when FB/social browser detected
+  }, []);
+
   return (
     <div className={styles.pageWrapper}>
       <Head>

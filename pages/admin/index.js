@@ -111,14 +111,28 @@ export default function AdminDashboard() {
 
             <div className={`${styles.metricCard} ${styles.conversion}`}>
               <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Success Rate</h3>
+                <h3 className={styles.metricTitle}>Landing Page Views</h3>
                 <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <div className={styles.metricValue}>{stats.conversionRate}%</div>
+              <div className={styles.metricValue}>{stats.pageViews?.today?.landingVisits || 0}</div>
               <div className={styles.metricSubtext}>
-                Payment success rate
+                {stats.pageViews?.today?.landingUniqueVisitors || 0} unique visitors
+              </div>
+            </div>
+
+            <div className={`${styles.metricCard}`}>
+              <div className={styles.metricHeader}>
+                <h3 className={styles.metricTitle}>Checkout Page Views</h3>
+                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className={styles.metricValue}>{stats.pageViews?.today?.checkoutVisits || 0}</div>
+              <div className={styles.metricSubtext}>
+                {stats.pageViews?.today?.checkoutUniqueVisitors || 0} unique visitors
               </div>
             </div>
           </div>

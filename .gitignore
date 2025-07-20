@@ -16,8 +16,10 @@ Tasklist/
 review-finding.md
 humanfeedback.md
 CLAUDE.md
+GEMINI.md
 .log
 TaskList.md
+*tasklist.md
 Misc/
 
 # testing
@@ -50,6 +52,7 @@ yarn-error.log*
 #database
 sql-fix*
 scripts/create-atomic-update-function.sql
+scripts/create-analytics-table.sql
 missing-database-function.sql
 
 # typescript

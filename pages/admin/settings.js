@@ -30,10 +30,32 @@ export default function Settings() {
   
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [analyticsStats, setAnalyticsStats] = useState({
+    currentRecords: 0,
+    oldestRecord: null,
+    canCleanup: false,
+    recordsToCleanup: 0
+  });
 
   useEffect(() => {
     loadSettings();
+    fetchAnalyticsStats();
   }, []);
+
+  const fetchAnalyticsStats = async () => {
+    const response = await fetch('/api/admin/analytics-stats');
+    const data = await response.json();
+    setAnalyticsStats(data);
+  };
+
+  const handleAnalyticsCleanup = async () => {
+    const response = await fetch('/api/admin/cleanup-analytics', { method: 'POST' });
+    const result = await response.json();
+    // Show cleanup results and refresh stats
+    fetchAnalyticsStats();
+    setMessage(result.message || 'Cleanup process completed.');
+    setTimeout(() => setMessage(''), 5000);
+  };
 
   const loadSettings = async () => {
     try {
@@ -349,6 +371,20 @@ export default function Settings() {
             onChange={handleInputChange}
             style={inputStyle}
           />
+        </div>
+
+        {/* Analytics Data Management */}
+        <div style={sectionStyle}>
+          <h2 style={{ marginTop: 0, color: '#333' }}>Analytics Data Management</h2>
+          <div className={styles.analyticsStats}>
+            <p>Current records: {analyticsStats.currentRecords}</p>
+            <p>Oldest record: {analyticsStats.oldestRecord}</p>
+            {analyticsStats.canCleanup && (
+              <button onClick={handleAnalyticsCleanup} className={styles.primary} style={{marginTop: '10px'}}>
+                Archive {analyticsStats.recordsToCleanup} old records
+              </button>
+            )}
+          </div>
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '30px' }}>

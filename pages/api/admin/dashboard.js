@@ -1,4 +1,4 @@
-import { supabase } from "../../../lib/supabase";
+import { supabase, getPageViewStats } from "../../../lib/supabase";
 import { requireAuth } from "../../../lib/adminAuth";
 import { getProductSettings } from "../../../lib/settings";
 
@@ -11,6 +11,9 @@ async function handler(req, res) {
     // Get product settings for accurate pricing
     const productSettings = await getProductSettings();
     const PRODUCT_PRICE = productSettings.productPrice;
+
+    // Get page view stats from the new function
+    const pageViewStats = await getPageViewStats();
 
     // Get today's date range
     const today = new Date();
@@ -132,7 +135,8 @@ async function handler(req, res) {
         pending: statusCounts.pending || 0,
         failed: statusCounts.failed || 0
       },
-      averageOrderValue: PRODUCT_PRICE
+      averageOrderValue: PRODUCT_PRICE,
+      pageViews: pageViewStats
     };
 
     res.status(200).json({

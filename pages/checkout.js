@@ -4,9 +4,16 @@ import { useRouter } from "next/router";
 import styles from "@/styles/Checkout.module.css";
 import { getProductSettings, formatPrice } from "../lib/settings";
 import { UserIcon, MailIcon, PhoneIcon, SecureShieldIcon } from "../components/icons";
+import { trackPageView } from '../lib/simpleTracking';
 
 
 export default function Checkout({ productSettings }) {
+  useEffect(() => {
+    // 🔥 ENHANCED: Multi-source visitor ID resolution
+    trackPageView('/checkout');  // NOW: Checks URL params first, then localStorage
+    // This handles both same-browser navigation AND cross-browser transitions!
+  }, []);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
