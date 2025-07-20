@@ -149,7 +149,7 @@ export default async function handler(req, res) {
         });
 
         if (emailLogResult.data && emailLogResult.data[0]) {
-          emailLogId = emailLogResult.data[0].id;
+          emailLogId = emailLogResult.data[0].log_id;
         }
 
         const emailRequest = mailjet.post('send', { 'version': 'v3.1' }).request({
