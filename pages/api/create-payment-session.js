@@ -43,15 +43,7 @@ export default async function handler(req, res) {
       productPrice: productSettings.productPrice 
     }, `Using product settings for order ${orderNumber}`);
 
-    // Enhanced email validation with status checking - TEMPORARILY DISABLED FOR TESTING
-    // const emailValidation = await validateEmailStatus(email);
-    // if (!emailValidation.canProceed) {
-    //   logger.warn({ 
-    //     reason: emailValidation.reason,
-    //     status: emailValidation.status 
-    //   }, `Email validation failed for: ${email}`);
-    //   return res.status(409).json(emailValidation.error);
-    // }
+
 
     // Save customer data
     const customerDataToInsert = {
