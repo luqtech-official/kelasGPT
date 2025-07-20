@@ -76,10 +76,8 @@ export default function Home({ productSettings }) {
             <p className={styles.heroSubtitle}>
               Tertanya-tanya bagaimana AI boleh mempercepat kerja harian? Mahu memahami LLM tanpa pening kepala teknikal? Ingin menaik taraf kemahiran, menjimatkan masa, dan menambah nilai kepada kerjaya atau bisnes anda?
             </p>
-            <Link href="/checkout" legacyBehavior>
-              <a className={styles.ctaButton}>
-                Daftar Sekarang <ArrowRightIcon />
-              </a>
+            <Link href="/checkout" className={styles.ctaButton}>
+              Daftar Sekarang <ArrowRightIcon />
             </Link>
             <p className={styles.ctaButtonSubtext}>Tempat terhad untuk sokongan berkualiti.</p>
           </div>
@@ -160,10 +158,8 @@ export default function Home({ productSettings }) {
                     <h2>Pelaburan Anda</h2>
                     <p>Dapatkan akses seumur hidup kepada semua video, nota, dan kemas kini masa hadapan. Tiada yuran tersembunyi.</p>
                     <div className={styles.price}>{formatPrice(productSettings.productPrice, 'RM')} <span>sekali bayar</span></div>
-                    <Link href="/checkout" legacyBehavior>
-                      <a className={styles.ctaButton}>
-                        Dapatkan Akses Sekarang
-                      </a>
+                    <Link href="/checkout" className={styles.ctaButton}>
+                      Dapatkan Akses Sekarang
                     </Link>
                 </div>
             </div>
@@ -175,10 +171,8 @@ export default function Home({ productSettings }) {
                 <div className={styles.imagineBox}>
                     <h2>Bayangkan…</h2>
                     <p>Menyiapkan laporan dalam minit, bukan jam. Menjana idea kempen pemasaran dengan beberapa baris prompt. Mengurangkan kos operasi sambil meningkatkan kualiti kerja. Inilah realiti baharu dengan AI apabila anda tahu caranya.</p>
-                    <Link href="/checkout" legacyBehavior>
-                      <a className={styles.ctaButton} style={{backgroundColor: 'var(--white)', color: 'var(--primary)'}}>
-                        Mula Transformasi Produktiviti Anda
-                      </a>
+                    <Link href="/checkout" className={styles.ctaButton} style={{backgroundColor: 'var(--white)', color: 'var(--primary)'}}>
+                      Mula Transformasi Produktiviti Anda
                     </Link>
                 </div>
             </div>

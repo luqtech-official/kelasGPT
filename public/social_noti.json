@@ -1,14 +1,27 @@
 [
   {
     "name": "Ahmad A.",
+    "productName": "KelasGPT - Instant Access x1",
     "timestamp": "2024-07-20T10:00:00Z"
   },
   {
     "name": "Siti N.",
+    "productName": "KelasGPT - Instant Access x1",
     "timestamp": "2024-07-20T10:05:00Z"
   },
   {
     "name": "Raju M.",
+    "productName": "KelasGPT - Instant Access x1",
     "timestamp": "2024-07-20T10:10:00Z"
+  },
+  {
+    "name": "Farah L.",
+    "productName": "KelasGPT - Instant Access x1",
+    "timestamp": "2024-07-20T10:15:00Z"
+  },
+  {
+    "name": "Hassan B.",
+    "productName": "KelasGPT - Instant Access x1",
+    "timestamp": "2024-07-20T10:20:00Z"
   }
 ]
