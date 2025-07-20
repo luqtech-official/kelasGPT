@@ -60,6 +60,8 @@ async function resendEmailHandler(req, res) {
       recipient_email: customerEmail,
       recipient_name: customerName,
       order_number: order_number,
+      customer_id: order.customers.customer_id,
+      order_id: order.order_id,
       status: 'sending',
       provider: 'mailjet',
       template_id: process.env.MJ_TEMPLATE_ID_PURCHASE_CONFIRMATION,
