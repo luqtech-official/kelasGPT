@@ -179,11 +179,12 @@ export default function Customers() {
       value: status,
       label: allStatuses[status],
       isDangerous: ['failed', 'refunded', 'cancelled'].includes(status),
-      isReversible: ['pending', 'paid'].includes(status),
-      description: getStatusDescription(status, currentStatus)
+      isReversible: ['paid'].includes(status),
+      isPending: status === 'pending'
+      // description: getStatusDescription(status, currentStatus)
     })) || [];
   };
-
+  
   // Helper function to provide context for status changes
   const getStatusDescription = (newStatus, currentStatus) => {
     const descriptions = {
@@ -202,7 +203,7 @@ export default function Customers() {
     if (['failed', 'cancelled', 'abandoned'].includes(currentStatus) && newStatus === 'paid') {
       return descriptions[newStatus] + ' (will grant access)';
     }
-
+    
     return descriptions[newStatus];
   };
 
@@ -610,7 +611,7 @@ export default function Customers() {
                               {getAvailableStatuses(customer.payment_status).map((status) => (
                                 <button
                                   key={status.value}
-                                  className={`${styles.statusOption} ${status.isDangerous ? styles.danger : (status.isReversible ? styles.success : styles.neutral)}`}
+                                  className={`${styles.statusOption} ${status.isDangerous ? styles.danger : (status.isPending ? styles.warning : (status.isReversible ? styles.success : styles.neutral))}`}
                                   onClick={() => handleStatusChange(customer, status.value)}
                                   title={status.description}
                                 >

@@ -1158,6 +1158,10 @@
   color: #059669;
 }
 
+.statusOption.warning {
+  color: #f59e0b;
+}
+
 .orderNumber {
   font-family: monospace;
   font-size: 11px;
