@@ -36,8 +36,10 @@ export default function Customers() {
   const fetchCSRFToken = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/csrf-token');
+
       if (response.ok) {
         const result = await response.json();
+        
         if (result.success) {
           setCsrfToken(result.csrfToken);
         }
@@ -69,13 +71,19 @@ export default function Customers() {
       try {
         result = await response.json();
       } catch (jsonError) {
-        console.error('Failed to parse JSON response:', jsonError);
         throw new Error('Server returned invalid response format');
       }
       
       if (result.success) {
         setCustomers(result.data.customers);
-        setPagination(result.data.pagination);
+        setPagination({
+          currentPage: result.data.currentPage,
+          totalPages: result.data.totalPages,
+          totalCount: result.data.totalCustomers,
+          filteredCount: result.data.totalFiltered,
+          hasNextPage: result.data.hasNextPage,
+          hasPreviousPage: result.data.hasPreviousPage
+        });
       } else {
         throw new Error(result.message || 'Failed to fetch customers');
       }
@@ -102,12 +110,16 @@ export default function Customers() {
   }, [fetchCSRFToken, fetchCustomers]);
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);  // ✅ Immediate UI update for responsiveness
-    setCurrentPage(1);                  // ✅ Reset pagination immediately
+    const newSearchTerm = event.target.value;
+
+    setSearchTerm(newSearchTerm);  // ✅ Immediate UI update for responsiveness
+    setCurrentPage(1);             // ✅ Reset pagination immediately
   };
 
   const handleStatusFilter = (event) => {
-    setStatusFilter(event.target.value);
+    const newStatusFilter = event.target.value;
+
+    setStatusFilter(newStatusFilter);
     setCurrentPage(1);
   };
 
@@ -146,24 +158,52 @@ export default function Customers() {
   const getAvailableStatuses = (currentStatus) => {
     const allStatuses = {
       pending: 'Pending Payment',
-      paid: 'Payment Successful',
+      paid: 'Payment Successful', 
       failed: 'Payment Failed',
-      refunded: 'Refunded'
+      refunded: 'Refunded',
+      cancelled: 'Cancelled',
+      abandoned: 'Abandoned'
     };
 
-    // Define allowed transitions
+    // More flexible transitions for admin control
     const transitions = {
-      pending: ['paid', 'failed'],
-      paid: ['failed', 'refunded'],
-      failed: ['paid'],
-      refunded: []
+      pending: ['paid', 'failed', 'cancelled', 'abandoned'],
+      paid: ['pending', 'failed', 'refunded', 'cancelled'],
+      failed: ['pending', 'paid', 'cancelled', 'abandoned'],
+      refunded: ['pending', 'paid', 'failed'], // Allow reverting refunds
+      cancelled: ['pending', 'paid', 'failed'],
+      abandoned: ['pending', 'paid', 'failed']
     };
 
     return transitions[currentStatus]?.map(status => ({
       value: status,
       label: allStatuses[status],
-      isDangerous: status === 'failed' || status === 'refunded'
+      isDangerous: ['failed', 'refunded', 'cancelled'].includes(status),
+      isReversible: ['pending', 'paid'].includes(status),
+      description: getStatusDescription(status, currentStatus)
     })) || [];
+  };
+
+  // Helper function to provide context for status changes
+  const getStatusDescription = (newStatus, currentStatus) => {
+    const descriptions = {
+      pending: 'Mark as awaiting payment',
+      paid: 'Mark as successfully paid',
+      failed: 'Mark payment as failed',
+      refunded: 'Mark as refunded to customer',
+      cancelled: 'Mark order as cancelled',
+      abandoned: 'Mark as abandoned by customer'
+    };
+
+    if (currentStatus === 'paid' && ['failed', 'refunded', 'cancelled'].includes(newStatus)) {
+      return descriptions[newStatus] + ' (will revoke access)';
+    }
+    
+    if (['failed', 'cancelled', 'abandoned'].includes(currentStatus) && newStatus === 'paid') {
+      return descriptions[newStatus] + ' (will grant access)';
+    }
+
+    return descriptions[newStatus];
   };
 
   const handleStatusClick = (customerId) => {
@@ -171,26 +211,60 @@ export default function Customers() {
   };
 
   const handleStatusChange = async (customer, newStatus) => {
-    const isDangerous = newStatus === 'failed' || 
-                       (customer.payment_status === 'paid' && newStatus !== 'paid');
+    const statusInfo = getAvailableStatuses(customer.payment_status).find(s => s.value === newStatus);
+    const isSignificantChange = statusInfo?.isDangerous || 
+                               (customer.payment_status === 'paid' && newStatus !== 'paid') ||
+                               (['failed', 'cancelled', 'abandoned'].includes(customer.payment_status) && newStatus === 'paid');
 
-    if (isDangerous) {
+    if (isSignificantChange) {
+      const impact = getStatusChangeImpact(customer.payment_status, newStatus);
       setConfirmModal({
         customer,
         newStatus,
-        title: `Change Status to ${newStatus.toUpperCase()}`,
-        message: `Are you sure you want to change ${customer.full_name}'s payment status from "${customer.payment_status}" to "${newStatus}"? This action will affect their access to the product.`
+        title: `Change Status: ${customer.payment_status} → ${newStatus}`,
+        message: `Change ${customer.full_name}'s status from "${customer.payment_status}" to "${newStatus}"?`,
+        description: statusInfo?.description || '',
+        impact: impact,
+        isReversible: statusInfo?.isReversible
       });
       setActiveDropdown(null);
     } else {
       try {
         await updateCustomerStatus(customer.customer_id, newStatus);
-        setActiveDropdown(null); // Only close dropdown after successful update
+        setActiveDropdown(null);
       } catch (error) {
-        // Error is already handled in updateCustomerStatus, but keep dropdown open
-        console.error('Status update failed, keeping dropdown open:', error);
+        console.error('Error updating status:', error);
       }
     }
+  };
+
+  // Helper function to describe the impact of status changes
+  const getStatusChangeImpact = (fromStatus, toStatus) => {
+    if (fromStatus === 'paid' && ['failed', 'refunded', 'cancelled'].includes(toStatus)) {
+      return {
+        type: 'warning',
+        text: '⚠️ This will revoke customer access to the product'
+      };
+    }
+    
+    if (['failed', 'cancelled', 'abandoned'].includes(fromStatus) && toStatus === 'paid') {
+      return {
+        type: 'success', 
+        text: '✅ This will grant customer access to the product'
+      };
+    }
+
+    if (toStatus === 'refunded') {
+      return {
+        type: 'info',
+        text: '💰 This indicates money was returned to customer'
+      };
+    }
+
+    return {
+      type: 'info',
+      text: 'ℹ️ Status will be updated in the system'
+    };
   };
 
   async function updateCustomerStatus(customerId, newStatus) {
@@ -314,19 +388,68 @@ export default function Customers() {
 
   // Email status helper function
   const getEmailStatusDisplay = (emailStatus) => {
-    if (!emailStatus) {
-      return { icon: '❓', text: 'No Email', color: '#9ca3af' };
+    if (!emailStatus || emailStatus.delivery_status === 'not_sent') {
+      return { 
+        icon: '📧', 
+        text: 'Not Sent', 
+        color: '#6b7280',
+        detail: 'No email sent yet'
+      };
     }
 
-    switch (emailStatus.status) {
+    const deliveryCount = emailStatus.delivery_count || 1;
+    const lastSentDate = emailStatus.last_sent_at ? new Date(emailStatus.last_sent_at).toLocaleDateString() : '';
+
+    switch (emailStatus.delivery_status) {
+      case 'delivered':
+        return { 
+          icon: '✅', 
+          text: 'Delivered', 
+          color: '#10b981',
+          detail: `Sent ${deliveryCount}x${lastSentDate ? ` (${lastSentDate})` : ''}`
+        };
       case 'sent':
-        return { icon: '✅', text: 'Sent', color: '#10b981' };
-      case 'sending':
-        return { icon: '⏳', text: 'Sending', color: '#f59e0b' };
+        return { 
+          icon: '📤', 
+          text: 'Sent', 
+          color: '#3b82f6',
+          detail: `Sent ${deliveryCount}x${lastSentDate ? ` (${lastSentDate})` : ''}`
+        };
+      case 'pending':
+        return { 
+          icon: '⏳', 
+          text: 'Pending', 
+          color: '#f59e0b',
+          detail: 'Email queued for delivery'
+        };
       case 'failed':
-        return { icon: '❌', text: 'Failed', color: '#ef4444' };
+        return { 
+          icon: '❌', 
+          text: 'Failed', 
+          color: '#ef4444',
+          detail: `Failed ${deliveryCount}x${lastSentDate ? ` (last: ${lastSentDate})` : ''}`
+        };
+      case 'bounced':
+        return { 
+          icon: '🔄', 
+          text: 'Bounced', 
+          color: '#f97316',
+          detail: 'Email bounced back'
+        };
+      case 'blocked':
+        return { 
+          icon: '🚫', 
+          text: 'Blocked', 
+          color: '#dc2626',
+          detail: 'Email blocked by provider'
+        };
       default:
-        return { icon: '❓', text: 'Unknown', color: '#9ca3af' };
+        return { 
+          icon: '❓', 
+          text: 'Unknown', 
+          color: '#9ca3af',
+          detail: `Status: ${emailStatus.delivery_status || 'unknown'}`
+        };
     }
   };
 
@@ -355,16 +478,18 @@ export default function Customers() {
       // Create blob and download
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
+      const filename = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+      
       const a = document.createElement('a');
       a.href = url;
-      a.download = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
       
     } catch (error) {
-      console.error('Export error:', error);
+      console.error('Export failed:', error);
       alert('Failed to export data. Please try again.');
     }
   };
@@ -458,47 +583,7 @@ export default function Customers() {
                         <div className={styles.customerEmail}>{customer.email_address}</div>
                       </td>
                       
-                      {/* Phone */}
-                      <td className={styles.tableBodyCell}>
-                        <div className={styles.phoneNumber}>{customer.phone_number}</div>
-                      </td>
-                      
-                      {/* Email Status */}
-                      <td className={styles.tableBodyCell}>
-                        <div className={styles.emailStatusContainer}>
-                          <div className={styles.emailStatusBadge}>
-                            {(() => {
-                              const emailStatus = getEmailStatusDisplay(customer.email_status);
-                              return (
-                                <span 
-                                  className={styles.emailStatusIndicator}
-                                  style={{ color: emailStatus.color }}
-                                >
-                                  {emailStatus.icon} {emailStatus.text}
-                                </span>
-                              );
-                            })()}
-                          </div>
-                          {customer.payment_status === 'paid' && (
-                            <button
-                              onClick={() => handleResendEmail(customer)}
-                              disabled={resendingEmail === customer.customer_id}
-                              className={styles.resendButton}
-                              title="Resend email"
-                            >
-                              {resendingEmail === customer.customer_id ? (
-                                <div className={styles.buttonSpinner}></div>
-                              ) : (
-                                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                              )}
-                            </button>
-                          )}
-                        </div>
-                      </td>
-                      
-                      {/* Interactive Status Badge */}
+                      {/* Payment Status */}
                       <td className={styles.tableBodyCell}>
                         <div style={{ position: 'relative' }}>
                           <div
@@ -525,10 +610,12 @@ export default function Customers() {
                               {getAvailableStatuses(customer.payment_status).map((status) => (
                                 <button
                                   key={status.value}
-                                  className={`${styles.statusOption} ${status.isDangerous ? styles.danger : styles.success}`}
+                                  className={`${styles.statusOption} ${status.isDangerous ? styles.danger : (status.isReversible ? styles.success : styles.neutral)}`}
                                   onClick={() => handleStatusChange(customer, status.value)}
+                                  title={status.description}
                                 >
-                                  {status.label}
+                                  <div className={styles.statusOptionMain}>{status.label}</div>
+                                  <div className={styles.statusOptionDesc}>{status.description}</div>
                                 </button>
                               ))}
                             </div>
@@ -536,15 +623,56 @@ export default function Customers() {
                         </div>
                       </td>
                       
+                      {/* Contact (Phone) */}
+                      <td className={styles.tableBodyCell}>
+                        <div className={styles.phoneNumber}>{customer.phone_number}</div>
+                      </td>
+                      
+                      {/* Email Status */}
+                      <td className={styles.tableBodyCell}>
+                        <div className={styles.emailStatusContainer}>
+                          <div className={styles.emailStatusBadge}>
+                            {(() => {
+                              const emailStatus = getEmailStatusDisplay(customer.email_status);
+                              return (
+                                <span 
+                                  className={styles.emailStatusIndicator}
+                                  style={{ color: emailStatus.color }}
+                                  title={emailStatus.detail}
+                                >
+                                  {emailStatus.icon} {emailStatus.text}
+                                </span>
+                              );
+                            })()}
+                          </div>
+                          {customer.payment_status === 'paid' && (
+                            <button
+                              onClick={() => handleResendEmail(customer)}
+                              disabled={resendingEmail === customer.customer_id}
+                              className={styles.resendButton}
+                              title="Resend email"
+                            >
+                              {resendingEmail === customer.customer_id ? (
+                                <div className={styles.buttonSpinner}></div>
+                              ) : (
+                                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                              )}
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                      
                       {/* Order Number */}
                       <td className={styles.tableBodyCell}>
-                        <span className={styles.orderNumber}>{customer.order_number}</span>
+                        <span className={styles.orderNumber}>{customer.latest_order_number || 'No orders'}</span>
                       </td>
                       
                       {/* Amount */}
                       <td className={styles.tableBodyCell}>
                         <span className={styles.amount}>
-                          RM {customer.final_amount ? customer.final_amount.toFixed(2) : '0.00'}
+                          RM {customer.latest_order_total ? customer.latest_order_total.toFixed(2) : '0.00'}
                         </span>
                       </td>
                       

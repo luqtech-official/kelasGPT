@@ -47,6 +47,7 @@ yarn-error.log*
 #database
 sql-fix*
 scripts/create-atomic-update-function.sql
+missing-database-function.sql
 
 # typescript
 *.tsbuildinfo
