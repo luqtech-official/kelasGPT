@@ -1484,3 +1484,748 @@
     color: #f9fafb;
   }
 }
+
+/* =================================================================== */
+/* NEW REDESIGNED DASHBOARD STYLES - SLEEK CORPORATE AESTHETIC */
+/* =================================================================== */
+
+.newDashboardContainer {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-weight: 400;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === HEADER SECTION === */
+.newDashboardHeader {
+  padding: 24px 20px 20px 20px;
+  text-align: left;
+  background: transparent;
+}
+
+.newTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.newSubtitle {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* === CARDS GRID SECTION === */
+.cardsSection {
+  padding: 0 20px 32px 20px;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.newMetricCard {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  height: 145px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+}
+
+.newMetricCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #8b5cf6 100%);
+  border-radius: 16px 16px 0 0;
+}
+
+.newMetricCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 
+    0 20px 25px rgba(0, 0, 0, 0.15),
+    0 8px 10px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(96, 165, 250, 0.3);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.7) 100%);
+}
+
+.newMetricCard:hover::before {
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 30%, #8b5cf6 70%, #ec4899 100%);
+  height: 4px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: capitalize;
+  letter-spacing: 0.06em;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cardIcon {
+  font-size: 18px;
+  opacity: 0.9;
+  filter: none;
+  transition: all 0.3s ease;
+}
+
+.cardValue {
+  font-size: 26px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 14px 0;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-feature-settings: 'tnum';
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.cardSubtext {
+  font-size: 10px;
+  color: #94a3b8;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-weight: 500;
+}
+
+.positiveChange {
+  color: #34d399;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+.negativeChange {
+  color: #f87171;
+  font-weight: 600;
+  font-size: 10px;
+}
+
+/* Removed Swiper styles - no longer needed */
+
+/* === CHART SECTION === */
+.chartSection {
+  padding: 0 20px 32px 20px;
+}
+
+.chartContainer {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+}
+
+.chartContainer:hover {
+  box-shadow: 
+    0 8px 15px rgba(0, 0, 0, 0.12),
+    0 3px 6px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.chartHeader {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.chartTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.015em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.chartSubtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0;
+}
+
+.chartWrapper {
+  height: 280px;
+  position: relative;
+}
+
+/* === CHART SUMMARY SECTION === */
+.chartSummary {
+  padding-top: 28px;
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.chartSummary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.6) 50%, transparent 100%);
+}
+
+.summaryCard {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  border-radius: 16px;
+  padding: 20px 32px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(59, 130, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.summaryCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #8b5cf6 100%);
+  border-radius: 16px 16px 0 0;
+}
+
+.summaryCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(96, 165, 250, 0.25);
+  box-shadow: 
+    0 12px 40px rgba(59, 130, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.summaryLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #60a5fa;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.summaryValue {
+  font-size: 32px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-feature-settings: 'tnum';
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* === TABLE SECTION === */
+.tableSection {
+  padding: 0 20px 32px 20px;
+}
+
+.tableContainer {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(51, 65, 85, 0.6) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+}
+
+.tableContainer:hover {
+  box-shadow: 
+    0 8px 15px rgba(0, 0, 0, 0.12),
+    0 3px 6px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.tableHeader {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.tableTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.015em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.tableSubtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin: 0;
+}
+
+.newTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeadRow {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.tableHeadCell {
+  padding: 16px 24px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: none;
+}
+
+.tableBodyRow {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.tableBodyRow:hover {
+  background: rgba(15, 23, 42, 0.3);
+}
+
+.tableBodyRow:last-child {
+  border-bottom: none;
+}
+
+.tableBodyCell {
+  padding: 16px 24px;
+  border: none;
+  vertical-align: middle;
+}
+
+.customerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.customerName {
+  font-weight: 500;
+  color: #f1f5f9;
+  font-size: 12px;
+  line-height: 1.3;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.customerEmail {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.statusInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  min-width: 60px;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.statusBadge.paid {
+  background: linear-gradient(135deg, #dcfdf7 0%, #a7f3d0 100%);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.statusBadge.pending {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.statusBadge.failed {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.statusBadge.cancelled {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  color: #374151;
+  border: 1px solid rgba(107, 114, 128, 0.2);
+}
+
+.statusBadge.abandoned {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #475569;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.statusBadge.expired {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  color: #be185d;
+  border: 1px solid rgba(190, 24, 93, 0.2);
+}
+
+.statusBadge.refunded {
+  background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%);
+  color: #1e40af;
+  border: 1px solid rgba(30, 64, 175, 0.2);
+}
+
+.orderNumber {
+  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 11px;
+  color: #e2e8f0;
+  background: rgba(71, 85, 105, 0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.timeInfo {
+  font-size: 11px;
+  color: #cbd5e1;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
+}
+
+.timeInfo div:first-child {
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.timeInfo div:last-child {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.emptyState {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  font-size: 13px;
+  padding: 32px;
+}
+
+/* === REFRESH SECTION === */
+.refreshSection {
+  padding: 0 20px 32px 20px;
+  text-align: center;
+}
+
+.newRefreshButton {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 14px rgba(59, 130, 246, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.newRefreshButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.4),
+    0 4px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 30%, #8b5cf6 70%, #ec4899 100%);
+}
+
+.newRefreshButton:active {
+  transform: translateY(0);
+}
+
+/* === RESPONSIVE DESIGN === */
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .newDashboardContainer {
+    padding: 0;
+  }
+
+  .newDashboardHeader {
+    padding: 20px 16px 16px 16px;
+  }
+
+  .newTitle {
+    font-size: 24px;
+  }
+
+  .cardsSection {
+    padding: 0 16px 24px 16px;
+  }
+
+  .cardsGrid {
+    gap: 12px;
+  }
+
+  .chartSection {
+    padding: 0 16px 24px 16px;
+  }
+
+  .tableSection {
+    padding: 0 16px 24px 16px;
+  }
+
+  .refreshSection {
+    padding: 0 16px 24px 16px;
+  }
+
+  .newMetricCard {
+    padding: 20px;
+    height: 120px;
+    border-radius: 14px;
+  }
+
+  .cardValue {
+    font-size: 22px;
+  }
+
+  .cardIcon {
+    font-size: 16px;
+  }
+
+  .chartContainer {
+    padding: 20px 16px;
+  }
+
+  .chartWrapper {
+    height: 240px;
+  }
+
+  .tableContainer {
+    border-radius: 12px;
+  }
+
+  .tableHeader {
+    padding: 20px 16px 12px 16px;
+  }
+
+  .tableHeadCell {
+    padding: 12px 16px;
+    font-size: 10px;
+  }
+
+  .tableBodyCell {
+    padding: 12px 16px;
+  }
+
+  .customerName {
+    font-size: 11px;
+  }
+
+  .customerEmail {
+    font-size: 10px;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 481px) and (max-width: 768px) {
+  .newDashboardHeader {
+    padding: 24px 20px;
+  }
+
+  .cardsSection {
+    padding: 0 20px 28px 20px;
+  }
+
+  .cardsGrid {
+    gap: 16px;
+  }
+
+  .chartSection {
+    padding: 0 20px 28px 20px;
+  }
+
+  .tableSection {
+    padding: 0 20px 28px 20px;
+  }
+
+  .chartWrapper {
+    height: 260px;
+  }
+}
+
+/* Desktop Optimizations */
+@media (min-width: 769px) {
+  .newDashboardContainer {
+    padding: 0;
+  }
+
+  .newDashboardHeader {
+    padding: 32px 24px 24px 24px;
+  }
+
+  .newTitle {
+    font-size: 32px;
+  }
+
+  .newSubtitle {
+    font-size: 15px;
+  }
+
+  .cardsSection {
+    padding: 0 24px 40px 24px;
+  }
+
+  .cardsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .chartSection {
+    padding: 0 24px 40px 24px;
+  }
+
+  .tableSection {
+    padding: 0 24px 40px 24px;
+  }
+
+  .refreshSection {
+    padding: 0 24px 40px 24px;
+  }
+
+  .newMetricCard {
+    padding: 28px;
+    height: 140px;
+    border-radius: 18px;
+  }
+
+  .cardValue {
+    font-size: 28px;
+  }
+
+  .cardIcon {
+    font-size: 20px;
+  }
+
+  .chartContainer {
+    padding: 28px;
+  }
+
+  .chartWrapper {
+    height: 320px;
+  }
+
+  .summaryCard {
+    padding: 24px 36px;
+  }
+
+  .summaryValue {
+    font-size: 36px;
+  }
+
+  .summaryLabel {
+    font-size: 13px;
+  }
+
+  .tableHeader {
+    padding: 28px 28px 20px 28px;
+  }
+
+  .tableHeadCell {
+    padding: 18px 28px;
+    font-size: 12px;
+  }
+
+  .tableBodyCell {
+    padding: 18px 28px;
+  }
+
+  .customerName {
+    font-size: 13px;
+  }
+
+  .customerEmail {
+    font-size: 11px;
+  }
+
+  .chartTitle {
+    font-size: 20px;
+  }
+
+  .tableTitle {
+    font-size: 20px;
+  }
+}

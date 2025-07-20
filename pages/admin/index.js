@@ -1,14 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import styles from '@/styles/Admin.module.css';
 
+// Swiper imports
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Chart.js imports
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
+    // Existing data structure maintained for compatibility
     totalCustomers: 0,
     todayCustomers: 0,
     totalRevenue: 0,
     todayRevenue: 0,
-    recentCustomers: []
+    recentCustomers: [],
+    pageViews: { today: {} },
+    // New data for redesigned dashboard
+    dailyRevenueChart: [],
+    monthlyRevenueComparison: {},
+    recentOrdersAllStatuses: []
   });
   const [loading, setLoading] = useState(true);
 
@@ -36,197 +75,306 @@ export default function AdminDashboard() {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
-      setStats({
-        totalCustomers: 0,
-        todayCustomers: 0,
-        totalRevenue: 0,
-        todayRevenue: 0,
-        recentCustomers: []
-      });
       setLoading(false);
     }
   };
 
-  return (
-    <AdminLayout title="Admin Dashboard">
-      <div className={styles.dashboardHeader}>
-        <h1 className={styles.title}>KelasGPT Dashboard</h1>
-        <p className={styles.subtitle}>
-          Real-time insights and analytics for your digital course platform
-        </p>
-      </div>
+  // Calculate metrics for the new cards
+  const calculateMetrics = () => {
+    const todayPageViews = stats.pageViews?.today?.landingUniqueVisitors || 0;
+    const todayTotalVisitors = stats.pageViews?.today?.landingVisits || 0;
+    const todayCheckoutViews = stats.pageViews?.today?.checkoutUniqueVisitors || 0;
+    
+    // Sales CTR = (checkout page unique visitor / sales page unique visitor) * 100
+    const salesCTR = todayPageViews > 0 ? ((todayCheckoutViews / todayPageViews) * 100).toFixed(1) : 0;
+    
+    // Conversion Rate = (Successful Purchased Customer / sales page unique visitor) * 100
+    const conversionRate = todayPageViews > 0 ? ((stats.todayCustomers / todayPageViews) * 100).toFixed(1) : 0;
+    
+    // Yesterday revenue comparison
+    const yesterdayRevenue = stats.dailyRevenueChart?.length >= 2 ? stats.dailyRevenueChart[stats.dailyRevenueChart.length - 2]?.revenue || 0 : 0;
+    const todayRevenueChange = yesterdayRevenue > 0 ? (((stats.todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100).toFixed(1) : 0;
 
-      {loading ? (
+    return {
+      todayPageViews,
+      todayTotalVisitors,
+      todayCheckoutViews,
+      todayRevenue: stats.todayRevenue,
+      yesterdayRevenue,
+      todayRevenueChange,
+      conversionRate,
+      salesCTR,
+      monthlyRevenue: stats.monthlyRevenueComparison?.currentMonth || 0,
+      monthlyRevenueChange: stats.monthlyRevenueComparison?.percentageChange || 0,
+      previousMonthRevenue: stats.monthlyRevenueComparison?.previousMonth || 0
+    };
+  };
+
+  const metrics = calculateMetrics();
+
+  // Chart configuration
+  const chartData = {
+    labels: stats.dailyRevenueChart?.map(day => day.day) || [],
+    datasets: [
+      {
+        label: 'Daily Revenue (RM)',
+        data: stats.dailyRevenueChart?.map(day => day.revenue) || [],
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderWidth: 3,
+        pointBackgroundColor: '#3b82f6',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        fill: true,
+        tension: 0.4
+      }
+    ]
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(17, 24, 39, 0.95)',
+        titleColor: '#f9fafb',
+        bodyColor: '#f9fafb',
+        borderColor: '#374151',
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          label: function(context) {
+            return `RM ${context.parsed.y.toFixed(2)}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false
+        },
+        ticks: {
+          color: '#6b7280',
+          font: {
+            size: 11,
+            weight: '500'
+          }
+        }
+      },
+      y: {
+        grid: {
+          color: 'rgba(107, 114, 128, 0.1)',
+          borderDash: [5, 5]
+        },
+        ticks: {
+          color: '#6b7280',
+          font: {
+            size: 11,
+            weight: '500'
+          },
+          callback: function(value) {
+            return `RM ${value}`;
+          }
+        }
+      }
+    },
+    elements: {
+      point: {
+        hoverBackgroundColor: '#3b82f6'
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <AdminLayout title="Admin Dashboard">
         <div className={styles.loading}>
           <div className={styles.loadingSpinner}></div>
-          Loading comprehensive analytics...
+          Loading dashboard analytics...
         </div>
-      ) : (
-        <>
-          {/* Key Metrics Grid */}
-          <div className={styles.metricsGrid}>
-            <div className={`${styles.metricCard} ${styles.customers}`}>
-              <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Total Customers</h3>
-                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+      </AdminLayout>
+    );
+  }
+
+  return (
+    <AdminLayout title="Admin Dashboard">
+      <div className={styles.newDashboardContainer}>
+        
+        {/* Header */}
+        <div className={styles.newDashboardHeader}>
+          <h1 className={styles.newTitle}>Today&apos;s Analytics</h1>
+          <p className={styles.newSubtitle}>Real-time business insights</p>
+        </div>
+
+        {/* Part 1: Main Cards Grid */}
+        <div className={styles.cardsSection}>
+          <div className={styles.cardsGrid}>
+            <div className={styles.newMetricCard}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>Page Views</h3>
+                <div className={styles.cardIcon}>👁️</div>
               </div>
-              <div className={styles.metricValue}>{stats.totalCustomers.toLocaleString()}</div>
-              <div className={styles.metricSubtext}>
-                {stats.conversionRate}% conversion rate
-                {stats.weeklyGrowth !== undefined && (
-                  <span className={`${styles.metricGrowth} ${stats.weeklyGrowth >= 0 ? styles.positive : styles.negative}`}>
-                    {stats.weeklyGrowth >= 0 ? '↗' : '↘'} {Math.abs(stats.weeklyGrowth)}%
+              <div className={styles.cardValue}>{metrics.todayPageViews.toLocaleString()}</div>
+              <div className={styles.cardSubtext}>
+                <div>Today&apos;s unique visitors</div>
+                <div>({metrics.todayTotalVisitors.toLocaleString()} total visits)</div>
+              </div>
+            </div>
+
+            <div className={styles.newMetricCard}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>Conversion Rate</h3>
+                <div className={styles.cardIcon}>📈</div>
+              </div>
+              <div className={styles.cardValue}>{metrics.conversionRate}%</div>
+              <div className={styles.cardSubtext}>
+                <div>CTR: {metrics.salesCTR}%</div>
+                <div>({metrics.todayCheckoutViews} unique checkouts)</div>
+              </div>
+            </div>
+
+            <div className={styles.newMetricCard}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>Revenue</h3>
+                <div className={styles.cardIcon}>💰</div>
+              </div>
+              <div className={styles.cardValue}>RM {metrics.todayRevenue.toFixed(2)}</div>
+              <div className={styles.cardSubtext}>
+                <div>
+                  <span className={metrics.todayRevenueChange >= 0 ? styles.positiveChange : styles.negativeChange}>
+                    {metrics.todayRevenueChange >= 0 ? '↗' : '↘'} {Math.abs(metrics.todayRevenueChange)}%
                   </span>
-                )}
+                  {' '}vs yesterday
+                </div>
+                <div>(Yesterday: RM {metrics.yesterdayRevenue.toFixed(2)})</div>
               </div>
             </div>
 
-            <div className={`${styles.metricCard} ${styles.revenue}`}>
-              <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Total Revenue</h3>
-                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+            <div className={styles.newMetricCard}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>Monthly Revenue</h3>
+                <div className={styles.cardIcon}>📊</div>
               </div>
-              <div className={styles.metricValue}>RM {stats.totalRevenue ? stats.totalRevenue.toLocaleString() : '0'}</div>
-              <div className={styles.metricSubtext}>
-                RM {stats.averageOrderValue ? stats.averageOrderValue.toFixed(2) : '0.00'} average order value
-              </div>
-            </div>
-
-            <div className={`${styles.metricCard}`}>
-              <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Today&apos;s Performance</h3>
-                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <div className={styles.metricValue}>{stats.todayCustomers}</div>
-              <div className={styles.metricSubtext}>
-                RM {stats.todayRevenue ? stats.todayRevenue.toFixed(2) : '0.00'} revenue today
-              </div>
-            </div>
-
-            <div className={`${styles.metricCard} ${styles.conversion}`}>
-              <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Landing Page Views</h3>
-                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </div>
-              <div className={styles.metricValue}>{stats.pageViews?.today?.landingVisits || 0}</div>
-              <div className={styles.metricSubtext}>
-                {stats.pageViews?.today?.landingUniqueVisitors || 0} unique visitors
-              </div>
-            </div>
-
-            <div className={`${styles.metricCard}`}>
-              <div className={styles.metricHeader}>
-                <h3 className={styles.metricTitle}>Checkout Page Views</h3>
-                <svg className={styles.metricIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <div className={styles.metricValue}>{stats.pageViews?.today?.checkoutVisits || 0}</div>
-              <div className={styles.metricSubtext}>
-                {stats.pageViews?.today?.checkoutUniqueVisitors || 0} unique visitors
+              <div className={styles.cardValue}>RM {metrics.monthlyRevenue.toFixed(2)}</div>
+              <div className={styles.cardSubtext}>
+                <div>
+                  <span className={metrics.monthlyRevenueChange >= 0 ? styles.positiveChange : styles.negativeChange}>
+                    {metrics.monthlyRevenueChange >= 0 ? '↗' : '↘'} {Math.abs(metrics.monthlyRevenueChange)}%
+                  </span>
+                  {' '}vs last month
+                </div>
+                <div>(Last month: RM {metrics.previousMonthRevenue.toFixed(2)})</div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Detailed Sections */}
-          <div className={styles.sectionsGrid}>
-            {/* Recent Customers Table */}
-            <div className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Recent Purchases</h2>
-                <span className={styles.metricSubtext}>Last 10 successful payments</span>
+        {/* Part 2: Revenue Performance Graph */}
+        <div className={styles.chartSection}>
+          <div className={styles.chartContainer}>
+            <div className={styles.chartHeader}>
+              <h2 className={styles.chartTitle}>Revenue Performance</h2>
+              <p className={styles.chartSubtitle}>Past 7 days confirmed revenue</p>
+            </div>
+            <div className={styles.chartWrapper}>
+              <Line data={chartData} options={chartOptions} />
+            </div>
+            
+            {/* 7 Days Revenue Summary */}
+            <div className={styles.chartSummary}>
+              <div className={styles.summaryCard}>
+                <div className={styles.summaryLabel}>7 Days Revenue</div>
+                <div className={styles.summaryValue}>
+                  RM {(stats.dailyRevenueChart?.reduce((sum, day) => sum + (day.revenue || 0), 0) || 0).toFixed(2)}
+                </div>
               </div>
-              
-              <table className={styles.table}>
-                <thead className={styles.tableHeader}>
-                  <tr>
-                    <th className={styles.tableHeaderCell}>Customer</th>
-                    <th className={styles.tableHeaderCell}>Amount</th>
-                    <th className={styles.tableHeaderCell}>Time</th>
+            </div>
+          </div>
+        </div>
+
+        {/* Part 3: Recent Orders Table */}
+        <div className={styles.tableSection}>
+          <div className={styles.tableContainer}>
+            <div className={styles.tableHeader}>
+              <h2 className={styles.tableTitle}>Recent Orders</h2>
+              <p className={styles.tableSubtitle}>Latest 10 order activities</p>
+            </div>
+            
+            <div className={styles.tableWrapper}>
+              <table className={styles.newTable}>
+                <thead>
+                  <tr className={styles.tableHeadRow}>
+                    <th className={styles.tableHeadCell}>Customer</th>
+                    <th className={styles.tableHeadCell}>Status</th>
+                    <th className={styles.tableHeadCell}>Time Created</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {stats.recentCustomers.length > 0 ? (
-                    stats.recentCustomers.map((customer, index) => (
-                      <tr key={index} className={styles.tableRow}>
-                        <td className={styles.tableCell}>
-                          <div className={styles.customerName}>{customer.name}</div>
-                          <div className={styles.customerEmail}>{customer.email}</div>
+                  {stats.recentOrdersAllStatuses?.length > 0 ? (
+                    stats.recentOrdersAllStatuses.map((order, index) => (
+                      <tr key={index} className={styles.tableBodyRow}>
+                        <td className={styles.tableBodyCell}>
+                          <div className={styles.customerInfo}>
+                            <div className={styles.customerName}>{order.customerName}</div>
+                            <div className={styles.customerEmail}>{order.customerEmail}</div>
+                          </div>
                         </td>
-                        <td className={`${styles.tableCell} ${styles.amount}`}>
-                          RM {customer.amount.toFixed(2)}
+                        <td className={styles.tableBodyCell}>
+                          <div className={styles.statusInfo}>
+                            <span className={`${styles.statusBadge} ${styles[order.paymentStatus]}`}>
+                              {order.paymentStatus}
+                            </span>
+                            <div className={styles.orderNumber}>#{order.orderNumber}</div>
+                          </div>
                         </td>
-                        <td className={`${styles.tableCell} ${styles.time}`}>
-                          {customer.time}
+                        <td className={styles.tableBodyCell}>
+                          <div className={styles.timeInfo}>
+                            {order.timeElapsed.includes('•') ? (
+                              <>
+                                <div>{order.timeElapsed.split(' • ')[0]}</div>
+                                <div>{order.timeElapsed.split(' • ')[1]}</div>
+                              </>
+                            ) : (
+                              <div>{order.timeElapsed}</div>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))
                   ) : (
-                    <tr className={styles.tableRow}>
-                      <td className={styles.tableCell} colSpan={3} style={{ textAlign: 'center', color: '#9ca3af' }}>
-                        No recent purchases to display
+                    <tr>
+                      <td colSpan={3} className={styles.emptyState}>
+                        No recent orders to display
                       </td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
-
-            {/* Status Breakdown */}
-            <div className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Payment Status</h2>
-                <span className={styles.metricSubtext}>Current breakdown</span>
-              </div>
-              
-              <div className={styles.statusBreakdown}>
-                <div className={styles.statusItem}>
-                  <span className={styles.statusLabel}>Successful Payments</span>
-                  <span className={`${styles.statusValue} ${styles.paid}`}>
-                    {stats.statusBreakdown?.paid || 0}
-                  </span>
-                </div>
-                
-                <div className={styles.statusItem}>
-                  <span className={styles.statusLabel}>Pending Payments</span>
-                  <span className={`${styles.statusValue} ${styles.pending}`}>
-                    {stats.statusBreakdown?.pending || 0}
-                  </span>
-                </div>
-                
-                <div className={styles.statusItem}>
-                  <span className={styles.statusLabel}>Failed Payments</span>
-                  <span className={`${styles.statusValue} ${styles.failed}`}>
-                    {stats.statusBreakdown?.failed || 0}
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
+        </div>
 
-          {/* Refresh Button */}
-          <div style={{ textAlign: 'center', marginTop: '32px' }}>
-            <button 
-              onClick={fetchDashboardData}
-              className={styles.refreshButton}
-            >
-              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Refresh Analytics
-            </button>
-          </div>
-        </>
-      )}
+        {/* Refresh Button */}
+        <div className={styles.refreshSection}>
+          <button 
+            onClick={fetchDashboardData}
+            className={styles.newRefreshButton}
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Refresh Analytics
+          </button>
+        </div>
+
+      </div>
     </AdminLayout>
   );
 }

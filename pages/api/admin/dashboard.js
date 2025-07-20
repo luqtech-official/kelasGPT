@@ -1,4 +1,4 @@
-import { supabase, getPageViewStats } from "../../../lib/supabase";
+import { supabase, getPageViewStats, getDailyRevenueStats, getMonthlyRevenueComparison, getRecentOrdersAllStatuses } from "../../../lib/supabase";
 import { requireAuth } from "../../../lib/adminAuth";
 import { getProductSettings } from "../../../lib/settings";
 
@@ -15,6 +15,13 @@ async function handler(req, res) {
 
     // Get page view stats from the new function
     const pageViewStats = await getPageViewStats();
+
+    // Get new dashboard data for redesigned interface
+    const [dailyRevenueStats, monthlyRevenue, recentOrdersAll] = await Promise.all([
+      getDailyRevenueStats(7),
+      getMonthlyRevenueComparison(),
+      getRecentOrdersAllStatuses(10)
+    ]);
 
     // Get today's date range
     const today = new Date();
@@ -44,26 +51,29 @@ async function handler(req, res) {
       throw todayCustomersError;
     }
 
-    // Get paid customers for revenue calculation
-    const { data: paidCustomers, error: paidCustomersError } = await supabase
-      .from('customers')
-      .select('created_at')
-      .eq('payment_status', 'paid');
+    // Get paid orders for confirmed revenue calculation
+    const { data: paidOrders, error: paidOrdersError } = await supabase
+      .from('orders')
+      .select('total_amount, created_at')
+      .eq('order_status', 'paid');
 
-    if (paidCustomersError) {
-      console.error('Error fetching paid customers:', paidCustomersError);
-      throw paidCustomersError;
+    if (paidOrdersError) {
+      console.error('Error fetching paid orders:', paidOrdersError);
+      throw paidOrdersError;
     }
 
-    // Calculate total revenue using dynamic product price
-    const totalRevenue = paidCustomers.length * PRODUCT_PRICE;
+    // Calculate total confirmed revenue from paid orders
+    const totalRevenue = paidOrders?.reduce((sum, order) => 
+      sum + (parseFloat(order.total_amount) || 0), 0) || 0;
 
-    // Calculate today's revenue
-    const todayPaidCustomers = paidCustomers.filter(customer => {
-      const customerDate = new Date(customer.created_at);
-      return customerDate >= todayStart && customerDate < todayEnd;
-    });
-    const todayRevenue = todayPaidCustomers.length * PRODUCT_PRICE;
+    // Calculate today's confirmed revenue from paid orders
+    const todayPaidOrders = paidOrders?.filter(order => {
+      const orderDate = new Date(order.created_at);
+      return orderDate >= todayStart && orderDate < todayEnd;
+    }) || [];
+    
+    const todayRevenue = todayPaidOrders.reduce((sum, order) => 
+      sum + (parseFloat(order.total_amount) || 0), 0);
 
     // Get recent customers (last 10 paid customers)
     const { data: recentCustomers, error: recentCustomersError } = await supabase
@@ -95,8 +105,18 @@ async function handler(req, res) {
       return acc;
     }, {});
 
+    // Get paid customers count for conversion rate calculation
+    const { data: paidCustomers, error: paidCustomersError } = await supabase
+      .from('customers')
+      .select('created_at')
+      .eq('payment_status', 'paid');
+
+    if (paidCustomersError) {
+      console.error('Error fetching paid customers for conversion:', paidCustomersError);
+    }
+
     // Get conversion rate
-    const conversionRate = totalCustomers > 0 ? ((paidCustomers.length / totalCustomers) * 100).toFixed(2) : 0;
+    const conversionRate = totalCustomers > 0 ? (((paidCustomers?.length || 0) / totalCustomers) * 100).toFixed(2) : 0;
 
     // Format recent customers for display
     const formattedRecentCustomers = recentCustomers.map(customer => ({
@@ -137,7 +157,11 @@ async function handler(req, res) {
         failed: statusCounts.failed || 0
       },
       averageOrderValue: PRODUCT_PRICE,
-      pageViews: pageViewStats
+      pageViews: pageViewStats,
+      // New data for redesigned dashboard
+      dailyRevenueChart: dailyRevenueStats,
+      monthlyRevenueComparison: monthlyRevenue,
+      recentOrdersAllStatuses: recentOrdersAll
     };
 
     res.status(200).json({
@@ -155,22 +179,33 @@ async function handler(req, res) {
   }
 }
 
-// Helper function to get relative time
+// Helper function to get detailed time with relative info
 function getRelativeTime(dateString) {
   const now = new Date();
   const date = new Date(dateString);
   const diffInMinutes = Math.floor((now - date) / (1000 * 60));
   
-  if (diffInMinutes < 1) return 'Just now';
-  if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+  // Format detailed time (12-hour format with AM/PM)
+  const timeOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Kuala_Lumpur'
+  };
   
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours} hours ago`;
+  const detailedTime = date.toLocaleString('en-MY', timeOptions);
   
-  const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 7) return `${diffInDays} days ago`;
+  // Get relative time
+  let relativeTime;
+  if (diffInMinutes < 1) relativeTime = 'Just now';
+  else if (diffInMinutes < 60) relativeTime = `${diffInMinutes}m ago`;
+  else if (diffInMinutes < 1440) relativeTime = `${Math.floor(diffInMinutes / 60)}h ago`;
+  else relativeTime = `${Math.floor(diffInMinutes / 1440)}d ago`;
   
-  return date.toLocaleDateString('en-MY');
+  return `${relativeTime} • ${detailedTime}`;
 }
 
 export default requireAuth(handler);

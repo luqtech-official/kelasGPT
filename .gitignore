@@ -104,3 +104,6 @@ Thumbs.db
 mailjet-*.html
 *-email-template.html
 email-template*.html
+
+# Future ideas and planning documents
+/.futureidea/
