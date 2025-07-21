@@ -32,6 +32,7 @@ export default function Customers() {
   // Email resend functionality
   const [resendingEmail, setResendingEmail] = useState(null);
   const [resendModal, setResendModal] = useState(null);
+  const [exportLoading, setExportLoading] = useState(false);
 
   const fetchCSRFToken = useCallback(async () => {
     try {
@@ -461,94 +462,149 @@ export default function Customers() {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const exportCustomers = async () => {
-    try {
-      // Build query parameters for export
-      const params = new URLSearchParams({
-        export: 'true',
-        search: debouncedSearchTerm,  // ✅ Use debounced value for export consistency
-        status: statusFilter
-      });
+  // Export functionality - commented out for future use
+  // const exportCustomers = async () => {
+  //   try {
+  //     setExportLoading(true);
+  //     
+  //     // Build query parameters for export
+  //     const params = new URLSearchParams({
+  //       export: 'true',
+  //       search: debouncedSearchTerm,  // ✅ Use debounced value for export consistency
+  //       status: statusFilter
+  //     });
 
-      const response = await fetch(`/api/admin/customers?${params}`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to export data');
-      }
+  //     const response = await fetch(`/api/admin/customers?${params}`);
+  //     
+  //     if (!response.ok) {
+  //       throw new Error('Failed to export data');
+  //     }
 
-      // Create blob and download
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const filename = `customers-${new Date().toISOString().split('T')[0]}.csv`;
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      
-    } catch (error) {
-      console.error('Export failed:', error);
-      alert('Failed to export data. Please try again.');
-    }
-  };
+  //     // Create blob and download
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const filename = `customers-${new Date().toISOString().split('T')[0]}.csv`;
+  //     
+  //     const a = document.createElement('a');
+  //     a.href = url;
+  //     a.download = filename;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     window.URL.revokeObjectURL(url);
+  //     document.body.removeChild(a);
+  //     
+  //   } catch (error) {
+  //     console.error('Export failed:', error);
+  //     alert('Failed to export data. Please try again.');
+  //   } finally {
+  //     setExportLoading(false);
+  //   }
+  // };
 
   return (
     <AdminLayout title="Customer Management">
-      {/* Header */}
-      <div className={styles.customersHeader}>
-        <h1 className={styles.customersTitle}>Customer Management</h1>
-        <button 
-          onClick={exportCustomers}
-          className={styles.exportButton}
-        >
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          Export CSV
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className={styles.filtersRow}>
-        <div className={styles.searchContainer}>
-          <input
-            type="text"
-            placeholder="Search by name, email, or phone..."
-            className={`${styles.searchInput} ${isSearching ? styles.searchInputSearching : ''}`}
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          {isSearching && (
-            <div className={styles.searchIndicator}>
-              <div className={styles.searchSpinner}></div>
+      {/* Command Bar */}
+      <div className={styles.commandBar}>
+        {/* Header Section */}
+        <div className={styles.commandBarHeader}>
+          <div className={styles.titleSection}>
+            <h1 className={styles.customersTitle}>Customer Management</h1>
+            <div className={styles.statsIndicator}>
+              {!loading && (
+                <span className={styles.customerCount}>
+                  {pagination.filteredCount} of {pagination.totalCount} customers
+                  {statusFilter !== 'all' && (
+                    <span className={styles.filterIndicator}>• {statusFilter} filter active</span>
+                  )}
+                </span>
+              )}
             </div>
-          )}
+          </div>
+          
+          {/* Export button - commented out for future use */}
+          {/* <div className={styles.headerActions}>
+            <button 
+              onClick={exportCustomers}
+              disabled={exportLoading}
+              className={styles.exportButton}
+            >
+              {exportLoading ? (
+                <div className={styles.buttonSpinner}></div>
+              ) : (
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              )}
+              {exportLoading ? 'Exporting...' : 'Export CSV'}
+            </button>
+          </div> */}
         </div>
-        
-        <select 
-          value={statusFilter} 
-          onChange={handleStatusFilter}
-          className={styles.filterSelect}
-        >
-          <option value="all">All Status</option>
-          <option value="paid">Paid</option>
-          <option value="pending">Pending</option>
-          <option value="failed">Failed</option>
-          <option value="refunded">Refunded</option>
-        </select>
 
-        <button 
-          onClick={fetchCustomers}
-          className={styles.refreshBtn}
-        >
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          Refresh
-        </button>
+        {/* Enhanced Filters Section */}
+        <div className={styles.filtersSection}>
+          <div className={styles.enhancedSearchContainer}>
+            <div className={styles.searchInputWrapper}>
+              <svg className={styles.searchIcon} width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search customers by name, email, or phone..."
+                className={`${styles.enhancedSearchInput} ${isSearching ? styles.searchInputSearching : ''}`}
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setCurrentPage(1);
+                  }}
+                  className={styles.clearSearchButton}
+                >
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+              {isSearching && (
+                <div className={styles.searchLoadingIndicator}>
+                  <div className={styles.searchSpinner}></div>
+                </div>
+              )}
+              <div className={styles.searchShortcut}>⌘K</div>
+            </div>
+          </div>
+          
+          <div className={styles.filterControls}>
+            <div className={styles.customFilterSelect}>
+              <select 
+                value={statusFilter} 
+                onChange={handleStatusFilter}
+                className={styles.enhancedFilterSelect}
+              >
+                <option value="all">All Status</option>
+                <option value="paid">Paid</option>
+                <option value="pending">Pending</option>
+                <option value="failed">Failed</option>
+                <option value="refunded">Refunded</option>
+              </select>
+              <svg className={styles.selectIcon} width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            <button 
+              onClick={fetchCustomers}
+              className={styles.enhancedRefreshBtn}
+              title="Refresh data"
+            >
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Loading State */}

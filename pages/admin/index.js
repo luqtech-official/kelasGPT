@@ -50,9 +50,19 @@ export default function AdminDashboard() {
     recentOrdersAllStatuses: []
   });
   const [loading, setLoading] = useState(true);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     fetchDashboardData();
+  }, []);
+
+  // Update current time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
   }, []);
 
   const fetchDashboardData = async () => {
@@ -111,6 +121,27 @@ export default function AdminDashboard() {
   };
 
   const metrics = calculateMetrics();
+
+  // Format current date and time
+  const formatDateTime = () => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const day = days[currentTime.getDay()];
+    const date = currentTime.getDate().toString().padStart(2, '0');
+    const month = months[currentTime.getMonth()];
+    const year = currentTime.getFullYear();
+    
+    let hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const hoursStr = hours.toString().padStart(2, '0');
+    
+    return `${day}, ${date} ${month} ${year} - ${hoursStr}:${minutes} ${ampm}`;
+  };
 
   // Chart configuration
   const chartData = {
@@ -210,7 +241,8 @@ export default function AdminDashboard() {
         {/* Header */}
         <div className={styles.newDashboardHeader}>
           <h1 className={styles.newTitle}>Today&apos;s Analytics</h1>
-          <p className={styles.newSubtitle}>Real-time business insights</p>
+          <p className={styles.newSubtitle}>Real-time Business Insights</p>
+          <p className={styles.newTimeDisplay}>{formatDateTime()}</p>
         </div>
 
         {/* Part 1: Main Cards Grid */}
