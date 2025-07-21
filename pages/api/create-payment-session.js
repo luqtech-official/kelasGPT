@@ -266,7 +266,17 @@ async function validateEmailStatus(logger, email) {
     switch (payment_status) {
       case 'pending':
         // Check if pending order is older than 10 minutes
-        const orderAge = Date.now() - new Date(created_at).getTime();
+        let createUTCTimestamp;
+        try {
+          ({ createUTCTimestamp } = await import('../../lib/timezone-utils.js'));
+        } catch (importError) {
+          logger.warn('Failed to import timezone-utils in create-payment-session, using fallback', { error: importError.message });
+          createUTCTimestamp = () => new Date().toISOString();
+        }
+        
+        const currentTime = new Date(createUTCTimestamp()).getTime();
+        const orderTime = new Date(created_at).getTime();
+        const orderAge = currentTime - orderTime;
         const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
         
         if (orderAge > tenMinutes) {

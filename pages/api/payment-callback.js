@@ -137,6 +137,14 @@ export default async function handler(req, res) {
         const productSettings = await getProductSettings();
 
         // Log email attempt
+        let createUTCTimestamp;
+        try {
+          ({ createUTCTimestamp } = await import('../../../lib/timezone-utils.js'));
+        } catch (importError) {
+          logger.warn('Failed to import timezone-utils in payment-callback, using fallback', { error: importError.message });
+          createUTCTimestamp = () => new Date().toISOString();
+        }
+        
         const emailLogResult = await logEmail({
           email_type: 'purchase_confirmation',
           recipient_email: customerEmail,
@@ -147,7 +155,7 @@ export default async function handler(req, res) {
           status: 'sending',
           provider: 'mailjet',
           template_id: process.env.MJ_TEMPLATE_ID_PURCHASE_CONFIRMATION,
-          created_at: new Date().toISOString()
+          created_at: createUTCTimestamp()
         });
 
         if (emailLogResult.data && emailLogResult.data[0]) {

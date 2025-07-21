@@ -55,6 +55,14 @@ async function resendEmailHandler(req, res) {
     const productSettings = await getProductSettings();
 
     // Log email resend attempt
+    let createUTCTimestamp;
+    try {
+      ({ createUTCTimestamp } = await import('../../../lib/timezone-utils.js'));
+    } catch (importError) {
+      console.warn('Failed to import timezone-utils in resend-email, using fallback', { error: importError.message });
+      createUTCTimestamp = () => new Date().toISOString();
+    }
+    
     const emailLogResult = await logEmail({
       email_type: 'purchase_confirmation_resend',
       recipient_email: customerEmail,
@@ -65,7 +73,7 @@ async function resendEmailHandler(req, res) {
       status: 'sending',
       provider: 'mailjet',
       template_id: process.env.MJ_TEMPLATE_ID_PURCHASE_CONFIRMATION,
-      created_at: new Date().toISOString()
+      created_at: createUTCTimestamp()
     });
 
     let emailLogId = null;

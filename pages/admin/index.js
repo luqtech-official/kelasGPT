@@ -2,13 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import styles from '@/styles/Admin.module.css';
 
-// Swiper imports
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
 // Chart.js imports
 import {
   Chart as ChartJS,
@@ -66,6 +59,7 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchDashboardData = async () => {
+    // console.log('Start: fetchDashboardData()');
     try {
       setLoading(true);
       const response = await fetch('/api/admin/dashboard');
@@ -78,6 +72,7 @@ export default function AdminDashboard() {
       
       if (result.success) {
         setStats(result.data);
+        // console.log('End: fetchDashboardData() Success');
       } else {
         throw new Error(result.message || 'Failed to fetch dashboard data');
       }
@@ -96,14 +91,24 @@ export default function AdminDashboard() {
     const todayCheckoutViews = stats.pageViews?.today?.checkoutUniqueVisitors || 0;
     
     // Sales CTR = (checkout page unique visitor / sales page unique visitor) * 100
-    const salesCTR = todayPageViews > 0 ? ((todayCheckoutViews / todayPageViews) * 100).toFixed(1) : 0;
+    const salesCTR = todayPageViews > 0 ? parseFloat(((todayCheckoutViews / todayPageViews) * 100).toFixed(1)) : 0;
     
-    // Conversion Rate = (Successful Purchased Customer / sales page unique visitor) * 100
-    const conversionRate = todayPageViews > 0 ? ((stats.todayCustomers / todayPageViews) * 100).toFixed(1) : 0;
+    // FIXED: Conversion Rate = (TODAY's PAID customers / sales page unique visitor) * 100
+    const todayPaidCustomers = stats.todayPaidCustomers || 0;
+    const conversionRate = todayPageViews > 0 ? parseFloat(((todayPaidCustomers / todayPageViews) * 100).toFixed(1)) : 0;
     
-    // Yesterday revenue comparison
-    const yesterdayRevenue = stats.dailyRevenueChart?.length >= 2 ? stats.dailyRevenueChart[stats.dailyRevenueChart.length - 2]?.revenue || 0 : 0;
-    const todayRevenueChange = yesterdayRevenue > 0 ? (((stats.todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100).toFixed(1) : 0;
+    // FIXED: Find yesterday's revenue by date, not array position
+    const today = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    
+    const yesterdayData = stats.dailyRevenueChart?.find(day => day.date === yesterday);
+    const yesterdayRevenue = yesterdayData?.revenue || 0;
+    const todayRevenueChange = yesterdayRevenue > 0 ? 
+      parseFloat((((stats.todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100).toFixed(1)) : 0;
+
+    // FIXED: Validate monthly percentage to prevent NaN/Infinity display
+    const rawMonthlyChange = stats.monthlyRevenueComparison?.percentageChange || 0;
+    const monthlyRevenueChange = (isFinite(rawMonthlyChange) && !isNaN(rawMonthlyChange)) ? rawMonthlyChange : 0;
 
     return {
       todayPageViews,
@@ -115,8 +120,11 @@ export default function AdminDashboard() {
       conversionRate,
       salesCTR,
       monthlyRevenue: stats.monthlyRevenueComparison?.currentMonth || 0,
-      monthlyRevenueChange: stats.monthlyRevenueComparison?.percentageChange || 0,
-      previousMonthRevenue: stats.monthlyRevenueComparison?.previousMonth || 0
+      monthlyRevenueChange,
+      previousMonthRevenue: stats.monthlyRevenueComparison?.previousMonth || 0,
+      // Add debugging info
+      todayPaidCustomers,
+      hasYesterdayData: !!yesterdayData
     };
   };
 

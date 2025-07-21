@@ -40,7 +40,10 @@ async function handler(req, res) {
 
     // --- 2. Process and aggregate data in memory ---
     const dailySummaries = recordsToArchive.reduce((acc, record) => {
-      const date = new Date(record.created_at).toISOString().split('T')[0];
+      // ✅ CRITICAL FIX: Convert UTC timestamp to Malaysia date for correct daily grouping
+      const date = new Date(record.created_at).toLocaleDateString('en-CA', {
+        timeZone: 'Asia/Kuala_Lumpur'
+      }); // Returns YYYY-MM-DD format in Malaysia timezone
       if (!acc[date]) {
         acc[date] = {
           date,

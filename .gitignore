@@ -53,6 +53,11 @@ yarn-error.log*
 sql-fix*
 scripts/create-atomic-update-function.sql
 scripts/create-analytics-table.sql
+scripts/malaysia-timezone-functions.sql
+scripts/create_dashboard_views.sql
+scripts/fix_dashboard_summary_view.sql
+scripts/fix_dashboard_summary_simple.sql
+scripts/APPLY-TIMEZONE-FIXES-README.md
 missing-database-function.sql
 
 # typescript
