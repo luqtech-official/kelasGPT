@@ -46,6 +46,8 @@ async function getSettings(req, res) {
       // Product Settings
       productName: { value: 'KelasGPT - Instant Access x1', type: 'string' },
       productPrice: { value: 197.00, type: 'number' },
+      discountamount: { value: 0, type: 'number' },
+      baseproductprice: { value: 197.00, type: 'number' },
       productDescription: { 
         value: 'Belajar cara menggunakan GPT-4 untuk tingkatkan produktiviti dan bina penyelesaian AI anda sendiri.',
         type: 'string'
@@ -195,6 +197,8 @@ function validateSetting(key, value) {
     socialProofInterval: (val) => typeof val === 'number' && val >= 3000 && val <= 20000,
     socialProofDuration: (val) => typeof val === 'number' && val >= 1000 && val <= 10000,
     productPrice: (val) => typeof val === 'number' && val >= 0 && val <= 9999.99,
+    discountamount: (val) => typeof val === 'number' && val >= 0 && val <= 9999.99,
+    baseproductprice: (val) => typeof val === 'number' && val >= 0 && val <= 9999.99,
     
     // String settings
     productName: (val) => typeof val === 'string' && val.length > 0 && val.length <= 200,
@@ -249,6 +253,8 @@ function getSettingType(key) {
     
     productName: 'product_config',
     productPrice: 'product_config',
+    discountamount: 'product_config',
+    baseproductprice: 'product_config',
     productDescription: 'product_config',
     productDownloadLink: 'product_config',
     

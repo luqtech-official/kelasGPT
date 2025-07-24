@@ -30,6 +30,16 @@ export default function Checkout({ productSettings }) {
     [productSettings.productPrice]
   );
 
+  const formatteddiscountPrice = useMemo(() => 
+    formatPrice(productSettings.discountamount), 
+    [productSettings.discountamount]
+  );
+
+  const formattedbasePrice = useMemo(() => 
+    formatPrice(productSettings.baseproductprice), 
+    [productSettings.baseproductprice]
+  );
+
   // Input sanitization function
   const sanitizeInput = useCallback((input) => {
     if (!input) return '';
@@ -338,18 +348,18 @@ export default function Checkout({ productSettings }) {
                     <p>{productSettings.productDescription}</p>
                     <p>Lifetime access to all modules.</p>
                 </div>
-                <p className={styles.itemPrice}>{formattedPrice}</p>
+                <p className={styles.itemPrice}>{formattedbasePrice}</p>
             </div>
 
             <div className={styles.divider}></div>
 
             <div className={styles.priceRow}>
                 <p>Subtotal</p>
-                <p>{formattedPrice}</p>
+                <p>{formattedbasePrice}</p>
             </div>
             <div className={styles.priceRow}>
                 <p>Discount</p>
-                <p>-RM0.00</p>
+                <p>-{formatteddiscountPrice}</p>
             </div>
 
             <div className={styles.divider}></div>
@@ -389,6 +399,8 @@ export async function getServerSideProps() {
       props: {
         productSettings: {
           productName: 'KelasGPT - Instant Access x1',
+          baseproductprice: 297.00,
+          discountamount: 100.00,
           productPrice: 197.00,
           productDescription: 'Complete GPT-4 learning course in Malay language'
         }

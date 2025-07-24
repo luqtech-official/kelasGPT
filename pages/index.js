@@ -724,8 +724,8 @@ export default function Home({ productSettings }) {
             <div className={styles.professionalToolkit}>
               <div className="container">
                 <div className={styles.toolkitHeader}>
-                  <h3>Professional Implementation Toolkit</h3>
-                  <p className={styles.toolkitSubtitle}>Ready-to-use resources yang direka untuk accelerate implementation anda</p>
+                  <h3>Bonus Extra!<br /><br />Professional Implementation Toolkit</h3>
+                  <p className={styles.toolkitSubtitle}>Ready-to-use resources yang direka untuk percepatkan implementation anda</p>
                   <div className={styles.toolkitBadge}>Exclusive Materials</div>
                 </div>
                 
@@ -736,7 +736,7 @@ export default function Home({ productSettings }) {
                     </div>
                     <div className={styles.toolkitContent}>
                       <h4>Custom Instruction Templates</h4>
-                      <p>Battle-tested templates untuk setup AI expert consultants. Copy-paste dan customize untuk keperluan anda.</p>
+                      <p>Battle-tested templates untuk setup AI expert consultants. Copy-paste dan customize mengikut panduan video untuk keperluan anda.</p>
                     </div>
                   </div>
                   
@@ -746,7 +746,7 @@ export default function Home({ productSettings }) {
                     </div>
                     <div className={styles.toolkitContent}>
                       <h4>Expert Knowledge Base Files</h4>
-                      <p>Specially crafted knowledge base files untuk different expert roles - siap untuk upload ke AI platforms.</p>
+                      <p>Specially crafted knowledge base seed files untuk different expert roles yang anda perlukan - siap untuk upload ke mana-mana AI platform pilihan anda.</p>
                     </div>
                   </div>
                   
@@ -756,7 +756,7 @@ export default function Home({ productSettings }) {
                     </div>
                     <div className={styles.toolkitContent}>
                       <h4>Professional Prompt Library</h4>
-                      <p>Curated collection of high-performance prompts untuk common business use cases and workflows.</p>
+                      <p>Koleksi high-performance prompts yang digunakan dalam video-video modul utama KelasGPT, khusus common business use cases and workflows.</p>
                     </div>
                   </div>
                   
@@ -766,7 +766,7 @@ export default function Home({ productSettings }) {
                     </div>
                     <div className={styles.toolkitContent}>
                       <h4>Lifetime Access & Updates</h4>
-                      <p>Sekali bayar, akses seumur hidup. Semua future updates, new materials, dan enhancements - PERCUMA.</p>
+                      <p>Sekali bayar untuk Lifetime Access. Semua future updates, new materials, dan enhancements - PERCUMA.</p>
                     </div>
                   </div>
                 </div>
@@ -774,8 +774,141 @@ export default function Home({ productSettings }) {
             </div>
 
             <div className={styles.courseOutlineCTA}>
-              <p>Ini adalah sistem pembelajaran yang paling komprehensif untuk master AI tanpa background teknikal.</p>
-              <p><strong>Semua video, nota, dan kemas kini masa hadapan - akses seumur hidup.</strong></p>
+              <p><strong>Ini adalah modul pembelajaran yang sangat komprehensif untuk kuasai AI tanpa sebarang background teknikal.</strong></p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Testimonials Section --- */}
+        <section className={styles.testimonialsSection}>
+          <div className="container">
+            <div className={styles.testimonialsHeader}>
+              <h2>Apa Kata Mereka Yang Dah Apply Framework Ni</h2>
+              <p className={styles.testimonialsSubtitle}>
+                Real results dari professionals yang dah transform cara kerja mereka dengan Context Design Framework
+              </p>
+            </div>
+            
+            <div className={styles.testimonialsGrid}>
+              {/* Testimonial 1: Corporate Manager */}
+              <div className={`${styles.testimonialCard} ${styles.featured}`}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  Honestly, masa mula-mula dengar pasal Context Design Framework ni, saya skeptical jugak. Dah terlalu banyak kali tertipu dengan &lsquo;revolutionary AI techniques&rsquo; yang end up jadi hype kosong sahaja. Tapi dalam 2 minggu after applying Module 2 & 4, <strong>cara saya handle reporting dan analysis kerja completely berubah</strong>. Yang biasanya ambil masa 3-4 jam untuk prepare monthly reports, sekarang 30 minit dah siap, dan quality lagi detailed from berbagai angles yang saya tak pernah consider before. <strong>Boss saya sampai tanya &lsquo;Ravi, you ambil course apa? Your reports lately very impressive.&rsquo;</strong> Last month dapat promotion jadi Senior Operations Manager. Seriously, kalau saya tau pasal ni earlier, mesti career path saya lagi accelerated.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>RK</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Ravi Kumar</h4>
+                    <p>Senior Operations Manager, CIMB Bank</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 2: Small Business Owner */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  My digital marketing agency tengah struggle nak compete dengan bigger players yang ada more resources. After KelasGPT, I setup 5 AI consultants following the exact framework - Content Strategist, Data Analyst, Campaign Designer, Client Relations Expert, dan Business Development Assistant. <strong>Within 3 months, productivity naik 300% and client satisfaction improved dramatically.</strong> Yang paling impressive, satu client yang always complain about campaign performance, suddenly puji our insights and strategic recommendations. <strong>Revenue jumped from RM12k to RM35k monthly</strong> sebab boleh handle more clients dengan same team size. The templates dan knowledge base files in the toolkit memang game changer. Sekarang competitors tanya macam mana we can deliver such high-quality work so consistently.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>SW</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Sarah Wong</h4>
+                    <p>Founder, Nexus Digital Marketing</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 3: Fresh Graduate */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  Job market sangat competitive for fresh graduates right now. Masa interview, when I demonstrated how I use AI to solve complex problems step-by-step using Context Design Framework, <strong>interviewer terus impressed</strong>. &ldquo;Wah, you understand AI at this level?&rdquo; Dalam 2 weeks dapat offer from 3 companies, and I negotiated salary 40% higher than standard fresh grad package. <strong>Now colleagues datang tanya for advice, which is surreal because 6 months ago I was just another struggling graduate.</strong>
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>AH</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Aiman Haziq</h4>
+                    <p>Software Engineer, TechTitan Solutions</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 4: Government Officer */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  Sebagai government officer, kita always kena ikut standard procedures yang sometimes very time-consuming. But after learning the framework, I created AI assistants for policy analysis, report writing, dan stakeholder communication. <strong>Department productivity improved so significantly that I kena present our new processes to other ministries.</strong> Yang best, I can maintain quality standards while dramatically reducing processing time. Director puji, &ldquo;Siti, your innovation mindset exactly what public service needs.&rdquo; Even got selected for leadership development program sebab demonstrate how technology can transform government operations.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>SN</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Puan Siti Nurhaliza</h4>
+                    <p>Senior Assistant Director, Ministry of Health</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 5: Working Mother */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  As a working mother dengan 2 young kids, time management is my biggest challenge. Every day rush from meetings to school pickup, then lagi kena prepare presentations and reports at night. After mastering the Context Design Framework, <strong>my work efficiency improved so much that I actually have time for family dinner every night now.</strong> Hospital board presentations yang dulu take 2-3 days to prepare, now I can create comprehensive analysis dalam 4-5 jam with better insights. <strong>Last month dapat offer for Hospital Director position</strong> - something I never thought possible while balancing family commitments. My husband cakap, &ldquo;You seem so much calmer and happier now.&rdquo; The framework didn&rsquo;t just change my career, it gave me back my family time.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>PS</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Dr. Priya Sharma</h4>
+                    <p>Hospital Administrator & Mother of 2</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 6: Consultant */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  Sebagai business consultant, clients expect deep insights and strategic recommendations. With the professional prompt library dan expert knowledge base, <strong>I can deliver analysis yang normally require team of specialists.</strong> One manufacturing client said, &ldquo;Ahmad, your strategic assessment is more comprehensive than Big 4 consulting firms, but fraction of the cost.&rdquo; <strong>Increased my consultation rates from RM300 to RM800 per hour</strong> sebab clients value the quality and speed of deliverables. The framework transformed me from generic consultant to AI-powered strategic advisor.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>AF</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Ahmad Fariz</h4>
+                    <p>Senior Business Consultant</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 7: Second Career */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  At 52, after 25 years in banking, I was worried about staying relevant in this AI era. Many colleagues my age struggle to adapt. But KelasGPT showed me that understanding AI principles is more important than technical skills. <strong>Now I&rsquo;m running corporate AI literacy workshops for major companies, earning more than my previous banking salary.</strong> Last week, a CEO half my age asked for advice on AI strategy implementation. The irony is beautiful - experience plus AI knowledge is actually a powerful combination that younger folks don&rsquo;t have yet.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>LC</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Encik Lim Cheng Hai</h4>
+                    <p>Corporate AI Trainer, Former Bank Manager</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Testimonial 8: Startup Employee */}
+              <div className={styles.testimonialCard}>
+                <div className={styles.testimonialQuotes}>&quot;&quot;</div>
+                <div className={styles.testimonialQuote}>
+                  In startup environment, you need to move fast and deliver results immediately. The Context Design Framework helped me create AI-powered product development workflows yang <strong>reduced our feature development cycle from 6 weeks to 2 weeks.</strong> CEO noticed and promoted me to Lead Product Manager within 4 months. <strong>Now other startups headhunt me specifically for my AI integration expertise.</strong> Best investment I ever made for my career.
+                </div>
+                <div className={styles.testimonialAuthor}>
+                  <div className={styles.authorAvatar}>NA</div>
+                  <div className={styles.authorInfo}>
+                    <h4>Nurul Aina</h4>
+                    <p>Lead Product Manager, InnovateTech</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

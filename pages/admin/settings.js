@@ -14,6 +14,8 @@ export default function Settings() {
     // Product Settings
     productName: 'KelasGPT - Belajar GPT-4 macam pro!',
     productPrice: 99.00,
+    discountamount: 0,
+    baseproductprice: 197.00,
     productDescription: 'Belajar cara menggunakan GPT-4 untuk tingkatkan produktiviti dan bina penyelesaian AI anda sendiri.',
     productDownloadLink: 'https://drive.google.com/file/d/example/view',
     
@@ -215,6 +217,32 @@ export default function Settings() {
             name="productName"
             value={settings.productName}
             onChange={handleInputChange}
+            style={inputStyle}
+          />
+
+          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
+            Base Product Price (RM)
+          </label>
+          <input
+            type="number"
+            name="baseproductprice"
+            value={settings.baseproductprice}
+            onChange={handleInputChange}
+            step="0.01"
+            min="0"
+            style={inputStyle}
+          />
+
+          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
+            Discount Amount (RM)
+          </label>
+          <input
+            type="number"
+            name="discountamount"
+            value={settings.discountamount}
+            onChange={handleInputChange}
+            step="0.01"
+            min="0"
             style={inputStyle}
           />
 
