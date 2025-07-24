@@ -54,7 +54,7 @@
 }
 
 .sectionHeader p {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: var(--text-secondary);
   max-width: 700px;
   margin: 0 auto;
@@ -81,7 +81,7 @@
 }
 
 .heroSubtitle {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   max-width: 800px;
   margin: 0 auto 2rem;
   color: var(--text-secondary);
@@ -90,7 +90,7 @@
 }
 
 .heroSecondary {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   max-width: 750px;
   margin: 0 auto 3rem;
   color: var(--terra-dark);
@@ -127,7 +127,7 @@
 .ctaButtonSubtext {
   display: block;
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #6c757d;
 }
 
@@ -156,7 +156,7 @@
 }
 
 .painPointCard p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 500;
 }
 
@@ -192,7 +192,7 @@
 }
 
 .featureCard h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
@@ -232,7 +232,7 @@
 }
 
 .learnItem h3 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   margin: 0;
 }
@@ -263,7 +263,7 @@
 }
 
 .pricingBox p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 2rem;
 }
 
@@ -293,10 +293,10 @@
     font-size: 2.2rem;
   }
   .heroSubtitle {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
   .heroSecondary {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .sectionHeader h2 {
     font-size: 1.8rem;
@@ -311,10 +311,10 @@
     font-size: 1.9rem;
   }
   .useCaseContent h4 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
   .expertCard h4 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   .section {
     padding: 4rem 0;
@@ -346,10 +346,10 @@
   }
   .ctaButton {
     padding: 1rem 2rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .consultantContent {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .imagineBox {
     margin: 1rem;
@@ -396,7 +396,7 @@
   color: var(--pure-white);
   padding: 8px 16px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   margin: 0.5rem;
 }
@@ -423,7 +423,7 @@
 .salesContent {
   max-width: 800px;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   line-height: 1.8;
   color: var(--text-primary);
 }
@@ -519,7 +519,7 @@
 
 .useCaseImage {
   width: 100%;
-  height: 200px;
+  height: 320px;
   background-color: var(--warm-gray);
   display: flex;
   align-items: center;
@@ -551,7 +551,7 @@
 }
 
 .useCaseContent h4 {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   color: var(--terra-dark);
   margin-bottom: 1rem;
   font-weight: 700;
@@ -579,7 +579,7 @@
 .consultantContent {
   max-width: 900px;
   margin: 0 auto;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 1.8;
 }
 
@@ -626,7 +626,7 @@
 }
 
 .expertCard h4 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--terra-dark);
   margin-bottom: 1rem;
   font-weight: 700;
@@ -636,5 +636,5 @@
 .expertCard p {
   color: var(--text-secondary);
   line-height: 1.6;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }

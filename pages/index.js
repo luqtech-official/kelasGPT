@@ -100,31 +100,19 @@ export default function Home({ productSettings }) {
                 <div className={styles.salesContent}>
                     <p>Assalamualaikum,</p>
                     
-                    <p>Kalau anda sedang mencari peluang untuk belajar skill AI dengan <strong>Betul dan Mendalam..</strong></p>
+                    <p>Kalau anda sedang mencari cara untuk <strong>betul-betul master AI</strong> untuk kerja dan bisnes..</p>
                     
-                    <p>Khususnya LLM seperti ChatGPT..</p>
+                    <p>Bukan sekadar copy-paste prompt dari internet..</p>
                     
-                    <p>Teruskan membaca..</p>
+                    <p><strong>Teruskan membaca.</strong></p>
                     
-                    <p>Sebab saya ada selitkan beberapa <span className={styles.emphasis}>&lsquo;ilmu mahal&rsquo;</span> dalam artikel ini..</p>
+                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai Malaysian professionals masih struggle guna AI dengan berkesan..</p>
                     
-                    <p>Dalam keadaan sekarang, yang mana masih ramai orang yang pertikaikan AI..</p>
+                    <p>Dan bagaimana <span className={styles.highlight}>Context Design Framework</span> yang saya akan ajar boleh transformasi cara anda bekerja sepenuhnya.</p>
                     
-                    <p>Dah ada sekumpulan orang yang betul-betul faham cara nak gunakan AI sebagai tools dengan betul..</p>
+                    <p>Tak kira anda kerja corporate, run bisnes sendiri, atau student..</p>
                     
-                    <p>Cara nak leverage kekuatan AI, dan teknik untuk work-around kelemahan dia..</p>
-                    
-                    <p>Dan bila anda faham macam mana AI ni berfikir dan berfungsi..</p>
-                    
-                    <p>Macam mana nak gunakan <span className={styles.highlight}>Framework betul..</span></p>
-                    
-                    <p>Cara susun <span className={styles.highlight}>Context dengan tepat..</span></p>
-                    
-                    <p>Tak ada orang yang akan complaint anda ni <em>&lsquo;sikit-sikit tanya chatgpt, bukan boleh pakai pun&rsquo;..</em></p>
-                    
-                    <p>And tak kisahlah apa saja jenis atau nature kerja anda..</p>
-                    
-                    <p><strong>Framework yang anda akan belajar ni sentiasa terpakai.</strong></p>
+                    <p><strong>Framework ni akan jadi game-changer untuk productivity anda.</strong></p>
                 </div>
             </div>
         </section>
@@ -139,7 +127,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.useCasesGrid}>
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 1</div>
@@ -150,7 +138,7 @@ export default function Home({ productSettings }) {
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 2</div>
@@ -161,7 +149,7 @@ export default function Home({ productSettings }) {
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 3</div>
