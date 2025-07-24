@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { trackPageView, initializeLinkModification } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
@@ -81,10 +82,10 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
             <h1 className={styles.heroTitle}>
-              Satu-satunya Kelas 'Deep Dive' AI Untuk Professional dan Small Business Owner yang <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+              Satu-satunya Kelas &lsquo;Deep Dive&rsquo; AI Untuk Professional dan Small Business Owner yang <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
             </h1>
             <p className={styles.heroSubtitle}>
-              <span className={styles.highlight}>'Context Design Framework'</span> Yang Pakar AI Gunakan Untuk Menaikan Kualiti Output AI Dan <strong>10-20x Produktiviti</strong> Mereka..
+              <span className={styles.highlight}>&lsquo;Context Design Framework&rsquo;</span> Yang Pakar AI Gunakan Untuk Menaikan Kualiti Output AI Dan <strong>10-20x Produktiviti</strong> Mereka..
             </p>
             <p className={styles.heroSecondary}>
               <strong>Modul Bonus:</strong> Jangan Terlepas! Saya tunjuk step-by-step cara saya guna AI untuk create bisnes guna AI dari kosong.. Cara buat research, tulis high-converting copywriting, vibe-code salespage.. semuanya guna framework yang sama
@@ -105,7 +106,7 @@ export default function Home({ productSettings }) {
                     
                     <p>Teruskan membaca..</p>
                     
-                    <p>Sebab saya ada selitkan beberapa <span className={styles.emphasis}>'ilmu mahal'</span> dalam artikel ini..</p>
+                    <p>Sebab saya ada selitkan beberapa <span className={styles.emphasis}>&lsquo;ilmu mahal&rsquo;</span> dalam artikel ini..</p>
                     
                     <p>Dalam keadaan sekarang, yang mana masih ramai orang yang pertikaikan AI..</p>
                     
@@ -119,7 +120,7 @@ export default function Home({ productSettings }) {
                     
                     <p>Cara susun <span className={styles.highlight}>Context dengan tepat..</span></p>
                     
-                    <p>Tak ada orang yang akan complaint anda ni <em>'sikit-sikit tanya chatgpt, bukan boleh pakai pun'..</em></p>
+                    <p>Tak ada orang yang akan complaint anda ni <em>&lsquo;sikit-sikit tanya chatgpt, bukan boleh pakai pun&rsquo;..</em></p>
                     
                     <p>And tak kisahlah apa saja jenis atau nature kerja anda..</p>
                     
@@ -138,7 +139,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.useCasesGrid}>
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 1</div>
@@ -149,7 +150,7 @@ export default function Home({ productSettings }) {
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 2</div>
@@ -160,12 +161,12 @@ export default function Home({ productSettings }) {
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" />
+                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" width={600} height={400} style={{width: '100%', height: 'auto'}} />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 3</div>
                             <h4>Infographic dan Presentation</h4>
-                            <p>Sedang orang lain masih mengharapkan prompt orang lain, yang selalunya generic.. Anda sudah few steps ahead dan boleh hasilkan 'well-thought' material yang anda perlukan.</p>
+                            <p>Sedang orang lain masih mengharapkan prompt orang lain, yang selalunya generic.. Anda sudah few steps ahead dan boleh hasilkan &lsquo;well-thought&rsquo; material yang anda perlukan.</p>
                         </div>
                     </div>
                 </div>
@@ -180,7 +181,7 @@ export default function Home({ productSettings }) {
             </div>
             <div className={styles.authorProfile}>
               <div className={styles.authorImage}>
-                <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332746/Professional_Photo_mdtnaf.png" alt="Fareid - KelasGPT Instructor" />
+                <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332746/Professional_Photo_mdtnaf.png" alt="Fareid - KelasGPT Instructor" width={300} height={300} style={{width: '100%', height: 'auto'}} />
               </div>
               <div className={styles.authorContent}>
                 <h3>Hi, Saya Fareid</h3>
@@ -193,9 +194,11 @@ export default function Home({ productSettings }) {
                   
                   <p>saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan global paling popular</p>
                   
-                  <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor's Pick</span> oleh platform itu sendiri,</p>
+                  <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
                   
-                  <div className={styles.socialProofBadge}>TradingView Editor's Pick</div>
+                  <div className={styles.tradingViewProof}>
+                    <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332276/Bland_Terlalu_AI_2_nhqtrc.png" alt="TradingView Editor&rsquo;s Pick Screenshot" className={styles.tradingViewImage} width={800} height={600} style={{width: '100%', height: 'auto'}} />
+                  </div>
                   
                   <p>Tetapi involvement saya dalam dunia technology as a service bukan sekadar menulis script untuk Tradingview..</p>
                   
@@ -221,7 +224,7 @@ export default function Home({ productSettings }) {
               
               <p>Kalau anda mahukan someone yang berpengalaman dalam industri..</p>
               
-              <p>Tolong breakdown konsep cara AI 'berfikir' yang kompleks menjadi lebih mudah difahami..</p>
+              <p>Tolong breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
               
               <p>Sesuai untuk anda..</p>
               
@@ -259,7 +262,7 @@ export default function Home({ productSettings }) {
               
               <p>Kalau sebelum ni anda selalu blur, tak yakin atau tak pasti nak cari mana jawapan anda..</p>
               
-              <p>Sekarang anda ada several <span style={{color: 'var(--terra-light)', fontWeight: '700'}}>'expert employee'</span> yang buat research dan manage task untuk anda.</p>
+              <p>Sekarang anda ada several <span style={{color: 'var(--terra-light)', fontWeight: '700'}}>&lsquo;expert employee&rsquo;</span> yang buat research dan manage task untuk anda.</p>
               
               <p>Bayangkan clarity of mind yang anda dapat..</p>
               

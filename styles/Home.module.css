@@ -46,7 +46,7 @@
 }
 
 .sectionHeader h2 {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 1rem;
   color: var(--text-primary);
@@ -70,7 +70,7 @@
 }
 
 .heroTitle {
-  font-size: 4rem;
+  font-size: 2.8rem;
   font-weight: 900;
   margin-bottom: 1.5rem;
   color: var(--text-primary);
@@ -277,7 +277,7 @@
 }
 
 .imagineBox h2 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 1.5rem;
 }
 
@@ -290,7 +290,7 @@
 /* --- Enhanced Responsive Design --- */
 @media (max-width: 768px) {
   .heroTitle {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
   .heroSubtitle {
     font-size: 1.2rem;
@@ -299,10 +299,22 @@
     font-size: 1.1rem;
   }
   .sectionHeader h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
   .imagineBox h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+  .notJustPrompts h2 {
+    font-size: 1.9rem;
+  }
+  .consultantVision h2 {
+    font-size: 1.9rem;
+  }
+  .useCaseContent h4 {
+    font-size: 1.2rem;
+  }
+  .expertCard h4 {
+    font-size: 1.3rem;
   }
   .section {
     padding: 4rem 0;
@@ -323,7 +335,7 @@
     width: 100%;
   }
   .authorContent h3 {
-    font-size: 2rem;
+    font-size: 1.4rem;
     text-align: center;
   }
   .useCasesGrid {
@@ -389,6 +401,18 @@
   margin: 0.5rem;
 }
 
+.tradingViewProof {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.tradingViewImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -430,7 +454,7 @@
 }
 
 .notJustPrompts h2 {
-  font-size: 3.5rem;
+  font-size: 2.4rem;
   font-weight: 900;
   color: var(--terra-dark);
   margin-bottom: 2rem;
@@ -468,7 +492,7 @@
 }
 
 .authorContent h3 {
-  font-size: 2.5rem;
+  font-size: 1.6rem;
   color: var(--text-primary);
   margin-bottom: 1rem;
 }
@@ -527,7 +551,7 @@
 }
 
 .useCaseContent h4 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--terra-dark);
   margin-bottom: 1rem;
   font-weight: 700;
@@ -548,7 +572,7 @@
 
 .consultantVision h2 {
   color: var(--pure-white);
-  font-size: 3.5rem;
+  font-size: 2.4rem;
   margin-bottom: 2rem;
 }
 
@@ -602,7 +626,7 @@
 }
 
 .expertCard h4 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--terra-dark);
   margin-bottom: 1rem;
   font-weight: 700;
