@@ -428,15 +428,15 @@ export default function Home({ productSettings }) {
                     </div>
                     <div className={styles.subModule}>
                       <strong>2.2 - Context Window Management</strong>
-                      <p>Faham kenapa AI "lupa" tiba-tiba dan macam mana nak work around dengan context limitations dia.</p>
+                      <p>Faham kenapa AI lupa tiba-tiba dan macam mana nak work around dengan context limitations dia.</p>
                     </div>
                     <div className={styles.subModule}>
                       <strong>2.3 - Embedding & Vector Space</strong>
-                      <p>Belajar macam mana semua data yang AI trained sebelum ni disimpan, dan macam mana cara prompt anda shape cara AI keluarkan balik 'ilmu' dia.</p>
+                      <p>Belajar macam mana semua data yang AI trained sebelum ni disimpan, dan macam mana cara prompt anda shape cara AI keluarkan balik ilmu dia.</p>
                     </div>
                     <div className={styles.subModule}>
                       <strong>2.4 - Token Prediction Engine & Hallucination</strong>
-                      <p>Masuk dalam "otak" AI untuk faham macam mana dia generate responses. Belajar kenapa AI hallucinate dan macam mana nak minimize false information.</p>
+                      <p>Masuk dalam otak AI untuk faham macam mana dia generate responses. Belajar kenapa AI hallucinate dan macam mana nak minimize false information.</p>
                     </div>
                     <div className={styles.subModule}>
                       <strong>2.5 - Regression Architecture dan Impak Terhadap Cara Anda Prompt</strong>
