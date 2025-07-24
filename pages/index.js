@@ -252,7 +252,7 @@ export default function Home({ productSettings }) {
               
               <p>Family anda nampak perubahan. More time with them, less stress, better financial security..</p>
               
-              <p><strong>Peers start asking: "Macam mana dia boleh perform at this level?"</strong></p>
+              <p><strong>Peers start asking: &quot;&quot;Macam mana dia boleh perform at this level?&quot;&quot;</strong></p>
               
               <p>The secret? You&rsquo;ve mastered something yang most Malaysian professionals tak tahu exist..</p>
               
