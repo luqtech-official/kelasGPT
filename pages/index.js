@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { trackPageView, initializeLinkModification } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
@@ -46,6 +46,26 @@ const RocketIcon = (props) => (
 
 
 export default function Home({ productSettings }) {
+  const [expandedModules, setExpandedModules] = useState({});
+
+  const toggleModule = (moduleId) => {
+    setExpandedModules(prev => {
+      const isCurrentlyExpanded = prev[moduleId];
+      if (isCurrentlyExpanded) {
+        // If clicking on an expanded module, just collapse it
+        return {
+          ...prev,
+          [moduleId]: false
+        };
+      } else {
+        // If clicking on a collapsed module, collapse all others and expand this one
+        return {
+          [moduleId]: true
+        };
+      }
+    });
+  };
+
   useEffect(() => {
     // 🔥 PHASE 1: Multi-source visitor ID resolution
     trackPageView('/');  // NOW: Checks URL params first, then localStorage, then creates new
@@ -354,17 +374,382 @@ export default function Home({ productSettings }) {
             </div>
           </div>
         </section>
+
+        {/* --- Course Outline Section --- */}
+        <section className={`${styles.section} ${styles.courseOutlineSection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Apa Yang Anda Akan Belajar</h2>
+              <p>Sistem pembelajaran bertahap dari asas hingga mahir - direka khas untuk orang yang tiada background teknikal</p>
+            </div>
+            
+            <div className={styles.courseOutline}>
+              {/* Module 1 */}
+              <div className={styles.moduleCard}>
+                <div className={`${styles.moduleHeader} ${expandedModules.module1 ? styles.expanded : ''}`} onClick={() => toggleModule('module1')}>
+                  <div className={styles.moduleTitle}>
+                    <span className={styles.moduleNumber}>MODUL 1</span>
+                    <h3>Intro & Beginner Module</h3>
+                  </div>
+                  <div className={`${styles.expandIcon} ${expandedModules.module1 ? styles.expanded : ''}`}>
+                    <ArrowRightIcon />
+                  </div>
+                </div>
+                {expandedModules.module1 && (
+                  <div className={styles.moduleContent}>
+                    <div className={styles.subModule}>
+                      <strong>1.1 - Apa Itu AI & ChatGPT</strong>
+                      <p>Pengenalan kepada AI dan ChatGPT untuk mereka yang tak pernah guna ChatGPT</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>1.2 - AI Ecosystem & Basic Terminology</strong>
+                      <p>Kuasai terminology penting, apa beza company, platform apps, dan model. Bezakan foundation AI app dan AI wrappers.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Module 2 */}
+              <div className={styles.moduleCard}>
+                <div className={`${styles.moduleHeader} ${expandedModules.module2 ? styles.expanded : ''}`} onClick={() => toggleModule('module2')}>
+                  <div className={styles.moduleTitle}>
+                    <span className={styles.moduleNumber}>MODUL 2</span>
+                    <h3>Foundation: Deep Dive Macam Mana AI Berfikir</h3>
+                  </div>
+                  <div className={`${styles.expandIcon} ${expandedModules.module2 ? styles.expanded : ''}`}>
+                    <ArrowRightIcon />
+                  </div>
+                </div>
+                {expandedModules.module2 && (
+                  <div className={styles.moduleContent}>
+                    <div className={styles.subModule}>
+                      <strong>2.1 - Memory Management dalam ChatGPT & LLM Lain</strong>
+                      <p>Anda tak boleh train AI, tapi anda boleh train memory app untuk buat AI kenal anda. Belajar cara manipulasi memori AI supaya dia ingat apa yang ANDA NAK DIA INGAT SAHAJA.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>2.2 - Context Window Management</strong>
+                      <p>Faham kenapa AI "lupa" tiba-tiba dan macam mana nak work around dengan context limitations dia.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>2.3 - Embedding & Vector Space</strong>
+                      <p>Belajar macam mana semua data yang AI trained sebelum ni disimpan, dan macam mana cara prompt anda shape cara AI keluarkan balik 'ilmu' dia.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>2.4 - Token Prediction Engine & Hallucination</strong>
+                      <p>Masuk dalam "otak" AI untuk faham macam mana dia generate responses. Belajar kenapa AI hallucinate dan macam mana nak minimize false information.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>2.5 - Regression Architecture dan Impak Terhadap Cara Anda Prompt</strong>
+                      <p>Faham transformer architecture punya impact pada prompting strategy anda. Optimize communication style anda untuk maximum AI effectiveness.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>2.6 - Fahami Setiap Features Yang Ada Dalam ChatGPT</strong>
+                      <p>Custom Instruction, Projects, WorkSpaces, CustomGPT, DeepResearch, Analytic Tools.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Module 3 */}
+              <div className={styles.moduleCard}>
+                <div className={`${styles.moduleHeader} ${expandedModules.module3 ? styles.expanded : ''}`} onClick={() => toggleModule('module3')}>
+                  <div className={styles.moduleTitle}>
+                    <span className={styles.moduleNumber}>MODUL 3</span>
+                    <h3>Advance: Macam Mana Nak Guna Setiap Feature Effectively</h3>
+                  </div>
+                  <div className={`${styles.expandIcon} ${expandedModules.module3 ? styles.expanded : ''}`}>
+                    <ArrowRightIcon />
+                  </div>
+                </div>
+                {expandedModules.module3 && (
+                  <div className={styles.moduleContent}>
+                    <div className={styles.subModule}>
+                      <strong>3.1 - Model Comparison (Normal, Mini, Flash, Reasoning)</strong>
+                      <p>ChatGPT o-series, Standard series, mini series.. Gemini model series, Claude model Series.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>3.2 - Platform Comparison (Style, Best Practice, Situational)</strong>
+                      <p>Platform mastery guide antara ChatGPT vs Claude vs Gemini vs Grok. Faham setiap platform punya strengths and weakness.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>3.3 - System Instruction Dan Custom Instruction</strong>
+                      <p>Create persistent AI behavior yang match dengan work style anda. Set up custom instructions yang buat AI faham preferences anda.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>3.4 - Tool Calling Functions</strong>
+                      <p>Leverage AI punya ability untuk guna external tools dan APIs. Expand AI capabilities beyond text generation.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>3.5 - Project & Workspace Features</strong>
+                      <p>Master collaborative AI environments dalam ChatGPT Projects dan Claude Projects. Organize complex work, maintain context across multiple sessions.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>3.6 - Custom GPT</strong>
+                      <p>Bina specialized AI assistants yang tailored untuk specific professional needs anda. Turn AI jadi personalized professional tool.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Module 4 */}
+              <div className={styles.moduleCard}>
+                <div className={`${styles.moduleHeader} ${expandedModules.module4 ? styles.expanded : ''}`} onClick={() => toggleModule('module4')}>
+                  <div className={styles.moduleTitle}>
+                    <span className={styles.moduleNumber}>MODUL 4</span>
+                    <h3>Context Design Framework & Building Expert Consultant</h3>
+                  </div>
+                  <div className={`${styles.expandIcon} ${expandedModules.module4 ? styles.expanded : ''}`}>
+                    <ArrowRightIcon />
+                  </div>
+                </div>
+                {expandedModules.module4 && (
+                  <div className={styles.moduleContent}>
+                    <div className={styles.subModule}>
+                      <strong>4.1 - Prompt Engineering Masterclass</strong>
+                      <p>Master art dan science of AI communication. Develop personal prompting style anda untuk consistent results.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>4.2 - JSON vs YAML vs Markdown vs Natural Language</strong>
+                      <p>Pilih optimal communication format untuk different AI tasks. Faham bila structured data formats produce better results.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>4.3 - Lean Prompting Framework</strong>
+                      <p>Systematic approach untuk efficient AI communication. Achieve maximum results dengan minimal instruction complexity.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>4.4 - Context Design Workflow</strong>
+                      <p>Strategic context management untuk complex professional projects. Structure information dan prioritize context elements.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>4.5 - Learning Workflow dengan AI</strong>
+                      <p>Transform AI jadi personal learning accelerator anda. Master techniques untuk rapid skill acquisition dan knowledge synthesis.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>4.6 - Building Expert Consultant guna ChatGPT/Gemini/Claude</strong>
+                      <p>Create AI consultants yang rival human experts dalam field anda. Advanced prompt architecture untuk high-level professional advice.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Module 5 */}
+              <div className={styles.moduleCard}>
+                <div className={`${styles.moduleHeader} ${expandedModules.module5 ? styles.expanded : ''}`} onClick={() => toggleModule('module5')}>
+                  <div className={styles.moduleTitle}>
+                    <span className={styles.moduleNumber}>MODUL 5</span>
+                    <h3>Image dan Video Generation</h3>
+                  </div>
+                  <div className={`${styles.expandIcon} ${expandedModules.module5 ? styles.expanded : ''}`}>
+                    <ArrowRightIcon />
+                  </div>
+                </div>
+                {expandedModules.module5 && (
+                  <div className={styles.moduleContent}>
+                    <div className={styles.subModule}>
+                      <strong>5.1 - Image Generation Prompt Technique</strong>
+                      <p>Professional visual content creation guna AI. Master prompt engineering untuk DALL-E, Midjourney, dan image generators lain.</p>
+                    </div>
+                    <div className={styles.subModule}>
+                      <strong>5.2 - Video Generation Step by Step</strong>
+                      <p>Complete workflow untuk AI-powered video creation. Dari concept sampai final output guna tools macam Runway, Pika Labs.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Bonus Modules */}
+              <div className={styles.bonusModules}>
+                <h3 className={styles.bonusTitle}>Modul Bonus Yang Anda Dapat PERCUMA</h3>
+                
+                {/* Bonus Module 1 */}
+                <div className={`${styles.moduleCard} ${styles.bonusCard}`}>
+                  <div className={`${styles.moduleHeader} ${expandedModules.bonus1 ? styles.expanded : ''}`} onClick={() => toggleModule('bonus1')}>
+                    <div className={styles.moduleTitle}>
+                      <span className={styles.moduleNumber}>BONUS 1</span>
+                      <h3>Use Case dalam Action</h3>
+                    </div>
+                    <div className={`${styles.expandIcon} ${expandedModules.bonus1 ? styles.expanded : ''}`}>
+                      <ArrowRightIcon />
+                    </div>
+                  </div>
+                  {expandedModules.bonus1 && (
+                    <div className={styles.moduleContent}>
+                      <div className={styles.subModule}>
+                        <strong>6.1 - Macam Mana Saya Guna AI untuk Stock Analysis</strong>
+                        <p>Live demonstration of AI-powered investment research specific untuk Malaysian market conditions.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>6.2 - AI untuk Task Management, Reporting dan Insight</strong>
+                        <p>Complete productivity system guna AI untuk Malaysian business environment. Task optimization dan strategic insights.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>6.3 - Setup Business Dari Scratch</strong>
+                        <p>End-to-end business launch guna AI assistance. Market research, business planning, content creation untuk Malaysian entrepreneurs.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Bonus Module 2 */}
+                <div className={`${styles.moduleCard} ${styles.bonusCard}`}>
+                  <div className={`${styles.moduleHeader} ${expandedModules.bonus2 ? styles.expanded : ''}`} onClick={() => toggleModule('bonus2')}>
+                    <div className={styles.moduleTitle}>
+                      <span className={styles.moduleNumber}>BONUS 2</span>
+                      <h3>Vibe Coding Framework</h3>
+                    </div>
+                    <div className={`${styles.expandIcon} ${expandedModules.bonus2 ? styles.expanded : ''}`}>
+                      <ArrowRightIcon />
+                    </div>
+                  </div>
+                  {expandedModules.bonus2 && (
+                    <div className={styles.moduleContent}>
+                      <div className={styles.subModule}>
+                        <strong>7.1 - The Very Basic untuk Non-Technical Person</strong>
+                        <p>Gentle introduction kepada coding concepts yang enhance AI collaboration. Tak perlu programming background.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>7.2 - Vibe Coding Workflow</strong>
+                        <p>Systematic approach untuk AI-assisted code creation untuk business automation.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>7.3 - Things to Consider</strong>
+                        <p>Quality control, security considerations, dan limitations bila guna AI untuk code generation.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>7.4 - Build Together: Simple, yet Beautiful Salespage</strong>
+                        <p>Complete project: Create professional landing page guna AI assistance. Dari concept sampai live website.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>7.5 - Build Together: Simple WebApp</strong>
+                        <p>Hands-on project bina personal professional website. Perfect untuk Malaysian professionals.</p>
+                      </div>
+                      <div className={styles.subModule}>
+                        <strong>7.6 - Exploring Further: Suggested Roadmap</strong>
+                        <p>Progression path untuk continued learning. Advanced AI integration dan career development opportunities.</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.courseOutlineCTA}>
+              <p>Ini adalah sistem pembelajaran yang paling komprehensif untuk master AI tanpa background teknikal.</p>
+              <p><strong>Semua video, nota, dan kemas kini masa hadapan - akses seumur hidup.</strong></p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Value Stack Section --- */}
+        <section className={`${styles.section} ${styles.valueStackSection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Berapa harga KelasGPT ni?</h2>
+              <p>Jika anda pernah tengok kursus premium lain, anda tau harga ini berpatutan</p>
+            </div>
+            
+            <div className={styles.valueStack}>
+              <div className={styles.valueItem}>
+                <div className={styles.valueContent}>
+                  <h4>Modul 1: Intro & Beginner Module</h4>
+                  <p>Asas AI dan ChatGPT untuk pemula</p>
+                </div>
+                <div className={styles.valuePrice}>RM 67</div>
+              </div>
+              
+              <div className={`${styles.valueItem} ${styles.premiumValue}`}>
+                <div className={styles.valueContent}>
+                  <h4>Modul 2: Foundation - Deep Dive AI Berfikir</h4>
+                  <div className={styles.exclusiveLabel}>ADVANCED</div>
+                  <p>6 bahagian mendalam tentang cara AI berfungsi</p>
+                </div>
+                <div className={styles.valuePrice}>RM 1,499</div>
+              </div>
+              
+              <div className={styles.valueItem}>
+                <div className={styles.valueContent}>
+                  <h4>Modul 3: Advanced Features Masterclass</h4>
+                  <p>6 teknik advanced untuk kuasai semua platform AI</p>
+                </div>
+                <div className={styles.valuePrice}>RM 147</div>
+              </div>
+              
+              <div className={`${styles.valueItem} ${styles.premiumValue}`}>
+                <div className={styles.valueContent}>
+                  <h4>Modul 4: Context Design Framework</h4>
+                  <div className={styles.exclusiveLabel}>SIGNATURE</div>
+                  <p>Formula rahsia untuk building expert consultant</p>
+                </div>
+                <div className={styles.valuePrice}>RM 799</div>
+              </div>
+              
+              <div className={styles.valueItem}>
+                <div className={styles.valueContent}>
+                  <h4>Modul 5: Image & Video Generation</h4>
+                  <p>Complete workflow untuk visual content creation</p>
+                </div>
+                <div className={styles.valuePrice}>RM 129</div>
+              </div>
+              
+              <div className={`${styles.valueItem} ${styles.bonusValue} ${styles.premiumValue}`}>
+                <div className={styles.valueContent}>
+                  <h4>BONUS: Use Case dalam Action + Vibe Coding Framework</h4>
+                  <div className={styles.exclusiveLabel}>ADVANCED</div>
+                  <p>Live demonstration (Stock analysis, Task management, Business setup) + 6 bahagian build website & app tanpa coding background</p>
+                </div>
+                <div className={styles.valuePrice}>RM 497</div>
+              </div>
+              
+              <div className={styles.valueTotal}>
+                <div className={styles.totalLine}></div>
+                <div className={styles.totalContent}>
+                  <h3>Jumlah Nilai Sebenar:</h3>
+                  <div className={styles.totalPrice}>RM 3,138</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         
         {/* --- Pricing Section --- */}
-        <section className={`${styles.section} ${styles.grey}`}>
+        <section className={`${styles.section} ${styles.pricingSection}`}>
             <div className="container">
-                <div className={styles.pricingBox}>
-                    <h2>Pelaburan Anda</h2>
-                    <p>Dapatkan akses seumur hidup kepada semua video, nota, dan kemas kini masa hadapan. Tiada yuran tersembunyi.</p>
-                    <div className={styles.price}>{formatPrice(productSettings.productPrice, 'RM')} <span>sekali bayar</span></div>
-                    <Link href="/checkout" className={styles.ctaButton}>
-                      Dapatkan Akses Sekarang
-                    </Link>
+                <div className={styles.pricingCard}>
+                    <div className={styles.pricingHeader}>
+                        <h2>Tetapi Hari Ini, Anda Hanya Perlu Bayar...</h2>
+                    </div>
+                    
+                    <div className={styles.priceDisplay}>
+                        <div className={styles.originalPrice}>RM 3,138</div>
+                        <div className={styles.currentPrice}>
+                            <span className={styles.currency}>RM</span>
+                            <span className={styles.amount}>{productSettings.productPrice}</span>
+                            <span className={styles.period}>sekali bayar</span>
+                        </div>
+                        <div className={styles.savings}>Anda jimat RM {3138 - productSettings.productPrice}!</div>
+                    </div>
+                    
+                    <div className={styles.priceIncludes}>
+                        <h3>Yang Anda Dapat:</h3>
+                        <ul>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Akses seumur hidup kepada semua modul</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Semua kemas kini masa hadapan PERCUMA</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Akses segera selepas pembayaran</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Boleh belajar ikut pace sendiri</li>
+                        </ul>
+                    </div>
+                    
+                    <div className={styles.ctaSection}>
+                        <Link href="/checkout" className={styles.mainCTA}>
+                            <RocketIcon className={styles.ctaIcon} />
+                            YA! Saya Nak Akses Segera
+                        </Link>
+                        <p className={styles.ctaSubtext}>Akses segera • Sekali bayar • Tiada yuran tersembunyi</p>
+                    </div>
+                    
+                    <div className={styles.urgencyNote}>
+                        <p><strong>Pelaburan terbaik untuk masa depan anda.</strong> Mula transform productivity anda hari ini.</p>
+                    </div>
                 </div>
             </div>
         </section>
