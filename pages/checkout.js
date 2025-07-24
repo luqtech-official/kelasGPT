@@ -320,9 +320,15 @@ export default function Checkout({ productSettings }) {
                     Processing...
                   </>
                 ) : (
-                  "Proceed"
+                  "Complete Checkout via SecurePay"
                 )}
               </button>
+              
+              <div className={styles.paymentInfo}>
+                <p className={styles.paymentInfoText}>
+                  You&apos;ll be redirected to SecurePay for secure payment via FPX bank transfer
+                </p>
+              </div>
               
               {error && (
                 <p 
