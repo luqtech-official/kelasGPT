@@ -82,13 +82,13 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
             <h1 className={styles.heroTitle}>
-              Satu-satunya Kelas &lsquo;Deep Dive&rsquo; AI Untuk Professional dan Small Business Owner yang <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+              Satu-satunya<br />Kelas &lsquo;Deep Dive&rsquo; AI<br />Untuk Professional dan<br />Small Business Owner yang<br /><span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
             </h1>
             <p className={styles.heroSubtitle}>
               <span className={styles.highlight}>&lsquo;Context Design Framework&rsquo;</span> Yang Pakar AI Gunakan Untuk Menaikan Kualiti Output AI Dan <strong>10-20x Produktiviti</strong> Mereka..
             </p>
             <p className={styles.heroSecondary}>
-              <strong>Modul Bonus:</strong> Jangan Terlepas! Saya tunjuk step-by-step cara saya guna AI untuk create bisnes guna AI dari kosong.. Cara buat research, tulis high-converting copywriting, vibe-code salespage.. semuanya guna framework yang sama
+              <span className={styles.urgentText}>Jangan Terlepas Modul Special!</span><br />Belajar step-by-step cara bina Bisnes Digital dengan AI dari kosong<br />- Research,<br />- Copywriting,<br />- Salespage<br />Semuanya guna framework yang sama
             </p>
           </div>
         </section>
@@ -100,13 +100,13 @@ export default function Home({ productSettings }) {
                 <div className={styles.salesContent}>
                     <p>Assalamualaikum,</p>
                     
-                    <p>Kalau anda sedang mencari cara untuk <strong>betul-betul master AI</strong> untuk kerja dan bisnes..</p>
+                    <p>Kalau anda sedang mencari cara untuk <strong>betul-betul belajar AI</strong> untuk kerja dan bisnes..</p>
                     
-                    <p>Bukan sekadar copy-paste prompt dari internet..</p>
+                    <p>Bukan sekadar copy-paste prompt over-hyped generic dari internet..</p>
                     
                     <p><strong>Teruskan membaca.</strong></p>
                     
-                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai Malaysian professionals masih struggle guna AI dengan berkesan..</p>
+                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai orang, termasuk Professionals.. masih struggle guna AI dengan berkesan..</p>
                     
                     <p>Dan bagaimana <span className={styles.highlight}>Context Design Framework</span> yang saya akan ajar boleh transformasi cara anda bekerja sepenuhnya.</p>
                     
@@ -165,14 +165,15 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.authoritySection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Sebelum Saya Tunjuk Cara Framework Berfungsi, Mungkin Saya Patut Perkenalkan Diri Saya Dulu</h2>
+              <h2>Sebelum saya dedahkan RAHSIA framework ni..</h2>
+              <p className={styles.sectionSubtitle}>Mungkin Saya Patut Perkenalkan Diri Saya Dulu..</p>
             </div>
             <div className={styles.authorProfile}>
               <div className={styles.authorImage}>
                 <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332746/Professional_Photo_mdtnaf.png" alt="Fareid - KelasGPT Instructor" width={300} height={300} style={{width: '100%', height: 'auto'}} />
               </div>
               <div className={styles.authorContent}>
-                <h3>Hi, Saya Fareid</h3>
+                <h3>Hi, Saya Fareid Zulkifli</h3>
                 <div className={styles.salesContent}>
                   <p>Kalau nama saya kedengaran familiar..</p>
                   
@@ -180,7 +181,7 @@ export default function Home({ productSettings }) {
                   
                   <p>Sebab sejak tahun 2020..</p>
                   
-                  <p>saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan global paling popular</p>
+                  <p>Saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan global paling popular</p>
                   
                   <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
                   
@@ -206,11 +207,13 @@ export default function Home({ productSettings }) {
               
               <p>Saya tak janjikan cara buat duit dengan AI..</p>
               
-              <p>Kalau itu yang anda cari, <strong>this class is not for u..</strong></p>
+              <p>Kalau itu yang anda cari..</p>
+
+              <p><strong>Mungkin ini bukan kelas yang sesuai..</strong></p>
               
-              <p><strong>Tapi..</strong></p>
+              <p><strong>TETAPI..</strong></p>
               
-              <p>Kalau anda mahukan someone yang berpengalaman dalam industri..</p>
+              <p>Kalau anda mahukan someone yang <span className={styles.highlight}>berpengalaman dalam industri..</span></p>
               
               <p>Tolong breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
               
