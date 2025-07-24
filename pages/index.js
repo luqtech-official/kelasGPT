@@ -66,6 +66,10 @@ export default function Home({ productSettings }) {
     });
   };
 
+  const formatSavings = (amount) => {
+    return `RM${amount.toLocaleString('en-MY')}`;
+  };
+
   useEffect(() => {
     // 🔥 PHASE 1: Multi-source visitor ID resolution
     trackPageView('/');  // NOW: Checks URL params first, then localStorage, then creates new
@@ -724,17 +728,18 @@ export default function Home({ productSettings }) {
                         <div className={styles.currentPrice}>
                             <span className={styles.currency}>RM</span>
                             <span className={styles.amount}>{productSettings.productPrice}</span>
-                            <span className={styles.period}>sekali bayar</span>
+                            <span className={styles.period}>SAHAJA</span>
                         </div>
-                        <div className={styles.savings}>Anda jimat RM {3138 - productSettings.productPrice}!</div>
+                        <div className={styles.period}></div>
+                        <div className={styles.savings}><br />Dengan Penjimatan Sebanyak<br />{formatSavings(3138 - productSettings.productPrice)}!</div>
                     </div>
                     
                     <div className={styles.priceIncludes}>
-                        <h3>Yang Anda Dapat:</h3>
+                        <h3>Ini Yang Anda Akan Dapat:</h3>
                         <ul>
-                            <li><CheckCircleIcon className={styles.checkIcon} />Akses seumur hidup kepada semua modul</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Instant Access selepas pembayaran</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Lifetime Access kepada semua modul</li>
                             <li><CheckCircleIcon className={styles.checkIcon} />Semua kemas kini masa hadapan PERCUMA</li>
-                            <li><CheckCircleIcon className={styles.checkIcon} />Akses segera selepas pembayaran</li>
                             <li><CheckCircleIcon className={styles.checkIcon} />Boleh belajar ikut pace sendiri</li>
                         </ul>
                     </div>
@@ -742,9 +747,9 @@ export default function Home({ productSettings }) {
                     <div className={styles.ctaSection}>
                         <Link href="/checkout" className={styles.mainCTA}>
                             <RocketIcon className={styles.ctaIcon} />
-                            YA! Saya Nak Akses Segera
+                            YA! Saya Nak Access Sekarang
                         </Link>
-                        <p className={styles.ctaSubtext}>Akses segera • Sekali bayar • Tiada yuran tersembunyi</p>
+                        <p className={styles.ctaSubtext}>Instant Access • Sekali Bayar • Tiada yuran tersembunyi</p>
                     </div>
                     
                     <div className={styles.urgencyNote}>
@@ -752,6 +757,54 @@ export default function Home({ productSettings }) {
                     </div>
                 </div>
             </div>
+        </section>
+
+        {/* --- Guarantee Section --- */}
+        <section className={`${styles.section} ${styles.guaranteeSection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Jaminan Kejayaan Pembelajaran Anda</h2>
+              <p>Selepas 8 tahun dalam industri, saya tahu apa yang berfungsi. Dan saya komited untuk pastikan ini berfungsi untuk anda juga.</p>
+            </div>
+            
+            <div className={styles.guaranteeGrid}>
+              <div className={styles.guaranteeCard}>
+                <div className={styles.guaranteeIcon}>
+                  <CheckCircleIcon />
+                </div>
+                <h4>Framework Mastery Support</h4>
+                <p>Selepas mengikuti Modul 2 & 4, jika anda masih tidak faham bagaimana Context Design Framework berfungsi, saya akan personally guide anda melalui konsep tersebut sehingga anda betul-betul master.</p>
+              </div>
+              
+              <div className={styles.guaranteeCard}>
+                <div className={styles.guaranteeIcon}>
+                  <CheckCircleIcon />
+                </div>
+                <h4>Real Results Commitment</h4>
+                <p>Dalam 30 hari, anda akan dapat apply sekurang-kurangnya 5 teknik dari kursus ini dalam kerja atau bisnes anda. Saya komited untuk pastikan anda capai hasil ni.</p>
+              </div>
+              
+              <div className={styles.guaranteeCard}>
+                <div className={styles.guaranteeIcon}>
+                  <CheckCircleIcon />
+                </div>
+                <h4>Non-Technical Promise</h4>
+                <p>Saya janjikan kursus ini direka khas untuk orang tanpa background IT. Setiap konsep dijelaskan dalam bahasa yang mudah, step-by-step, tanpa jargon technical yang mengelirukan.</p>
+              </div>
+            </div>
+            
+            <div className={styles.guaranteeFooter}>
+              <div className={styles.guaranteeBadge}>
+                <h3>Komitmen Saya Kepada Kejayaan Anda</h3>
+                <p>Saya tidak sekadar jual kursus dan hilang. Saya komited untuk pastikan anda betul-betul faham dan boleh apply semua yang anda belajar. Kerana kejayaan anda adalah kejayaan saya juga.</p>
+              </div>
+              
+              <div className={styles.guaranteeStatement}>
+                <p><strong>Kenapa saya begitu yakin dengan kepuasan anda?</strong></p>
+                <p>Sebab modul yang disusun bukan sekadar theory kosong. Ia datang dari 8 tahun hands-on experience memberi konsultansi teknikal kepada Real Business User, termasuklah integrasi AI dalam pelbagai aspek bisnes yang menjadi fokus sejak 2-3 tahun lepas. </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* --- Imagine/Final CTA Section --- */}

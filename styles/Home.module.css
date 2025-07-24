@@ -511,13 +511,9 @@
 }
 
 .savings {
-  background: var(--urgent-red);
-  color: var(--pure-white);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  color: var(--urgent-red);
   font-weight: 700;
   font-size: 1.1rem;
-  display: inline-block;
   margin-top: 1rem;
 }
 
@@ -669,6 +665,170 @@
   
   .ctaSection {
     padding: 2rem 1.5rem;
+  }
+}
+
+/* --- Guarantee Section --- */
+.guaranteeSection {
+  background: linear-gradient(135deg, var(--terra-bg), var(--warm-gray));
+  border-top: 1px solid var(--terra-light);
+}
+
+.guaranteeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.guaranteeCard {
+  background: var(--pure-white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  border: 1px solid var(--terra-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guaranteeCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.guaranteeIcon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem auto;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pure-white);
+}
+
+.guaranteeCard h4 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.guaranteeCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.guaranteeFooter {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.guaranteeBadge {
+  background: var(--pure-white);
+  border: 3px solid var(--success-green);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.guaranteeBadge::before {
+  content: '✓';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--success-green);
+  color: var(--pure-white);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.guaranteeBadge h3 {
+  color: var(--success-green);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.guaranteeBadge p {
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.guaranteeStatement {
+  background: var(--terra-dark);
+  color: var(--pure-white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.guaranteeStatement p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.guaranteeStatement p:last-child {
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+.guaranteeStatement strong {
+  color: var(--pure-white);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .guaranteeGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .guaranteeCard {
+    padding: 1.5rem;
+  }
+  
+  .guaranteeIcon {
+    width: 50px;
+    height: 50px;
+    padding: 12px;
+    margin-bottom: 1rem;
+  }
+  
+  .guaranteeCard h4 {
+    font-size: 1.1rem;
+  }
+  
+  .guaranteeCard p {
+    font-size: 0.9rem;
+  }
+  
+  .guaranteeBadge {
+    padding: 2rem 1.5rem;
+  }
+  
+  .guaranteeBadge h3 {
+    font-size: 1.4rem;
+  }
+  
+  .guaranteeStatement {
+    padding: 1.5rem;
   }
 }
 
