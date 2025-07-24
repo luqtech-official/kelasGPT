@@ -145,7 +145,7 @@ export default function Home({ productSettings }) {
         <section className={styles.section}>
             <div className="container">
                 <div className={styles.sectionHeader}>
-                    <h2>Lihat Bagaimana Framework Ni Berfungsi</h2>
+                    <h2>Apa Anda Boleh Buat Bila Faham Cara AI Berfikir</h2>
                     <p>Semua yang saya tunjuk ni, hanyalah basic use case.. Anda akan belajar lebih banyak use case yang lebih advance..</p>
                 </div>
                 <div className={styles.useCasesGrid}>
@@ -167,7 +167,7 @@ export default function Home({ productSettings }) {
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 2</div>
                             <h4>Analisis Data Dan Reporting</h4>
-                            <p>Kalau anda nak analisis data, buat report atau dapatkan business insight yang actually grounded dan bukan halusinasi? apply je framework yang sama.</p>
+                            <p>Guna framework yang sama, anda boleh ubah raw data dari file excel atau csv, dapatkan analisis data penuh, buat full report atau dapatkan business insight yang actually grounded dan bukan halusinasi. Semua dalam 5-7 minit sahaja!</p>
                         </div>
                     </div>
                     
