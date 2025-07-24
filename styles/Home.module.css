@@ -349,7 +349,7 @@
     font-size: 1.05rem;
   }
   .consultantContent {
-    font-size: 1.05rem;
+    font-size: 1.0rem;
   }
   .imagineBox {
     margin: 1rem;
@@ -579,7 +579,7 @@
 .consultantContent {
   max-width: 900px;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   line-height: 1.8;
 }
 
