@@ -287,19 +287,68 @@
   opacity: 0.9;
 }
 
-/* --- Responsive Design --- */
+/* --- Enhanced Responsive Design --- */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
+  .heroTitle {
+    font-size: 2.8rem;
   }
-  .hero p {
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  .heroSecondary {
     font-size: 1.1rem;
   }
-  .sectionHeader h2, .imagineBox h2 {
-    font-size: 2rem;
+  .sectionHeader h2 {
+    font-size: 2.2rem;
+  }
+  .imagineBox h2 {
+    font-size: 2.5rem;
   }
   .section {
-    padding: 3rem 0;
+    padding: 4rem 0;
+  }
+  .authorProfile {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    align-items: center;
+  }
+  .authorImage {
+    width: 100px;
+    height: 100px;
+    order: -1; /* Move image to top */
+  }
+  .authorContent {
+    text-align: center;
+    width: 100%;
+  }
+  .authorContent h3 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  .useCasesGrid {
+    grid-template-columns: 1fr;
+  }
+  .expertsGrid {
+    grid-template-columns: 1fr;
+  }
+  .ctaButton {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+  .consultantContent {
+    font-size: 1.1rem;
+  }
+  .imagineBox {
+    margin: 1rem;
+    padding: 3rem 1.5rem;
+  }
+  .pricingBox {
+    margin: 0 1rem;
+    padding: 2rem;
+  }
+  .price {
+    font-size: 3rem;
   }
   .learnGrid {
     grid-template-columns: 1fr;
