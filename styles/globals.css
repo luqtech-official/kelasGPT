@@ -6,15 +6,26 @@
 */
 
 :root {
-  /* Color Palette */
-  --background: #f8f9fa; /* A light, clean off-white */
-  --foreground: #212529; /* A dark, readable text color */
-  --primary: #0052cc; /* A strong, trustworthy blue for primary actions */
-  --primary-hover: #0041a3; /* A darker shade for hover states */
-  --secondary: #e9ecef; /* A light grey for card backgrounds and dividers */
-  --accent: #17a2b8; /* A calming teal for accents and secondary info */
+  /* Terra Cotta Color Scheme */
+  --terra-primary: #CD8B76;
+  --terra-dark: #A8523F;
+  --terra-light: #E8C5B8;
+  --terra-bg: #FBF8F5;
+  --text-primary: #2C2C2C;
+  --text-secondary: #6B5B57;
+  --success-green: #4A7C59;
+  --pure-white: #FFFFFF;
+  --warm-gray: #F5F1EB;
+
+  /* Legacy Color Palette (kept for compatibility) */
+  --background: #f8f9fa;
+  --foreground: #212529;
+  --primary: #0052cc;
+  --primary-hover: #0041a3;
+  --secondary: #e9ecef;
+  --accent: #17a2b8;
   --white: #ffffff;
-  --success: #28a745; /* A vibrant green for success indicators */
+  --success: #28a745;
 
   /* Typography */
   --font-body: 'Inter', sans-serif;

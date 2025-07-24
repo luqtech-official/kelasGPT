@@ -81,82 +81,314 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
             <h1 className={styles.heroTitle}>
-              Belajar & Kuasai Kecerdasan Buatan untuk Gandakan Produktiviti Anda
+              Satu-satunya Kelas 'Deep Dive' AI Untuk Professional dan Small Business Owner yang <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
             </h1>
             <p className={styles.heroSubtitle}>
-              Tertanya-tanya bagaimana AI boleh mempercepat kerja harian? Mahu memahami LLM tanpa pening kepala teknikal? Ingin menaik taraf kemahiran, menjimatkan masa, dan menambah nilai kepada kerjaya atau bisnes anda?
+              <span className={styles.highlight}>'Context Design Framework'</span> Yang Pakar AI Gunakan Untuk Menaikan Kualiti Output AI Dan <strong>10-20x Produktiviti</strong> Mereka..
             </p>
-            <Link href="/checkout" className={styles.ctaButton}>
-              Daftar Sekarang <ArrowRightIcon />
-            </Link>
-            <p className={styles.ctaButtonSubtext}>Tempat terhad untuk sokongan berkualiti.</p>
+            <p className={styles.heroSecondary}>
+              <strong>Modul Bonus:</strong> Jangan Terlepas! Saya tunjuk step-by-step cara saya guna AI untuk create bisnes guna AI dari kosong.. Cara buat research, tulis high-converting copywriting, vibe-code salespage.. semuanya guna framework yang sama
+            </p>
           </div>
         </section>
 
-        {/* --- Who is this for? (Pain Points) --- */}
+        {/* --- Problem Awareness Section --- */}
+        <section className={`${styles.section} ${styles.notJustPrompts}`}>
+            <div className="container">
+                <h2 className={styles.notJustPrompts}>Ini Bukan Kelas Prompt Semata-mata!</h2>
+                <div className={styles.salesContent}>
+                    <p>Assalamualaikum,</p>
+                    
+                    <p>Kalau anda sedang mencari peluang untuk belajar skill AI dengan <strong>Betul dan Mendalam..</strong></p>
+                    
+                    <p>Khususnya LLM seperti ChatGPT..</p>
+                    
+                    <p>Teruskan membaca..</p>
+                    
+                    <p>Sebab saya ada selitkan beberapa <span className={styles.emphasis}>'ilmu mahal'</span> dalam artikel ini..</p>
+                    
+                    <p>Dalam keadaan sekarang, yang mana masih ramai orang yang pertikaikan AI..</p>
+                    
+                    <p>Dah ada sekumpulan orang yang betul-betul faham cara nak gunakan AI sebagai tools dengan betul..</p>
+                    
+                    <p>Cara nak leverage kekuatan AI, dan teknik untuk work-around kelemahan dia..</p>
+                    
+                    <p>Dan bila anda faham macam mana AI ni berfikir dan berfungsi..</p>
+                    
+                    <p>Macam mana nak gunakan <span className={styles.highlight}>Framework betul..</span></p>
+                    
+                    <p>Cara susun <span className={styles.highlight}>Context dengan tepat..</span></p>
+                    
+                    <p>Tak ada orang yang akan complaint anda ni <em>'sikit-sikit tanya chatgpt, bukan boleh pakai pun'..</em></p>
+                    
+                    <p>And tak kisahlah apa saja jenis atau nature kerja anda..</p>
+                    
+                    <p><strong>Framework yang anda akan belajar ni sentiasa terpakai.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        {/* --- Use Cases with Visual Proof --- */}
         <section className={styles.section}>
             <div className="container">
                 <div className={styles.sectionHeader}>
-                    <h2>Adakah Ini Anda?</h2>
+                    <h2>Lihat Bagaimana Framework Ni Berfungsi</h2>
+                    <p>Semua yang saya tunjuk ni, hanyalah basic use case.. Anda akan belajar lebih banyak use case yang lebih advance..</p>
                 </div>
-                <div className={styles.painPointsGrid}>
-                    <div className={styles.painPointCard}>
-                        <RocketIcon />
-                        <p>Profesional yang ingin 10x produktiviti.</p>
+                <div className={styles.useCasesGrid}>
+                    <div className={styles.useCaseCard}>
+                        <div className={styles.useCaseImage}>
+                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" />
+                        </div>
+                        <div className={styles.useCaseContent}>
+                            <div className={styles.useCaseTitle}>Use Case 1</div>
+                            <h4>Content Penulisan</h4>
+                            <p>Nak buat content penulisan, apply Context Design Framework ni, anda akan dapat hasil yang sesuai dengan gaya penulisan anda, content yang anda sendiri faham, bukan sekadar copy-paste macam orang lain.</p>
+                        </div>
                     </div>
-                    <div className={styles.painPointCard}>
-                        <BrainCircuitIcon />
-                        <p>Pelajar & penyelidik yang mahu menulis & menganalisis lebih pantas.</p>
+                    
+                    <div className={styles.useCaseCard}>
+                        <div className={styles.useCaseImage}>
+                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" />
+                        </div>
+                        <div className={styles.useCaseContent}>
+                            <div className={styles.useCaseTitle}>Use Case 2</div>
+                            <h4>Analisis Data Dan Reporting</h4>
+                            <p>Kalau anda nak analisis data, buat report atau dapatkan business insight yang actually grounded dan bukan halusinasi? apply je framework yang sama.</p>
+                        </div>
                     </div>
-                    <div className={styles.painPointCard}>
-                        <TargetIcon />
-                        <p>Pemilik bisnes kecil yang mahu menambah baik operasi & pemasaran.</p>
+                    
+                    <div className={styles.useCaseCard}>
+                        <div className={styles.useCaseImage}>
+                            <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" />
+                        </div>
+                        <div className={styles.useCaseContent}>
+                            <div className={styles.useCaseTitle}>Use Case 3</div>
+                            <h4>Infographic dan Presentation</h4>
+                            <p>Sedang orang lain masih mengharapkan prompt orang lain, yang selalunya generic.. Anda sudah few steps ahead dan boleh hasilkan 'well-thought' material yang anda perlukan.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        {/* --- Features Section ("Why KelasGPT") --- */}
-        <section className={`${styles.section} ${styles.grey}`}>
+        {/* --- Authority Building Section --- */}
+        <section className={`${styles.section} ${styles.authoritySection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Mengapa KelasGPT Lain Daripada Yang Lain?</h2>
-              <p>Disampaikan oleh penganalisis perniagaan berpengalaman, setiap topik dihubungkan terus kepada situasi sebenar di tempat kerja dan perniagaan.</p>
+              <h2>Sebelum Saya Tunjuk Cara Framework Berfungsi, Mungkin Saya Patut Perkenalkan Diri Saya Dulu</h2>
             </div>
-            <div className={styles.featuresGrid}>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}><CheckCircleIcon /></div>
-                <div><h3>Fokus Non-Teknikal</h3><p>Dijelaskan dalam bahasa mudah, sesuai untuk latar belakang apa pun.</p></div>
+            <div className={styles.authorProfile}>
+              <div className={styles.authorImage}>
+                <img src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332746/Professional_Photo_mdtnaf.png" alt="Fareid - KelasGPT Instructor" />
               </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}><CheckCircleIcon /></div>
-                <div><h3>Panduan Langkah Demi Langkah</h3><p>Daripada asas AI hingga strategi prompt lanjutan, semuanya tersusun.</p></div>
+              <div className={styles.authorContent}>
+                <h3>Hi, Saya Fareid</h3>
+                <div className={styles.salesContent}>
+                  <p>Kalau nama saya kedengaran familiar..</p>
+                  
+                  <p>Mungkin sebab anda pernah nampak atau menggunakan hasil kerja saya sebelum ini.</p>
+                  
+                  <p>Sebab sejak tahun 2020..</p>
+                  
+                  <p>saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan global paling popular</p>
+                  
+                  <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor's Pick</span> oleh platform itu sendiri,</p>
+                  
+                  <div className={styles.socialProofBadge}>TradingView Editor's Pick</div>
+                  
+                  <p>Tetapi involvement saya dalam dunia technology as a service bukan sekadar menulis script untuk Tradingview..</p>
+                  
+                  <p>Dengan hampir <strong>8 tahun pengalaman sebagai Lead Business Analyst</strong> dalam beberapa company IT..</p>
+                  
+                  <p>Kepakaran utama saya as a bridging role, ialah menerangkan dan memberi konsultansi kepada business user tentang selok belok perkara teknikal berkaitan <span className={styles.highlight}>Teknologi dan AI dalam konteks bisnes mereka..</span></p>
+                  
+                  <p>Dan tujuan saya ceritakan semua ni ialah supaya anda faham..</p>
+                </div>
               </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}><CheckCircleIcon /></div>
-                <div><h3>Kandungan Ringkas & Padat</h3><p>12 video sederhana panjang, mudah diulang tonton mengikut topik.</p></div>
-              </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}><CheckCircleIcon /></div>
-                <div><h3>Belajar Ikut Kadar Sendiri</h3><p>Akses 24/7; belajar di pejabat, rumah atau semasa dalam perjalanan.</p></div>
-              </div>
+            </div>
+            
+            <div className={styles.salesContent} style={{marginTop: '3rem', textAlign: 'center'}}>
+              <h3 style={{color: 'var(--terra-dark)', fontSize: '2rem', marginBottom: '1.5rem'}}>Ini BUKAN Kelas Buat Duit Dengan AI</h3>
+              
+              <p>Saya bukanlah sifu content creator atau marketing expert yang join trend AI..</p>
+              
+              <p>Saya tak janjikan cara buat duit dengan AI..</p>
+              
+              <p>Kalau itu yang anda cari, <strong>this class is not for u..</strong></p>
+              
+              <p><strong>Tapi..</strong></p>
+              
+              <p>Kalau anda mahukan someone yang berpengalaman dalam industri..</p>
+              
+              <p>Tolong breakdown konsep cara AI 'berfikir' yang kompleks menjadi lebih mudah difahami..</p>
+              
+              <p>Sesuai untuk anda..</p>
+              
+              <p>Atau sesiapa yang langsung tak ada background teknikal..</p>
+              
+              <p>Cara nak leverage AI dalam kerja, study atau bisnes anda dengan <span className={styles.emphasis}>proper understanding..</span></p>
+              
+              <p><strong>Bukan sekadar copy paste prompt orang lain</strong></p>
+              
+              <p><em>Teruskan baca..</em></p>
             </div>
           </div>
         </section>
 
-        {/* --- What You'll Learn Section --- */}
-        <section className={styles.section}>
+        {/* --- Personal Consultant Vision --- */}
+        <section className={`${styles.section} ${styles.consultantVision}`}>
+          <div className="container">
+            <h2>Personal Expert Consultant Yang Dijanjikan</h2>
+            <div className={styles.consultantContent}>
+              <p><strong>Bayangkan..</strong></p>
+              
+              <p>Anda duduk dalam bilik anda, menghadap laptop dengan penuh fokus..</p>
+              
+              <p>Anda kerja keras sebab nak better future, Better income, Nak hidup selesa..</p>
+              
+              <p>Sama ada nak start side bisnes sendiri,</p>
+              
+              <p>Nak scale up bisnes sekarang,</p>
+              
+              <p>Improve kualiti kerja office..</p>
+              
+              <p>Apa saja yang anda nak buat..</p>
+              
+              <p><strong>Instead of serabut tak tahu nak mula dari mana, anda ada personal consultant, specially custom made untuk anda.</strong></p>
+              
+              <p>Kalau sebelum ni anda selalu blur, tak yakin atau tak pasti nak cari mana jawapan anda..</p>
+              
+              <p>Sekarang anda ada several <span style={{color: 'var(--terra-light)', fontWeight: '700'}}>'expert employee'</span> yang buat research dan manage task untuk anda.</p>
+              
+              <p>Bayangkan clarity of mind yang anda dapat..</p>
+              
+              <p>Sejauh mana fokus anda boleh pergi..</p>
+              
+              <p>Bila dah tak ada mental block remeh.. <em>(sebab utama orang ramai procrastinate)</em></p>
+              
+              <p>Bila anda tak payah buat kerja seorang diri..</p>
+              
+              <p><strong>Anda dah boleh bagi tumpuan dekat actual problem solving..</strong></p>
+              
+              <p><strong>Kerja-kerja yang high impact..</strong></p>
+              
+              <p><strong>Yang bagi anda kepuasan..</strong></p>
+              
+              <p>Biarkan kerja-kerja remeh, makan masa, tapi low impact diselesaikan oleh personal AI anda.</p>
+              
+              <p style={{fontSize: '1.5rem', fontWeight: '700', margin: '2rem 0'}}>Best part? Projek yang ambil masa sebulan, anda siapkan dalam masa 4-5 hari sahaja.</p>
+              
+              <p>Ada masa extra, anda fokus dekat benda lain, pasangan, anak2, kawan-kawan, side hustle lain..</p>
+              
+              <p>Buat macam ni untuk 3-4 bulan, orang keliling akan nampak perubahan kualiti kerja anda, start jadikan anda sebagai tempat rujukan.</p>
+              
+              <p><strong>Itu yang teknologi AI janjikan dari dulu..</strong></p>
+              
+              <p><strong>dan mampu berikan sekarang..</strong></p>
+              
+              <p>Kalau anda faham cara yang tepat dan betul untuk bina Personal Expert Consultant, custom made special untuk anda.</p>
+              
+              <p>Semua ni tak mustahil..</p>
+              
+              <p>Tak payah langgan Apps AI banyak2, ChatGPT pun cukup..</p>
+              
+              <p>Kalau tak suka ChatGPT.. Gemini ada, Claude, Grok..</p>
+              
+              <p>Tak kira platform apa yang anda guna</p>
+              
+              <p><strong>Anda akan belajar cara setup AI dengan betul..</strong></p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- 5 AI Experts Story --- */}
+        <section className={`${styles.section} ${styles.aiExpertsSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Apa Yang Anda Akan Pelajari?</h2>
-              <p>Kurikulum komprehensif yang membawa anda dari zero ke hero dalam aplikasi AI praktikal.</p>
+              <h2>Satu Malam je Untuk Dapat 5 AI Expert</h2>
+              <p>Dan anda boleh setup kurang.. atau lebih.., bergantung pada keperluan anda..</p>
+              
+              <p>Cara nak setup expert consultant guna ChatGPT ni senang.</p>
+              
+              <p>Saya sendiri setup 5 Expert dalam ChatGPT untuk bantu kerja saya, yang saya guna sampai sekarang..</p>
+              
+              <p><strong>Dalam 1 malam je, sekali setup, guna sampai bila-bila..</strong></p>
             </div>
-            <div className={styles.learnGrid}>
-                <div className={styles.learnItem}><CheckCircleIcon /><h3>Asas AI – Terma utama, sejarah ringkas, dan cara AI “berfikir”.</h3></div>
-                <div className={styles.learnItem}><CheckCircleIcon /><h3>Cara LLM Berfungsi – Konteks tetingkap, benchmark model popular.</h3></div>
-                <div className={styles.learnItem}><CheckCircleIcon /><h3>Teknik Prompt – Dari asas hingga lanjutan; rangka kerja, dan mental model.</h3></div>
-                <div className={styles.learnItem}><CheckCircleIcon /><h3>Ciri Tambahan LLM – Cara memaksimumkan langganan berbayar anda.</h3></div>
-                <div className={styles.learnItem}><CheckCircleIcon /><h3>How-to & Demo – Menyelesaikan tugasan harian, penulisan, analisis, dan automasi.</h3></div>
+            
+            <div className={styles.expertsGrid}>
+              <div className={styles.expertCard}>
+                <div className={styles.expertTitle}>AI EXPERT #1</div>
+                <h4>Project Management Expert</h4>
+                <p>Personal manager yang handle dan manage tasklist saya. Kalau banyak task, dia siap-siap prioritise task mana penting, yang mana nak delegate to AI, yang mana nak buat dulu. Dia buat satu report plan, saya review, kalau setuju, saya follow je plan dia.</p>
+              </div>
+              
+              <div className={styles.expertCard}>
+                <div className={styles.expertTitle}>AI EXPERT #2</div>
+                <h4>Copy Writing Expert</h4>
+                <p>Tolong buat ayat untuk online business (My main side hustle). Dia lah yang design semua copywriting untuk paid ads yang saya buat. Ads fatigue? dia tolong buat baru. Nak Split test? dia bagi recommendation.</p>
+              </div>
+              
+              <div className={styles.expertCard}>
+                <div className={styles.expertTitle}>AI EXPERT #3</div>
+                <h4>Stock Trading Expert</h4>
+                <p>Tolong review fundamental analysis saham, cari data financial, bagi tau area yang saya patut consider (My other side hustle)</p>
+              </div>
+              
+              <div className={styles.expertCard}>
+                <div className={styles.expertTitle}>AI EXPERT #4</div>
+                <h4>Data Storytelling Expert</h4>
+                <p>Analysis Expert, yang tolong bagi insight, monitor risk based on data bisnes yang saya provide.</p>
+              </div>
+              
+              <div className={styles.expertCard}>
+                <div className={styles.expertTitle}>AI EXPERT #5</div>
+                <h4>Coding Expert</h4>
+                <p>This very page, kelasgpt.com, <span className={styles.emphasis}>100% coded oleh AI</span>, lengkap dengan salespage, checkout, payment integration, customer management system, emel. Saya start from scratch, dalam masa 5 hari, ada fully functioning sales system, yang 100% percuma, tak payah bayar onpay/shopify/shopeegram untuk host dah..</p>
+              </div>
+            </div>
+            
+            <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '3rem'}}>
+              <p><strong>Ini semua personalised untuk saya, dan anda akan belajar step by step untuk bina expert personalised untuk anda..</strong></p>
+              
+              <p>Semua ni possible bila faham AI.</p>
+              
+              <p>Dan sangat mudah..</p>
+              
+              <p><strong>Selagi mana anda faham cara AI berfikir..</strong></p>
+              
+              <div className={styles.learnGrid} style={{marginTop: '2rem'}}>
+                <div className={styles.learnItem}>
+                  <CheckCircleIcon />
+                  <h3>Context Window management - Supaya AI tak jadi bengap tiba</h3>
+                </div>
+                <div className={styles.learnItem}>
+                  <CheckCircleIcon />
+                  <h3>Regression Architecture dan impak terhadap cara anda prompt</h3>
+                </div>
+                <div className={styles.learnItem}>
+                  <CheckCircleIcon />
+                  <h3>Memory Manipulation technique</h3>
+                </div>
+                <div className={styles.learnItem}>
+                  <CheckCircleIcon />
+                  <h3>Embedding & Vector Space - Teknik control context priority dengan prompt</h3>
+                </div>
+              </div>
+              
+              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>Ini semua anda belajar dalam <span className={styles.emphasis}>Module 2: Deep Dive to AI Foundation.</span></p>
+              
+              <p>Rasa susah?</p>
+              
+              <p>Bunyi terlalu teknikal?</p>
+              
+              <p><strong>Jangan takut.</strong></p>
+              
+              <p>Cara pembelajaran kelasGPT sememangnya fokus untuk orang yang tak ada background IT.</p>
+              
+              <p><em>Jom tengok preview kelas dibawah..</em></p>
+              
+              <p><em>Sesuai tak untuk anda?</em></p>
             </div>
           </div>
         </section>

@@ -14,7 +14,8 @@
       "WebFetch(domain:documentation.mailjet.com)",
       "Bash(node:*)",
       "Bash(npm run lint)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "WebFetch(domain:www.starterstory.com)"
     ],
     "deny": []
   }

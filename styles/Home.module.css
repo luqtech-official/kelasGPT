@@ -1,9 +1,12 @@
 /*
-  Home.module.css
-  - Contains all styles for the conversion-focused sales page.
-  - Each section is clearly defined and styled for maximum impact and readability.
-  - Fully responsive design ensures a great experience on all devices.
+  Home.module.css - Direct Sales Letter Design
+  - High-impact sales letter with light terra cotta color scheme
+  - Trust-focused design optimized for Malaysian mobile market
+  - Clean, professional layout that builds credibility and drives conversion
 */
+
+/* --- Terra Cotta Sales Letter Styles --- */
+/* Color variables are now defined in globals.css */
 
 /* --- General Layout --- */
 .pageWrapper {
@@ -11,62 +14,88 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  background-color: var(--pure-white);
+  color: var(--text-primary);
 }
 
 .main {
   width: 100%;
-  padding: 2rem 0;
+  padding: 0;
+  max-width: none;
 }
 
 .section {
   width: 100%;
-  padding: 4rem 0;
+  padding: 5rem 0;
 }
 
 .section.grey {
-  background-color: var(--white);
-  border-top: 1px solid var(--secondary);
-  border-bottom: 1px solid var(--secondary);
+  background-color: var(--terra-bg);
+  border-top: 1px solid var(--terra-light);
+  border-bottom: 1px solid var(--terra-light);
+}
+
+.section.terra {
+  background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
+  color: var(--pure-white);
 }
 
 .sectionHeader {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .sectionHeader h2 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  line-height: 1.2;
 }
 
 .sectionHeader p {
-  font-size: 1.1rem;
-  color: #6c757d;
-  max-width: 600px;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 700px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
 
 /* --- Hero Section --- */
 .hero {
   text-align: center;
-  padding: 4rem 0 5rem;
+  padding: 6rem 0 7rem;
+  background: linear-gradient(135deg, var(--terra-bg) 0%, var(--pure-white) 100%);
 }
 
-.hero h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #0052cc, #007bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  line-height: 1.1;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.hero p {
-  font-size: 1.25rem;
-  max-width: 700px;
+.heroSubtitle {
+  font-size: 1.4rem;
+  max-width: 800px;
   margin: 0 auto 2rem;
-  color: #495057;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.heroSecondary {
+  font-size: 1.2rem;
+  max-width: 750px;
+  margin: 0 auto 3rem;
+  color: var(--terra-dark);
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 /* --- CTA Button --- */
@@ -275,4 +304,264 @@
   .learnGrid {
     grid-template-columns: 1fr;
   }
+}
+
+/* --- Additional Sales Letter Elements --- */
+.highlight {
+  background: linear-gradient(120deg, var(--terra-light) 0%, var(--terra-light) 100%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.emphasis {
+  color: var(--terra-dark);
+  font-weight: 700;
+}
+
+.testimonial {
+  background: var(--pure-white);
+  padding: 2rem;
+  border-left: 4px solid var(--terra-primary);
+  border-radius: 8px;
+  margin: 2rem 0;
+  font-style: italic;
+  box-shadow: 0 5px 15px rgba(44, 44, 44, 0.05);
+}
+
+.socialProofBadge {
+  display: inline-block;
+  background: var(--success-green);
+  color: var(--pure-white);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0.5rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --- Sales Content Readability Styles --- */
+.salesContent {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.salesContent p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.salesContent p:last-child {
+  margin-bottom: 0;
+}
+
+.salesContent strong {
+  font-weight: 700;
+  color: var(--terra-dark);
+}
+
+.salesContent em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* --- Problem Awareness Section --- */
+.notJustPrompts {
+  background-color: var(--terra-bg);
+  text-align: left;
+}
+
+.notJustPrompts h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--terra-dark);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* --- Authority Section --- */
+.authoritySection {
+  background-color: var(--pure-white);
+}
+
+.authorProfile {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.authorImage {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--terra-light);
+  box-shadow: 0 8px 25px rgba(205, 139, 118, 0.2);
+}
+
+.authorImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.authorContent h3 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+/* --- Use Cases Grid --- */
+.useCasesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.useCaseCard {
+  background: var(--pure-white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(44, 44, 44, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.useCaseCard:hover {
+  transform: translateY(-5px);
+}
+
+.useCaseImage {
+  width: 100%;
+  height: 200px;
+  background-color: var(--warm-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.useCaseImage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.useCaseContent {
+  padding: 2rem;
+}
+
+.useCaseTitle {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
+  color: var(--pure-white);
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(205, 139, 118, 0.3);
+}
+
+.useCaseContent h4 {
+  font-size: 1.4rem;
+  color: var(--terra-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.useCaseContent p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Personal Consultant Section --- */
+.consultantVision {
+  background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
+  color: var(--pure-white);
+  text-align: center;
+}
+
+.consultantVision h2 {
+  color: var(--pure-white);
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+}
+
+.consultantContent {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 1.3rem;
+  line-height: 1.8;
+}
+
+.consultantContent p {
+  margin-bottom: 1.8rem;
+  line-height: 1.8;
+}
+
+.consultantContent p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- AI Experts Section --- */
+.aiExpertsSection {
+  background-color: var(--terra-bg);
+}
+
+.expertsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.expertCard {
+  background: var(--pure-white);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border-left: 5px solid var(--terra-primary);
+  box-shadow: 0 8px 25px rgba(44, 44, 44, 0.08);
+}
+
+.expertTitle {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--success-green), #3A5F47);
+  color: var(--pure-white);
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(74, 124, 89, 0.3);
+}
+
+.expertCard h4 {
+  font-size: 1.5rem;
+  color: var(--terra-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  margin-top: 0;
+}
+
+.expertCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1.1rem;
 }
