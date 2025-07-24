@@ -326,7 +326,7 @@ export default function Checkout({ productSettings }) {
               
               <div className={styles.paymentInfo}>
                 <p className={styles.paymentInfoText}>
-                  You&apos;ll be redirected to SecurePay for secure payment via FPX bank transfer
+                  You&apos;ll be redirected to Payment Gateway for secure payment via FPX bank transfer.
                 </p>
               </div>
               

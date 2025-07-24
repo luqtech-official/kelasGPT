@@ -64,6 +64,24 @@ export const ProcessingIcon = memo(({ className }) => (
   </svg>
 ));
 
+export const SecurePayIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="80" height="24" viewBox="0 0 100 30" className={className}>
+    <rect width="100" height="30" rx="4" fill="#2563eb"/>
+    <text x="50" y="20" textAnchor="middle" fill="white" fontSize="12" fontWeight="600" fontFamily="Inter, sans-serif">
+      SecurePay
+    </text>
+  </svg>
+));
+
+export const FPXIcon = memo(({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="24" viewBox="0 0 50 30" className={className}>
+    <rect width="50" height="30" rx="4" fill="#0066cc"/>
+    <text x="25" y="20" textAnchor="middle" fill="white" fontSize="10" fontWeight="700" fontFamily="Inter, sans-serif">
+      FPX
+    </text>
+  </svg>
+));
+
 UserIcon.displayName = 'UserIcon';
 MailIcon.displayName = 'MailIcon';
 PhoneIcon.displayName = 'PhoneIcon';
@@ -73,3 +91,5 @@ TimeoutIcon.displayName = 'TimeoutIcon';
 SuccessIcon.displayName = 'SuccessIcon';
 FailedIcon.displayName = 'FailedIcon';
 ProcessingIcon.displayName = 'ProcessingIcon';
+SecurePayIcon.displayName = 'SecurePayIcon';
+FPXIcon.displayName = 'FPXIcon';
