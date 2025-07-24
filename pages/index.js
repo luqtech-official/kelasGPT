@@ -6,6 +6,7 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
+import { cloudinaryPresets, getCloudinaryBlurDataURL, getCloudinarySizes } from "../lib/cloudinary";
 
 // --- SVG Icon Components ----
 // Using simple functional components for SVG icons for reusability and cleanliness.
@@ -151,18 +152,38 @@ export default function Home({ productSettings }) {
                 <div className={styles.useCasesGrid}>
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Writing_Style_Sample_y7vmrr.webp" alt="AI Writing Style Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
+                            <Image 
+                                src={cloudinaryPresets.content('v1753332727/Writing_Style_Sample_y7vmrr')} 
+                                alt="AI Writing Style Sample" 
+                                width={800} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto'}} 
+                                loading="lazy"
+                                placeholder="blur"
+                                blurDataURL={getCloudinaryBlurDataURL('v1753332727/Writing_Style_Sample_y7vmrr')}
+                                sizes={getCloudinarySizes('content')}
+                            />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 1</div>
                             <h4>Content Penulisan</h4>
-                            <p>Nak buat content penulisan, apply Context Design Framework ni, anda akan dapat hasil yang sesuai dengan gaya penulisan anda, content yang anda sendiri faham, bukan sekadar copy-paste macam orang lain.</p>
+                            <p>Nak buat content penulisan seperti social media, copywriting, article? Apply je Context Design Framework ni, anda akan dapat hasil yang sesuai dengan gaya penulisan anda, content yang anda sendiri faham, bukan sekadar copy-paste macam orang lain.</p>
                         </div>
                     </div>
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332727/Sales_Report_Sample_om3mlm.webp" alt="AI Sales Report Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
+                            <Image 
+                                src={cloudinaryPresets.content('v1753332727/Sales_Report_Sample_om3mlm')} 
+                                alt="AI Sales Report Sample" 
+                                width={800} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto'}} 
+                                loading="lazy"
+                                placeholder="blur"
+                                blurDataURL={getCloudinaryBlurDataURL('v1753332727/Sales_Report_Sample_om3mlm')}
+                                sizes={getCloudinarySizes('content')}
+                            />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 2</div>
@@ -173,7 +194,17 @@ export default function Home({ productSettings }) {
                     
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
-                            <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332728/Infografik_Sample_amkqdu.webp" alt="AI Infographic Sample" width={800} height={500} style={{width: '100%', height: 'auto'}} />
+                            <Image 
+                                src={cloudinaryPresets.content('v1753332728/Infografik_Sample_amkqdu')} 
+                                alt="AI Infographic Sample" 
+                                width={800} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto'}} 
+                                loading="lazy"
+                                placeholder="blur"
+                                blurDataURL={getCloudinaryBlurDataURL('v1753332728/Infografik_Sample_amkqdu')}
+                                sizes={getCloudinarySizes('content')}
+                            />
                         </div>
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 3</div>
@@ -194,7 +225,17 @@ export default function Home({ productSettings }) {
             </div>
             <div className={styles.authorProfile}>
               <div className={styles.authorImage}>
-                <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332746/Professional_Photo_mdtnaf.png" alt="Fareid - KelasGPT Instructor" width={300} height={300} style={{width: '100%', height: 'auto'}} />
+                <Image 
+                    src={cloudinaryPresets.profile('v1753332746/Professional_Photo_mdtnaf')} 
+                    alt="Fareid - KelasGPT Instructor" 
+                    width={300} 
+                    height={300} 
+                    style={{width: '100%', height: 'auto'}} 
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={getCloudinaryBlurDataURL('v1753332746/Professional_Photo_mdtnaf')}
+                    sizes={getCloudinarySizes('profile')}
+                />
               </div>
               <div className={styles.authorContent}>
                 <h3>Hi, Saya Fareid Zulkifli</h3>
@@ -210,7 +251,18 @@ export default function Home({ productSettings }) {
                   <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
                   
                   <div className={styles.tradingViewProof}>
-                    <Image src="https://res.cloudinary.com/dtvvaed5i/image/upload/v1753332276/Bland_Terlalu_AI_2_nhqtrc.png" alt="TradingView Editor&rsquo;s Pick Screenshot" className={styles.tradingViewImage} width={800} height={600} style={{width: '100%', height: 'auto'}} />
+                    <Image 
+                        src={cloudinaryPresets.content('v1753332276/Bland_Terlalu_AI_2_nhqtrc')} 
+                        alt="TradingView Editor&rsquo;s Pick Screenshot" 
+                        className={styles.tradingViewImage} 
+                        width={800} 
+                        height={600} 
+                        style={{width: '100%', height: 'auto'}} 
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL={getCloudinaryBlurDataURL('v1753332276/Bland_Terlalu_AI_2_nhqtrc')}
+                        sizes={getCloudinarySizes('content')}
+                    />
                   </div>
                   
                   <p>Tetapi involvement saya dalam dunia technology as a service bukan sekadar menulis script untuk Tradingview..</p>
