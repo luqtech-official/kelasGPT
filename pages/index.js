@@ -45,6 +45,37 @@ const RocketIcon = (props) => (
     </svg>
 );
 
+const FileTextIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+        <polyline points="14,2 14,8 20,8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10,9 9,9 8,9"/>
+    </svg>
+);
+
+const DatabaseIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+        <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/>
+    </svg>
+);
+
+const ZapIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+);
+
+const InfinityIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M17 12c0-1.76-1.24-3-3-3s-3 1.24-3 3 1.24 3 3 3 3-1.24 3-3zM7 12c0-1.76-1.24-3-3-3s-3 1.24-3 3 1.24 3 3 3 3-1.24 3-3z"/>
+        <path d="M7 12h10"/>
+    </svg>
+);
+
 
 export default function Home({ productSettings }) {
   const [expandedModules, setExpandedModules] = useState({});
@@ -689,6 +720,59 @@ export default function Home({ productSettings }) {
               </div>
             </div>
 
+            {/* --- Professional Toolkit Section --- */}
+            <div className={styles.professionalToolkit}>
+              <div className="container">
+                <div className={styles.toolkitHeader}>
+                  <h3>Professional Implementation Toolkit</h3>
+                  <p className={styles.toolkitSubtitle}>Ready-to-use resources yang direka untuk accelerate implementation anda</p>
+                  <div className={styles.toolkitBadge}>Exclusive Materials</div>
+                </div>
+                
+                <div className={styles.toolkitGrid}>
+                  <div className={styles.toolkitItem}>
+                    <div className={styles.toolkitIcon}>
+                      <FileTextIcon />
+                    </div>
+                    <div className={styles.toolkitContent}>
+                      <h4>Custom Instruction Templates</h4>
+                      <p>Battle-tested templates untuk setup AI expert consultants. Copy-paste dan customize untuk keperluan anda.</p>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.toolkitItem}>
+                    <div className={styles.toolkitIcon}>
+                      <DatabaseIcon />
+                    </div>
+                    <div className={styles.toolkitContent}>
+                      <h4>Expert Knowledge Base Files</h4>
+                      <p>Specially crafted knowledge base files untuk different expert roles - siap untuk upload ke AI platforms.</p>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.toolkitItem}>
+                    <div className={styles.toolkitIcon}>
+                      <ZapIcon />
+                    </div>
+                    <div className={styles.toolkitContent}>
+                      <h4>Professional Prompt Library</h4>
+                      <p>Curated collection of high-performance prompts untuk common business use cases and workflows.</p>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.toolkitItem}>
+                    <div className={styles.toolkitIcon}>
+                      <InfinityIcon />
+                    </div>
+                    <div className={styles.toolkitContent}>
+                      <h4>Lifetime Access & Updates</h4>
+                      <p>Sekali bayar, akses seumur hidup. Semua future updates, new materials, dan enhancements - PERCUMA.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className={styles.courseOutlineCTA}>
               <p>Ini adalah sistem pembelajaran yang paling komprehensif untuk master AI tanpa background teknikal.</p>
               <p><strong>Semua video, nota, dan kemas kini masa hadapan - akses seumur hidup.</strong></p>
@@ -701,7 +785,8 @@ export default function Home({ productSettings }) {
           <div className="container">
             <div className={styles.sectionHeader}>
               <h2>Berapa harga KelasGPT ni?</h2>
-              <p>Jika anda pernah tengok kursus premium lain, anda tau harga ini berpatutan</p>
+              <p>Jika anda pernah tengok kelas atau kursus AI yang lain, anda mesti tahu mahalnya kualiti kelas AI yang komprehensif macam ni.</p>
+              <p><br />Dan untuk konteks,<br />Nilai setiap modul yang anda akan dapat ni, boleh dianggarkan dengan harga berikut:</p>
             </div>
             
             <div className={styles.valueStack}>
