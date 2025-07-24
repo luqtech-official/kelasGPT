@@ -444,8 +444,8 @@ export default function Home({ productSettings }) {
               <div className={styles.moduleCard}>
                 <div className={`${styles.moduleHeader} ${expandedModules.module1 ? styles.expanded : ''}`} onClick={() => toggleModule('module1')}>
                   <div className={styles.moduleTitle}>
-                    <span className={styles.moduleNumber}>MODUL 1</span>
-                    <h3>Intro & Beginner Module</h3>
+                    <span className={styles.moduleNumber}>MODUL 1 | BEGINNER</span>
+                    <h3>Introduction to AI & Its Ecosystem</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module1 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -469,8 +469,8 @@ export default function Home({ productSettings }) {
               <div className={styles.moduleCard}>
                 <div className={`${styles.moduleHeader} ${expandedModules.module2 ? styles.expanded : ''}`} onClick={() => toggleModule('module2')}>
                   <div className={styles.moduleTitle}>
-                    <span className={styles.moduleNumber}>MODUL 2</span>
-                    <h3>Foundation: Deep Dive Macam Mana AI Berfikir</h3>
+                    <span className={styles.moduleNumber}>MODUL 2 | FOUNDATION</span>
+                    <h3>Underlying Principle: Macam Mana AI Think & Reasons</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module2 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -510,8 +510,8 @@ export default function Home({ productSettings }) {
               <div className={styles.moduleCard}>
                 <div className={`${styles.moduleHeader} ${expandedModules.module3 ? styles.expanded : ''}`} onClick={() => toggleModule('module3')}>
                   <div className={styles.moduleTitle}>
-                    <span className={styles.moduleNumber}>MODUL 3</span>
-                    <h3>Advance: Macam Mana Nak Guna Setiap Feature Effectively</h3>
+                    <span className={styles.moduleNumber}>MODUL 3 | ADVANCE</span>
+                    <h3>Multi Platform And Features Mastery</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module3 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -551,8 +551,8 @@ export default function Home({ productSettings }) {
               <div className={styles.moduleCard}>
                 <div className={`${styles.moduleHeader} ${expandedModules.module4 ? styles.expanded : ''}`} onClick={() => toggleModule('module4')}>
                   <div className={styles.moduleTitle}>
-                    <span className={styles.moduleNumber}>MODUL 4</span>
-                    <h3>Context Design Framework & Building Expert Consultant</h3>
+                    <span className={styles.moduleNumber}>MODUL 4 | MASTERY</span>
+                    <h3>Context Design Framework: Gabungkan Semua Dalam Satu Framework</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module4 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -592,7 +592,7 @@ export default function Home({ productSettings }) {
               <div className={styles.moduleCard}>
                 <div className={`${styles.moduleHeader} ${expandedModules.module5 ? styles.expanded : ''}`} onClick={() => toggleModule('module5')}>
                   <div className={styles.moduleTitle}>
-                    <span className={styles.moduleNumber}>MODUL 5</span>
+                    <span className={styles.moduleNumber}>MODUL 5 | ADVANCE</span>
                     <h3>Image dan Video Generation</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module5 ? styles.expanded : ''}`}>
