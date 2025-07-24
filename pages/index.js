@@ -232,63 +232,31 @@ export default function Home({ productSettings }) {
           <div className="container">
             <h2>Personal Expert Consultant Yang Dijanjikan</h2>
             <div className={styles.consultantContent}>
-              <p><strong>Bayangkan..</strong></p>
+              <p><strong>Bayangkan anda seorang yang ambitious, yang tak pernah lepaskan peluang untuk level up..</strong></p>
               
-              <p>Anda duduk dalam bilik anda, menghadap laptop dengan penuh fokus..</p>
+              <p>Anda tengah duduk dalam bilik, planning next big move untuk career atau side business..</p>
               
-              <p>Anda kerja keras sebab nak better future, Better income, Nak hidup selesa..</p>
+              <p>Tapi instead of groping in the dark macam most people..</p>
               
-              <p>Sama ada nak start side bisnes sendiri,</p>
+              <p><strong>Anda ada unfair advantage yang 99% professionals kat Malaysia tak ada..</strong></p>
               
-              <p>Nak scale up bisnes sekarang,</p>
+              <p>Anda tahu cara transform AI jadi personal expert consultants yang specifically designed untuk YOUR goals, YOUR industry, YOUR style of working..</p>
               
-              <p>Improve kualiti kerja office..</p>
+              <p>Sedangkan colleagues anda masih guna AI macam Google search..</p>
               
-              <p>Apa saja yang anda nak buat..</p>
+              <p><strong>Anda dah master the framework untuk create custom AI workforce yang kerja 24/7 untuk accelerate whatever hustle anda ada.</strong></p>
               
-              <p><strong>Instead of serabut tak tahu nak mula dari mana, anda ada personal consultant, specially custom made untuk anda.</strong></p>
+              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0'}}>Projek yang orang lain ambil masa sebulan, anda siapkan dalam 4-5 hari.</p>
               
-              <p>Kalau sebelum ni anda selalu blur, tak yakin atau tak pasti nak cari mana jawapan anda..</p>
+              <p>Dalam masa 6 bulan, anda dah jadi go-to person dalam company untuk complex projects.. side business anda scale exponentially.. passive income streams multiply..</p>
               
-              <p>Sekarang anda ada several <span style={{color: 'var(--terra-light)', fontWeight: '700'}}>&lsquo;expert employee&rsquo;</span> yang buat research dan manage task untuk anda.</p>
+              <p>Family anda nampak perubahan. More time with them, less stress, better financial security..</p>
               
-              <p>Bayangkan clarity of mind yang anda dapat..</p>
+              <p><strong>Peers start asking: "Macam mana dia boleh perform at this level?"</strong></p>
               
-              <p>Sejauh mana fokus anda boleh pergi..</p>
+              <p>The secret? You&rsquo;ve mastered something yang most Malaysian professionals tak tahu exist..</p>
               
-              <p>Bila dah tak ada mental block remeh.. <em>(sebab utama orang ramai procrastinate)</em></p>
-              
-              <p>Bila anda tak payah buat kerja seorang diri..</p>
-              
-              <p><strong>Anda dah boleh bagi tumpuan dekat actual problem solving..</strong></p>
-              
-              <p><strong>Kerja-kerja yang high impact..</strong></p>
-              
-              <p><strong>Yang bagi anda kepuasan..</strong></p>
-              
-              <p>Biarkan kerja-kerja remeh, makan masa, tapi low impact diselesaikan oleh personal AI anda.</p>
-              
-              <p style={{fontSize: '1.5rem', fontWeight: '700', margin: '2rem 0'}}>Best part? Projek yang ambil masa sebulan, anda siapkan dalam masa 4-5 hari sahaja.</p>
-              
-              <p>Ada masa extra, anda fokus dekat benda lain, pasangan, anak2, kawan-kawan, side hustle lain..</p>
-              
-              <p>Buat macam ni untuk 3-4 bulan, orang keliling akan nampak perubahan kualiti kerja anda, start jadikan anda sebagai tempat rujukan.</p>
-              
-              <p><strong>Itu yang teknologi AI janjikan dari dulu..</strong></p>
-              
-              <p><strong>dan mampu berikan sekarang..</strong></p>
-              
-              <p>Kalau anda faham cara yang tepat dan betul untuk bina Personal Expert Consultant, custom made special untuk anda.</p>
-              
-              <p>Semua ni tak mustahil..</p>
-              
-              <p>Tak payah langgan Apps AI banyak2, ChatGPT pun cukup..</p>
-              
-              <p>Kalau tak suka ChatGPT.. Gemini ada, Claude, Grok..</p>
-              
-              <p>Tak kira platform apa yang anda guna</p>
-              
-              <p><strong>Anda akan belajar cara setup AI dengan betul..</strong></p>
+              <p><strong>Dan sebenarnya, untuk setup semua ni.. cuma ambil satu malam sahaja.</strong></p>
             </div>
           </div>
         </section>
