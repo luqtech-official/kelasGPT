@@ -315,10 +315,10 @@ export default function Home({ productSettings }) {
 
                   <div style={{ textAlign: 'center', margin: '2rem 0', padding: '1rem 0', borderTop: '1px solid rgba(0,0,0,0.08)', borderBottom: '1px solid rgba(0,0,0,0.08)', lineHeight: '1.9', color: 'var(--text-secondary)', fontSize: '0.9rem', fontStyle: 'italic' }}>
                     Trading Algorithm<br />
-                    Loan Evaluation Engine<br />
-                    AI Chatbot untuk B2B<br />
-                    AI Sales Reporting<br />
-                    Policy Management System
+                    Loan Evaluation Engine untuk Banking<br />
+                    AI Chatbot untuk SME<br />
+                    AI Intergration untuk Sales Platform<br />
+                    HR Policy Management System
                   </div>
 
                   <p>Almost any niche yang perlukan teknologi ni, saya pernah sentuh..</p>
