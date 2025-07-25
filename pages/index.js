@@ -147,14 +147,44 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
             <h1 className={styles.heroTitle}>
-              Satu-satunya<br />Kelas &lsquo;Deep Dive&rsquo; AI<br />Untuk Professional dan<br />Small Business Owner yang<br /><span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+              <span className={styles.heroHook}>Finally!</span>
+              
+              {/* Mobile Line Breaks (4 lines) */}
+              <span className={styles.mobileBreak}>
+                Satu-satunya<br />
+                Kelas &lsquo;<span className={styles.brushStroke}>Deep Dive</span>&rsquo; AI<br />
+                Untuk Orang Yang<br />
+                <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+              </span>
+              
+              {/* Desktop Line Breaks (3 lines) */}
+              <span className={styles.desktopBreak}>
+                Satu-satunya Kelas<br />
+                &lsquo;<span className={styles.brushStroke}>Deep Dive</span>&rsquo; AI Untuk Orang Yang<br />
+                <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+              </span>
             </h1>
-            <p className={styles.heroSubtitle}>
-              <span className={styles.highlight}>&lsquo;Context Design Framework&rsquo;</span> Yang Pakar AI Gunakan Untuk Menaikan Kualiti Output AI Dan <strong>10-20x Produktiviti</strong> Mereka..
-            </p>
-            <p className={styles.heroSecondary}>
-              <span className={styles.urgentText}>Jangan Terlepas Modul Special!</span><br />Belajar step-by-step cara bina Bisnes Digital dengan AI dari kosong<br />- Research,<br />- Copywriting,<br />- Salespage<br />Semuanya guna framework yang sama
-            </p>
+            
+            {/* Elegant Line Separator */}
+            <div className={styles.heroSeparator}></div>
+            
+            <div className={styles.heroContent}>
+              <p className={styles.heroLead}>
+                Belajar <strong>Step-by-Step Exactly</strong> Cara AI Berfikir, Cara Training AI Expert Sendiri, Berdasarkan <strong>Battle-Tested Framework</strong> Dari Real Industry Implementations <strong>10-20x Produktiviti</strong> Mereka..
+              </p>
+              
+              <div className={styles.heroTeaser}>
+                <h3>Sedikit Teaser untuk Apa Yang Anda Dapat:</h3>
+                
+                <ul className={styles.heroList}>
+                  <li>Bina dan Latih &lsquo;Pekerja AI&rsquo; sebagai Expert Consultant Dengan Betul, bukan sekadar &ldquo;Act like world-class expert..&rdquo;.</li>
+                  <li>Kuasai Proper Context Engineering, Tak ada lagi Ungrounded Hallucination..</li>
+                  <li>Best Approach Nak AI Tiru Writing Style Anda.. Tanpa Nampak &lsquo;AI-Generated Content&lsquo;.</li>
+                  <li>Belajar &lsquo;Behind-The-Scene&rsquo; AI Algorithm supaya boleh apply dalam semua jenis task atau niche, dengan tepat.</li>
+                  <li>Teknik Prompt Ringkas, Tapi Maximum Output.. Tak perlu guna mega-prompt yang terlalu rigid dengan constraint sampai degrade performance AI</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
