@@ -319,7 +319,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--terra-light);
+  border-bottom: 0.5px solid var(--terra-light);
   transition: background-color 0.2s ease;
 }
 
@@ -368,7 +368,7 @@
 }
 
 .premiumValue {
-  background: linear-gradient(135deg, var(--terra-bg), #f8f6f3);
+  /* background: linear-gradient(135deg, var(--terra-bg), #f8f6f3); */
   border-left: 4px solid var(--terra-dark);
   position: relative;
 }
