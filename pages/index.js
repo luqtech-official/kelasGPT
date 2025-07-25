@@ -102,6 +102,14 @@ export default function Home({ productSettings }) {
     return `RM${amount.toLocaleString('en-MY')}`;
   };
 
+  const calculateProgress = (total, left) => {
+    const numTotal = Number(total) || 0;
+    const numLeft = Number(left) || 0;
+    const claimed = numTotal - numLeft;
+    const percentage = numTotal > 0 ? (claimed / numTotal * 100) : 0;
+    return Math.max(0, Math.min(100, percentage));
+  };
+
   useEffect(() => {
     // 🔥 PHASE 1: Multi-source visitor ID resolution
     trackPageView('/');  // NOW: Checks URL params first, then localStorage, then creates new
@@ -132,6 +140,21 @@ export default function Home({ productSettings }) {
 
       {/* The SocialProof component is kept as requested */}
       <SocialProof />
+
+      {/* Scarcity Banner - Only show when discount is active */}
+      {productSettings.allowdiscount && (
+        <div className={styles.scarcityBanner}>
+          <div className="container">
+            <div className={styles.scarcityBannerContent}>
+              <span className={styles.scarcityBannerIcon}>⚡</span>
+              <div className={styles.scarcityBannerText}>
+                <strong>Early Bird:</strong> {Number(productSettings.discountunitleft) || 0} slots left at RM{productSettings.productPrice} 
+                <span className={styles.scarcityBannerSubtext}>Standard RM{productSettings.baseproductprice} after Early Bird habis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className={styles.main}>
         {/* --- Hero Section --- */}
@@ -985,7 +1008,7 @@ export default function Home({ productSettings }) {
           </div>
         </section>
         
-        {/* --- Pricing Section --- */}
+        {/* --- Base Pricing Section (First Reveal) --- */}  
         <section className={`${styles.section} ${styles.pricingSection}`}>
             <div className="container">
                 <div className={styles.pricingCard}>
@@ -997,11 +1020,14 @@ export default function Home({ productSettings }) {
                         <div className={styles.originalPrice}>RM 3,138</div>
                         <div className={styles.currentPrice}>
                             <span className={styles.currency}>RM</span>
-                            <span className={styles.amount}>{productSettings.productPrice}</span>
+                            <span className={styles.amount}>{productSettings.allowdiscount ? productSettings.baseproductprice : productSettings.productPrice}</span>
                             <span className={styles.period}>SAHAJA</span>
                         </div>
                         <div className={styles.period}></div>
-                        <div className={styles.savings}><br />Dengan Penjimatan Sebanyak<br />{formatSavings(3138 - productSettings.productPrice)}!</div>
+                        <div className={styles.savings}>
+                            <br />Dengan Penjimatan Sebanyak<br />
+                            {formatSavings(3138 - (productSettings.allowdiscount ? productSettings.baseproductprice : productSettings.productPrice))}!
+                        </div>
                     </div>
                     
                     <div className={styles.priceIncludes}>
@@ -1014,20 +1040,91 @@ export default function Home({ productSettings }) {
                         </ul>
                     </div>
                     
-                    <div className={styles.ctaSection}>
-                        <Link href="/checkout" className={styles.mainCTA}>
-                            <RocketIcon className={styles.ctaIcon} />
-                            YA! Saya Nak Access Sekarang
-                        </Link>
-                        <p className={styles.ctaSubtext}>Instant Access • Sekali Bayar • Tiada yuran tersembunyi</p>
-                    </div>
+                    {!productSettings.allowdiscount && (
+                        <div className={styles.ctaSection}>
+                            <Link href="/checkout" className={styles.mainCTA}>
+                                <RocketIcon className={styles.ctaIcon} />
+                                YA! Saya Nak Access Sekarang
+                            </Link>
+                            <p className={styles.ctaSubtext}>Instant Access • Sekali Bayar • Tiada yuran tersembunyi</p>
+                        </div>
+                    )}
                     
-                    <div className={styles.urgencyNote}>
-                        <p><strong>Pelaburan terbaik untuk masa depan anda.</strong> Mula transform productivity anda hari ini.</p>
-                    </div>
+                    {!productSettings.allowdiscount && (
+                        <div className={styles.urgencyNote}>
+                            <p><strong>Pelaburan terbaik untuk masa depan anda.</strong> Mula transform productivity anda hari ini.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
+
+        {/* --- Professional Discount Offer (Only when allowdiscount is true) --- */}
+        {productSettings.allowdiscount && (
+            <section className={`${styles.section} ${styles.professionalOfferSection}`}>
+                <div className="container">
+                    <div className={styles.professionalOfferCard}>
+                        <div className={styles.offerHeader}>
+                            <h2>Tunggu Sekejap !!</h2>
+                            <p className={styles.offerSubtext}>There&apos;s always a reward untuk early action taker.</p>
+                        </div>
+
+                        <div className={styles.earlyBirdAccess}>
+                            <div className={styles.accessInfo}>
+                                <h3>Early Bird Pricing - {Number(productSettings.discountunittotal) || 0} Students Terawal Sahaja</h3>
+                                <p><strong>Early Bird Spots</strong> khusus untuk introduce KelasGPT pada harga istimewa. Hanya untuk {Number(productSettings.discountunittotal) || 0} student terawal - lepas habis, harga akan naik ke standard rate.</p>
+                                
+                                <div className={styles.earlyBirdStatus}>
+                                    <div className={styles.statusBar}>
+                                        <div 
+                                            className={styles.statusFill} 
+                                            style={{width: `${calculateProgress(productSettings.discountunittotal, productSettings.discountunitleft)}%`}}
+                                        ></div>
+                                    </div>
+                                    <div className={styles.statusText}>
+                                        <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)} student sudah secured</strong><br />Early Bird slots dengan harga istimewa</span>
+                                        <span className={styles.urgentText}>Hanya {Number(productSettings.discountunitleft) || 0} <br />Early Bird slots yang tinggal!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.earlyBirdPricing}>
+                            <div className={styles.pricingHeader}>
+                                <h3>Early Bird Pricing</h3>
+                                <p>{Number(productSettings.discountunitleft) || 0} slots remaining</p>
+                            </div>
+                            
+                            <div className={styles.priceReveal}>
+                                <div className={styles.originalMemberPrice}>
+                                    <span className={styles.priceStrike}>RM{productSettings.baseproductprice}</span>
+                                    <span className={styles.memberLabel}>Standard Price</span>
+                                </div>
+                                <div className={styles.currentMemberPrice}>
+                                    <span className={styles.currency}>RM</span>
+                                    <span className={styles.amount}>{productSettings.productPrice}</span>
+                                    <span className={styles.memberBadge}>Early Bird Price</span>
+                                </div>
+                                <div className={styles.savingsAmount}>
+                                    Early Bird Savings: RM{productSettings.baseproductprice - productSettings.productPrice}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.primaryCTASection}>
+                            <Link href="/checkout" className={styles.primaryCTA}>
+                                Secure Early Bird Access + RM{productSettings.baseproductprice - productSettings.productPrice} Savings
+                            </Link>
+                            <p className={styles.primaryCTASubtext}>Instant Access • {Number(productSettings.discountunitleft) || 0} Early Bird slots left • Lifetime Access</p>
+                        </div>
+
+                        <div className={styles.membershipNote}>
+                            <p><strong>250 Early Bird spots</strong> untuk introduce KelasGPT dengan special pricing. Early Birds dapat priority support + course feedback input. Lepas habis: standard rate RM{productSettings.baseproductprice}.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )}
 
         {/* --- Guarantee Section --- */}
         <section className={`${styles.section} ${styles.guaranteeSection}`}>
