@@ -305,12 +305,38 @@ export default function Home({ productSettings }) {
                     />
                   </div>
                   
-                  <p>Tetapi involvement saya dalam dunia technology as a service bukan sekadar menulis script untuk Tradingview..</p>
+                  <p>Tetapi involvement saya dalam dunia Technology As A Service bukan sekadar menulis script untuk Tradingview..</p>
+
+                  <p>Itu cuma satu dari &lsquo;hobby project&rsquo; saya..</p>
                   
-                  <p>Dengan hampir <strong>8 tahun pengalaman sebagai Lead Business Analyst</strong> dalam beberapa company IT..</p>
+                  <p>Kerja hakiki saya, dengan lebih <strong>8 tahun pengalaman sebagai Lead Business Consultant</strong> dalam beberapa company IT..</p>
                   
-                  <p>Kepakaran utama saya as a bridging role, ialah menerangkan dan memberi konsultansi kepada business user tentang selok belok perkara teknikal berkaitan <span className={styles.highlight}>Teknologi dan AI dalam konteks bisnes mereka..</span></p>
+                  <p>Ialah memberi <strong>konsultansi kepada Real Business User</strong> cara nak intergrate <span className={styles.highlight}>Teknologi dan AI dalam konteks bisnes mereka..</span></p>
+
+                  <div style={{ textAlign: 'center', margin: '2rem 0', padding: '1rem 0', borderTop: '1px solid rgba(0,0,0,0.08)', borderBottom: '1px solid rgba(0,0,0,0.08)', lineHeight: '1.9', color: 'var(--text-secondary)', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                    Trading Algorithm<br />
+                    Loan Evaluation Engine<br />
+                    AI Chatbot untuk B2B<br />
+                    AI Sales Reporting<br />
+                    Policy Management System
+                  </div>
+
+                  <p>Almost any niche yang perlukan teknologi ni, saya pernah sentuh..</p>
+
+                  <p><strong>So trust me bila saya cakap..</strong></p>
+
+                  <p>Kebanyakan business user atau owner, selalu sangat overestimate kebolehan teknologi dalam unrealistic ways,</p>
                   
+                  <p>Tapi underestimate macam mana <strong>creative use of teknologi ni</strong> boleh bantu kerja atau bisnes mereka..</p>
+
+                  <p>Sebab mereka cuma nampak the end results teknologi tersebut..<br />Apps.. Platform.. Software..</p>
+
+                  <p>Tapi once mereka faham teknologi, sistem yang mereka nak guna tu..</p>
+                  
+                  <p><span className={styles.highlight}>Tak perlu faham coding pun..</span></p>
+                  
+                  <p>Simply faham <strong>actual logic dan algorithm disebalik sistem</strong> yang mereka guna,<br />Cara mereka bekerja terus berubah.</p>
+
                   <p>Dan tujuan saya ceritakan semua ni ialah supaya anda faham..</p>
                 </div>
               </div>
@@ -333,11 +359,9 @@ export default function Home({ productSettings }) {
               
               <p>Tolong breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
               
-              <p>Sesuai untuk anda..</p>
-              
-              <p>Atau sesiapa yang langsung tak ada background teknikal..</p>
-              
-              <p>Cara nak leverage AI dalam kerja, study atau bisnes anda dengan <span className={styles.emphasis}>proper understanding..</span></p>
+              <p>Nak belajar <span className={styles.highlight}>framework, workflow untuk bina context dalam AI dengan maximum accuracy..</span></p>
+
+              <p>Walaupun anda langsung tak ada background teknikal..</p>
               
               <p><strong>Bukan sekadar copy paste prompt orang lain</strong></p>
               
