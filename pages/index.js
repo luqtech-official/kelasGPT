@@ -141,20 +141,6 @@ export default function Home({ productSettings }) {
       {/* The SocialProof component is kept as requested */}
       <SocialProof />
 
-      {/* Scarcity Banner - Only show when discount is active */}
-      {productSettings.allowdiscount && (
-        <div className={styles.scarcityBanner}>
-          <div className="container">
-            <div className={styles.scarcityBannerContent}>
-              <span className={styles.scarcityBannerIcon}>⚡</span>
-              <div className={styles.scarcityBannerText}>
-                <strong>Early Bird:</strong> {Number(productSettings.discountunitleft) || 0} slots left at RM{productSettings.productPrice} 
-                <span className={styles.scarcityBannerSubtext}>Standard RM{productSettings.baseproductprice} after Early Bird habis</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <main className={styles.main}>
         {/* --- Hero Section --- */}
@@ -1072,7 +1058,7 @@ export default function Home({ productSettings }) {
                         <div className={styles.earlyBirdAccess}>
                             <div className={styles.accessInfo}>
                                 <h3>Early Bird Pricing - {Number(productSettings.discountunittotal) || 0} Students Terawal Sahaja</h3>
-                                <p><strong>Early Bird Spots</strong> khusus untuk introduce KelasGPT pada harga istimewa. Hanya untuk {Number(productSettings.discountunittotal) || 0} student terawal - lepas habis, harga akan naik ke standard rate.</p>
+                                <p><strong>Limited Early Bird access</strong> untuk introduce KelasGPT dengan special pricing. Terhad untuk {Number(productSettings.discountunittotal) || 0} students terawal sahaja - lepas habis, harga naik ke standard rate secara automatik.</p>
                                 
                                 <div className={styles.earlyBirdStatus}>
                                     <div className={styles.statusBar}>
@@ -1082,8 +1068,8 @@ export default function Home({ productSettings }) {
                                         ></div>
                                     </div>
                                     <div className={styles.statusText}>
-                                        <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)} student sudah secured</strong><br />Early Bird slots dengan harga istimewa</span>
-                                        <span className={styles.urgentText}>Hanya {Number(productSettings.discountunitleft) || 0} <br />Early Bird slots yang tinggal!</span>
+                                        <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)} students grabbed</strong><br />Early Bird pricing in last 24 hours</span>
+                                        <span className={styles.urgentText}>CRITICAL: Only {Number(productSettings.discountunitleft) || 0}<br />Early Bird slots left before price increase</span>
                                     </div>
                                 </div>
                             </div>
@@ -1092,7 +1078,7 @@ export default function Home({ productSettings }) {
                         <div className={styles.earlyBirdPricing}>
                             <div className={styles.pricingHeader}>
                                 <h3>Early Bird Pricing</h3>
-                                <p>{Number(productSettings.discountunitleft) || 0} slots remaining</p>
+                                <p>Only {Number(productSettings.discountunitleft) || 0} student slots remaining</p>
                             </div>
                             
                             <div className={styles.priceReveal}>
@@ -1119,7 +1105,7 @@ export default function Home({ productSettings }) {
                         </div>
 
                         <div className={styles.membershipNote}>
-                            <p><strong>250 Early Bird spots</strong> untuk introduce KelasGPT dengan special pricing. Early Birds dapat priority support + course feedback input. Lepas habis: standard rate RM{productSettings.baseproductprice}.</p>
+                            <p><strong>250 Early Bird spots untuk students sahaja</strong> - introduce KelasGPT dengan special pricing. Early Bird students dapat priority support + course feedback input. Selepas Early Bird habis: automatic price increase ke RM{productSettings.baseproductprice}.</p>
                         </div>
                     </div>
                 </div>
