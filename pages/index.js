@@ -1468,13 +1468,14 @@ export default function Home({ productSettings }) {
 
                         <div className={styles.membershipNote}>
                             <h4 style={{color: 'var(--terra-dark)', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Author&rsquo;s Note</h4>
-                            <p style={{marginBottom: '1rem'}}>Anda dah baca sampai sini sebab anda tahu ini <strong>apa yang anda mahu</strong>.</p>
+                            <p style={{marginBottom: '1rem'}}>The reason anda dah baca sampai sini..</p>
+                            <p style={{marginBottom: '1rem'}}>Sebab anda tahu ini <strong>apa yang anda mahu</strong>.</p>
                             <p style={{marginBottom: '1rem'}}>Kalau anda baca setiap perkataan yang saya tulis...</p>
                             <p style={{marginBottom: '1rem'}}>Anda tahu setiap apa yang saya cakap <strong>makes perfect sense</strong>.</p>
                             <p style={{marginBottom: '2rem'}}>And this is <strong>exactly</strong> apa yang anda perlukan.</p>
                             
                             <p style={{fontSize: '1.1rem', lineHeight: '1.6', fontWeight: '600', color: 'var(--terra-dark)'}}>
-                                <strong>Persoalan yang tinggal:</strong> anda cukup decisive untuk <em>trust your judgment</em>... 
+                                <strong>Persoalan yang tinggal:</strong><br /><br />Adakah anda cukup decisive untuk <em>trust your judgment</em>... 
                                 <br />atau overthink something yang anda dah tahu <strong>jawapannya</strong>?
                             </p>
                         </div>
