@@ -79,6 +79,9 @@ const InfinityIcon = (props) => (
 
 export default function Home({ productSettings }) {
   const [expandedModules, setExpandedModules] = useState({});
+  const [animatedSpotsLeft, setAnimatedSpotsLeft] = useState(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [progressBarWidth, setProgressBarWidth] = useState(0);
 
   const toggleModule = (moduleId) => {
     setExpandedModules(prev => {
@@ -118,13 +121,73 @@ export default function Home({ productSettings }) {
     initializeLinkModification(); // Modifies checkout links when FB/social browser detected
   }, []);
 
+  // Animated counter for spots left
+  useEffect(() => {
+    const observeEarlyBird = () => {
+      const earlyBirdSection = document.querySelector('.earlyBirdAccess');
+      if (!earlyBirdSection || hasAnimated) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !hasAnimated) {
+              setHasAnimated(true);
+              animateCounter();
+              animateProgressBar();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      observer.observe(earlyBirdSection);
+      return () => observer.disconnect();
+    };
+
+    const animateCounter = () => {
+      const targetValue = Number(productSettings.discountunitleft) || 0;
+      const startValue = Math.min(targetValue + 15, 999); // Start from slightly higher number
+      const duration = 2000; // 2 seconds
+      const stepTime = 50; // Update every 50ms
+      const steps = duration / stepTime;
+      const decrement = (startValue - targetValue) / steps;
+
+      let currentValue = startValue;
+      setAnimatedSpotsLeft(currentValue);
+
+      const timer = setInterval(() => {
+        currentValue -= decrement;
+        if (currentValue <= targetValue) {
+          setAnimatedSpotsLeft(targetValue);
+          clearInterval(timer);
+        } else {
+          setAnimatedSpotsLeft(Math.floor(currentValue));
+        }
+      }, stepTime);
+    };
+
+    const animateProgressBar = () => {
+      const targetPercentage = calculateProgress(productSettings.discountunittotal, productSettings.discountunitleft);
+      
+      // Delay the progress bar animation slightly to show it starting from 0
+      setTimeout(() => {
+        setProgressBarWidth(targetPercentage);
+      }, 300);
+    };
+
+    // Only run if productSettings is available and allowdiscount is true
+    if (productSettings?.allowdiscount) {
+      observeEarlyBird();
+    }
+  }, [productSettings, hasAnimated]);
+
   return (
     <div className={styles.pageWrapper}>
       <Head>
         <title>KelasGPT - Kuasai AI Untuk Gandakan Produktiviti Anda</title>
         <meta
           name="description"
-          content="Belajar & Kuasai Kecerdasan Buatan (AI) dan Large Language Models (LLM) untuk mempercepat kerja, menaik taraf kemahiran, dan menjimatkan masa. Sertai KelasGPT hari ini!"
+          content="Belajar &amp; Kuasai Kecerdasan Buatan (AI) dan Large Language Models (LLM) untuk mempercepat kerja, menaik taraf kemahiran, dan menjimatkan masa. Sertai KelasGPT hari ini!"
         />
         <meta property="og:title" content="KelasGPT - Kuasai AI Untuk Gandakan Produktiviti Anda" />
         <meta
@@ -146,42 +209,67 @@ export default function Home({ productSettings }) {
         {/* --- Hero Section --- */}
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
+
+            {/* Pill Element */}
+            <div className={styles.heroPill}>
+              <span className={styles.heroPillText}>KelasGPT | Modul &lsquo;Deep Dive&rsquo; AI</span>
+            </div>
+
+            {/* Main Headline */}
             <h1 className={styles.heroTitle}>
-              <span className={styles.heroHook}>Finally!</span>
               
               {/* Mobile Line Breaks (4 lines) */}
               <span className={styles.mobileBreak}>
-                Satu-satunya<br />
-                Kelas &lsquo;<span className={styles.brushStroke}>Deep Dive</span>&rsquo; AI<br />
-                Untuk Orang Yang<br />
-                <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+                &lsquo;Open Secret&rsquo; Yang<br />
+                Hanya AI Engineers Faham..<br />
+                Termasuk <span className={styles.emphasis}>Method Khusus</span> Untuk Train Personal AI Expert
+                <div className={styles.heroSeparator}></div>
+                Sekarang Accessible<br />Untuk Orang Yang<br />
+                <span className={styles.emphasis}>Zero Technical Knowledge!</span>
               </span>
-              
+
               {/* Desktop Line Breaks (3 lines) */}
               <span className={styles.desktopBreak}>
-                Satu-satunya Kelas<br />
-                &lsquo;<span className={styles.brushStroke}>Deep Dive</span>&rsquo; AI Untuk Orang Yang<br />
-                <span className={styles.emphasis}>Kosong Ilmu Teknikal</span>
+                &lsquo;Open Secret&rsquo;<br />Yang Hanya AI Engineers Faham..<br />
+                <span className={styles.emphasis}>Method Khusus</span> Train AI Expert Sendiri
+                <div className={styles.heroSeparator}></div>
+                Sekarang Accessible Untuk Orang Yang<br />
+                <span className={styles.emphasis}>Zero Technical Knowledge!</span>
               </span>
             </h1>
-            
-            {/* Elegant Line Separator */}
-            <div className={styles.heroSeparator}></div>
-            
+
+            {/* Hero Visual Element */}
+            <div className={styles.heroVisual}>
+              <Image 
+                src={cloudinaryPresets.hero('v1753562149/Untitled_design_rhwya0', { quality: 'q_85' })}
+                alt="KelasGPT Framework Visual Guide" 
+                width={600} 
+                height={400} 
+                style={{width: '100%', height: 'auto'}} 
+                loading="eager"
+                priority
+                placeholder="blur"
+                blurDataURL={getCloudinaryBlurDataURL('v1753562149/Untitled_design_rhwya0')}
+                sizes={getCloudinarySizes('hero')}
+              />
+            </div>
+
+            {/* Enhanced Subtext */}           
             <div className={styles.heroContent}>
               <p className={styles.heroLead}>
-                Belajar <strong>Step-by-Step Exactly</strong> Cara AI Berfikir, Cara Training AI Expert Sendiri, Berdasarkan <strong>Battle-Tested Framework</strong> Dari Real Industry Implementations.
+                Berdasarkan <strong>Battle-Tested Framework</strong><br />dari Real Industry Implementations.<br /><br />
+                <em style={{fontSize: '0.9em'}}>(Tak Perlu Apps Lain - ChatGPT Pun Cukup)</em>
               </p>
               
               <div className={styles.heroTeaser}>
-                <h3>Sedikit Teaser untuk Apa Yang Anda Dapat:</h3>
+                <h3>Belajar Step-By-Step</h3>
                 
                 <ul className={styles.heroList}>
-                  <li>Bina dan Latih &lsquo;Pekerja AI&rsquo; sebagai Expert Consultant Dengan Betul, bukan sekadar &ldquo;Act like world-class expert..&rdquo;.</li>
-                  <li>Kuasai Proper Context Engineering, Tak ada lagi Ungrounded Hallucination..</li>
-                  <li>Best Approach Nak AI Tiru Writing Style Anda.. Tanpa Nampak &lsquo;AI-Generated Content&lsquo;.</li>
-                  <li>Belajar &lsquo;Behind-The-Scene&rsquo; AI Algorithm supaya boleh apply dalam semua jenis task atau niche, dengan tepat.</li>
-                  <li>Teknik Prompt Ringkas, Tapi Maximum Output.. Tak perlu guna mega-prompt yang terlalu rigid dengan constraint sampai degrade performance AI</li>
+                  <li>Belajar <strong>&lsquo;Thinking Dan Reasoning Algorithm&rsquo; AI Sebenar</strong> supaya anda boleh apply dalam semua jenis task atau niche, dengan tepat.</li>
+                  <li>Fahamkan cara pre-trained data AI disimpan.. dan anda Boleh <strong>Manipulasi Prompt DAN Response AI..</strong>untuk dapat output berkualiti, yang anda perlukan</li>
+                  <li>Kuasai <strong>Workflow Bina Context..</strong> Tak ada lagi Ungrounded Hallucination..</li>
+                  <li>Cara bina dan latih<strong> &lsquo;Pekerja AI&rsquo; sebagai Expert Advisor Dengan Betul</strong>.. Bukan sekadar &ldquo;Act like world-class expert..&rdquo;.</li>
+                  <li><strong>Teknik Prompt Ringkas, Tapi Maximum Output</strong>.. Tak perlu guna mega-prompt yang terlalu rigid dengan constraint sampai degrade performance AI</li>
                 </ul>
               </div>
             </div>
@@ -208,6 +296,8 @@ export default function Home({ productSettings }) {
                     <p>Tak kira anda kerja corporate, run bisnes sendiri, atau student..</p>
                     
                     <p><strong>KelasGPT ni akan jadi game-changer untuk productivity anda.</strong></p>
+                    
+                    <p><em>Tapi first, let me tunjuk something yang akan shock anda...</em></p>
                 </div>
             </div>
         </section>
@@ -237,7 +327,7 @@ export default function Home({ productSettings }) {
                         <div className={styles.useCaseContent}>
                             <div className={styles.useCaseTitle}>Use Case 1</div>
                             <h4>Content Penulisan</h4>
-                            <p>Nak buat content penulisan seperti social media, copywriting, article? Apply je Context Design Framework ni, anda akan dapat hasil yang sesuai dengan gaya penulisan anda, content yang anda sendiri faham, bukan sekadar copy-paste macam orang lain.</p>
+                            <p>Nak buat content penulisan seperti social media, copywriting, article? Apply je guna framework yang diajar, anda akan dapat hasil yang sesuai dengan gaya penulisan anda, content yang anda sendiri faham, bukan sekadar copy-paste macam orang lain.</p>
                         </div>
                     </div>
                     
@@ -301,49 +391,71 @@ export default function Home({ productSettings }) {
                 </div>
                 
                 <div className={styles.salesContent}>
-                    <p>Walaupun industri Content Creation ni sangat kompetitif..</p>
-                    
                     <p>Ramai je creator kita boleh hasilkan video yang menarik dan engaging.</p>
                     
-                    <p>And ramai yang ada moment viral mereka tersendiri..</p>
+                    <p>And ramai juga yang ada moment viral mereka tersendiri..</p>
                     
-                    <p>Tapi untuk kebanyakan creator, result tu tak konsisten</p>
+                    <p>Tapi untuk kebanyakan creator..</p>
                     
-                    <p>Kadang-kadang video masuk kolam FYP besar.. kadang-kadang sendu je..</p>
+                    <p><strong style={{color: 'var(--urgent-red)'}}>Result tu tak konsisten.</strong></p>
                     
-                    <p>Dan yang buat mereka terpinga-pinga..</p>
+                    <p>Kadang-kadang video masuk kolam FYP besar..</p>
                     
-                    <p>Format, style video diorang guna sama je..</p>
+                    <p>Kadang-kadang sendu je..</p>
+                    
+                    <p>Dan yang buat mereka <em style={{color: 'var(--terra-dark)'}}>terpinga-pinga</em>..</p>
+                    
+                    <p>Format sama.</p>
+                    
+                    <p>Style video sama.</p>
+                    
+                    <p>Content approach sama je..</p>
 
-                    <p>Kenapa rasa macam luck?</p>
+                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Kenapa rasa macam ikut luck?</strong></p>
                     
-                    <p>Tapi ada creator..</p>
+                    <p><em>Tapi ada creator..</em></p>
                     
-                    <p>Consistently dapat pergi viral. Walaupun style video berubah, konten video lain..</p>
+                    <p><strong>Consistently dapat pergi viral.</strong></p>
+                    
+                    <p>Walaupun style video berubah..</p>
+                    
+                    <p>Konten video lain..</p>
+                    
+                    <p>Platform berubah..</p>
 
-                    <p>Sebab apa?</p>
+                    <p style={{fontSize: '1.1rem', fontWeight: '600', margin: '1.5rem 0'}}><strong>Sebab apa?</strong></p>
 
-                    <p>Sesetengah creator, buat due diligence mereka.</p>
+                    <p>Sesetengah creator buat <span className={styles.emphasis}>due diligence</span> mereka.</p>
 
-                    <p>Mereka study dan faham, apa yang platform nak, macam mana algo push untuk FYP..</p>
+                    <p>Mereka study dan faham <strong>apa yang platform nak</strong>..</p>
                     
-                    <p>Video panjang, pendek, timing posting, SEO macam mana Tiktok suka, konten apa Tiktok tak suka..</p>
+                    <p>Macam mana algo push untuk FYP..</p>
+                    
+                    <p>Video panjang ke, pendek ke..</p>
+                    
+                    <p>Timing posting..</p>
+                    
+                    <p>SEO macam mana TikTok suka..</p>
+                    
+                    <p>Konten apa TikTok <strong style={{color: 'var(--urgent-red)'}}>tak suka</strong>..</p>
 
-                    <p>And sebab mereka pandai semua ni, nak konsisten dengan result tak susah..</p>
+                    <p>And bila mereka pandai semua ni..</p>
+                    
+                    <p><strong>Nak konsisten dengan result tak susah.</strong></p>
 
-                    <p>Mereka faham, pandai buat video tak cukup..</p>
+                    <p>Mereka faham..</p>
+                    
+                    <p>Pandai shooting video je tak cukup.. Platform pun kena faham</p>
+                    
+                    <p style={{fontSize: '1.4rem', fontWeight: '800', color: 'var(--terra-dark)', margin: '2rem 0', textAlign: 'center'}}><strong>And that&rsquo;s the difference.</strong></p>
 
-                    <p><strong>Kena faham platform.</strong></p>
-                    
-                    <p>Macam mana algorithm tolak content ke FYP..</p>
-                    
-                    <p>Apa yang platform suka, apa yang platform benci..</p>
-                    
-                    <p>Timing, hashtag strategy, engagement patterns..</p>
-                    
-                    <p>Semua detail yang tak nampak tapi determine success atau failure..</p>
-                    
-                    <p><strong>And that&rsquo;s the difference.</strong></p>
+                    <p><strong>Cuba fikir..</strong></p>
+
+                    <p>Kalau anda content creator.. dan anda tahu algo tiktok akan check kalau engagement rate sama..</p>
+
+                    <p>Dia akan prioritise content yang durasi lebih lama dulu..</p>
+
+                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Adakah strategy anda akan berubah?</strong></p>
                 </div>
 
                 <br />
@@ -356,43 +468,47 @@ export default function Home({ productSettings }) {
                 </div>
                 
                 <div className={styles.salesContent}>
-                    <p><strong>AI pun exactly sama.</strong>, maybe lagi teruk.</p>
-                    
-                    <p>Some people tak pandai prompt, sebab tak pernah belajar..</p>
-                    
-                    <p>I get it..<br />sebab AI ni teknologi baru.</p>
-                    
-                    <p>The real problem start..</p>
-                    
-                    <p>Bila mereka mula belajar prompt formula, prompt engineering.. tanpa basic foundation yang betul..</p>
-                    
-                    <p>Sifat AI yang sentiasa bagi jawapan dalam nada yang confident, sangat confident..</p>
-                    
-                    <p>So much so that jawapan generic pun kita baca macam sangat hebat</p>
+                    <p><strong>AI pun exactly sama.</strong></p>
 
-                    <p>kita panggil cognitive dissonance..</p>
+                    <p>Setiap satu kefahaman anda tentang mechanism yang AI guna</p>
                     
-                    <p>Tapi bila ada obvious error, output tak tepat..</p>
+                    <p>Untuk output response dia..</p>
+
+                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Akan ubah cara anda prompt dengan mendadak!</strong></p>
+
+                    <p>Cuma, situasi AI ni lebih rumit..</p>
                     
-                    <p>Mereka blame AI tu &ldquo;unreliable&rdquo;..</p>
+                    <p>Ada orang, tak pandai prompt.. sebab tak pernah belajar.</p>
                     
-                    <p><strong>Tapi sebenarnya..</strong></p>
+                    <p>And I get it.</p>
+
+                    <p>AI, LLM semua ni benda baru.</p>
                     
-                    <p>Sebab mereka tak faham <span className={styles.emphasis}>the logic, algorithm disebalik AI.</span></p>
+                    <p><strong>But the real problem starts bila mereka mula belajar prompt formula, prompt engineering... tanpa basic foundation yang betul.</strong></p>
                     
-                    <p>AI ada context window management..</p>
+                    <p>Sifat AI ni.. dia selalu bagi jawapan dalam nada yang confident. Sangat confident.</p>
                     
-                    <p>Ada memory architecture..</p>
+                    <p>So much so that bila dia bagi jawapan generic pun, kita akan baca macam sangat hebat.</p>
+
+                    <p>Classic case of <span className={styles.emphasis}>Confidence Bias.</span></p>
                     
-                    <p>Ada embedding priorities dan token prediction patterns..</p>
+                    <p>Tapi bila ada obvious error, output tak tepat...</p>
                     
-                    <p>Ada regression limitations yang kalau anda tak tahu, anda akan frustrated dengan inconsistent results..</p>
+                    <p>Mereka blame AI tu &ldquo;unreliable&rdquo;.</p>
+                    
+                    <p><strong>Tapi sebenarnya...</strong></p>
+                    
+                    <p>Sebab mereka tak faham <span className={styles.emphasis}>the logic, the mechanism, disebalik cara AI berfikir.</span></p>
+                    
+                    <p>AI ada context window management. Ada memory architecture. Ada embedding priorities dan token prediction patterns.</p>
+                    
+                    <p>Ada built-in limitations yang kalau anda tak tahu, anda akan frustrated dengan inconsistent results.</p>
                     
                     <p><strong>Exactly macam TikTok creator yang tak faham algorithm.</strong></p>
                     
-                    <p>Mereka akan stuck dalam cycle trial-and-error forever..</p>
+                    <p>Mereka akan stuck dalam cycle trial-and-error forever.</p>
                     
-                    <p>Sedangkan professionals yang faham foundation..</p>
+                    <p>Sedangkan your competitor, yang faham the essentials...</p>
                     
                     <p><span className={styles.highlight}>Dapat predictable, high-quality results every single time.</span></p>
                 </div>
@@ -438,6 +554,8 @@ export default function Home({ productSettings }) {
                     <p>Foundation knowledge anda akan applicable everywhere.</p>
                     
                     <p><strong>That&rsquo;s the power of learning the right way.</strong></p>
+                    
+                    <p><em>Dan in fact, ada satu technique yang belum saya mention lagi yang akan change everything...</em></p>
                 </div>                
             </div>
         </section>
@@ -586,25 +704,35 @@ export default function Home({ productSettings }) {
               
               <p>Tapi instead of groping in the dark macam most people..</p>
               
-              <p><strong>Anda ada unfair advantage yang 99% professionals kat Malaysia tak ada..</strong></p>
+              <p><strong>Anda ada unfair advantage yang 99% professionals kat Malaysia tak ada.</strong></p>
               
-              <p>Anda tahu cara transform AI jadi personal expert consultants yang specifically designed untuk YOUR goals, YOUR industry, YOUR style of working..</p>
+              <p>Anda tahu cara transform AI jadi personal expert consultants.</p>
+              
+              <p>Specifically designed untuk YOUR goals. YOUR industry. YOUR style of working.</p>
               
               <p>Sedangkan colleagues anda masih guna AI macam Google search..</p>
               
-              <p><strong>Anda dah master the framework untuk create custom AI workforce yang kerja 24/7 untuk accelerate whatever hustle anda ada.</strong></p>
+              <p><strong>Anda dah master the framework untuk create custom AI workforce yang kerja 24/7.</strong></p>
               
-              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0'}}>Projek yang orang lain ambil masa sebulan, anda siapkan dalam 4-5 hari.</p>
+              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0', color: 'var(--urgent-red)'}}>Projek yang orang lain ambil masa sebulan...</p>
               
-              <p>Dalam masa 6 bulan, anda dah jadi go-to person dalam company untuk complex projects.. side business anda scale exponentially.. passive income streams multiply..</p>
+              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0', color: 'var(--urgent-red)'}}>Anda siapkan dalam 4-5 hari.</p>
               
-              <p>Family anda nampak perubahan. More time with them, less stress, better financial security..</p>
+              <p>Dalam masa 6 bulan, anda dah jadi go-to person dalam company untuk complex projects.</p>
               
-              <p><strong>Peers start asking: &quot;&quot;Macam mana dia boleh perform at this level?&quot;&quot;</strong></p>
+              <p>Side business anda scale exponentially.</p>
               
-              <p>The secret? You&rsquo;ve mastered something yang most Malaysian professionals tak tahu exist..</p>
+              <p>Passive income streams multiply.</p>
               
-              <p><strong>Dan sebenarnya, untuk setup semua ni.. cuma ambil satu malam sahaja.</strong></p>
+              <p><strong>Family anda nampak perubahan.</strong> More time with them, less stress, better financial security.</p>
+              
+              <p><strong>Peers start asking: &quot;Macam mana dia boleh perform at this level?&quot;</strong></p>
+              
+              <p>The secret?</p>
+              
+              <p>You&rsquo;ve mastered something yang most Malaysian professionals tak tahu exist.</p>
+              
+              <p style={{fontSize: '1.6rem', fontWeight: '800', margin: '2rem 0', textAlign: 'center'}}><strong>Dan sebenarnya, untuk setup semua ni.. cuma ambil satu malam sahaja.</strong></p>
             </div>
           </div>
         </section>
@@ -679,7 +807,7 @@ export default function Home({ productSettings }) {
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Embedding & Vector Space - Teknik control context priority dengan prompt</h3>
+                  <h3>Embedding &amp; Vector Space - Teknik control context priority dengan prompt</h3>
                 </div>
               </div>
               
@@ -696,6 +824,8 @@ export default function Home({ productSettings }) {
               <p><em>Jom tengok preview kelas dibawah..</em></p>
               
               <p><em>Sesuai tak untuk anda?</em></p>
+              
+              <p><em>And here&rsquo;s the kicker yang akan convince anda completely...</em></p>
             </div>
           </div>
         </section>
@@ -714,7 +844,7 @@ export default function Home({ productSettings }) {
                 <div className={`${styles.moduleHeader} ${expandedModules.module1 ? styles.expanded : ''}`} onClick={() => toggleModule('module1')}>
                   <div className={styles.moduleTitle}>
                     <span className={styles.moduleNumber}>MODUL 1 | BEGINNER</span>
-                    <h3>Introduction to AI & Its Ecosystem</h3>
+                    <h3>Introduction to AI &amp; Its Ecosystem</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module1 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -723,11 +853,11 @@ export default function Home({ productSettings }) {
                 {expandedModules.module1 && (
                   <div className={styles.moduleContent}>
                     <div className={styles.subModule}>
-                      <strong>1.1 - Apa Itu AI & ChatGPT</strong>
+                      <strong>1.1 - Apa Itu AI &amp; ChatGPT</strong>
                       <p>Pengenalan kepada AI dan ChatGPT untuk mereka yang tak pernah guna ChatGPT</p>
                     </div>
                     <div className={styles.subModule}>
-                      <strong>1.2 - AI Ecosystem & Basic Terminology</strong>
+                      <strong>1.2 - AI Ecosystem &amp; Basic Terminology</strong>
                       <p>Kuasai terminology penting, apa beza company, platform apps, dan model. Bezakan foundation AI app dan AI wrappers.</p>
                     </div>
                   </div>
@@ -739,7 +869,7 @@ export default function Home({ productSettings }) {
                 <div className={`${styles.moduleHeader} ${expandedModules.module2 ? styles.expanded : ''}`} onClick={() => toggleModule('module2')}>
                   <div className={styles.moduleTitle}>
                     <span className={styles.moduleNumber}>MODUL 2 | FOUNDATION</span>
-                    <h3>Underlying Principle: Macam Mana AI Think & Reasons</h3>
+                    <h3>Underlying Principle: Macam Mana AI Think &amp; Reasons</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module2 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -748,7 +878,7 @@ export default function Home({ productSettings }) {
                 {expandedModules.module2 && (
                   <div className={styles.moduleContent}>
                     <div className={styles.subModule}>
-                      <strong>2.1 - Memory Management dalam ChatGPT & LLM Lain</strong>
+                      <strong>2.1 - Memory Management dalam ChatGPT &amp; LLM Lain</strong>
                       <p>Anda tak boleh train AI, tapi anda boleh train memory app untuk buat AI kenal anda. Belajar cara manipulasi memori AI supaya dia ingat apa yang ANDA NAK DIA INGAT SAHAJA.</p>
                     </div>
                     <div className={styles.subModule}>
@@ -756,11 +886,11 @@ export default function Home({ productSettings }) {
                       <p>Faham kenapa AI lupa tiba-tiba dan macam mana nak work around dengan context limitations dia.</p>
                     </div>
                     <div className={styles.subModule}>
-                      <strong>2.3 - Embedding & Vector Space</strong>
+                      <strong>2.3 - Embedding &amp; Vector Space</strong>
                       <p>Belajar macam mana semua data yang AI trained sebelum ni disimpan, dan macam mana cara prompt anda shape cara AI keluarkan balik ilmu dia.</p>
                     </div>
                     <div className={styles.subModule}>
-                      <strong>2.4 - Token Prediction Engine & Hallucination</strong>
+                      <strong>2.4 - Token Prediction Engine &amp; Hallucination</strong>
                       <p>Masuk dalam otak AI untuk faham macam mana dia generate responses. Belajar kenapa AI hallucinate dan macam mana nak minimize false information.</p>
                     </div>
                     <div className={styles.subModule}>
@@ -805,7 +935,7 @@ export default function Home({ productSettings }) {
                       <p>Leverage AI punya ability untuk guna external tools dan APIs. Expand AI capabilities beyond text generation.</p>
                     </div>
                     <div className={styles.subModule}>
-                      <strong>3.5 - Project & Workspace Features</strong>
+                      <strong>3.5 - Project &amp; Workspace Features</strong>
                       <p>Master collaborative AI environments dalam ChatGPT Projects dan Claude Projects. Organize complex work, maintain context across multiple sessions.</p>
                     </div>
                     <div className={styles.subModule}>
@@ -821,7 +951,7 @@ export default function Home({ productSettings }) {
                 <div className={`${styles.moduleHeader} ${expandedModules.module4 ? styles.expanded : ''}`} onClick={() => toggleModule('module4')}>
                   <div className={styles.moduleTitle}>
                     <span className={styles.moduleNumber}>MODUL 4 | MASTERY</span>
-                    <h3>Context Design Framework: Gabungkan Semua Dalam Satu Framework</h3>
+                    <h3>Context Design Workflow: Gabungkan Semua Dalam Satu Framework</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module4 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -862,7 +992,7 @@ export default function Home({ productSettings }) {
                 <div className={`${styles.moduleHeader} ${expandedModules.module5 ? styles.expanded : ''}`} onClick={() => toggleModule('module5')}>
                   <div className={styles.moduleTitle}>
                     <span className={styles.moduleNumber}>MODUL 5 | ADVANCE</span>
-                    <h3>Image dan Video Generation</h3>
+                    <h3>Image &amp; Video Generation</h3>
                   </div>
                   <div className={`${styles.expandIcon} ${expandedModules.module5 ? styles.expanded : ''}`}>
                     <ArrowRightIcon />
@@ -1003,7 +1133,7 @@ export default function Home({ productSettings }) {
                       <InfinityIcon />
                     </div>
                     <div className={styles.toolkitContent}>
-                      <h4>Lifetime Access & Updates</h4>
+                      <h4>Lifetime Access &amp; Updates</h4>
                       <p>Sekali bayar untuk Lifetime Access. Semua future updates, new materials, dan enhancements - PERCUMA.</p>
                     </div>
                   </div>
@@ -1035,7 +1165,7 @@ export default function Home({ productSettings }) {
               <div className={`${styles.testimonialCard} ${styles.featured}`}>
                 <div className={styles.testimonialQuotes}>&quot;&quot;</div>
                 <div className={styles.testimonialQuote}>
-                  Honestly, masa mula-mula dengar pasal Context Design Framework ni, saya skeptical jugak. Dah terlalu banyak kali tertipu dengan &lsquo;revolutionary AI techniques&rsquo; yang end up jadi hype kosong sahaja. Tapi dalam 2 minggu after applying Module 2 & 4, <strong>cara saya handle reporting dan analysis kerja completely berubah</strong>. Yang biasanya ambil masa 3-4 jam untuk prepare monthly reports, sekarang 30 minit dah siap, dan quality lagi detailed from berbagai angles yang saya tak pernah consider before. <strong>Boss saya sampai tanya &lsquo;Ravi, you ambil course apa? Your reports lately very impressive.&rsquo;</strong> Last month dapat promotion jadi Senior Operations Manager. Seriously, kalau saya tau pasal ni earlier, mesti career path saya lagi accelerated.
+                  Honestly, masa mula-mula dengar pasal KelasGPT ni, saya skeptical jugak. Dah terlalu banyak kali tertipu dengan &lsquo;revolutionary AI techniques&rsquo; yang end up jadi hype kosong sahaja. Tapi dalam 2 minggu after applying Module 2 &amp; 4, <strong>cara saya handle reporting dan analysis kerja completely berubah</strong>. Yang biasanya ambil masa 3-4 jam untuk prepare monthly reports, sekarang 30 minit dah siap, dan quality lagi detailed from berbagai angles yang saya tak pernah consider before. <strong>Boss saya sampai tanya &lsquo;Ravi, you ambil course apa? Your reports lately very impressive.&rsquo;</strong> Last month dapat promotion jadi Senior Operations Manager. Seriously, kalau saya tau pasal ni earlier, mesti career path saya lagi accelerated.
                 </div>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}>RK</div>
@@ -1065,7 +1195,7 @@ export default function Home({ productSettings }) {
               <div className={styles.testimonialCard}>
                 <div className={styles.testimonialQuotes}>&quot;&quot;</div>
                 <div className={styles.testimonialQuote}>
-                  Job market sangat competitive for fresh graduates right now. Masa interview, when I demonstrated how I use AI to solve complex problems step-by-step using Context Design Framework, <strong>interviewer terus impressed</strong>. &ldquo;Wah, you understand AI at this level?&rdquo; Dalam 2 weeks dapat offer from 3 companies, and I negotiated salary 40% higher than standard fresh grad package. <strong>Now colleagues datang tanya for advice, which is surreal because 6 months ago I was just another struggling graduate.</strong>
+                  Job market sangat competitive for fresh graduates right now. Masa interview, when I demonstrated how I use AI to solve complex problems step-by-step using Framework KelasGPT, <strong>interviewer terus impressed</strong>. &ldquo;Wah, you understand AI at this level?&rdquo; Dalam 2 weeks dapat offer from 3 companies, and I negotiated salary 40% higher than standard fresh grad package. <strong>Now colleagues datang tanya for advice, which is surreal because 6 months ago I was just another struggling graduate.</strong>
                 </div>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}>AH</div>
@@ -1095,13 +1225,13 @@ export default function Home({ productSettings }) {
               <div className={styles.testimonialCard}>
                 <div className={styles.testimonialQuotes}>&quot;&quot;</div>
                 <div className={styles.testimonialQuote}>
-                  As a working mother dengan 2 young kids, time management is my biggest challenge. Every day rush from meetings to school pickup, then lagi kena prepare presentations and reports at night. After mastering the Context Design Framework, <strong>my work efficiency improved so much that I actually have time for family dinner every night now.</strong> Hospital board presentations yang dulu take 2-3 days to prepare, now I can create comprehensive analysis dalam 4-5 jam with better insights. <strong>Last month dapat offer for Hospital Director position</strong> - something I never thought possible while balancing family commitments. My husband cakap, &ldquo;You seem so much calmer and happier now.&rdquo; The framework didn&rsquo;t just change my career, it gave me back my family time.
+                  As a working mother dengan 2 young kids, time management is my biggest challenge. Every day rush from meetings to school pickup, then lagi kena prepare presentations and reports at night. After mastering the right AI Foundation, <strong>my work efficiency improved so much that I actually have time for family dinner every night now.</strong> Hospital board presentations yang dulu take 2-3 days to prepare, now I can create comprehensive analysis dalam 4-5 jam with better insights. <strong>Last month dapat offer for Hospital Director position</strong> - something I never thought possible while balancing family commitments. My husband cakap, &ldquo;You seem so much calmer and happier now.&rdquo; The framework didn&rsquo;t just change my career, it gave me back my family time.
                 </div>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}>PS</div>
                   <div className={styles.authorInfo}>
                     <h4>Dr. Priya Sharma</h4>
-                    <p>Hospital Administrator & Mother of 2</p>
+                    <p>Hospital Administrator &amp; Mother of 2</p>
                   </div>
                 </div>
               </div>
@@ -1140,7 +1270,7 @@ export default function Home({ productSettings }) {
               <div className={styles.testimonialCard}>
                 <div className={styles.testimonialQuotes}>&quot;&quot;</div>
                 <div className={styles.testimonialQuote}>
-                  In startup environment, you need to move fast and deliver results immediately. The Context Design Framework helped me create AI-powered product development workflows yang <strong>reduced our feature development cycle from 6 weeks to 2 weeks.</strong> CEO noticed and promoted me to Lead Product Manager within 4 months. <strong>Now other startups headhunt me specifically for my AI integration expertise.</strong> Best investment I ever made for my career.
+                  In startup environment, you need to move fast and deliver results immediately. The KelasGPT helped me create AI-powered product development workflows yang <strong>reduced our feature development cycle from 6 weeks to 2 weeks.</strong> CEO noticed and promoted me to Lead Product Manager within 4 months. <strong>Now other startups headhunt me specifically for my AI integration expertise.</strong> Best investment I ever made for my career.
                 </div>
                 <div className={styles.testimonialAuthor}>
                   <div className={styles.authorAvatar}>NA</div>
@@ -1166,7 +1296,7 @@ export default function Home({ productSettings }) {
             <div className={styles.valueStack}>
               <div className={styles.valueItem}>
                 <div className={styles.valueContent}>
-                  <h4>Modul 1: Intro & Beginner Module</h4>
+                  <h4>Modul 1: Intro &amp; Beginner Module</h4>
                   <p>Asas AI dan ChatGPT untuk pemula</p>
                 </div>
                 <div className={styles.valuePrice}>RM 67</div>
@@ -1191,16 +1321,16 @@ export default function Home({ productSettings }) {
               
               <div className={`${styles.valueItem} ${styles.premiumValue}`}>
                 <div className={styles.valueContent}>
-                  <h4>Modul 4: Context Design Framework</h4>
+                  <h4>Modul 4: Context Design Workflow</h4>
                   <div className={styles.exclusiveLabel}>SIGNATURE</div>
-                  <p>Formula rahsia untuk building expert consultant</p>
+                  <p>Formula rahsia untuk building reliable expert consultant</p>
                 </div>
                 <div className={styles.valuePrice}>RM 799</div>
               </div>
               
               <div className={styles.valueItem}>
                 <div className={styles.valueContent}>
-                  <h4>Modul 5: Image & Video Generation</h4>
+                  <h4>Modul 5: Image &amp; Video Generation</h4>
                   <p>Complete workflow untuk visual content creation</p>
                 </div>
                 <div className={styles.valuePrice}>RM 129</div>
@@ -1210,7 +1340,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.valueContent}>
                   <h4>BONUS: Use Case dalam Action + Vibe Coding Framework</h4>
                   <div className={styles.exclusiveLabel}>ADVANCED</div>
-                  <p>Live demonstration (Stock analysis, Task management, Business setup) + 6 bahagian build website & app tanpa coding background</p>
+                  <p>Live demonstration (Stock analysis, Task management, Business setup) + 6 bahagian build website &amp; app tanpa coding background</p>
                 </div>
                 <div className={styles.valuePrice}>RM 497</div>
               </div>
@@ -1284,10 +1414,10 @@ export default function Home({ productSettings }) {
                     <div className={styles.professionalOfferCard}>
                         <div className={styles.offerHeader}>
                             <h2>Tunggu Sekejap !!</h2>
-                            <p className={styles.offerSubtext}>There&apos;s always a reward untuk early action taker.</p>
+                            <p className={styles.offerSubtext}>Ada Special Reward jika anda Decisive dan memilih untuk menjadi the real AI early adopters!</p>
                         </div>
 
-                        <div className={styles.earlyBirdAccess}>
+                        <div className={`${styles.earlyBirdAccess} earlyBirdAccess`}>
                             <div className={styles.accessInfo}>
                                 <h3>Early Bird Pricing - {Number(productSettings.discountunittotal) || 0} Students Terawal Sahaja</h3>
                                 <p><strong>Limited Early Bird access</strong> untuk introduce KelasGPT dengan special pricing. Terhad untuk {Number(productSettings.discountunittotal) || 0} students terawal sahaja - lepas habis, harga naik ke standard rate secara automatik.</p>
@@ -1296,12 +1426,12 @@ export default function Home({ productSettings }) {
                                     <div className={styles.statusBar}>
                                         <div 
                                             className={styles.statusFill} 
-                                            style={{width: `${calculateProgress(productSettings.discountunittotal, productSettings.discountunitleft)}%`}}
+                                            style={{width: `${progressBarWidth}%`}}
                                         ></div>
                                     </div>
                                     <div className={styles.statusText}>
                                         <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)} students grabbed</strong><br />Early Bird pricing in last 24 hours</span>
-                                        <span className={styles.urgentText}>CRITICAL: Only {Number(productSettings.discountunitleft) || 0}<br />Early Bird slots left before price increase</span>
+                                        <span className={styles.urgentText}>CRITICAL: Only <span style={{fontWeight: '900', fontSize: '1.1em'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</span><br />Early Bird slots left before price increase</span>
                                     </div>
                                 </div>
                             </div>
@@ -1310,7 +1440,7 @@ export default function Home({ productSettings }) {
                         <div className={styles.earlyBirdPricing}>
                             <div className={styles.pricingHeader}>
                                 <h3>Early Bird Pricing</h3>
-                                <p>Only {Number(productSettings.discountunitleft) || 0} student slots remaining</p>
+                                <p>Only <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</span> student slots remaining</p>
                             </div>
                             
                             <div className={styles.priceReveal}>
@@ -1333,11 +1463,20 @@ export default function Home({ productSettings }) {
                             <Link href="/checkout" className={styles.primaryCTA}>
                                 Secure Early Bird Access + RM{productSettings.baseproductprice - productSettings.productPrice} Savings
                             </Link>
-                            <p className={styles.primaryCTASubtext}>Instant Access • {Number(productSettings.discountunitleft) || 0} Early Bird slots left • Lifetime Access</p>
+                            <p className={styles.primaryCTASubtext}>Instant Access • <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</span> Early Bird slots left • Lifetime Access</p>
                         </div>
 
                         <div className={styles.membershipNote}>
-                            <p><strong>250 Early Bird spots untuk students sahaja</strong> - introduce KelasGPT dengan special pricing. Early Bird students dapat priority support + course feedback input. Selepas Early Bird habis: automatic price increase ke RM{productSettings.baseproductprice}.</p>
+                            <h4 style={{color: 'var(--terra-dark)', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Author&rsquo;s Note</h4>
+                            <p style={{marginBottom: '1rem'}}>Anda dah baca sampai sini sebab anda tahu ini <strong>apa yang anda mahu</strong>.</p>
+                            <p style={{marginBottom: '1rem'}}>Kalau anda baca setiap perkataan yang saya tulis...</p>
+                            <p style={{marginBottom: '1rem'}}>Anda tahu setiap apa yang saya cakap <strong>makes perfect sense</strong>.</p>
+                            <p style={{marginBottom: '2rem'}}>And this is <strong>exactly</strong> apa yang anda perlukan.</p>
+                            
+                            <p style={{fontSize: '1.1rem', lineHeight: '1.6', fontWeight: '600', color: 'var(--terra-dark)'}}>
+                                <strong>Persoalan yang tinggal:</strong> anda cukup decisive untuk <em>trust your judgment</em>... 
+                                <br />atau overthink something yang anda dah tahu <strong>jawapannya</strong>?
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1358,7 +1497,7 @@ export default function Home({ productSettings }) {
                   <CheckCircleIcon />
                 </div>
                 <h4>Framework Mastery Support</h4>
-                <p>Selepas mengikuti Modul 2 & 4, jika anda masih tidak faham bagaimana Context Design Framework berfungsi, saya akan personally guide anda melalui konsep tersebut sehingga anda betul-betul master.</p>
+                <p>Selepas mengikuti Modul 2 &amp; 4, jika anda masih tidak faham bagaimana Framework dalam KelasGPT berfungsi, saya akan personally guide anda melalui konsep tersebut sehingga anda betul-betul master.</p>
               </div>
               
               <div className={styles.guaranteeCard}>
