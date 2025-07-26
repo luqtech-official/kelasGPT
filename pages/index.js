@@ -297,26 +297,148 @@ export default function Home({ productSettings }) {
                 <div className={styles.lessonPill}>
                     <span className={styles.lessonNumber}>01</span>
                     <span className={styles.lessonDivider}></span>
-                    <span className={styles.lessonText}>Lesson Dari Social Media</span>
+                    <span className={styles.lessonText}>Lesson Dari Tiktok Creator</span>
                 </div>
                 
                 <div className={styles.salesContent}>
-                    <p>Look, saya faham kenapa anda fikir macam tu..</p>
+                    <p>Walaupun industri Content Creation ni sangat kompetitif..</p>
                     
-                    <p>Tengok Ahmad dan Siti. Both start TikTok same time, both pandai buat video, both work hard every day.</p>
+                    <p>Ramai je creator kita boleh hasilkan video yang menarik dan engaging.</p>
                     
-                    <p>Ahmad follow trends, copy dances, post consistently. Siti buat the same thing, tapi dia study algorithm. Dia faham kenapa certain videos stuck kat 40K views, and kenapa some kena push sampai 100K+.</p>
+                    <p>And ramai yang ada moment viral mereka tersendiri..</p>
                     
-                    <p>6 bulan later? Ahmad ada 800 followers and frustrated. Siti ada 50K followers with brand deals coming in.</p>
+                    <p>Tapi untuk kebanyakan creator, result tu tak konsisten</p>
                     
-                    <p>Same effort. Same talent. <span className={styles.highlight}>One understands how the system works, one doesn&rsquo;t.</span></p>
+                    <p>Kadang-kadang video masuk kolam FYP besar.. kadang-kadang sendu je..</p>
                     
-                    <p>AI pun exactly the same.</p>
+                    <p>Dan yang buat mereka terpinga-pinga..</p>
                     
-                    <p>You boleh collect prompts and copy templates, sometimes dapat lucky.. Or you boleh faham why certain prompts work and others don&rsquo;t.</p>
+                    <p>Format, style video diorang guna sama je..</p>
+
+                    <p>Kenapa rasa macam luck?</p>
                     
-                    <p>Which Ahmad atau Siti you nak jadi?</p>
+                    <p>Tapi ada creator..</p>
+                    
+                    <p>Consistently dapat pergi viral. Walaupun style video berubah, konten video lain..</p>
+
+                    <p>Sebab apa?</p>
+
+                    <p>Sesetengah creator, buat due diligence mereka.</p>
+
+                    <p>Mereka study dan faham, apa yang platform nak, macam mana algo push untuk FYP..</p>
+                    
+                    <p>Video panjang, pendek, timing posting, SEO macam mana Tiktok suka, konten apa Tiktok tak suka..</p>
+
+                    <p>And sebab mereka pandai semua ni, nak konsisten dengan result tak susah..</p>
+
+                    <p>Mereka faham, pandai buat video tak cukup..</p>
+
+                    <p><strong>Kena faham platform.</strong></p>
+                    
+                    <p>Macam mana algorithm tolak content ke FYP..</p>
+                    
+                    <p>Apa yang platform suka, apa yang platform benci..</p>
+                    
+                    <p>Timing, hashtag strategy, engagement patterns..</p>
+                    
+                    <p>Semua detail yang tak nampak tapi determine success atau failure..</p>
+                    
+                    <p><strong>And that&rsquo;s the difference.</strong></p>
                 </div>
+
+                <br />
+                <br />
+
+                <div className={styles.lessonPill}>
+                    <span className={styles.lessonNumber}>02</span>
+                    <span className={styles.lessonDivider}></span>
+                    <span className={styles.lessonText}>Perangkap AI Yang Confident</span>
+                </div>
+                
+                <div className={styles.salesContent}>
+                    <p><strong>AI pun exactly sama.</strong>, maybe lagi teruk.</p>
+                    
+                    <p>Some people tak pandai prompt, sebab tak pernah belajar..</p>
+                    
+                    <p>I get it..<br />sebab AI ni teknologi baru.</p>
+                    
+                    <p>The real problem start..</p>
+                    
+                    <p>Bila mereka mula belajar prompt formula, prompt engineering.. tanpa basic foundation yang betul..</p>
+                    
+                    <p>Sifat AI yang sentiasa bagi jawapan dalam nada yang confident, sangat confident..</p>
+                    
+                    <p>So much so that jawapan generic pun kita baca macam sangat hebat</p>
+
+                    <p>kita panggil cognitive dissonance..</p>
+                    
+                    <p>Tapi bila ada obvious error, output tak tepat..</p>
+                    
+                    <p>Mereka blame AI tu &ldquo;unreliable&rdquo;..</p>
+                    
+                    <p><strong>Tapi sebenarnya..</strong></p>
+                    
+                    <p>Sebab mereka tak faham <span className={styles.emphasis}>the logic, algorithm disebalik AI.</span></p>
+                    
+                    <p>AI ada context window management..</p>
+                    
+                    <p>Ada memory architecture..</p>
+                    
+                    <p>Ada embedding priorities dan token prediction patterns..</p>
+                    
+                    <p>Ada regression limitations yang kalau anda tak tahu, anda akan frustrated dengan inconsistent results..</p>
+                    
+                    <p><strong>Exactly macam TikTok creator yang tak faham algorithm.</strong></p>
+                    
+                    <p>Mereka akan stuck dalam cycle trial-and-error forever..</p>
+                    
+                    <p>Sedangkan professionals yang faham foundation..</p>
+                    
+                    <p><span className={styles.highlight}>Dapat predictable, high-quality results every single time.</span></p>
+                </div>
+
+                <br />
+                <br />
+
+                <div className={styles.lessonPill}>
+                    <span className={styles.lessonNumber}>03</span>
+                    <span className={styles.lessonDivider}></span>
+                    <span className={styles.lessonText}>The Unfair Advantage</span>
+                </div>
+                
+                <div className={styles.salesContent}>
+                    <p>Bayangkan colleague anda struggling 3-4 jam buat report..</p>
+                    
+                    <p>Anda siapkan dalam 30 minit dengan quality lagi bagus..</p>
+                    
+                    <p>Mereka tanya: <em>&ldquo;Macam mana you boleh so efficient?&rdquo;</em></p>
+                    
+                    <p>You just smile..</p>
+                    
+                    <p>Sebab anda faham <strong>Foundation AI yang mereka tak tahu.</strong></p>
+                    
+                    <p>Anda tahu macam mana setup context priority..</p>
+                    
+                    <p>Anda tahu macam mana manipulate AI memory supaya dia remember exactly apa yang anda nak..</p>
+                    
+                    <p>Anda tahu cara optimize prompt structure based on regression architecture..</p>
+                    
+                    <p><strong>Ini bukan magic.</strong></p>
+                    
+                    <p><strong>Ini systematic understanding.</strong></p>
+                    
+                    <p>Dan once anda faham foundation ni..</p>
+                    
+                    <p><span className={styles.emphasis}>Every AI tool yang keluar market, anda boleh master dengan cepat..</span></p>
+                    
+                    <p>Sebab prinsip sama across all platforms..</p>
+                    
+                    <p>ChatGPT, Claude, Gemini, Grok..</p>
+                    
+                    <p>Foundation knowledge anda akan applicable everywhere.</p>
+                    
+                    <p><strong>That&rsquo;s the power of learning the right way.</strong></p>
+                </div>                
             </div>
         </section>
 
@@ -324,7 +446,7 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.authoritySection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Sebelum Saya Explain Panjang Lebar..</h2>
+              <h2>Sebelum Saya Terangkan Dengan Detail Modul KelasGPT..</h2>
               <p className={styles.sectionSubtitle}>Mungkin Saya Patut Perkenalkan Diri Saya Dulu..</p>
             </div>
             <div className={styles.authorProfile}>
