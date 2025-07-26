@@ -345,6 +345,8 @@ export default function Home({ productSettings }) {
 
                   <p>Cara nak intergrate Teknologi dan AI <br /><span className={styles.highlight}> sesuai dengan konteks bisnes mereka..</span></p>
 
+                  <p>Antaranya:</p>
+
                   <div className={styles.projectsList}>
                     <div className={styles.projectItem}>
                       <CheckCircleIcon className={styles.projectIcon} />

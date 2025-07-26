@@ -154,10 +154,6 @@
   transition: all 0.3s ease;
 }
 
-.moduleCard:hover {
-  border-color: var(--terra-primary);
-  box-shadow: var(--shadow-md);
-}
 
 .moduleHeader {
   display: flex;
@@ -169,9 +165,6 @@
   transition: background-color 0.3s ease;
 }
 
-.moduleHeader:hover {
-  background: var(--terra-light);
-}
 
 .moduleHeader.expanded {
   background: var(--terra-light);
@@ -2305,10 +2298,6 @@
   transition: all 0.3s ease;
 }
 
-.toolkitItem:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(44, 44, 44, 0.08);
-}
 
 .toolkitIcon {
   color: var(--terra-primary);
