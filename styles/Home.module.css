@@ -109,6 +109,19 @@
   margin-bottom: 1rem;
   color: var(--text-primary);
   line-height: 1.2;
+  position: relative;
+}
+
+.sectionHeader h2::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--terra-primary), var(--success-green));
+  border-radius: 2px;
 }
 
 .sectionHeader p {
@@ -137,7 +150,20 @@
 
 /* --- Course Outline Section --- */
 .courseOutlineSection {
-  background-color: var(--pure-white);
+  background: linear-gradient(180deg, var(--pure-white) 0%, #FEFDFB 100%);
+  position: relative;
+}
+
+.courseOutlineSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--terra-primary), transparent);
+  opacity: 0.4;
 }
 
 .courseOutline {
@@ -2106,6 +2132,22 @@
   margin-top: 4rem;
 }
 
+.section:nth-child(4) {
+  background: linear-gradient(135deg, #f8f9fa 0%, var(--pure-white) 100%);
+  position: relative;
+}
+
+.section:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--terra-primary), var(--success-green), var(--urgent-red));
+  opacity: 0.3;
+}
+
 .useCaseCard {
   background: var(--pure-white);
   border-radius: 16px;
@@ -2169,6 +2211,26 @@
   background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
   color: var(--pure-white);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.consultantVision::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.3;
+  animation: float 20s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-30px, -30px) rotate(360deg); }
 }
 
 .consultantVision h2 {
@@ -2195,7 +2257,19 @@
 
 /* --- AI Experts Section --- */
 .aiExpertsSection {
-  background-color: var(--terra-bg);
+  background: linear-gradient(135deg, var(--terra-bg) 0%, #F5F1ED 100%);
+  position: relative;
+}
+
+.aiExpertsSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--terra-primary), transparent);
+  opacity: 0.3;
 }
 
 .expertsGrid {
@@ -2211,6 +2285,20 @@
   border-radius: 16px;
   border-left: 5px solid var(--terra-primary);
   box-shadow: 0 8px 25px rgba(44, 44, 44, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.expertCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--success-green), transparent);
+  opacity: 0.1;
+  border-radius: 0 16px 0 100%;
 }
 
 .expertTitle {
@@ -2340,9 +2428,23 @@
 
 /* --- Testimonials Section --- */
 .testimonialsSection {
-  background: linear-gradient(135deg, #F8F6F3, var(--terra-bg));
+  background: linear-gradient(135deg, var(--terra-dark), #2C1810);
   padding: 5rem 0;
   margin: 2rem 0 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonialsSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(74, 124, 89, 0.1), transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(214, 48, 49, 0.08), transparent 50%);
+  pointer-events: none;
 }
 
 .testimonialsHeader {
@@ -2353,12 +2455,13 @@
 .testimonialsHeader h2 {
   font-size: 2.2rem;
   font-weight: 800;
-  color: var(--terra-dark);
+  color: var(--pure-white);
   margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .testimonialsSubtitle {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
@@ -2368,7 +2471,7 @@
   font-size: 1.1rem;
   font-weight: 400;
   max-width: 600px;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   opacity: 0.8;
   margin-top: 0.5rem;
   margin-bottom: 0;
@@ -2474,5 +2577,70 @@
   
   .testimonialsHeader h2 {
     font-size: 1.8rem;
+  }
+}
+
+/* --- Lesson Pill Component --- */
+.lessonPill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  margin: 0 0 2rem 0;
+  background: var(--pure-white);
+  border: 1px solid var(--terra-dark);
+  color: var(--terra-dark);
+  max-width: 60vw;
+  width: fit-content;
+}
+
+.lessonNumber {
+  font-family: 'SF Mono', ui-monospace, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.lessonDivider {
+  width: 1px;
+  height: 0.875rem;
+  background: var(--terra-dark);
+  margin: 0 0.75rem;
+  flex-shrink: 0;
+}
+
+.lessonText {
+  font-family: 'SF Mono', ui-monospace, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* Left align the pill within container */
+.sectionHeader + .lessonPill {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+  .lessonPill {
+    padding: 0.375rem 0.875rem;
+  }
+  
+  .lessonNumber {
+    font-size: 0.7rem;
+  }
+  
+  .lessonText {
+    font-size: 0.8rem;
+  }
+  
+  .lessonDivider {
+    height: 0.75rem;
+    margin: 0 0.5rem;
   }
 }

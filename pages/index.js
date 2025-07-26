@@ -286,6 +286,40 @@ export default function Home({ productSettings }) {
             </div>
         </section>
 
+        {/* --- Deep Dive Reality Check Section --- */}
+        <section className={`${styles.section} ${styles.grey}`}>
+            <div className="container">
+                <div className={styles.sectionHeader}>
+                    <h2>Kenapa Kena Belajar Secara Deep Dive?</h2>
+                    <p>Belajar Cara Prompt Dengan Betul Tak Cukup Ke?</p>
+                </div>
+                
+                <div className={styles.lessonPill}>
+                    <span className={styles.lessonNumber}>01</span>
+                    <span className={styles.lessonDivider}></span>
+                    <span className={styles.lessonText}>Lesson Dari Social Media</span>
+                </div>
+                
+                <div className={styles.salesContent}>
+                    <p>Look, saya faham kenapa anda fikir macam tu..</p>
+                    
+                    <p>Tengok Ahmad dan Siti. Both start TikTok same time, both pandai buat video, both work hard every day.</p>
+                    
+                    <p>Ahmad follow trends, copy dances, post consistently. Siti buat the same thing, tapi dia study algorithm. Dia faham kenapa certain videos stuck kat 40K views, and kenapa some kena push sampai 100K+.</p>
+                    
+                    <p>6 bulan later? Ahmad ada 800 followers and frustrated. Siti ada 50K followers with brand deals coming in.</p>
+                    
+                    <p>Same effort. Same talent. <span className={styles.highlight}>One understands how the system works, one doesn&rsquo;t.</span></p>
+                    
+                    <p>AI pun exactly the same.</p>
+                    
+                    <p>You boleh collect prompts and copy templates, sometimes dapat lucky.. Or you boleh faham why certain prompts work and others don&rsquo;t.</p>
+                    
+                    <p>Which Ahmad atau Siti you nak jadi?</p>
+                </div>
+            </div>
+        </section>
+
         {/* --- Authority Building Section --- */}
         <section className={`${styles.section} ${styles.authoritySection}`}>
           <div className="container">
@@ -871,7 +905,7 @@ export default function Home({ productSettings }) {
               </p>
               {/* Simple Line Separator */}
               <div className={styles.heroSeparator}></div>
-              <p className={styles.testimonialsNote}>PENTING: KelasGPT masih di fasa awal launching. Kebanyakan Testimonials ini ialah dari existing client yang belajar secara direct coaching dengan saya melalui AI implementation dalam bisnes mereka.</p>
+              <p className={styles.testimonialsNote}>Nota:<br />KelasGPT masih di fasa awal launching.<br /><br />Kebanyakan Testimonials ini ialah dari existing client yang belajar secara direct coaching dengan saya melalui AI implementation dalam bisnes mereka.</p>
             </div>
             
             <div className={styles.testimonialsGrid}>
