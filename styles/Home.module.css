@@ -1773,7 +1773,7 @@
 }
 
 /* --- Enhanced Responsive Design --- */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   /* Scarcity Banner Mobile */
   .scarcityBanner {
     padding: 0.8rem 0;
@@ -1940,6 +1940,38 @@
   .learnGrid {
     grid-template-columns: 1fr;
   }
+}
+
+/* --- Projects List --- */
+.projectsList {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  line-height: 1.9;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.projectItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+
+.projectItem:last-child {
+  margin-bottom: 0;
+}
+
+.projectIcon {
+  width: 12px;
+  height: 12px;
+  margin-right: 0.5rem;
+  opacity: 0.6;
+  color: var(--text-secondary);
 }
 
 /* --- Additional Sales Letter Elements --- */
@@ -2341,6 +2373,17 @@
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
+}
+
+.testimonialsNote {
+  font-size: 1.1rem;
+  font-weight: 400;
+  max-width: 600px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  line-height: 1.4;
 }
 
 .testimonialsGrid {

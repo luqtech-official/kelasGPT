@@ -170,7 +170,7 @@ export default function Home({ productSettings }) {
             
             <div className={styles.heroContent}>
               <p className={styles.heroLead}>
-                Belajar <strong>Step-by-Step Exactly</strong> Cara AI Berfikir, Cara Training AI Expert Sendiri, Berdasarkan <strong>Battle-Tested Framework</strong> Dari Real Industry Implementations <strong>10-20x Produktiviti</strong> Mereka..
+                Belajar <strong>Step-by-Step Exactly</strong> Cara AI Berfikir, Cara Training AI Expert Sendiri, Berdasarkan <strong>Battle-Tested Framework</strong> Dari Real Industry Implementations.
               </p>
               
               <div className={styles.heroTeaser}>
@@ -197,17 +197,17 @@ export default function Home({ productSettings }) {
                     
                     <p>Kalau anda sedang mencari cara untuk <strong>betul-betul belajar AI</strong> untuk kerja dan bisnes..</p>
                     
-                    <p>Bukan sekadar copy-paste prompt over-hyped generic dari internet..</p>
+                    <p>Bukan sekadar copy-paste prompt yang over-hyped, tapi generic dari internet..</p>
                     
                     <p><strong>Teruskan membaca.</strong></p>
                     
-                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai orang, termasuk Professionals.. masih struggle guna AI dengan berkesan..</p>
+                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai orang masih struggle guna AI dengan berkesan..</p>
                     
-                    <p>Dan bagaimana <span className={styles.highlight}>Context Design Framework</span> yang saya akan ajar boleh transformasi cara anda bekerja sepenuhnya.</p>
+                    <p>Dan macam mana <span className={styles.highlight}>Framework KelasGPT</span> yang saya akan ajar boleh transformasi cara anda bekerja sepenuhnya.</p>
                     
                     <p>Tak kira anda kerja corporate, run bisnes sendiri, atau student..</p>
                     
-                    <p><strong>Framework ni akan jadi game-changer untuk productivity anda.</strong></p>
+                    <p><strong>KelasGPT ni akan jadi game-changer untuk productivity anda.</strong></p>
                 </div>
             </div>
         </section>
@@ -290,7 +290,7 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.authoritySection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Sebelum saya dedahkan RAHSIA framework ni..</h2>
+              <h2>Sebelum Saya Explain Panjang Lebar..</h2>
               <p className={styles.sectionSubtitle}>Mungkin Saya Patut Perkenalkan Diri Saya Dulu..</p>
             </div>
             <div className={styles.authorProfile}>
@@ -316,7 +316,7 @@ export default function Home({ productSettings }) {
                   
                   <p>Sebab sejak tahun 2020..</p>
                   
-                  <p>Saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan global paling popular</p>
+                  <p>Saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan <strong>global</strong> paling popular</p>
                   
                   <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
                   
@@ -341,27 +341,46 @@ export default function Home({ productSettings }) {
                   
                   <p>Kerja hakiki saya, dengan lebih <strong>8 tahun pengalaman sebagai Lead Business Consultant</strong> dalam beberapa company IT..</p>
                   
-                  <p>Ialah memberi <strong>konsultansi kepada Real Business User</strong> cara nak intergrate <span className={styles.highlight}>Teknologi dan AI dalam konteks bisnes mereka..</span></p>
+                  <p>Ialah memberi<br /><strong>konsultansi kepada Real Business User</strong></p>
 
-                  <div style={{ textAlign: 'center', margin: '2rem 0', padding: '1rem 0', borderTop: '1px solid rgba(0,0,0,0.08)', borderBottom: '1px solid rgba(0,0,0,0.08)', lineHeight: '1.9', color: 'var(--text-secondary)', fontSize: '0.9rem', fontStyle: 'italic' }}>
-                    Trading Algorithm<br />
-                    Loan Evaluation Engine untuk Banking<br />
-                    AI Chatbot untuk SME<br />
-                    AI Intergration untuk Sales Platform<br />
-                    HR Policy Management System
+                  <p>Cara nak intergrate Teknologi dan AI <br /><span className={styles.highlight}> sesuai dengan konteks bisnes mereka..</span></p>
+
+                  <div className={styles.projectsList}>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      Trading Algorithm
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      Loan Evaluation Engine untuk Banking
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      AI Chatbot untuk SME
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      AI Intergration untuk Sales Platform
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      HR Policy Management System
+                    </div>
                   </div>
 
-                  <p>Almost any niche yang perlukan teknologi ni, saya pernah sentuh..</p>
+                  <p><strong>Almost any niche yang perlukan teknologi ni,<br />saya pernah sentuh..</strong></p>
 
-                  <p><strong>So trust me bila saya cakap..</strong></p>
+                  <p>So trust me bila saya cakap..</p>
 
-                  <p>Kebanyakan business user atau owner, selalu sangat overestimate kebolehan teknologi dalam unrealistic ways,</p>
+                  <p>Real problem yang kebanyakan business user atau owner alami</p>
+
+                  <p>Selalunya sebab mereka overestimate kebolehan AI dalam unrealistic ways</p>
                   
-                  <p>Tapi underestimate macam mana <strong>creative use of teknologi ni</strong> boleh bantu kerja atau bisnes mereka..</p>
+                  <p>Tapi underestimate macam mana creative use of teknologi ni boleh bantu kerja atau bisnes mereka..</p>
 
-                  <p>Sebab mereka cuma nampak the end results teknologi tersebut..<br />Apps.. Platform.. Software..</p>
+                  <p>Sebab mereka cuma nampak magic dari the end results of teknologi tersebut..<br />Apps.. Platform.. Software..</p>
 
-                  <p>Tapi once mereka faham teknologi, sistem yang mereka nak guna tu..</p>
+                  <p>Tapi once mereka faham apa yang berlaku &lsquo;behind the scene&rsquo; sistem yang mereka nak guna tu..</p>
                   
                   <p><span className={styles.highlight}>Tak perlu faham coding pun..</span></p>
                   
@@ -387,15 +406,15 @@ export default function Home({ productSettings }) {
               
               <p>Kalau anda mahukan someone yang <span className={styles.highlight}>berpengalaman dalam industri..</span></p>
               
-              <p>Tolong breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
+              <p>Tolong anda breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
               
-              <p>Nak belajar <span className={styles.highlight}>framework, workflow untuk bina context dalam AI dengan maximum accuracy..</span></p>
+              <p>Ajar anda step-by-step <strong>framework, workflow</strong> untuk bina context dalam AI dengan <strong>maximum accuracy..</strong></p>
 
-              <p>Walaupun anda langsung tak ada background teknikal..</p>
+              <p>Dalam masa yang sama..</p>
+
+              <p><span className={styles.highlight}>Anda tak perlu ada background teknikal..<br />Tak perlu belajar coding..</span></p>
               
-              <p><strong>Bukan sekadar copy paste prompt orang lain</strong></p>
-              
-              <p><em>Teruskan baca..</em></p>
+              <p><em>Teruskan membaca..</em></p>
             </div>
           </div>
         </section>
@@ -405,9 +424,7 @@ export default function Home({ productSettings }) {
           <div className="container">
             <h2>Personal Expert Consultant Yang Dijanjikan</h2>
             <div className={styles.consultantContent}>
-              <p><strong>Bayangkan anda seorang yang ambitious, yang tak pernah lepaskan peluang untuk level up..</strong></p>
-              
-              <p>Anda tengah duduk dalam bilik, planning next big move untuk career atau side business..</p>
+              <p><strong>Bayangkan anda tengah duduk dalam bilik, focused, kerja keras, planning next big move untuk career atau side business..</strong></p>
               
               <p>Tapi instead of groping in the dark macam most people..</p>
               
@@ -848,8 +865,11 @@ export default function Home({ productSettings }) {
             <div className={styles.testimonialsHeader}>
               <h2>Apa Kata Mereka Yang Dah Apply Framework Ni</h2>
               <p className={styles.testimonialsSubtitle}>
-                Real results dari professionals yang dah transform cara kerja mereka dengan Context Design Framework
+                Real results dari professionals yang dah transform cara kerja mereka dengan Framework KelasGPT
               </p>
+              {/* Simple Line Separator */}
+              <div className={styles.heroSeparator}></div>
+              <p className={styles.testimonialsNote}>PENTING: KelasGPT masih di fasa awal launching. Kebanyakan Testimonials ini ialah dari existing client yang belajar secara direct coaching dengan saya melalui AI implementation dalam bisnes mereka.</p>
             </div>
             
             <div className={styles.testimonialsGrid}>
