@@ -1,0 +1,110 @@
+.legalContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #fff;
+}
+
+.legalContent {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.legalContent h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+  text-align: center;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 1rem;
+}
+
+.lastUpdated {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #007bff;
+}
+
+.lastUpdated p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.legalContent section {
+  margin-bottom: 2rem;
+}
+
+.legalContent h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.legalContent h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
+  color: #34495e;
+}
+
+.legalContent p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.legalContent ul {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.legalContent li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.legalContent strong {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .legalContainer {
+    padding: 1rem 0.5rem;
+  }
+  
+  .legalContent {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .legalContent h1 {
+    font-size: 2rem;
+  }
+  
+  .legalContent h2 {
+    font-size: 1.3rem;
+  }
+  
+  .legalContent h3 {
+    font-size: 1.1rem;
+  }
+  
+  .legalContent ul {
+    padding-left: 1.5rem;
+  }
+}

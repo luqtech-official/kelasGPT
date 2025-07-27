@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
-import { cloudinaryPresets, getCloudinaryBlurDataURL, getCloudinarySizes } from "../lib/cloudinary";
+import { cloudinaryPresets, getCloudinaryBlurDataURL, getCloudinarySizes } from "../lib/imagekit";
 
 // --- SVG Icon Components ----
 // Using simple functional components for SVG icons for reusability and cleanliness.
@@ -1407,7 +1407,7 @@ export default function Home({ productSettings }) {
             </div>
         </section>
 
-        {/* --- Professional Discount Offer (Only when allowdiscount is true) --- */}
+        {/* --- Discount Offer Section (Only when allowdiscount is true) --- */}
         {productSettings.allowdiscount && (
             <section className={`${styles.section} ${styles.professionalOfferSection}`}>
                 <div className="container">
@@ -1422,6 +1422,7 @@ export default function Home({ productSettings }) {
                                 <h3>Early Bird Pricing - {Number(productSettings.discountunittotal) || 0} Students Terawal Sahaja</h3>
                                 <p><strong>Limited Early Bird access</strong> untuk introduce KelasGPT dengan special pricing. Terhad untuk {Number(productSettings.discountunittotal) || 0} students terawal sahaja - lepas habis, harga naik ke standard rate secara automatik.</p>
                                 
+                                {/* --- FOMO Progress Bar for Early Bird --- */}
                                 <div className={styles.earlyBirdStatus}>
                                     <div className={styles.statusBar}>
                                         <div 
@@ -1466,8 +1467,9 @@ export default function Home({ productSettings }) {
                             <p className={styles.primaryCTASubtext}>Instant Access • <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</span> Early Bird slots left • Lifetime Access</p>
                         </div>
 
-                        <div className={styles.membershipNote}>
-                            <h4 style={{color: 'var(--terra-dark)', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Author&rsquo;s Note</h4>
+                        {/* --- Author's Note Section --- */}
+                        <div className={styles.authorNote}>
+                            <h4 style={{color: 'var(--terra-dark)', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Nota Penulis:</h4>
                             <p style={{marginBottom: '1rem'}}>The reason anda dah baca sampai sini..</p>
                             <p style={{marginBottom: '1rem'}}>Sebab anda tahu ini <strong>apa yang anda mahu</strong>.</p>
                             <p style={{marginBottom: '1rem'}}>Kalau anda baca setiap perkataan yang saya tulis...</p>
@@ -1488,25 +1490,34 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.guaranteeSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Jaminan Kejayaan Pembelajaran Anda</h2>
-              <p>Selepas 8 tahun dalam industri, saya tahu apa yang berfungsi. Dan saya komited untuk pastikan ini berfungsi untuk anda juga.</p>
+              <h2>Kepuasan Anda 100% Dijamin</h2>
+              <p>Anda akan dapat apa yang anda perlu, dan dengan lifetime access, setiap update terkini, untuk setiap modul, anda akan dapat secara percuma!</p>
             </div>
             
+            <div className={styles.guaranteeHeader}>
+              <div className={styles.guaranteeBadge}>
+                <h3><strong>Kenapa saya begitu yakin dengan kepuasan anda?</strong></h3>
+                <p>Sebab modul yang disusun bukan sekadar teori kosong, tapi disusun dengan cermat, step-by-step untuk memastikan anda belajar dalam cara yang sangat mudah difahami.</p>
+                <br />
+                <p>Ia datang dari 8 tahun hands-on experience memberi konsultansi teknikal kepada actual business user dalam pelbagai industri, termasuklah integrasi AI dalam pelbagai aspek bisnes yang menjadi fokus sejak 2-3 tahun lepas. </p>
+              </div>
+            </div>
+
             <div className={styles.guaranteeGrid}>
               <div className={styles.guaranteeCard}>
                 <div className={styles.guaranteeIcon}>
                   <CheckCircleIcon />
                 </div>
-                <h4>Framework Mastery Support</h4>
-                <p>Selepas mengikuti Modul 2 &amp; 4, jika anda masih tidak faham bagaimana Framework dalam KelasGPT berfungsi, saya akan personally guide anda melalui konsep tersebut sehingga anda betul-betul master.</p>
+                <h4>Personal Support Provided</h4>
+                <p>Selepas mengikuti Modul 2 &amp; 4, jika anda masih tidak faham bagaimana Framework dalam KelasGPT berfungsi, saya akan personally guide anda melalui konsep tersebut sehingga anda betul-betul faham.</p>
               </div>
               
               <div className={styles.guaranteeCard}>
                 <div className={styles.guaranteeIcon}>
                   <CheckCircleIcon />
                 </div>
-                <h4>Real Results Commitment</h4>
-                <p>Dalam 30 hari, anda akan dapat apply sekurang-kurangnya 5 teknik dari kursus ini dalam kerja atau bisnes anda. Saya komited untuk pastikan anda capai hasil ni.</p>
+                <h4>Complete Learning Material</h4>
+                <p>Untuk memastikan kepuasan anda sebagai pelanggan KelasGPT, Anda akan mendapat Video Penjelasan, Video Framework, Video Hands-on Project, Ready-Made Custom GPT, Template Custom Instruction, Puluhan File Untuk Train Expert Advisor.</p>
               </div>
               
               <div className={styles.guaranteeCard}>
@@ -1514,38 +1525,72 @@ export default function Home({ productSettings }) {
                   <CheckCircleIcon />
                 </div>
                 <h4>Non-Technical Promise</h4>
-                <p>Saya janjikan kursus ini direka khas untuk orang tanpa background IT. Setiap konsep dijelaskan dalam bahasa yang mudah, step-by-step, tanpa jargon technical yang mengelirukan.</p>
+                <p>Saya janjikan kursus ini direka khas untuk orang tanpa background IT. Setiap konsep dijelaskan dalam bahasa yang mudah, analogi yang sesuai, step-by-step, tanpa jargon technical yang mengelirukan.</p>
               </div>
             </div>
             
-            <div className={styles.guaranteeFooter}>
-              <div className={styles.guaranteeBadge}>
+            {/* --- Disabling Guarantee Footer Until I Have The Right Copy for this --- */}
+            {/* <div className={styles.guaranteeFooter}>
+              <div className={styles.guaranteeStatement}>
                 <h3>Komitmen Saya Kepada Kejayaan Anda</h3>
                 <p>Saya tidak sekadar jual kursus dan hilang. Saya komited untuk pastikan anda betul-betul faham dan boleh apply semua yang anda belajar. Kerana kejayaan anda adalah kejayaan saya juga.</p>
               </div>
-              
-              <div className={styles.guaranteeStatement}>
-                <p><strong>Kenapa saya begitu yakin dengan kepuasan anda?</strong></p>
-                <p>Sebab modul yang disusun bukan sekadar theory kosong. Ia datang dari 8 tahun hands-on experience memberi konsultansi teknikal kepada Real Business User, termasuklah integrasi AI dalam pelbagai aspek bisnes yang menjadi fokus sejak 2-3 tahun lepas. </p>
-              </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
-        {/* --- Imagine/Final CTA Section --- */}
-        <section className={styles.section}>
+        {/* --- Final CTA Section --- */}
+        <section className={`${styles.section} ${styles.finalCTASection}`}>
             <div className="container">
-                <div className={styles.imagineBox}>
-                    <h2>Bayangkan…</h2>
-                    <p>Menyiapkan laporan dalam minit, bukan jam. Menjana idea kempen pemasaran dengan beberapa baris prompt. Mengurangkan kos operasi sambil meningkatkan kualiti kerja. Inilah realiti baharu dengan AI apabila anda tahu caranya.</p>
-                    <Link href="/checkout" className={styles.ctaButton} style={{backgroundColor: 'var(--white)', color: 'var(--primary)'}}>
-                      Mula Transformasi Produktiviti Anda
+                <div className={styles.finalCTAContainer}>
+                    <div className={styles.finalMessage}>
+                        <p>Anda dah baca sampai sini sebab anda tahu ini exactly apa yang anda perlukan untuk move forward. Yang tinggal sekarang: <strong>Will you act on what you know is right?</strong></p>
+                        
+                        <p>Lupakan 6 bulan, jika anda rasa anda mampu commit untuk serap apa yang KelasGPT ajar, cuma 1-2 minggu dengan frequent AI use..</p>
+                          
+                        <p>Semua akan jadi natural untuk anda, an elite AI User dan enjoy the real unfair advantage.<br /><br />{productSettings.allowdiscount && <span>Final Reminder:<br />Cuma <strong style={{color: 'var(--urgent-red)'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</strong> Early Bird slots left.</span>}</p>
+                    </div>
+                    
+                    <Link 
+                        href="/checkout" 
+                        className={styles.finalCTA}
+                    >
+                        <span className={styles.finalCTAMainText}>Ya, Saya Nak Start Sekarang</span>
+                        <span className={styles.finalCTASubText}>
+                            {productSettings.allowdiscount 
+                                ? `RM${productSettings.productPrice} Early Bird • Save RM${productSettings.baseproductprice - productSettings.productPrice}` 
+                                : `RM${productSettings.productPrice} • Lifetime Access`
+                            }
+                        </span>
                     </Link>
                 </div>
             </div>
         </section>
 
       </main>
+
+      {/* --- Legal Footer --- */}
+      <footer className={styles.legalFooter}>
+        <div className="container">
+          <div className={styles.disclaimerContent}>
+            <div className={styles.footerMeta}>
+              <p>&copy; 2025 KelasGPT. All rights reserved.</p>
+              <p>Educational platform for AI literacy in Malaysia.</p>
+              <p className={styles.legalLinks}><br />Go To:</p>
+              <p className={styles.legalLinks}>
+                <Link href="/privacypolicy" className={styles.legalLink}>Privacy Policy</Link>
+                <span className={styles.linkSeparator}>|</span>
+                <Link href="/termsofuse" className={styles.legalLink}>Terms of Use</Link>
+              </p>
+              <p className={styles.legalLinks}><br />Important Disclaimer:</p>
+            </div>
+            
+            <div className={styles.disclaimerText}>
+              <p>Individual results may vary. Success depends on individual effort, commitment, and application of the techniques taught. No specific results are guaranteed. KelasGPT provides educational content on AI usage and productivity techniques. This is not professional advice and should not replace professional consultation in your specific field. Testimonials and case studies are real experiences from actual users, but individual results will vary based on personal effort and circumstances. This website and its content comply with advertising standards. We make no unrealistic income claims or guaranteed outcomes. Access to internet and AI platforms (ChatGPT, Claude, etc.) required. Platform subscriptions sold separately. We collect minimal tracking data and cookies solely for website analytics and performance optimization purposes. We do not share, sell, or distribute any personal data with third parties, except for platform-specific tracking pixels (Meta Pixel, TikTok Pixel) which are collected directly by those advertising platforms in accordance with their respective privacy policies for advertising measurement and optimization purposes only. This website is not part of Facebook, Instagram, WhatsApp, Threads, or any Meta Platforms websites. Additionally, this website is not endorsed by Meta Platforms Inc. in any way. Facebook, Instagram, WhatsApp, Threads, and Meta are trademarks of Meta Platforms Inc. This website is also not part of TikTok or any ByteDance platforms. This website is not endorsed by ByteDance Ltd. or TikTok Pte. Ltd. in any way. TikTok is a trademark of ByteDance Ltd. Our only relationship with these platforms is through their advertising services to promote our educational content.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

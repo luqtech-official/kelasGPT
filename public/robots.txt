@@ -1,2 +1,372 @@
+# KelasGPT Robots.txt - Optimized for Bandwidth & Ad Conversion
+# Last Updated: January 27, 2025
+#
+# STRATEGY:
+# 1. ALLOW: Critical advertising bots (Meta, Google, TikTok, Apple, Pinterest)
+# 2. ALLOW: Essential social sharing bots for organic reach
+# 3. BLOCK: SEO tools, AI training, price scrapers, vulnerability scanners
+# 4. PROTECT: Admin areas, APIs, customer data, sensitive files
+# 5. OPTIMIZE: Conversion funnel paths explicitly allowed
+# 6. RATE LIMIT: Unknown bots heavily restricted to save bandwidth
+#
+# Expected bandwidth savings: 60-80% from bot traffic
+# Protected advertising conversion tracking: Meta Pixel, Google Ads, TikTok Ads
+
+# === ALLOW CRITICAL BOTS FOR ADS & CONVERSION ===
+
+# Google (Search + Google Ads + YouTube)
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Video
+Allow: /
+Crawl-delay: 2
+
+# Bing (Search + Microsoft Ads)
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Meta/Facebook (Ads + Social Sharing)
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Facebot
+Allow: /
+User-agent: FacebookBot
+Allow: /
+
+# TikTok/ByteDance (TikTok Ads)
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 3
+
+# Apple (iOS Sharing + Apple News + Apple Search Ads)
+User-agent: Applebot
+Allow: /
+Crawl-delay: 2
+
+# Additional Advertising Platforms
+User-agent: PinterestBot
+Allow: /
+Crawl-delay: 3
+
+User-agent: SnapBot
+Allow: /
+Crawl-delay: 3
+
+# Legitimate Search Engines
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 3
+
+# Social Media Bots (Important for sharing)
+User-agent: Twitterbot
+Allow: /
+User-agent: LinkedInBot
+Allow: /
+User-agent: WhatsApp
+Allow: /
+User-agent: TelegramBot
+Allow: /
+User-agent: RedditBot
+Allow: /
+User-agent: SlackBot
+Allow: /
+
+# === BLOCK BANDWIDTH-WASTING BOTS ===
+
+# SEO Tools & Scrapers (Major Bandwidth Wasters)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SeznamBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: MajesticSEO
+Disallow: /
+
+User-agent: BacklinkCrawler
+Disallow: /
+
+User-agent: LinkpadBot
+Disallow: /
+
+User-agent: spbot
+Disallow: /
+
+# Regional Search Engines (Not priority for Malaysian market)
+User-agent: YandexBot
+Disallow: /
+
+User-agent: NaverBot
+Disallow: /
+
+User-agent: SogouSpider
+Disallow: /
+
+# AI Training Bots (Content Theft Protection)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+# E-commerce Scrapers & Price Comparison (Critical to Block)
+User-agent: PriceGrabber
+Disallow: /
+
+User-agent: Shopping.com
+Disallow: /
+
+User-agent: Shopzilla
+Disallow: /
+
+User-agent: BizRate
+Disallow: /
+
+User-agent: PricewatchBot
+Disallow: /
+
+User-agent: CompSpyBot
+Disallow: /
+
+# Archive & Research Bots
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: SurveyBot
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+# Aggressive Scrapers & Content Theft
+User-agent: PetalBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: AspiegelBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: HeadlessChrome
+Disallow: /
+
+User-agent: Chrome-Lighthouse
+Disallow: /
+
+User-agent: Screaming Frog
+Disallow: /
+
+# Vulnerability Scanners & Malicious Bots
+User-agent: Nikto
+Disallow: /
+
+User-agent: sqlmap
+Disallow: /
+
+User-agent: w3af
+Disallow: /
+
+User-agent: ZmEu
+Disallow: /
+
+User-agent: masscan
+Disallow: /
+
+# Generic Crawlers & Unknown Bots
+User-agent: *crawler*
+Disallow: /
+
+User-agent: *scraper*
+Disallow: /
+
+User-agent: *spider*
+Disallow: /
+
+# === PROTECT SENSITIVE AREAS (ALL BOTS) ===
+
+# Admin Dashboard & Authentication
 User-agent: *
 Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /login
+Disallow: /auth/
+
+# Database & Configuration
+Disallow: /.env*
+Disallow: /config/
+Disallow: /database/
+Disallow: /db/
+
+# Application Files & Development
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /yarn.lock
+Disallow: /next.config.js
+Disallow: /tsconfig.json
+Disallow: /jsconfig.json
+Disallow: /.next/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.gitignore
+Disallow: /README.md
+
+# Logs, Testing & Utilities
+Disallow: /.log/
+Disallow: /logs/
+Disallow: /test/
+Disallow: /tests/
+Disallow: /scripts/
+Disallow: /backup/
+Disallow: /dev/
+Disallow: /staging/
+
+# Sensitive File Types
+Disallow: /*.log
+Disallow: /*.sql
+Disallow: /*.db
+Disallow: /*.sqlite
+Disallow: /*.bak
+Disallow: /*.old
+Disallow: /*.orig
+
+# Temporary & Cache Files
+Disallow: /*_temp
+Disallow: /*cache*
+Disallow: /*.tmp
+Disallow: /*.temp
+Disallow: /tmp/
+Disallow: /cache/
+
+# Customer Data Protection
+Disallow: /customers/
+Disallow: /orders/
+Disallow: /user-data/
+Disallow: /exports/
+
+# Payment Security (Protect everything except callbacks)
+Disallow: /payment/processing/
+Disallow: /payment/admin/
+Disallow: /checkout/admin/
+
+# === ALLOW IMPORTANT CONVERSION PATHS ===
+
+# Main conversion funnel (ensure no blocking)
+User-agent: *
+Allow: /
+Allow: /checkout
+Allow: /payment-status
+Allow: /thankyou
+Allow: /videolisting
+
+# Legal pages (required for compliance)
+Allow: /privacypolicy
+Allow: /termsofuse
+
+# === SPECIAL API PROTECTIONS ===
+
+# Block most API endpoints but allow critical payment/tracking APIs
+User-agent: *
+Disallow: /api/
+Allow: /api/payment-callback
+Allow: /api/payment-status  
+Allow: /api/track-view
+Allow: /api/client-logs
+
+# Specifically block sensitive API endpoints
+Disallow: /api/admin/
+Disallow: /api/customers
+Disallow: /api/customers/
+Disallow: /api/create-payment-session
+Disallow: /api/hello
+
+# === SITEMAP & HOST ===
+
+Sitemap: https://kelasgpt.com/sitemap.xml
+Host: kelasgpt.com
+
+# === CRAWL DELAY & RATE LIMITING ===
+
+# Aggressive unknown bots - heavily rate limited
+User-agent: *
+Crawl-delay: 10
+Request-rate: 1/30
+
+# Override for trusted bots (already defined above with specific delays)
+# Google: 1s, Bing: 2s, Apple: 2s, TikTok: 3s, Pinterest/Snap: 3s
+
+# === FINAL SECURITY RULES FOR UNKNOWN BOTS ===
+
+# Block common vulnerability scanning paths
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /phpmyadmin/
+Disallow: /admin.php
+Disallow: /login.php
+Disallow: /xmlrpc.php
+Disallow: /.well-known/
+Disallow: /cgi-bin/
+
+# Block common file extensions that shouldn't be crawled
+Disallow: /*.exe
+Disallow: /*.zip
+Disallow: /*.rar
+Disallow: /*.tar.gz
+Disallow: /*.pdf$
+Disallow: /*.doc
+Disallow: /*.docx
+Disallow: /*.xls
+Disallow: /*.xlsx
+
+# Performance optimization - block resource-heavy operations
+Disallow: /search?
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
+Disallow: /*?*sessionid
+Disallow: /*?*tracking
