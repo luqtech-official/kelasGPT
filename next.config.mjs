@@ -20,15 +20,26 @@ const nextConfig = {
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Custom headers for additional caching
+  // Custom headers for proper caching - FIXED VERSION
   async headers() {
     return [
       {
-        source: '/(.*)',
+        // Cache static assets (JS, CSS, images) for 1 year
+        source: '/(_next/static|favicon.ico|robots.txt|sitemap.xml)',
         headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Don't cache HTML pages and API routes
+        source: '/((?!_next/static|favicon.ico|robots.txt|sitemap.xml).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
           },
         ],
       },
