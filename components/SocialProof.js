@@ -19,21 +19,23 @@ export default function SocialProof() {
 
   useEffect(() => {
     if (notifications.length > 0) {
-      let currentIndex = 0;
-      const interval = setInterval(() => {
-        const notification = notifications[currentIndex];
+      const showRandomNotification = () => {
+        const randomIndex = Math.floor(Math.random() * notifications.length);
+        const notification = notifications[randomIndex];
         
-        // Show notification
         setCurrentNotification(notification);
         setIsVisible(true);
         
-        // Hide notification after 5 seconds
         setTimeout(() => {
           setIsVisible(false);
-        }, 5000);
-        
-        currentIndex = (currentIndex + 1) % notifications.length;
-      }, 10000); // Show a new notification every 10 seconds
+        }, 5000); // Hide after 5 seconds
+      };
+
+      // Show the first notification immediately
+      showRandomNotification();
+
+      // Then show a new one every 10 seconds
+      const interval = setInterval(showRandomNotification, 10000);
 
       return () => clearInterval(interval);
     }

@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2>1. Introduction</h2>
           <p>
-            Luq Technology ("we," "our," or "us") operates the KelasGPT website (kelasgpt.com) 
+            Luq Technology (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) operates the KelasGPT website (kelasgpt.com) 
             and provides educational video courses. This Privacy Policy explains how we collect, 
             use, disclose, and safeguard your information when you visit our website or use our services.
           </p>
@@ -128,7 +128,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section>
-          <h2>11. Children's Privacy</h2>
+          <h2>11. Children&apos;s Privacy</h2>
           <p>
             Our services are not intended for children under 13 years of age. We do not knowingly collect personal 
             information from children under 13.
@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
           <h2>12. Changes to This Privacy Policy</h2>
           <p>
             We may update this Privacy Policy from time to time. We will notify you of any changes by posting the 
-            new Privacy Policy on this page and updating the "Last Updated" date.
+            new Privacy Policy on this page and updating the &quot;Last Updated&quot; date.
           </p>
         </section>
 
@@ -178,7 +178,7 @@ export default function PrivacyPolicy() {
           </p>
           
           <p>
-            <strong>Data and Privacy:</strong> While we may use Meta's advertising platforms, any personal data 
+            <strong>Data and Privacy:</strong> While we may use Meta&apos;s advertising platforms, any personal data 
             collected through our website is governed solely by this Privacy Policy and our Terms of Use. 
             Meta Platforms Inc. is not responsible for our data collection, processing, or privacy practices.
           </p>
@@ -215,7 +215,7 @@ export default function PrivacyPolicy() {
           </p>
           
           <p>
-            <strong>Data and Privacy:</strong> While we may use TikTok's advertising platforms, any personal data 
+            <strong>Data and Privacy:</strong> While we may use TikTok&apos;s advertising platforms, any personal data 
             collected through our website is governed solely by this Privacy Policy and our Terms of Use. 
             ByteDance Ltd., TikTok Pte. Ltd., and related entities are not responsible for our data collection, 
             processing, or privacy practices.
@@ -233,7 +233,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2>14. Contact Us</h2>
           <p>
-            If you have any questions about this Privacy Policy, please contact us through our website's contact form 
+            If you have any questions about this Privacy Policy, please contact us through our website&apos;s contact form 
             or customer support channels.
           </p>
         </section>

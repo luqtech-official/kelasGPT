@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { trackPageView, initializeLinkModification } from '../lib/simpleTracking';
+import { trackPageView, getOrCreateVisitorId } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -82,6 +82,7 @@ export default function Home({ productSettings }) {
   const [animatedSpotsLeft, setAnimatedSpotsLeft] = useState(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [progressBarWidth, setProgressBarWidth] = useState(0);
+  const [visitorId, setVisitorId] = useState(null);
 
   const toggleModule = (moduleId) => {
     setExpandedModules(prev => {
@@ -113,12 +114,17 @@ export default function Home({ productSettings }) {
     return Math.max(0, Math.min(100, percentage));
   };
 
+  const [checkoutUrl, setCheckoutUrl] = useState('/checkout');
+
   useEffect(() => {
-    // 🔥 PHASE 1: Multi-source visitor ID resolution
-    trackPageView('/');  // NOW: Checks URL params first, then localStorage, then creates new
-    
-    // 🚀 PHASE 2: Initialize link modification for social browsers
-    initializeLinkModification(); // Modifies checkout links when FB/social browser detected
+    const id = getOrCreateVisitorId();
+    setVisitorId(id);
+    trackPageView('/', id);
+
+    // Only append visitor ID if it exists
+    if (id) {
+      setCheckoutUrl(`/checkout?vid=${id}`);
+    }
   }, []);
 
   // Animated counter for spots left
@@ -1390,7 +1396,7 @@ export default function Home({ productSettings }) {
                     
                     {!productSettings.allowdiscount && (
                         <div className={styles.ctaSection}>
-                            <Link href="/checkout" className={styles.mainCTA}>
+                            <Link href={checkoutUrl} className={styles.mainCTA}>
                                 <RocketIcon className={styles.ctaIcon} />
                                 YA! Saya Nak Access Sekarang
                             </Link>
@@ -1461,7 +1467,7 @@ export default function Home({ productSettings }) {
                         </div>
 
                         <div className={styles.primaryCTASection}>
-                            <Link href="/checkout" className={styles.primaryCTA}>
+                            <Link href={checkoutUrl} className={styles.primaryCTA}>
                                 Secure Early Bird Access + RM{productSettings.baseproductprice - productSettings.productPrice} Savings
                             </Link>
                             <p className={styles.primaryCTASubtext}>Instant Access • <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{animatedSpotsLeft !== null ? animatedSpotsLeft : (Number(productSettings.discountunitleft) || 0)}</span> Early Bird slots left • Lifetime Access</p>
@@ -1552,7 +1558,7 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <Link 
-                        href="/checkout" 
+                        href={checkoutUrl} 
                         className={styles.finalCTA}
                     >
                         <span className={styles.finalCTAMainText}>Ya, Saya Nak Start Sekarang</span>

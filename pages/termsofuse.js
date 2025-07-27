@@ -170,7 +170,7 @@ export default function TermsOfUse() {
         <section>
           <h2>16. Contact Information</h2>
           <p>
-            If you have any questions about these Terms of Use, please contact us through our website's contact form 
+            If you have any questions about these Terms of Use, please contact us through our website&apos;s contact form 
             or customer support channels available on kelasgpt.com.
           </p>
         </section>
@@ -216,8 +216,8 @@ export default function TermsOfUse() {
           
           <p>
             <strong>User Responsibility and Platform Terms:</strong> Users who access Meta platforms through links 
-            or references on our website do so under Meta Platforms Inc.'s terms of service, privacy policies, and 
-            community guidelines. We are not responsible for Meta's platform policies, content moderation decisions, 
+            or references on our website do so under Meta Platforms Inc.&apos;s terms of service, privacy policies, and 
+            community guidelines. We are not responsible for Meta&apos;s platform policies, content moderation decisions, 
             account restrictions, or any user experience on Meta platforms.
           </p>
           
@@ -267,8 +267,8 @@ export default function TermsOfUse() {
           
           <p>
             <strong>User Responsibility and Platform Terms:</strong> Users who access TikTok or other ByteDance platforms 
-            through links or references on our website do so under ByteDance's and TikTok's respective terms of service, 
-            privacy policies, and community guidelines. We are not responsible for TikTok's or ByteDance's platform policies, 
+            through links or references on our website do so under ByteDance&apos;s and TikTok&apos;s respective terms of service, 
+            privacy policies, and community guidelines. We are not responsible for TikTok&apos;s or ByteDance&apos;s platform policies, 
             content moderation decisions, account restrictions, or any user experience on their platforms.
           </p>
           
@@ -290,7 +290,7 @@ export default function TermsOfUse() {
           
           <p>
             <strong>Advertising Compliance:</strong> Our advertising activities on third-party platforms comply with 
-            each platform's advertising policies and guidelines. However, platform policy changes, advertising account 
+            each platform&apos;s advertising policies and guidelines. However, platform policy changes, advertising account 
             restrictions, or content disapprovals are beyond our control and do not affect the validity of these Terms 
             of Use or our educational content delivery.
           </p>
