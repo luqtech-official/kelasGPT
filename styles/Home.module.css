@@ -234,6 +234,18 @@
   transform: rotate(90deg);
 }
 
+
+.modulePrice {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8B6F47;
+  margin-top: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(168, 82, 63, 0.08);
+  border-radius: 12px;
+  display: inline-block;
+}
+
 .moduleContent {
   padding: 0 1.5rem 1.5rem 1.5rem;
   animation: slideDown 0.3s ease-out;
@@ -317,6 +329,43 @@
   z-index: 2;
 }
 
+
+.bonusValueSummary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(214, 48, 49, 0.05), rgba(214, 48, 49, 0.08));
+  border: 1px solid rgba(214, 48, 49, 0.15);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.bonusValueContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.bonusValueText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bonusValueAmount {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--urgent-red);
+}
+
+.courseOutlineTotal {
+  max-width: 700px;
+  margin: 3rem auto 0 auto;
+  background: var(--terra-dark);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
 .courseOutlineCTA {
   text-align: center;
   margin-top: 3rem;
@@ -345,6 +394,24 @@
   
   .moduleTitle h3 {
     font-size: 1.1rem;
+  }
+  
+  .modulePrice {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.6rem;
+  }
+  
+  .bonusValueSummary {
+    padding: 1.2rem;
+  }
+  
+  .bonusValueText {
+    font-size: 1rem;
+  }
+  
+  .bonusValueAmount {
+    font-size: 1.2rem;
   }
   
   .moduleContent {
@@ -1015,7 +1082,7 @@
 
 .savingsAmount {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--success-green);
   margin-top: 1rem;
@@ -2129,6 +2196,17 @@
   .expertsGrid {
     grid-template-columns: 1fr;
   }
+  
+  .expertCard {
+    padding: 2rem;
+    gap: 1.2rem;
+  }
+  
+  .expertImage {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.3rem;
+  }
   .ctaButton {
     padding: 1rem 2rem;
     font-size: 1.05rem;
@@ -2478,6 +2556,11 @@
   box-shadow: 0 8px 25px rgba(44, 44, 44, 0.08);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
 }
 
 .expertCard::before {
@@ -2517,6 +2600,30 @@
   color: var(--text-secondary);
   line-height: 1.6;
   font-size: 1.05rem;
+}
+
+.expertImage {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--terra-light);
+  box-shadow: 0 4px 15px rgba(168, 82, 63, 0.15);
+  background: var(--terra-bg);
+  margin-bottom: 0.5rem;
+}
+
+.expertImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expertContent {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 /* --- Professional Toolkit Section --- */
