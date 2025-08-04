@@ -14,6 +14,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.novalnet.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     // Optimize image loading and caching
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

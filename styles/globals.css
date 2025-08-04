@@ -18,6 +18,53 @@
   --pure-white: #FFFFFF;
   --warm-gray: #F5F1EB;
 
+  /* CTA Button Color Design */
+  /*------------------------------------ Start of CTA button Design ------------------------------------*/
+  /* To switch themes, move the start '/*' and end '*/
+  /* to surround the block you want to disable.   */
+  
+  /* Red (Original) */
+  /* --cta-btn-bg-1: #e74c3c;
+  --cta-btn-bg-2: #c0392b;
+  --cta-btn-shadow-1: 0 12px 30px rgba(231, 76, 60, 0.4);
+  --cta-btn-shadow-2: 0 18px 40px rgba(231, 76, 60, 0.5); */
+ 
+  
+  /* Blue */
+  --cta-btn-bg-1: #3498db;
+  --cta-btn-bg-2: #2980b9;
+  --cta-btn-shadow-1:  0 12px 30px rgba(52, 152, 219, 0.45);
+  --cta-btn-shadow-2: 0 18px 40px rgba(52, 152, 219, 0.55); 
+ 
+
+  /* Teal */
+  /* --cta-btn-bg-1: #3498db;
+  --cta-btn-bg-2: #2980b9;
+  --cta-btn-shadow-1:  0 12px 30px rgba(52, 152, 219, 0.45);
+  --cta-btn-shadow-2: 0 18px 40px rgba(52, 152, 219, 0.55); */
+ 
+
+    /* Dark Green (Forest) */
+  /* --cta-btn-bg-1: #2C7D4F;
+  --cta-btn-bg-2: #1D5D3B;
+  --cta-btn-shadow-1: 0 12px 30px rgba(44, 125, 79, 0.45);
+  --cta-btn-shadow-2: 0 18px 40px rgba(44, 125, 79, 0.55); */
+  
+
+  /* Dark Blue (Midnight) */
+  /* --cta-btn-bg-1: #34495e;
+  --cta-btn-bg-2: #2c3e50;
+  --cta-btn-shadow-1: 0 12px 30px rgba(52, 73, 94, 0.45);
+  --cta-btn-shadow-2: 0 18px 40px rgba(52, 73, 94, 0.55); */
+ 
+   /* Black/Gray (Graphite) */
+  /* --cta-btn-bg-1: #434343;
+  --cta-btn-bg-2: #000000;
+  --cta-btn-shadow-1: 0 12px 30px rgba(0, 0, 0, 0.35);
+  --cta-btn-shadow-2: 0 18px 40px rgba(0, 0, 0, 0.45); */
+
+  /*------------------------------------ End of CTA button Design ------------------------------------*/
+
   /* Legacy Color Palette (kept for compatibility) */
   --background: #f8f9fa;
   --foreground: #212529;

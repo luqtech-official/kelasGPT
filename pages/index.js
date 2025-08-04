@@ -8,6 +8,15 @@ import SocialProof from "@/components/SocialProof"; // Assuming this component e
 import { getProductSettings, formatPrice } from "../lib/settings";
 import { cloudinaryPresets, getCloudinaryBlurDataURL, getCloudinarySizes } from "../lib/imagekit";
 
+// Swiper components and modules
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+// Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 // --- SVG Icon Components ----
 // Using simple functional components for SVG icons for reusability and cleanliness.
 
@@ -681,26 +690,26 @@ export default function Home({ productSettings }) {
           </div>
         </section>
 
-        {/* --- 5 AI Experts Story --- */}
-        <section className={`${styles.section} ${styles.aiExpertsSection}`}>
+        {/* --- 5 Major Benefits Section --- */}
+        <section className={`${styles.section} ${styles.benefitsSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>Satu Malam je Untuk Dapat 5 AI Expert</h2>
-              <p>Dan anda boleh setup kurang.. atau lebih.., bergantung pada keperluan anda..</p>
+              <h2>5 Benefit Besar Yang Anda Akan Dapat</h2>
+              <p><strong>Bayangkan kalau anda boleh...</strong></p>
               
-              <p>Cara nak setup expert consultant guna ChatGPT ni senang.</p>
+              <p>Transform cara anda kerja dengan AI yang faham anda betul-betul.</p>
               
-              <p>Saya sendiri setup 5 Expert dalam ChatGPT untuk bantu kerja saya, yang saya guna sampai sekarang..</p>
+              <p>Setup sekali, guna seumur hidup untuk <em>mana-mana career path atau business</em> anda pilih.</p>
               
-              <p><strong>Dalam 1 malam je, sekali setup, guna sampai bila-bila..</strong></p>
+              <p><strong>Ini bukan tentang setup AI expert untuk saya - ini tentang benefit yang ANDA akan dapat.</strong></p>
             </div>
             
-            <div className={styles.expertsGrid}>
-              <div className={styles.expertCard}>
-                <div className={styles.expertImage}>
+            <div className={styles.benefitsGrid}>
+              <div className={styles.benefitCard}>
+                <div className={styles.benefitImage}>
                   <Image 
                     src={cloudinaryPresets.expert('expert-placeholder')}
-                    alt="Project Management Expert" 
+                    alt="Instant Professional Analysis" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
@@ -710,18 +719,18 @@ export default function Home({ productSettings }) {
                     sizes={getCloudinarySizes('expert')}
                   />
                 </div>
-                <div className={styles.expertContent}>
-                  <div className={styles.expertTitle}>AI EXPERT #1</div>
-                  <h4>Project Management Expert</h4>
-                  <p>Personal manager yang handle dan manage tasklist saya. Kalau banyak task, dia siap-siap prioritise task mana penting, yang mana nak delegate to AI, yang mana nak buat dulu. Dia buat satu report plan, saya review, kalau setuju, saya follow je plan dia.</p>
+                <div className={styles.benefitContent}>
+                  <div className={styles.benefitTitle}>BENEFIT #1</div>
+                  <h4>Instant Professional Analysis</h4>
+                  <p><strong>Bayangkan:</strong> Mana-mana topic kerja anda, dalam 3 minit je dapat expert-level insights. Market research? Business strategy? Problem solving? AI analyze semua dengan detail macam consultant RM500/jam. <em>Module 4 ajar technique ni.</em></p>
                 </div>
               </div>
               
-              <div className={styles.expertCard}>
-                <div className={styles.expertImage}>
+              <div className={styles.benefitCard}>
+                <div className={styles.benefitImage}>
                   <Image 
                     src={cloudinaryPresets.expert('expert-placeholder')}
-                    alt="Copy Writing Expert" 
+                    alt="Effortless Task Management" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
@@ -731,18 +740,18 @@ export default function Home({ productSettings }) {
                     sizes={getCloudinarySizes('expert')}
                   />
                 </div>
-                <div className={styles.expertContent}>
-                  <div className={styles.expertTitle}>AI EXPERT #2</div>
-                  <h4>Copy Writing Expert</h4>
-                  <p>Tolong buat ayat untuk online business (My main side hustle). Dia lah yang design semua copywriting untuk paid ads yang saya buat. Ads fatigue? dia tolong buat baru. Nak Split test? dia bagi recommendation.</p>
+                <div className={styles.benefitContent}>
+                  <div className={styles.benefitTitle}>BENEFIT #2</div>
+                  <h4>Effortless Task Management</h4>
+                  <p><strong>Tak pernah overwhelmed lagi:</strong> AI prioritize semua task anda, bagi clear action plan, beritahu apa nak focus hari ni. Kerja banyak? AI breakdown jadi manageable steps. <em>Framework dalam Module 2 & 4.</em></p>
                 </div>
               </div>
               
-              <div className={styles.expertCard}>
-                <div className={styles.expertImage}>
+              <div className={styles.benefitCard}>
+                <div className={styles.benefitImage}>
                   <Image 
                     src={cloudinaryPresets.expert('expert-placeholder')}
-                    alt="Stock Trading Expert" 
+                    alt="Consistent Quality Output" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
@@ -752,18 +761,18 @@ export default function Home({ productSettings }) {
                     sizes={getCloudinarySizes('expert')}
                   />
                 </div>
-                <div className={styles.expertContent}>
-                  <div className={styles.expertTitle}>AI EXPERT #3</div>
-                  <h4>Stock Trading Expert</h4>
-                  <p>Tolong review fundamental analysis saham, cari data financial, bagi tau area yang saya patut consider (My other side hustle)</p>
+                <div className={styles.benefitContent}>
+                  <div className={styles.benefitTitle}>BENEFIT #3</div>
+                  <h4>Consistent Quality Output</h4>
+                  <p><strong>Setiap hasil professional-grade:</strong> Reports, presentations, proposals - semua consistent quality tinggi. Boss tak pernah minta revise lagi sebab output anda selalu spot-on. <em>Prompt engineering mastery Module 4.</em></p>
                 </div>
               </div>
               
-              <div className={styles.expertCard}>
-                <div className={styles.expertImage}>
+              <div className={styles.benefitCard}>
+                <div className={styles.benefitImage}>
                   <Image 
                     src={cloudinaryPresets.expert('expert-placeholder')}
-                    alt="Data Storytelling Expert" 
+                    alt="Universal Problem Solving" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
@@ -773,18 +782,18 @@ export default function Home({ productSettings }) {
                     sizes={getCloudinarySizes('expert')}
                   />
                 </div>
-                <div className={styles.expertContent}>
-                  <div className={styles.expertTitle}>AI EXPERT #4</div>
-                  <h4>Data Storytelling Expert</h4>
-                  <p>Analysis Expert, yang tolong bagi insight, monitor risk based on data bisnes yang saya provide.</p>
+                <div className={styles.benefitContent}>
+                  <div className={styles.benefitTitle}>BENEFIT #4</div>
+                  <h4>Universal Problem Solving</h4>
+                  <p><strong>Mana-mana industry pun boleh:</strong> Finance, marketing, operations, HR - AI jadi consultant untuk semua field. Tukar kerja? AI follow anda sekali. Start business? AI guide step-by-step. <em>Context design workflow Module 4.</em></p>
                 </div>
               </div>
               
-              <div className={styles.expertCard}>
-                <div className={styles.expertImage}>
+              <div className={styles.benefitCard}>
+                <div className={styles.benefitImage}>
                   <Image 
                     src={cloudinaryPresets.expert('expert-placeholder')}
-                    alt="Coding Expert" 
+                    alt="Accelerated Learning" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
@@ -794,22 +803,22 @@ export default function Home({ productSettings }) {
                     sizes={getCloudinarySizes('expert')}
                   />
                 </div>
-                <div className={styles.expertContent}>
-                  <div className={styles.expertTitle}>AI EXPERT #5</div>
-                  <h4>Coding Expert</h4>
-                  <p>This very page, kelasgpt.com, <span className={styles.emphasis}>100% coded oleh AI</span>, lengkap dengan salespage, checkout, payment integration, customer management system, emel. Saya start from scratch, dalam masa 5 hari, ada fully functioning sales system, yang 100% percuma, tak payah bayar onpay/shopify/shopeegram untuk host dah..</p>
+                <div className={styles.benefitContent}>
+                  <div className={styles.benefitTitle}>BENEFIT #5</div>
+                  <h4>Accelerated Learning</h4>
+                  <p><strong>Belajar apa pun 10x lagi pantas:</strong> New skills, industry knowledge, technical concepts - AI breakdown complex topics jadi simple, bagi real examples, create learning roadmap untuk anda. <em>Learning workflow Module 4.</em></p>
                 </div>
               </div>
             </div>
             
             <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '3rem'}}>
-              <p><strong>Ini semua personalised untuk saya, dan anda akan belajar step by step untuk bina expert personalised untuk anda..</strong></p>
+              <p><strong>Semua benefit ni possible sebab anda akan faham THE FOUNDATION - cara AI sebenarnya berfikir.</strong></p>
               
-              <p>Semua ni possible bila faham AI.</p>
+              <p>Bila faham foundation, anda tak stuck dengan trial-and-error lagi.</p>
               
-              <p>Dan sangat mudah..</p>
+              <p>Anda boleh predict apa AI nak, dan craft perfect prompts setiap kali.</p>
               
-              <p><strong>Selagi mana anda faham cara AI berfikir..</strong></p>
+              <p><strong>Dan achieve consistent results untuk mana-mana professional goal anda ada.</strong></p>
               
               <div className={styles.learnGrid} style={{marginTop: '2rem'}}>
                 <div className={styles.learnItem}>
@@ -818,36 +827,316 @@ export default function Home({ productSettings }) {
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Regression Architecture dan impak terhadap cara anda prompt</h3>
+                  <h3>Memory Manipulation - Control apa AI ingat dan lupakan</h3>
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Memory Manipulation technique</h3>
+                  <h3>Prompt Engineering Mastery - Consistent professional results</h3>
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Embedding &amp; Vector Space - Teknik control context priority dengan prompt</h3>
+                  <h3>Context Design Workflow - Universal problem-solving framework</h3>
                 </div>
               </div>
               
-              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>Ini semua anda belajar dalam <span className={styles.emphasis}>Module 2: Deep Dive to AI Foundation.</span></p>
+              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>Foundation techniques ni anda belajar dalam <span className={styles.emphasis}>Module 2 & Module 4.</span></p>
               
-              <p>Rasa susah?</p>
+              <p>Sounds too good to be true?</p>
               
               <p>Bunyi terlalu teknikal?</p>
               
-              <p><strong>Jangan takut.</strong></p>
+              <p><strong>Jangan risau.</strong></p>
               
-              <p>Cara pembelajaran kelasGPT sememangnya fokus untuk orang yang tak ada background IT.</p>
+              <p>Seluruh kursus direka untuk orang yang <em>takda background IT langsung</em>.</p>
               
-              <p><em>Jom tengok preview kelas dibawah..</em></p>
+              <p><em>But wait... theres more...</em></p>
               
-              <p><em>Sesuai tak untuk anda?</em></p>
+              <p><em>Not only you get all these benefits...</em></p>
               
-              <p><em>And here&rsquo;s the kicker yang akan convince anda completely...</em></p>
+              <p><em>You also get the exact tools to achieve them...</em></p>
             </div>
           </div>
         </section>
+
+        {/* --- 3 Ready-Made AI Experts Bonus Section --- */}
+        {/* All Images link are simple placeholders, thats why all look the same */}
+        {/* --- 3 Ready-Made AI Experts Bonus Section --- */}
+        {/* All Images link are simple placeholders, thats why all look the same */}
+        <section className={`${styles.section} ${styles.aiExpertsBonusSection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>BONUS: 3 Ready-Made Custom AI Experts</h2>
+              <p><strong>Not only that... anda juga akan dapat 3 powerful ready-made custom AI experts!</strong></p>
+              
+              <p>Untuk achieve semua benefit di atas, anda perlukan tools yang tepat.</p>
+              
+              <p>Dan saya dah setup untuk anda - <em>tinggal copy & paste sahaja</em>.</p>
+              
+              <p><strong>Sekali setup, guna seumur hidup untuk mana-mana kerja atau business anda ada.</strong></p>
+            </div>
+
+            {/* Expert 1: Copywriter (Images Left + Description Right) */}
+            {/* ---------------------------------------- Swiper Image Start Here ---------------------------------------- */}
+            <div className={styles.expertShowcase}>
+              <div className={styles.expertImages}>
+                <div className={styles.expertHeader}>
+                  <div className={styles.expertNumber}>EXPERT #1</div>
+                  <h3>AI Copywriter Expert</h3>
+                </div>
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={10}
+                  navigation={true}
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 3500, disableOnInteraction: true }}
+                  loop={true}
+                  className={styles.expertImageSwiper}
+                >
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_yvapo6yvapo6yvap.png?updatedAt=1754234787671"
+                        alt="AI Copywriter Expert in Action" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_yvapo6yvapo6yvap.png?updatedAt=1754234787671"
+                        alt="Copywriter Expert Interface" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_yvapo6yvapo6yvap.png?updatedAt=1754234787671"
+                        alt="Professional Content Creation" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_yvapo6yvapo6yvap.png?updatedAt=1754234787671"
+                        alt="High-Converting Copy Results" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+              
+              <div className={styles.expertDescription}>
+                <div className={styles.expertBadge}>COPY & PASTE TEMPLATE</div>
+                <h4>Professional Copywriter & Content Strategist</h4>
+                <p><strong>Achieve Benefit #3: Consistent Quality Output</strong></p>
+                <p>Master copywriter untuk sales pages, email campaigns, social media content, proposals, dan presentations. Dia analyze target audience, craft compelling headlines, dan ensure setiap piece of content convert.</p>
+                
+                <div className={styles.expertFeatures}>
+                  <div className={styles.feature}>✓ Sales copy yang convert tinggi</div>
+                  <div className={styles.feature}>✓ Professional presentations & reports</div>
+                  <div className={styles.feature}>✓ Email marketing campaigns</div>
+                  <div className={styles.feature}>✓ Social media content strategy</div>
+                </div>
+                
+                <p className={styles.expertResult}><em>Boss tak pernah minta revise lagi sebab output anda selalu spot-on.</em></p>
+              </div>
+            </div>
+
+            {/* Expert 2: Personal Manager (Description Left + Images Right) */}
+            <div className={`${styles.expertShowcase} ${styles.expertShowcaseReverse}`}>
+              <div className={styles.expertDescription}>
+                <div className={styles.expertBadge}>READY-TO-USE TEMPLATE</div>
+                <h4>Project Management & Productivity Specialist</h4>
+                <p><strong>Achieve Benefit #2: Effortless Task Management</strong></p>
+                <p>Personal manager yang handle task prioritization, project planning, deadline management, dan resource allocation. Dia analyze workload anda, identify bottlenecks, dan bagi step-by-step action plan untuk maximize productivity.</p>
+                
+                <div className={styles.expertFeatures}>
+                  <div className={styles.feature}>✓ Smart task prioritization matrix</div>
+                  <div className={styles.feature}>✓ Project timeline & milestone tracking</div>
+                  <div className={styles.feature}>✓ Team delegation recommendations</div>
+                  <div className={styles.feature}>✓ Productivity optimization insights</div>
+                </div>
+                
+                <p className={styles.expertResult}><em>Tak pernah overwhelmed lagi - AI handle semua planning untuk anda.</em></p>
+              </div>
+              
+              <div className={styles.expertImages}>
+                <div className={styles.expertHeader}>
+                  <div className={styles.expertNumber}>EXPERT #2</div>
+                  <h3>AI Personal Manager Expert</h3>
+                </div>
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={10}
+                  navigation={true}
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 3500, disableOnInteraction: true }}
+                  loop={true}
+                  className={styles.expertImageSwiper}
+                >
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_qsekmwqsekmwqsek.png?updatedAt=1754234867223"
+                        alt="Personal Manager Expert Dashboard" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_qsekmwqsekmwqsek.png?updatedAt=1754234867223"
+                        alt="Task Management Interface" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_qsekmwqsekmwqsek.png?updatedAt=1754234867223"
+                        alt="Project Planning Tools" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+            </div>
+
+            {/* Expert 3: Content Creator (Images Left + Description Right) */}
+            <div className={styles.expertShowcase}>
+              <div className={styles.expertImages}>
+                <div className={styles.expertHeader}>
+                  <div className={styles.expertNumber}>EXPERT #3</div>
+                  <h3>AI Content Creator Expert</h3>
+                </div>
+                <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={10}
+                  navigation={true}
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 3500, disableOnInteraction: true }}
+                  loop={true}
+                  className={styles.expertImageSwiper}
+                >
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_ms02psms02psms02.png?updatedAt=1754234867588"
+                        alt="Content Creator Expert Interface" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_ms02psms02psms02.png?updatedAt=1754234867588"
+                        alt="Multi-Platform Content Creation" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_ms02psms02psms02.png?updatedAt=1754234867588"
+                        alt="Professional Content Results" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className={styles.expertImageContainer}>
+                      <Image 
+                        src="https://ik.imagekit.io/kelasgptcdnid/kelasgpt/Gemini_Generated_Image_ms02psms02psms02.png?updatedAt=1754234867588"
+                        alt="Content Strategy Planning" 
+                        fill
+                        style={{objectFit: 'cover'}} 
+                        loading="lazy"
+                      />
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+              
+              <div className={styles.expertDescription}>
+                <div className={styles.expertBadge}>PROFESSIONAL-GRADE TEMPLATE</div>
+                <h4>Universal Content Creator & Strategy Expert</h4>
+                <p><strong>Achieve Benefit #1 & #4: Professional Analysis + Universal Problem Solving</strong></p>
+                <p>Master content strategist untuk any industry - finance, marketing, operations, HR. Dia create engaging content, analyze performance metrics, optimize untuk different platforms, dan ensure brand consistency across all channels.</p>
+                
+                <div className={styles.expertFeatures}>
+                  <div className={styles.feature}>✓ Multi-platform content strategy</div>
+                  <div className={styles.feature}>✓ Brand voice consistency</div>
+                  <div className={styles.feature}>✓ Performance analytics & optimization</div>
+                  <div className={styles.feature}>✓ Cross-industry adaptability</div>
+                </div>
+                
+                <p className={styles.expertResult}><em>One expert untuk solve any professional content challenge.</em></p>
+              </div>
+            </div>
+            {/* ---------------------------------------- Swiper Image End Here ---------------------------------------- */}
+            
+
+            <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '4rem'}}>
+              <p><strong>Ketiga-tiga expert templates ni tinggal copy & paste je. Zero technical setup required.</strong></p>
+              
+              <p>Each expert direka specifically untuk achieve the exact benefits yang saya mention dalam section atas.</p>
+              
+              <p>And the best part?</p>
+              
+              <p><strong>Sekali anda setup, anda boleh customize untuk any professional situation, any industry, any career path.</strong></p>
+              
+              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>But to really maximize these experts, anda kena faham <span className={styles.emphasis}>cara AI berfikir (Module 2)</span> dan <span className={styles.emphasis}>advanced prompting techniques (Module 4)</span>.</p>
+              
+              <p>Sebab bila faham foundation...</p>
+              
+              <p><strong>Anda boleh:</strong></p>
+              
+              <ul style={{textAlign: 'left', maxWidth: '600px', margin: '1rem auto'}}>
+                <li>Customize each expert untuk specific needs industry anda</li>
+                <li>Troubleshoot bila AI bagi unexpected results</li>
+                <li>Create your own specialized experts untuk niche applications</li>
+                <li>Scale the benefits across any career change atau business pivot</li>
+                <li>Combine multiple experts untuk complex professional challenges</li>
+              </ul>
+              
+              <p><strong>And heres the kicker yang akan convince anda completely...</strong></p>
+            </div>
+          </div>
+        </section>
+        
+        
+        
 
 
         {/* --- Testimonials Section --- */}
@@ -1389,13 +1678,13 @@ export default function Home({ productSettings }) {
                     <div className={styles.professionalOfferCard}>
                         <div className={styles.offerHeader}>
                             <h2>Tunggu Sekejap !!</h2>
-                            <p className={styles.offerSubtext}>Ada Special Reward jika anda Decisive dan memilih untuk menjadi the real AI early adopters!</p>
+                            <p className={styles.offerSubtext}>Ada Tawaran Istimewa Untuk Student Terawal</p>
                         </div>
 
                         <div className={`${styles.earlyBirdAccess} earlyBirdAccess`}>
                             <div className={styles.accessInfo}>
-                                <h3>Early Bird Pricing - {Number(productSettings.discountunittotal) || 0} Students Terawal Sahaja</h3>
-                                <p><strong>Limited Early Bird access</strong> untuk introduce KelasGPT dengan special pricing. Terhad untuk {Number(productSettings.discountunittotal) || 0} students terawal sahaja - lepas habis, harga naik ke standard rate secara automatik.</p>
+                                <h3>Untuk {Number(productSettings.discountunittotal) || 0} Students<br />Pertama</h3>
+                                <p><strong>Early Bird Offer</strong> untuk introduce KelasGPT pada harga special.<br /><br />Tetapi hanya terhad untuk {Number(productSettings.discountunittotal) || 0} students terawal sahaja - Selepas slot habis, harga naik ke standard rate secara automatik.</p>
                                 
                                 {/* --- FOMO Progress Bar for Early Bird --- */}
                                 <div className={styles.earlyBirdStatus}>
@@ -1407,8 +1696,8 @@ export default function Home({ productSettings }) {
                                     </div>
                                     <div className={styles.statusText}>
                                         <span className={styles.urgentText}>AMARAN: </span>
-                                        <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)} students sudah grabbed</strong><br />Early Bird pricing ni</span>
                                         <span className={styles.urgentText}>Hanya <span style={{fontWeight: '900', fontSize: '1.1em'}}>{Number(productSettings.discountunitleft) || 0}</span><br />Early Bird slots yang tinggal</span>
+                                        <span><strong>{(Number(productSettings.discountunittotal) || 0) - (Number(productSettings.discountunitleft) || 0)}/{(Number(productSettings.discountunittotal) || 0)} students sudah pun grabbed</strong><br />Early Bird pricing ni</span>
                                     </div>
                                 </div>
                             </div>
@@ -1433,9 +1722,25 @@ export default function Home({ productSettings }) {
 
                         <div className={styles.primaryCTASection}>
                             <Link href={checkoutUrl} className={styles.primaryCTA}>
-                                Saya Nak Early Bird Pricing & Jimat RM{productSettings.baseproductprice - productSettings.productPrice}
+                                Saya Nak Join KelasGPT <br />(Early Bird Pricing)
                             </Link>
-                            <p className={styles.primaryCTASubtext}>Instant Access • <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</span> Early Bird slots left • 100% Tiada Upsell</p>
+                          {/* The main container for the secure payment text and icons */}
+                          <div className={styles.securePaymentText}>
+                              {/* Checkmark icon indicating security */}
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={styles.securePaymentIcon} viewBox="0 0 16 16">
+                                  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"></path>
+                              </svg>
+                              <span> Secure payment via  </span>
+                              {/* FPX payment logo  */}
+                                <Image 
+                                src="https://www.novalnet.com/wp-content/uploads/2021/06/fpx-logo.svg"
+                                alt="FPX Payment Logo"
+                                width={600} 
+                                height={12}
+                                className={styles.securePaymentLogo}
+                                />
+                          </div>
+                            <p className={styles.primaryCTASubtext}>Tinggal <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</span> Early Bird slot sahaja<br />• Instant Access<br />• 100% Tiada Upsell</p>
                         </div>
 
                         {/* --- Author's Note Section --- */}
@@ -1519,21 +1824,33 @@ export default function Home({ productSettings }) {
                         
                         <p>Lupakan 6 bulan, jika anda rasa anda mampu commit untuk serap apa yang KelasGPT ajar, cuma 1-2 minggu dengan frequent AI use..</p>
                           
-                        <p>Semua akan jadi natural untuk anda, an elite AI User dan enjoy the real unfair advantage.<br /><br />{productSettings.allowdiscount && <span>Final Reminder:<br />Cuma <strong style={{color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</strong> Early Bird slots left.</span>}</p>
+                        <p>Semua akan jadi natural untuk anda, an elite AI User dan enjoy the real unfair advantage.<br /><br /></p>
+                        
+                        <p>{productSettings.allowdiscount && <span>Final Reminder:<br />Cuma <strong style={{color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</strong> Early Bird slots yang tinggal!</span>}</p>
                     </div>
                     
-                    <Link 
-                        href={checkoutUrl} 
-                        className={styles.finalCTA}
-                    >
-                        <span className={styles.finalCTAMainText}>Ya, Saya Nak Start Sekarang</span>
-                        <span className={styles.finalCTASubText}>
-                            {productSettings.allowdiscount 
-                                ? `RM${productSettings.productPrice} Early Bird • Save RM${productSettings.baseproductprice - productSettings.productPrice}` 
-                                : `RM${productSettings.productPrice} • Lifetime Access`
-                            }
-                        </span>
-                    </Link>
+                    <div className={styles.primaryCTASection}>
+                            <Link href={checkoutUrl} className={styles.primaryCTA}>
+                                Saya Nak Join KelasGPT <br />(Early Bird Pricing)
+                            </Link>
+                          {/* The main container for the secure payment text and icons */}
+                          <div className={styles.securePaymentText}>
+                              {/* Checkmark icon indicating security */}
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={styles.securePaymentIcon} viewBox="0 0 16 16">
+                                  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"></path>
+                              </svg>
+                              <span> Secure payment via  </span>
+                              {/* FPX payment logo  */}
+                                <Image 
+                                src="https://www.novalnet.com/wp-content/uploads/2021/06/fpx-logo.svg"
+                                alt="FPX Payment Logo"
+                                width={600} 
+                                height={12}
+                                className={styles.securePaymentLogo}
+                                />
+                          </div>
+                            <p className={styles.primaryCTASubtext}>• Instant Access<br />• 100% Tiada Upsell</p>
+                    </div>
                 </div>
             </div>
         </section>
