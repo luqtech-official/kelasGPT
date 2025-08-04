@@ -569,7 +569,158 @@
 }
 
 /* ==========================================================================
-   8. KelasGPT Benefit Section
+   8. 5 Major customExperts Section
+   ========================================================================== */
+.customExpertsSection {
+  background: linear-gradient(135deg, var(--terra-bg), var(--warm-gray));
+  border-top: 1px solid var(--terra-light);
+  position: relative;
+}
+
+.customExpertsSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--terra-primary), transparent);
+  opacity: 0.4;
+}
+
+.customExpertsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.customExpertCard {
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--terra-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.customExpertCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.customExpertCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--terra-primary), var(--success-green));
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.customExpertCard:hover::before {
+  opacity: 1;
+}
+
+.customExpertImage {
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border: 4px solid var(--pure-white);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--terra-light);
+}
+
+.customExpertImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customExpertContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.customExpertTitle {
+  font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--terra-primary);
+  margin-bottom: 1rem;
+  background: var(--terra-bg);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--terra-light);
+}
+
+.customExpertCard h4 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.customExpertCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.learnGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.learnItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--secondary);
+  transition: all 0.2s ease;
+}
+
+.learnItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.learnItem svg {
+  width: 24px;
+  height: 24px;
+  color: var(--success);
+  flex-shrink: 0;
+}
+
+.learnItem h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ==========================================================================
+   9. AI Experts Bonus Section
    ========================================================================== */
 .benefitKelasSection {
   /* background: linear-gradient(135deg, var(--terra-dark), #2C1810); */
@@ -601,8 +752,7 @@
   min-width: 0;
 }
 
-.benefitKelasShowcase .benefitKelasImages {
-  border-radius: 16px;
+.benefitKelasImages {
   position: relative;
   align-self: start;
 }
@@ -631,6 +781,69 @@
   font-size: 1.8rem;
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.benefitKelasImageSwiper {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  background: var(--pure-white);
+}
+
+.benefitKelasImageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  max-height: 400px;
+}
+
+.benefitKelasImageContainer img {
+  transition: transform 0.4s ease;
+}
+
+.benefitKelasImageSwiper:hover img {
+  transform: scale(1.05);
+}
+
+.benefitKelasImageSwiper .swiper-button-next,
+.benefitKelasImageSwiper .swiper-button-prev {
+  color: var(--pure-white);
+  background: rgba(0, 0, 0, 0.5);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.benefitKelasImageSwiper .swiper-button-next:hover,
+.benefitKelasImageSwiper .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+}
+
+.benefitKelasImageSwiper .swiper-button-next::after,
+.benefitKelasImageSwiper .swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.benefitKelasImageSwiper .swiper-pagination {
+  bottom: 15px;
+}
+
+.benefitKelasImageSwiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+  transition: all 0.3s ease;
+}
+
+.benefitKelasImageSwiper .swiper-pagination-bullet-active {
+  background: var(--pure-white);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .benefitKelasDescription {
@@ -664,7 +877,6 @@
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 15px rgba(168, 82, 63, 0.3);
   text-transform: uppercase;
@@ -783,233 +995,6 @@
   color: rgba(255, 255, 255, 0.9);
   margin-right: 0.8rem;
   font-size: 0.8rem;
-}
-/* ==========================================================================
-   9. Free 5 customExperts Section
-   ========================================================================== */
-.customExpertsSection {
-  background: linear-gradient(135deg, var(--terra-bg), var(--warm-gray));
-  border-top: 1px solid var(--terra-light);
-  position: relative;
-}
-
-.customExpertsSection::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--terra-primary), transparent);
-  opacity: 0.4;
-}
-
-.customExpertsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
-  margin-top: 3rem;
-}
-
-.customExpertCard {
-  background: var(--pure-white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--terra-light);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-.customExpertCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.customExpertCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--terra-primary), var(--success-green));
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.customExpertCard:hover::before {
-  opacity: 1;
-}
-
-.customExpertImage {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  border: 4px solid var(--pure-white);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: var(--terra-light);
-}
-
-.customExpertImage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-
-.customExpertImageSwiper {
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  background: var(--pure-white);
-}
-
-.customExpertImageContainer {
-  position: relative;
-  width: 100%;
-
-  padding-top: 75%; 
-  aspect-ratio: 4/3; 
-
-  /* height: auto; */
-  max-height: 800px;
-}
-
-.customExpertImageContainer img {
-  transition: transform 0.4s ease;
-  width: 100%;
-  height: auto; 
-  object-fit: contain; 
-}
-
-/* .customExpertImageContainer::after {
-  content: '';
-  display: block;
-  padding-bottom: 60%;
-} */
-
-.customExpertImageSwiper:hover img {
-  transform: scale(1.05);
-}
-
-.customExpertImageSwiper .swiper-button-next,
-.customExpertImageSwiper .swiper-button-prev {
-  color: var(--pure-white);
-  background: rgba(0, 0, 0, 0.5);
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.customExpertImageSwiper .swiper-button-next:hover,
-.customExpertImageSwiper .swiper-button-prev:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: scale(1.1);
-}
-
-.customExpertImageSwiper .swiper-button-next::after,
-.customExpertImageSwiper .swiper-button-prev::after {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.customExpertImageSwiper .swiper-pagination {
-  bottom: 15px;
-}
-
-.customExpertImageSwiper .swiper-pagination-bullet {
-  background: rgba(255, 255, 255, 0.6);
-  opacity: 1;
-  width: 10px;
-  height: 10px;
-  transition: all 0.3s ease;
-}
-
-.customExpertImageSwiper .swiper-pagination-bullet-active {
-  background: var(--pure-white);
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.customExpertContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.customExpertTitle {
-  font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--terra-primary);
-  margin-bottom: 1rem;
-  background: var(--terra-bg);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  border: 1px solid var(--terra-light);
-}
-
-.customExpertCard h4 {
-  font-size: 1.3rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.customExpertCard p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 0.95rem;
-  margin: 0;
-}
-
-.learnGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-.learnItem {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: var(--white);
-  padding: 1.25rem 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--secondary);
-  transition: all 0.2s ease;
-}
-
-.learnItem:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.learnItem svg {
-  width: 24px;
-  height: 24px;
-  color: var(--success);
-  flex-shrink: 0;
-}
-
-.learnItem h3 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0;
 }
 
 /* ==========================================================================
@@ -2453,13 +2438,13 @@
   .benefitKelasDescription h4 {
     font-size: 1.2rem;
   }
-  .customExpertImageSwiper .swiper-button-next,
-  .customExpertImageSwiper .swiper-button-prev {
+  .benefitKelasImageSwiper .swiper-button-next,
+  .benefitKelasImageSwiper .swiper-button-prev {
     width: 35px;
     height: 35px;
   }
-  .customExpertImageSwiper .swiper-button-next::after,
-  .customExpertImageSwiper .swiper-button-prev::after {
+  .benefitKelasImageSwiper .swiper-button-next::after,
+  .benefitKelasImageSwiper .swiper-button-prev::after {
     font-size: 14px;
   }
   .benefitKelasSection .salesContent {
