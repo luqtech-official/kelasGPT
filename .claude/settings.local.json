@@ -18,7 +18,8 @@
       "WebFetch(domain:www.starterstory.com)",
       "WebFetch(domain:docs.imagekit.io)",
       "WebFetch(domain:imagekit.io)",
-      "WebFetch(domain:imagekit.io)"
+      "WebFetch(domain:imagekit.io)",
+      "WebFetch(domain:developers.facebook.com)"
     ],
     "deny": []
   }

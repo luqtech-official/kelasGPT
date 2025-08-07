@@ -4,15 +4,27 @@ import { useRouter } from "next/router";
 import styles from "@/styles/Checkout.module.css";
 import { getProductSettings, formatPrice } from "../lib/settings";
 import { UserIcon, MailIcon, PhoneIcon, SecureShieldIcon } from "../components/icons";
-import { trackPageView } from '../lib/simpleTracking';
+import { trackPageView, getOrCreateVisitorId } from '../lib/simpleTracking';
+import { trackInitiateCheckout } from "../lib/facebook-pixel";
 
 
 export default function Checkout({ productSettings }) {
+
   useEffect(() => {
-    // 🔥 ENHANCED: Multi-source visitor ID resolution
-    trackPageView('/checkout');  // NOW: Checks URL params first, then localStorage
-    // This handles both same-browser navigation AND cross-browser transitions!
-  }, []);
+    // Track page view with visitor ID
+    const visitorId = getOrCreateVisitorId();
+    trackPageView('/checkout', visitorId);
+
+    // Track InitiateCheckout event for Facebook Pixel - Simple and reliable
+    if (productSettings) {
+      trackInitiateCheckout({
+        productName: productSettings.productName,
+        productPrice: productSettings.productPrice,
+        productId: 'kelasgpt-course',
+        category: 'education'
+      });
+    }
+  }, [productSettings]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -127,6 +139,22 @@ export default function Checkout({ productSettings }) {
       setLoading(false);
       return;
     }
+
+    // Track InitiateCheckout with customer data (form submission = serious intent)
+    const customerData = {
+      email: data.email,
+      phone: data.phone,
+      // Split name into first and last name
+      firstName: data.name.split(' ')[0] || '',
+      lastName: data.name.split(' ').slice(1).join(' ') || ''
+    };
+
+    trackInitiateCheckout({
+      productName: productSettings.productName,
+      productPrice: productSettings.productPrice,
+      productId: 'kelasgpt-course',
+      category: 'education'
+    }, customerData);
 
     // Request timeout and abort controller
     const controller = new AbortController();

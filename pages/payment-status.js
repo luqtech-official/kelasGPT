@@ -4,6 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "@/styles/Checkout.module.css";
 import { SuccessIcon, FailedIcon, ProcessingIcon } from "../components/icons";
+import { trackPurchase } from "../lib/facebook-pixel";
+import { getProductSettings } from "../lib/settings";
 
 export default function PaymentStatusPage() {
   const router = useRouter();
@@ -12,6 +14,8 @@ export default function PaymentStatusPage() {
   const [message, setMessage] = useState('');
   const [orderNumber, setOrderNumber] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [productSettings, setProductSettings] = useState(null);
+  const [customerData, setCustomerData] = useState(null);
 
   useEffect(() => {
     if (router.isReady) {
@@ -41,6 +45,73 @@ export default function PaymentStatusPage() {
       return () => clearTimeout(timer);
     }
   }, [router.isReady, query]);
+
+  // Load product settings for tracking
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await getProductSettings();
+        setProductSettings(settings);
+      } catch (error) {
+        console.error('Error loading product settings for tracking:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  // Fetch customer data when we have an order number
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      if (orderNumber && status === 'success') {
+        try {
+          const response = await fetch(`/api/get-customer-by-order?order_number=${encodeURIComponent(orderNumber)}`);
+          if (response.ok) {
+            const result = await response.json();
+            if (result.success && result.customer) {
+              setCustomerData(result.customer);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching customer data:', error);
+        }
+      }
+    };
+
+    fetchCustomerData();
+  }, [orderNumber, status]);
+
+  // Track Purchase event when payment is successful - With customer data for Advanced Matching
+  useEffect(() => {
+    if (productSettings && status === 'success' && orderNumber) {
+      // Add a small delay to ensure the success state is fully set
+      const trackingTimer = setTimeout(() => {
+        // Prepare customer data for Advanced Matching if available
+        const fbCustomerData = {};
+        if (customerData) {
+          fbCustomerData.email = customerData.email;
+          fbCustomerData.phone = customerData.phone;
+          fbCustomerData.customerId = customerData.customerId;
+          
+          // Split full name into first and last name
+          const nameParts = customerData.fullName.split(' ');
+          fbCustomerData.firstName = nameParts[0] || '';
+          fbCustomerData.lastName = nameParts.slice(1).join(' ') || '';
+        }
+        
+        trackPurchase({
+          productName: productSettings.productName,
+          productPrice: productSettings.productPrice,
+          productId: 'kelasgpt-course',
+          category: 'education',
+          orderNumber: orderNumber,
+          value: productSettings.productPrice
+        }, fbCustomerData);
+      }, 500);
+
+      return () => clearTimeout(trackingTimer);
+    }
+  }, [productSettings, status, orderNumber, customerData]);
 
   const getStatusIcon = () => {
     switch (status) {

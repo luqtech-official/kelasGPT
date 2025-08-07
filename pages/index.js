@@ -7,6 +7,7 @@ import styles from "@/styles/Home.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
 import { imagePresets, getBlurDataURL, getImageSizes } from "../lib/imagekit";
+import { trackViewContent } from "../lib/facebook-pixel";
 // import { ResponsiveImage } from '../components/ResponsiveImage';
 
 // Swiper components and modules
@@ -132,7 +133,17 @@ export default function Home({ productSettings }) {
     if (id) {
       setCheckoutUrl(`/checkout?vid=${id}`);
     }
-  }, []);
+    
+    // Track ViewContent event for Facebook Pixel - Simple and reliable
+    if (productSettings) {
+      trackViewContent({
+        productName: productSettings.productName,
+        productPrice: productSettings.productPrice,
+        productId: 'kelasgpt-course',
+        category: 'education'
+      });
+    }
+  }, [productSettings]);
 
 
   return (
@@ -1936,6 +1947,57 @@ export default function Home({ productSettings }) {
         </section>
 
       </main>
+
+      {/* --- Contact Support Section --- */}
+      <section className={styles.contactSection}>
+        <div className="container">
+          <div className={styles.contactContent}>
+            <h3 className={styles.contactTitle}>Sokongan & Bantuan</h3>
+            
+            <div className={styles.contactMethods}>
+              {/* Primary Support - WhatsApp */}
+              <div className={`${styles.contactMethod} ${styles.primarySupport}`}>
+                <span className={styles.contactLabel}>WhatsApp:</span>
+                <a 
+                  href={`https://wa.me/60${productSettings.productSupportPhone.replace(/\D/g, '').replace(/^0/, '')}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={styles.whatsappButton}
+                >
+                  Chat on WhatsApp
+                </a>
+                <span className={styles.contactContext}>Fastest response</span>
+              </div>
+              
+              {/* Secondary Support - AI Chatbot */}
+              <div className={`${styles.contactMethod} ${styles.secondarySupport}`}>
+                <span className={styles.contactLabel}>Expert AI:</span>
+                <a 
+                  href={productSettings.productSupportChatbot}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={styles.chatbotButton}
+                >
+                  Ask Expert AI
+                </a>
+                <span className={styles.contactContext}>24/7 available</span>
+              </div>
+              
+              {/* Tertiary Support - Email */}
+              <div className={`${styles.contactMethod} ${styles.tertiarySupport}`}>
+                <span className={styles.contactLabel}>Email:</span>
+                <a 
+                  href={`mailto:${productSettings.productSupportEmail}`}
+                  className={styles.emailButton}
+                >
+                  Send Email
+                </a>
+                <span className={styles.contactContext}>Detailed inquiries</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* --- Legal Footer --- */}
       <footer className={styles.legalFooter}>

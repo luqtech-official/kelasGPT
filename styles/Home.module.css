@@ -2151,6 +2151,227 @@
   margin: 0 auto;
 }
 
+/* Professional Contact Support Section */
+.contactSection {
+  background: #fafbfc;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+
+.contactContent {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.contactTitle {
+  font-family: var(--font-inter);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 2rem 0;
+  letter-spacing: -0.01em;
+}
+
+.contactMethods {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.contactMethod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  padding: 1.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #f1f3f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Professional Support Cards with Hover Effects */
+.contactMethod:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: #e5e7eb;
+}
+
+.primarySupport {
+  order: 1;
+}
+
+.primarySupport::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 8px 8px 0 0;
+}
+
+.secondarySupport {
+  order: 2;
+}
+
+.secondarySupport::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+  border-radius: 8px 8px 0 0;
+}
+
+.tertiarySupport {
+  order: 3;
+}
+
+.tertiarySupport::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6b7280, #64748b);
+  border-radius: 8px 8px 0 0;
+}
+
+/* Professional Typography */
+.contactLabel {
+  font-family: var(--font-inter);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.contactContext {
+  font-family: var(--font-inter);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+}
+
+.contactValue {
+  font-family: var(--font-inter);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.whatsappButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #25D366;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: var(--font-inter);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(37, 211, 102, 0.15);
+}
+
+.whatsappButton:hover {
+  background: #128C7E;
+  transform: translateY(-0.5px);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
+  color: white;
+  text-decoration: none;
+}
+
+/* Professional Support Buttons */
+.supportButton,
+.whatsappButton,
+.chatbotButton,
+.emailButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+  min-height: 44px;
+  width: 100%;
+  max-width: 140px;
+  border: none;
+  letter-spacing: -0.01em;
+}
+
+/* Professional WhatsApp Button */
+.whatsappButton {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  color: #059669;
+  box-shadow: inset 0 0 0 1px #a7f3d0;
+}
+
+.whatsappButton:hover {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #047857;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px #6ee7b7, 0 4px 8px rgba(5, 150, 105, 0.15);
+}
+
+/* Professional AI Chatbot Button */
+.chatbotButton {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  color: #7c3aed;
+  box-shadow: inset 0 0 0 1px #ddd6fe;
+}
+
+.chatbotButton:hover {
+  background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+  color: #6d28d9;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px #c4b5fd, 0 4px 8px rgba(124, 58, 237, 0.15);
+}
+
+/* Professional Email Button */
+.emailButton {
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  color: #64748b;
+  box-shadow: inset 0 0 0 1px #e2e8f0;
+}
+
+.emailButton:hover {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  color: #475569;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px #cbd5e1, 0 4px 8px rgba(100, 116, 139, 0.15);
+}
+
 .footerMeta {
   text-align: center;
   padding-top: 1.5rem;
@@ -2409,6 +2630,54 @@
     font-size: 1.2rem;
   }
 
+  /* Professional Contact Section - Mobile */
+  .contactSection {
+    padding: 1.5rem 0;
+  }
+  .contactContent {
+    max-width: 95%;
+    padding: 0 0.75rem;
+  }
+  .contactTitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .contactMethods {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .contactMethod {
+    padding: 1rem 0.5rem;
+  }
+  
+  /* Mobile Professional Buttons - Maintain Three Columns */
+  .whatsappButton,
+  .chatbotButton,
+  .emailButton {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.75rem;
+    max-width: none;
+    width: 100%;
+    min-height: 40px;
+  }
+  
+  .contactLabel {
+    font-size: 0.65rem;
+    margin-bottom: 0.5rem;
+  }
+  .contactContext {
+    font-size: 0.6rem;
+    margin-top: 0.5rem;
+    line-height: 1.2;
+  }
+  
+  /* Mobile Card Accents */
+  .primarySupport::before,
+  .secondarySupport::before,
+  .tertiarySupport::before {
+    height: 2px;
+  }
+
   /* Footer */
   .legalFooter {
     padding: 2rem 0 1.5rem 0;
@@ -2517,6 +2786,33 @@
 
 /* --- Small Screens (Mobile) --- */
 @media (max-width: 600px) {
+  /* Professional Contact Section - Extra Small Mobile */
+  .contactSection {
+    padding: 1.25rem 0;
+  }
+  .contactContent {
+    padding: 0 0.5rem;
+  }
+  .contactMethods {
+    gap: 8px;
+  }
+  .contactMethod {
+    padding: 0.75rem 0.25rem;
+  }
+  .whatsappButton,
+  .chatbotButton,
+  .emailButton {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.7rem;
+    min-height: 36px;
+  }
+  .contactLabel {
+    font-size: 0.6rem;
+  }
+  .contactContext {
+    font-size: 0.55rem;
+  }
+
   /* Hero */
   .hero {
     padding: 3rem 0 1.5rem;
