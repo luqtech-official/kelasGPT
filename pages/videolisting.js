@@ -157,6 +157,51 @@ export default function VideoListing() {
     }
   ];
 
+  const aiExperts = [
+    {
+      name: "Irfan",
+      title: "The VEO 3 Creative Director",
+      description: "Expert in video creation and creative direction using advanced AI tools",
+      accessExpert: "https://chatgpt.com/g/g-68966a15f7b881918f42c38dec8a6b59-irfan-the-veo-3-creative-director",
+      sourceFile: "https://drive.google.com/drive/folders/1wOuAalb80YbyPD9P8S2gxBFFG6GP6WGO?usp=sharing"
+    },
+    {
+      name: "Zaki",
+      title: "The Mini vibe Coder Consultant",
+      description: "Specialized in coding solutions and development consultancy with AI assistance",
+      accessExpert: "https://chatgpt.com/g/g-68969d33bab48191b4672b5bf127583b-zaki-the-mini-vibe-coder-consultant",
+      sourceFile: "https://drive.google.com/drive/folders/1ePIiV2J6jX53qwWztpqrY4QweJST47Bh?usp=sharing"
+    },
+    {
+      name: "Sarah",
+      title: "The Intuitive Marketing Angle Expert",
+      description: "Intuitive marketing strategies and angle discovery for effective campaigns",
+      accessExpert: "https://chatgpt.com/g/g-6896b621f6f4819193e00ef02189ef42-sarah-the-intuitive-marketing-angle-expert",
+      sourceFile: "https://drive.google.com/drive/folders/1wt4qaX20wlL4EDfKu2xSLoAL1Qg2td14?usp=sharing"
+    },
+    {
+      name: "Balqis",
+      title: "The Friendly Productivity Coach",
+      description: "Personal productivity coaching and workflow optimization strategies",
+      accessExpert: "https://chatgpt.com/g/g-68965d41ae6c81918f2a7102ca495a79-balqis-the-friendly-productivity-coach",
+      sourceFile: "https://drive.google.com/drive/folders/19bzmLXPqpVfV5viC-WvQdgDgAEzZf2nZ?usp=sharing"
+    },
+    {
+      name: "Chaeha",
+      title: "The Engaging Hook Specialist",
+      description: "Creating compelling hooks and attention-grabbing content strategies",
+      accessExpert: "https://chatgpt.com/g/g-6896b91ac184819192b48db211378ec5-chae-ha-the-engaging-hook-specialist",
+      sourceFile: "https://drive.google.com/drive/folders/16-e27QF23MG5rO4V0X081Qx1WNvWKrKX?usp=sharing"
+    },
+    {
+      name: "Ikram",
+      title: "The Sophisticated Data Storyteller",
+      description: "Transform data into compelling narratives and actionable insights",
+      accessExpert: "https://chatgpt.com/g/g-6896bb7cab8c81918c28a7d3358619b7-ikram-the-sophisticated-data-storyteller",
+      sourceFile: "https://drive.google.com/drive/folders/1wLOL2VMEtx5r3SXnJQp7JwtFJZFcctAk?usp=sharing"
+    }
+  ];
+
   return (
     <>
       <Head>

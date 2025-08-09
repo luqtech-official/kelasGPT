@@ -1,8 +1,8 @@
 /* Modern minimalist design for video listing page */
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #FBF8F5 0%, #E8C5B8 100%);
+  font-family: var(--font-body);
 }
 
 .header {
@@ -31,7 +31,7 @@
 .divider {
   width: 80px;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #CD8B76, #A8523F);
   margin: 1.5rem auto 0;
   border-radius: 2px;
 }
@@ -166,7 +166,7 @@
 
 .duration {
   font-weight: 500;
-  color: #667eea;
+  color: #CD8B76;
 }
 
 .separator {
@@ -187,7 +187,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--cta-btn-bg-1) 0%, var(--cta-btn-bg-2) 100%);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -196,13 +196,13 @@
   font-weight: 500;
   font-size: 0.875rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: var(--cta-btn-shadow-1);
 }
 
 .watchButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%);
+  box-shadow: var(--cta-btn-shadow-2);
+  background: linear-gradient(135deg, var(--cta-btn-bg-2) 0%, var(--cta-btn-bg-1) 100%);
 }
 
 .playIcon {
@@ -245,7 +245,7 @@
 .contactInfo p {
   margin: 0;
   font-size: 0.875rem;
-  color: #667eea;
+  color: #CD8B76;
   font-weight: 500;
 }
 
@@ -364,7 +364,7 @@
 
 .modalDuration {
   font-size: 0.875rem;
-  color: #667eea;
+  color: #CD8B76;
   font-weight: 500;
 }
 
