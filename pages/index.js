@@ -917,7 +917,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.customExpertContent}>
                   <div className={styles.customExpertTitle}>EXPERT #1 - IRFAN</div>
                   <h4>Master Video Creation dengan VEO 3</h4>
-                  <p><strong>Bayangkan kalau anda boleh:</strong> Cipta video professional-grade dalam minit je guna Google's VEO 3. Tak perlu equipment mahal, tak perlu skill video editing - cuma prompt yang tepat. Irfan akan ajar exact prompts untuk viral content, product videos, dan marketing materials yang convert tinggi. <em>Revolutionary video prompting techniques.</em></p>
+                  <p><strong>Bayangkan kalau anda boleh:</strong> Cipta video professional-grade dalam minit je guna Google&quot;s VEO 3. Tak perlu equipment mahal, tak perlu skill video editing - cuma prompt yang tepat. Irfan akan ajar exact prompts untuk viral content, product videos, dan marketing materials yang convert tinggi. <em>Revolutionary video prompting techniques.</em></p>
                 </div>
               </div>
               
@@ -1135,9 +1135,9 @@ export default function Home({ productSettings }) {
             <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '3rem'}}>
               <p><strong>Tapi ini semua impossible kalau anda still stuck dengan generic AI prompts...</strong></p>
               
-              <p>Sementara anda tengah Google "how to use ChatGPT for work", your competitors dah master private AI workforce yang most people tak tahu wujud.</p>
+              <p>Sementara anda tengah Google &ldquo;how to use ChatGPT for work&rdquo;, your competitors dah master private AI workforce yang most people tak tahu wujud.</p>
               
-              <p><strong>Here's what separates winners from wannabes:</strong></p>
+              <p><strong>Here&quot;s what separates winners from wannabes:</strong></p>
               
               <p>Winners understand AI psychology. They know exactly how to architect prompts yang produce consistent professional results. Every single time.</p>
               
@@ -1174,19 +1174,19 @@ export default function Home({ productSettings }) {
               
               <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>These are the EXACT foundations yang separate professionals making RM80K dari those making RM200K+. <span className={styles.emphasis}>Anda master semua ni dalam Module 2 & Module 4.</span></p>
               
-              <p><strong>Tapi here's the thing...</strong></p>
+              <p><strong>Tapi here&quot;s the thing...</strong></p>
               
               <p>Even kalau anda faham psychology behind AI, you still need the TOOLS.</p>
               
               <p>You need the exact prompts. The templates. The step-by-step systems.</p>
               
-              <p><strong>That's where these 6 experts come in.</strong></p>
+              <p><strong>That&quot;s where these 6 experts come in.</strong></p>
               
-              <p>They're not just concepts. They're ready-to-use, copy-paste professional tools yang you can deploy TODAY.</p>
+              <p>They&quot;re not just concepts. They&quot;re ready-to-use, copy-paste professional tools yang you can deploy TODAY.</p>
               
               <p style={{fontSize: '1.3rem', fontWeight: '700', margin: '2rem 0', color: 'var(--terra-primary)'}}>While your competitors are still figuring out basic prompts...</p>
               
-              <p><strong>You'll have a complete AI workforce that makes you look like a genius.</strong></p>
+              <p><strong>You&quot;ll have a complete AI workforce that makes you look like a genius.</strong></p>
               
               <p><em>And the best part? Setup takes 30 minutes. Results last forever.</em></p>
             </div>
