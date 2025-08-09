@@ -807,8 +807,8 @@
 
 .customExpertsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
   margin-top: 3rem;
 }
 
@@ -869,19 +869,27 @@
 .customExpertImageSwiper {
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   background: var(--pure-white);
+  border: 2px solid var(--terra-light);
+  transition: all 0.3s ease;
+}
+
+.customExpertImageSwiper:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  border-color: var(--terra-primary);
+  transform: translateY(-2px);
 }
 
 .customExpertImageContainer {
   position: relative;
   width: 100%;
 
-  padding-top: 75%; 
-  aspect-ratio: 4/3; 
+  padding-top: 85%; 
+  aspect-ratio: 4/3.2; 
 
   /* height: auto; */
-  max-height: 800px;
+  max-height: 450px;
 }
 
 .customExpertImageContainer img {
@@ -898,7 +906,7 @@
 } */
 
 .customExpertImageSwiper:hover img {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .customExpertImageSwiper .swiper-button-next,
@@ -2463,6 +2471,17 @@
   .bonusValueAmount {
     font-size: 1.2rem;
   }
+
+  /* Expert Cards Responsive */
+  .customExpertsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .customExpertImageContainer {
+    max-height: 350px;
+    padding-top: 80%;
+  }
   .moduleContent {
     padding: 0 1.2rem 1.2rem 1.2rem;
   }
@@ -2925,6 +2944,18 @@
   .benefitKelasDescription h3 {
     font-size: 1.3rem;
   }
+  
+  /* Mobile Expert Cards */
+  .customExpertsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .customExpertImageContainer {
+    max-height: 300px;
+    padding-top: 75%;
+  }
+  
   .feature {
     font-size: 0.95rem;
   }

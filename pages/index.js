@@ -861,14 +861,20 @@ export default function Home({ productSettings }) {
         <section className={`${styles.section} ${styles.customExpertsSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>3 Custom Expert Yang Anda Akan Dapat</h2>
-              <p><strong>Bayangkan kalau anda boleh...</strong></p>
+              <h2>6 Custom Expert Yang Akan Buat Competitors Anda Tertanya-tanya</h2>
+              <p><strong>Sementara colleagues anda masih struggle dengan basic ChatGPT...</strong></p>
               
-              <p>Transform cara anda kerja dengan AI yang faham anda betul-betul.</p>
+              <p>Anda dah ada personal team of specialists yang kerja 24/7 untuk multiply your professional output.</p>
               
-              <p>Setup sekali, guna seumur hidup untuk <em>mana-mana career path atau business</em> anda pilih.</p>
+              <p><strong>Bayangkan tengah deadline pressure, tapi instead of panic...</strong></p>
               
-              <p><strong>Ini bukan tentang setup AI expert untuk saya - ini tentang benefit yang ANDA akan dapat.</strong></p>
+              <p>Anda chill sebab tahu dalam 15 minit, anda boleh produce quality work yang biasanya ambil masa 3-4 hari.</p>
+              
+              <p>Video campaigns yang viral. Web applications yang sophisticated. Marketing angles yang competitors tak terfikir. Data insights yang impress management.</p>
+              
+              <p><strong>Yang best part? Setup sekali je. Guna forever.</strong></p>
+              
+              <p>Mana-mana industry anda pindah, mana-mana business anda start - these 6 experts ikut anda. <em>Macam ada unfair advantage yang orang lain tak tahu.</em></p>
             </div>
             
             <div className={styles.customExpertsGrid}>
@@ -887,10 +893,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('parkchaeha')}
-                          alt="AI Copywriter Expert in Action" 
+                          src={imagePresets.benefit('irfan-photo')}
+                          alt="Irfan - VEO 3 Creative Director Expert" 
                           fill
-                          // style={{objectFit: 'contain'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -898,32 +904,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('EA-copywriter-sample')}
-                          alt="Copywriter Expert Interface" 
+                          src={imagePresets.benefit('irfan-profile')}
+                          alt="Professional Video Creation Expert" 
                           fill
-                          // style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('parkchaeha')}
-                          alt="Professional Content Creation" 
-                          fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('parkchaeha')}
-                          alt="High-Converting Copy Results" 
-                          fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -931,9 +915,9 @@ export default function Home({ productSettings }) {
                   </Swiper>             
                 </div>
                 <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>BENEFIT #1</div>
-                  <h4>Instant Professional Analysis</h4>
-                  <p><strong>Bayangkan:</strong> Mana-mana topic kerja anda, dalam 3 minit je dapat expert-level insights. Market research? Business strategy? Problem solving? AI analyze semua dengan detail macam consultant RM500/jam. <em>Module 4 ajar technique ni.</em></p>
+                  <div className={styles.customExpertTitle}>EXPERT #1 - IRFAN</div>
+                  <h4>Master Video Creation dengan VEO 3</h4>
+                  <p><strong>Bayangkan kalau anda boleh:</strong> Cipta video professional-grade dalam minit je guna Google's VEO 3. Tak perlu equipment mahal, tak perlu skill video editing - cuma prompt yang tepat. Irfan akan ajar exact prompts untuk viral content, product videos, dan marketing materials yang convert tinggi. <em>Revolutionary video prompting techniques.</em></p>
                 </div>
               </div>
               
@@ -951,10 +935,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('parksaejin2')}
-                          alt="Personal Manager Expert Dashboard" 
+                          src={imagePresets.benefit('zaki-photo')}
+                          alt="Zaki - Mini vibe Coder Consultant Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -962,21 +946,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('parksaejin2')}
-                          alt="Task Management Interface" 
+                          src={imagePresets.benefit('zaki-profile')}
+                          alt="Web Application Development Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('parksaejin2')}
-                          alt="Project Planning Tools" 
-                          fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -984,9 +957,9 @@ export default function Home({ productSettings }) {
                   </Swiper>
                 </div>
                 <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>BENEFIT #2</div>
-                  <h4>Effortless Task Management</h4>
-                  <p><strong>Tak pernah overwhelmed lagi:</strong> AI prioritize semua task anda, bagi clear action plan, beritahu apa nak focus hari ni. Kerja banyak? AI breakdown jadi manageable steps. <em>Framework dalam Module 2 & 4.</em></p>
+                  <div className={styles.customExpertTitle}>EXPERT #2 - ZAKI</div>
+                  <h4>Build Web Apps Tanpa Coding Skills</h4>
+                  <p><strong>Tak pernah takut technology lagi:</strong> Zaki ajar non-technical people macam mana nak build professional web applications guna LLM from scratch. Landing pages, e-commerce sites, booking systems - semua boleh buat sendiri tanpa hire expensive developers. Save RM20,000++. <em>No-code development mastery dengan AI assistance.</em></p>
                 </div>
               </div>
               
@@ -1004,10 +977,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('queeny')}
-                          alt="Content Creator Expert Interface" 
+                          src={imagePresets.benefit('sarah-photo')}
+                          alt="Sarah - Intuitive Marketing Angle Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1015,32 +988,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('queeny')}
-                          alt="Multi-Platform Content Creation" 
+                          src={imagePresets.benefit('sarah-profile')}
+                          alt="Marketing Angle Discovery Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('queeny')}
-                          alt="Professional Content Results" 
-                          fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('queeny')}
-                          alt="Content Strategy Planning" 
-                          fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1048,9 +999,9 @@ export default function Home({ productSettings }) {
                   </Swiper>
                 </div>
                 <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>BENEFIT #3</div>
-                  <h4>Consistent Quality Output</h4>
-                  <p><strong>Setiap hasil professional-grade:</strong> Reports, presentations, proposals - semua consistent quality tinggi. Boss tak pernah minta revise lagi sebab output anda selalu spot-on. <em>Prompt engineering mastery Module 4.</em></p>
+                  <div className={styles.customExpertTitle}>EXPERT #3 - SARAH</div>
+                  <h4>Discover Winning Marketing Angles</h4>
+                  <p><strong>Tak pernah confuse tentang messaging lagi:</strong> Sarah uncover hidden marketing angles yang your competitors tak nampak. Dia analyze market psychology, identify emotional triggers, dan craft messaging yang resonate dengan your target audience. Campaign anda convert 300% better. <em>Intuitive angle discovery frameworks.</em></p>
                 </div>
               </div>
               
@@ -1068,10 +1019,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('hinata')}
-                          alt="Content Creator Expert Interface" 
+                          src={imagePresets.benefit('balqis-photo')}
+                          alt="Balqis - Friendly Productivity Coach Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1079,32 +1030,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('hinata')}
-                          alt="Multi-Platform Content Creation" 
+                          src={imagePresets.benefit('balqis-profile')}
+                          alt="Productivity Coach Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('hinata')}
-                          alt="Professional Content Results" 
-                          fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('hinata')}
-                          alt="Content Strategy Planning" 
-                          fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1112,9 +1041,9 @@ export default function Home({ productSettings }) {
                   </Swiper>
                 </div>
                 <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>BENEFIT #4</div>
-                  <h4>Universal Problem Solving</h4>
-                  <p><strong>Mana-mana industry pun boleh:</strong> Finance, marketing, operations, HR - AI jadi consultant untuk semua field. Tukar kerja? AI follow anda sekali. Start business? AI guide step-by-step. <em>Context design workflow Module 4.</em></p>
+                  <div className={styles.customExpertTitle}>EXPERT #4 - BALQIS</div>
+                  <h4>Conquer Procrastination Forever</h4>
+                  <p><strong>Tak pernah procrastinate lagi:</strong> Balqis bukan just bagi motivational quotes. Dia identify ROOT CAUSE kenapa anda delay tasks, design personalized productivity systems, dan bagi step-by-step action plans yang actually work. Morning routine, focus techniques, energy management - semua custom untuk your lifestyle. <em>Psychology-based productivity mastery.</em></p>
                 </div>
               </div>
               
@@ -1132,10 +1061,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('parkminah')}
-                          alt="Content Creator Expert Interface" 
+                          src={imagePresets.benefit('chaeha-photo')}
+                          alt="Chaeha - Engaging Hook Specialist Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1143,32 +1072,10 @@ export default function Home({ productSettings }) {
                     <SwiperSlide>
                       <div className={styles.customExpertImageContainer}>
                         <Image 
-                          src={imagePresets.benefit('parkminah')}
-                          alt="Multi-Platform Content Creation" 
+                          src={imagePresets.benefit('chaeha-profile')}
+                          alt="Hook Specialist Expert" 
                           fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('parkminah')}
-                          alt="Professional Content Results" 
-                          fill
-                          style={{objectFit: 'cover'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('parkminah')}
-                          alt="Content Strategy Planning" 
-                          fill
-                          style={{objectFit: 'cover'}} 
+                          style={{objectFit: 'contain'}} 
                           loading="lazy"
                         />
                       </div>
@@ -1176,34 +1083,88 @@ export default function Home({ productSettings }) {
                   </Swiper>
                 </div>
                 <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>BENEFIT #5</div>
-                  <h4>Accelerated Learning</h4>
-                  <p><strong>Belajar apa pun 10x lagi pantas:</strong> New skills, industry knowledge, technical concepts - AI breakdown complex topics jadi simple, bagi real examples, create learning roadmap untuk anda. <em>Learning workflow Module 4.</em></p>
+                  <div className={styles.customExpertTitle}>EXPERT #5 - CHAEHA</div>
+                  <h4>Craft Scroll-Stopping Hooks</h4>
+                  <p><strong>Audience anda tak boleh scroll past content anda:</strong> Chaeha master art of attention-grabbing. Dia study psychology behind viral content, analyze trending patterns, dan teach exact formulas untuk hooks yang make people STOP and ENGAGE. Facebook ads, LinkedIn posts, email subject lines - semua convert 10x better. <em>Proven hook psychology frameworks.</em></p>
+                </div>
+              </div>
+
+              <div className={styles.customExpertCard}>
+                <div className={styles.customExpertImage}>
+                  <Swiper
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={10}
+                  navigation={true}
+                  pagination={{ clickable: true }}
+                  autoplay={{ delay: 3500, disableOnInteraction: true }}
+                  loop={true}
+                  className={styles.customExpertImageSwiper}
+                  >
+                    <SwiperSlide>
+                      <div className={styles.customExpertImageContainer}>
+                        <Image 
+                          src={imagePresets.benefit('ikram-photo')}
+                          alt="Ikram - Sophisticated Data Storyteller Expert" 
+                          fill
+                          style={{objectFit: 'contain'}} 
+                          loading="lazy"
+                        />
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className={styles.customExpertImageContainer}>
+                        <Image 
+                          src={imagePresets.benefit('ikram-profile')}
+                          alt="Data Storyteller Expert" 
+                          fill
+                          style={{objectFit: 'contain'}} 
+                          loading="lazy"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  </Swiper>
+                </div>
+                <div className={styles.customExpertContent}>
+                  <div className={styles.customExpertTitle}>EXPERT #6 - IKRAM</div>
+                  <h4>Transform Data Into Compelling Stories</h4>
+                  <p><strong>Data tak boring lagi:</strong> Ikram ambil raw numbers, spreadsheets, atau complex analytics dan transform jadi insightful stories yang management faham. Boardroom presentations, quarterly reports, business proposals - semua data-driven tapi engaging. Boss anda akan impressed dengan your analytical depth. <em>Executive-level data storytelling mastery.</em></p>
                 </div>
               </div>
             </div>
             
             <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '3rem'}}>
-              <p><strong>Semua benefit ni possible sebab anda akan faham THE FOUNDATION - cara AI sebenarnya berfikir.</strong></p>
+              <p><strong>Tapi ini semua impossible kalau anda still stuck dengan generic AI prompts...</strong></p>
               
-              <p>Bila faham foundation, anda tak stuck dengan trial-and-error lagi.</p>
+              <p>Sementara anda tengah Google "how to use ChatGPT for work", your competitors dah master private AI workforce yang most people tak tahu wujud.</p>
               
-              <p>Anda boleh predict apa AI nak, dan craft perfect prompts setiap kali.</p>
+              <p><strong>Here's what separates winners from wannabes:</strong></p>
               
-              <p><strong>Dan achieve consistent results untuk mana-mana professional goal anda ada.</strong></p>
+              <p>Winners understand AI psychology. They know exactly how to architect prompts yang produce consistent professional results. Every single time.</p>
+              
+              <p>Wannabes copy-paste random prompts from Facebook groups dan wonder kenapa results tak consistent.</p>
+              
+              <p style={{fontSize: '1.2rem', fontWeight: '700', margin: '2rem 0', color: 'var(--terra-primary)'}}>The gap is widening every month.</p>
+              
+              <p><strong>6 bulan dari sekarang, ada dua jenis professionals:</strong></p>
+              
+              <p>Those yang mastered AI workforce systems (getting promoted, launching successful businesses, working less stress) dan those yang still struggling dengan basic AI tools (falling behind, working weekends, feeling overwhelmed).</p>
+              
+              <p><strong>Which one anda mahu jadi?</strong></p>
+              
+              <p><strong>The difference? They master the 3 psychological foundations yang 99% people ignore:</strong></p>
               
               <div className={styles.learnGrid} style={{marginTop: '2rem'}}>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Context Window management - Supaya AI tak jadi bengap tiba</h3>
+                  <h3>AI Psychology Mastery - Predict exactly how AI akan respond sebelum you even send the prompt</h3>
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Memory Manipulation - Control apa AI ingat dan lupakan</h3>
+                  <h3>Context Control - Make AI remember your preferences, style, dan requirements automatically</h3>
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
-                  <h3>Prompt Engineering Mastery - Consistent professional results</h3>
+                  <h3>Professional Prompt Architecture - Build prompts yang deliver executive-level results every time</h3>
                 </div>
                 <div className={styles.learnItem}>
                   <CheckCircleIcon />
@@ -1211,21 +1172,23 @@ export default function Home({ productSettings }) {
                 </div>
               </div>
               
-              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>Foundation techniques ni anda belajar dalam <span className={styles.emphasis}>Module 2 & Module 4.</span></p>
+              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>These are the EXACT foundations yang separate professionals making RM80K dari those making RM200K+. <span className={styles.emphasis}>Anda master semua ni dalam Module 2 & Module 4.</span></p>
               
-              <p>Sounds too good to be true?</p>
+              <p><strong>Tapi here's the thing...</strong></p>
               
-              <p>Bunyi terlalu teknikal?</p>
+              <p>Even kalau anda faham psychology behind AI, you still need the TOOLS.</p>
               
-              <p><strong>Jangan risau.</strong></p>
+              <p>You need the exact prompts. The templates. The step-by-step systems.</p>
               
-              <p>Seluruh kursus direka untuk orang yang <em>takda background IT langsung</em>.</p>
+              <p><strong>That's where these 6 experts come in.</strong></p>
               
-              <p><em>But wait... theres more...</em></p>
+              <p>They're not just concepts. They're ready-to-use, copy-paste professional tools yang you can deploy TODAY.</p>
               
-              <p><em>Not only you get all these benefits...</em></p>
+              <p style={{fontSize: '1.3rem', fontWeight: '700', margin: '2rem 0', color: 'var(--terra-primary)'}}>While your competitors are still figuring out basic prompts...</p>
               
-              <p><em>You also get the exact tools to achieve them...</em></p>
+              <p><strong>You'll have a complete AI workforce that makes you look like a genius.</strong></p>
+              
+              <p><em>And the best part? Setup takes 30 minutes. Results last forever.</em></p>
             </div>
           </div>
         </section>
