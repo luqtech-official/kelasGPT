@@ -268,6 +268,58 @@ export default function VideoListing() {
             ))}
           </div>
 
+          {/* AI Experts Section */}
+          <div className={styles.expertSection}>
+            <div className={styles.sectionHeader}>
+              <h2>AI Experts Eksklusif</h2>
+              <p>
+                Akses terus kepada 6 AI Expert yang dilatih khas untuk membantu anda dalam pelbagai bidang. 
+                Setiap expert dilengkapi dengan sumber fail khusus untuk pembelajaran mendalam.
+              </p>
+            </div>
+
+            <div className={styles.expertGrid}>
+              {aiExperts.map((expert, index) => (
+                <div key={index} className={styles.expertCard}>
+                  <div className={styles.expertInfo}>
+                    <h3 className={styles.expertName}>{expert.name}</h3>
+                    <h4 className={styles.expertTitle}>{expert.title}</h4>
+                    <p className={styles.expertDescription}>{expert.description}</p>
+                  </div>
+                  
+                  <div className={styles.expertActions}>
+                    <a 
+                      href={expert.accessExpert}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.expertButton}
+                    >
+                      <svg className={styles.chatIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                      </svg>
+                      Access Expert
+                    </a>
+                    <a 
+                      href={expert.sourceFile}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.sourceButton}
+                    >
+                      <svg className={styles.fileIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      Source Files
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className={styles.footer}>
             <div className={styles.footerContent}>
               <h3>Sokongan & Bantuan</h3>
