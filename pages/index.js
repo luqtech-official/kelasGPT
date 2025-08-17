@@ -235,30 +235,189 @@ export default function Home({ productSettings }) {
           </div>
         </section>
 
-        {/* --- Problem Awareness Section --- */}
+        {/* --- Body Lead Section --- */}
         <section className={`${styles.section} ${styles.notJustPrompts}`}>
             <div className="container">
-                <h2 className={styles.notJustPrompts}>Ini Bukan Kelas Prompt Semata-mata!</h2>
+                <h2 className={styles.notJustPrompts}>Ini Bukan Sekadar Kelas AI Biasa!</h2>
                 <div className={styles.salesContent}>
                     <p>Assalamualaikum,</p>
                     
-                    <p>Kalau anda sedang mencari cara untuk <strong>betul-betul belajar AI</strong> untuk kerja dan bisnes..</p>
+                    <p>Kalau anda sedang mencari cara untuk <strong>betul-betul belajar AI untuk Bisnes</strong>..</p>
                     
-                    <p>Bukan sekadar copy-paste prompt yang over-hyped, tapi generic dari internet..</p>
+                    <p>Bukan sekadar beli ready-made GPTs atau Prompt Pack yang generic, tapi tak tahu cara optimize..</p>
                     
                     <p><strong>Teruskan membaca.</strong></p>
                     
-                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa ramai orang masih struggle guna AI dengan berkesan..</p>
+                    <p>Sebab dalam masa 3 minit ni, anda akan faham kenapa 90% orang yang guna AI tools masih tak dapat results yang diharapkan..</p>
                     
-                    <p>Dan macam mana <span className={styles.highlight}>Framework KelasGPT</span> yang saya akan ajar boleh transformasi cara anda bekerja sepenuhnya.</p>
+                    <p>Dan macam mana <span className={styles.highlight}>3-Step Formula</span> yang anda akan belajar untuk latih ChatGPT yang biasa dan generic.. <em>(atau Gemini/Claude/Grok - mana-mana platform pilihan anda)</em></p>
                     
-                    <p>Tak kira anda kerja corporate, run bisnes sendiri, atau student..</p>
+                    <p>Untuk jadi <strong>Team Expert Consultant</strong> personal anda, bernilai lebih RM200K+ setahun.</p>
                     
-                    <p><strong>KelasGPT ni akan jadi game-changer untuk productivity anda.</strong></p>
+                    <p>Tak kira anda complete beginner atau dah ada experience dengan AI..</p>
                     
-                    <p><em>Tapi first, let me tunjuk something yang akan shock anda...</em></p>
+                    <p><strong>3-Step Formula yang simple ni akan unlock true potential AI untuk anda.</strong></p>
+                    
                 </div>
             </div>
+        </section>
+
+        {/* --- Deep Dive Reality Check Section --- */}
+        <section className={`${styles.section} ${styles.grey}`}>
+            <div className="container">
+                <div className={styles.sectionHeader}>
+                    <h2>Kenapa Kena Belajar Secara Deep Dive?</h2>
+                    <p>Belajar Cara Prompt Dengan Betul Tak Cukup Ke?</p>
+                </div>
+                
+                <div className={styles.lessonPill}>
+                    <span className={styles.lessonNumber}>01</span>
+                    <span className={styles.lessonDivider}></span>
+                    <span className={styles.lessonText}>Lesson Dari Tiktok Creator</span>
+                </div>
+                
+                <div className={styles.salesContent}>
+                    <p>Ramai je creator kita boleh hasilkan video yang menarik dan engaging.</p>
+                    
+                    <p>And ramai juga yang ada moment viral mereka tersendiri..</p>
+                    
+                    <p><strong>Cuba fikir..</strong></p>
+
+                    <p>Kalau anda content creator.. dan anda tahu algo tiktok akan check kalau engagement rate sama..</p>
+
+                    <p>Dia akan prioritise content yang durasi lebih lama dulu..</p>
+
+                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Adakah strategy anda akan berubah?</strong></p>
+                </div>
+
+                <br />
+                <br />
+
+                <div className={styles.lessonPill}>
+                    <span className={styles.lessonNumber}>02</span>
+                    <span className={styles.lessonDivider}></span>
+                    <span className={styles.lessonText}>Perangkap AI Yang Confident</span>
+                </div>
+                
+                <div className={styles.salesContent}>
+                    <p><strong>AI pun exactly sama.</strong></p>
+
+                    <p>Cuma, situasi AI ni lebih rumit..</p>
+                    
+                    <p>Ada orang, tak pandai prompt.. sebab tak pernah belajar.</p>
+                    
+                    <p><strong>Exactly macam TikTok creator yang tak faham algorithm.</strong></p>
+                    
+                    <p>Mereka akan stuck dalam cycle trial-and-error forever.</p>
+                    
+                    <p>Sedangkan your competitor, yang faham the essentials...</p>
+                    
+                    <p><span className={styles.highlight}>Dapat predictable, high-quality results every single time.</span></p>
+                </div>
+            
+            </div>
+        </section>
+
+        {/* --- Authority Building Section --- */}
+        <section className={`${styles.section} ${styles.authoritySection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Sebelum Saya Terangkan Dengan Detail Tentang KelasGPT Ni..</h2>
+              <p className={styles.sectionSubtitle}><br />Mungkin Saya Patut Perkenalkan Diri Saya Dulu..</p>
+            </div>
+            <div className={styles.authorProfile}>
+              <div className={styles.authorImage}>
+                <Image 
+                    src={imagePresets.profile('author-photo')} 
+                    alt="Fareid - KelasGPT Instructor" 
+                    width={500} 
+                    height={500} 
+                    style={{width: '100%', height: 'auto'}} 
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL('author-photo')}
+                    sizes={getImageSizes('profile')}
+                />
+              </div>
+              <div className={styles.authorContent}>
+                <h3>Hi, Saya Fareid Zulkifli</h3>
+                <div className={styles.salesContent}>
+                  <p>Kalau nama saya kedengaran familiar..</p>
+                  
+                  <p>Mungkin sebab anda pernah nampak atau menggunakan hasil kerja saya sebelum ini.</p>
+                  
+                  <p>Sebab sejak tahun 2020..</p>
+                  
+                  <p>Saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan <strong>global</strong> paling popular</p>
+                  
+                  <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
+                  
+                  <div className={styles.tradingViewProof}>
+                    <Image 
+                        src={imagePresets.content('tradingview-proof')} 
+                        alt="TradingView Editor&rsquo;s Pick Screenshot" 
+                        className={styles.tradingViewImage} 
+                        width={800} 
+                        height={600} 
+                        style={{width: '100%', height: 'auto'}} 
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL={getBlurDataURL('tradingview-proof')}
+                        sizes={getImageSizes('content')}
+                    />
+                  </div>
+                  
+                  <p>Tapi ini cuma satu dari &lsquo;hobby project&rsquo; saya..</p>
+                  
+                  <p>Kerja hakiki saya, dengan lebih <strong>8 tahun pengalaman sebagai Lead Business Consultant</strong> dalam beberapa company IT..</p>
+                  
+                  <p>Banyak niche yang perlukan Teknologi Atau AI implementation ni, saya pernah sentuh..</p>
+
+                  <p><strong>Antaranya:</strong></p>
+
+                  <div className={styles.projectsList}>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      Trading Algorithm
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      Loan Evaluation Engine untuk Banking
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      AI Chatbot untuk SME
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      AI Intergration untuk Sales Platform
+                    </div>
+                    <div className={styles.projectItem}>
+                      <CheckCircleIcon className={styles.projectIcon} />
+                      HR Policy Management System
+                    </div>
+                  </div>
+
+                  <p>Dan tujuan saya ceritakan semua ni ialah supaya anda faham..</p>
+
+                  <p>Dari Traders Atau Real Businesses</p>
+
+                  <p><strong>Problem yang mereka semua alami sama je..</strong></p>
+
+                  <p>Mereka selalu overestimate kebolehan AI ni dalam unrealistic ways..</p>
+                  
+                  <p>Tapi underestimate macam mana creative use of teknologi ni boleh bantu kerja atau bisnes mereka..</p>
+
+                  <p><strong>Tapi bila mereka faham</strong> apa yang berlaku &lsquo;behind the scene&rsquo; sistem yang mereka nak guna tu..</p>
+                  
+                  <p><strong>Tak perlu faham coding pun..</strong></p>
+                  
+                  <p><span className={styles.highlight}>Simply faham actual logic dan algorithm disebalik sistem</span> yang mereka guna,<br />Cara mereka bekerja terus berubah.</p>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* --- Use Cases with Visual Proof --- */}
@@ -333,367 +492,6 @@ export default function Home({ productSettings }) {
                     </div>
                 </div>
             </div>
-        </section>
-
-        {/* --- Deep Dive Reality Check Section --- */}
-        <section className={`${styles.section} ${styles.grey}`}>
-            <div className="container">
-                <div className={styles.sectionHeader}>
-                    <h2>Kenapa Kena Belajar Secara Deep Dive?</h2>
-                    <p>Belajar Cara Prompt Dengan Betul Tak Cukup Ke?</p>
-                </div>
-                
-                <div className={styles.lessonPill}>
-                    <span className={styles.lessonNumber}>01</span>
-                    <span className={styles.lessonDivider}></span>
-                    <span className={styles.lessonText}>Lesson Dari Tiktok Creator</span>
-                </div>
-                
-                <div className={styles.salesContent}>
-                    <p>Ramai je creator kita boleh hasilkan video yang menarik dan engaging.</p>
-                    
-                    <p>And ramai juga yang ada moment viral mereka tersendiri..</p>
-                    
-                    <p>Tapi untuk kebanyakan creator..</p>
-                    
-                    <p><strong style={{color: 'var(--urgent-red)'}}>Result tu tak konsisten.</strong></p>
-                    
-                    <p>Kadang-kadang video masuk kolam FYP besar..</p>
-                    
-                    <p>Kadang-kadang sendu je..</p>
-                    
-                    <p>Dan yang buat mereka <em style={{color: 'var(--terra-dark)'}}>terpinga-pinga</em>..</p>
-                    
-                    <p>Format sama.</p>
-                    
-                    <p>Style video sama.</p>
-                    
-                    <p>Content approach sama je..</p>
-
-                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Kenapa rasa macam ikut luck?</strong></p>
-                    
-                    <p><em>Tapi ada creator..</em></p>
-                    
-                    <p><strong>Consistently dapat pergi viral.</strong></p>
-                    
-                    <p>Walaupun style video berubah..</p>
-                    
-                    <p>Konten video lain..</p>
-                    
-                    <p>Platform berubah..</p>
-
-                    <p style={{fontSize: '1.1rem', fontWeight: '600', margin: '1.5rem 0'}}><strong>Sebab apa?</strong></p>
-
-                    <p>Sesetengah creator buat <span className={styles.emphasis}>due diligence</span> mereka.</p>
-
-                    <p>Mereka study dan faham <strong>apa yang platform nak</strong>..</p>
-                    
-                    <p>Macam mana algo push untuk FYP..</p>
-                    
-                    <p>Video panjang ke, pendek ke..</p>
-                    
-                    <p>Timing posting..</p>
-                    
-                    <p>SEO macam mana TikTok suka..</p>
-                    
-                    <p>Konten apa TikTok <strong style={{color: 'var(--urgent-red)'}}>tak suka</strong>..</p>
-
-                    <p>And bila mereka pandai semua ni..</p>
-                    
-                    <p><strong>Nak konsisten dengan result tak susah.</strong></p>
-
-                    <p>Mereka faham..</p>
-                    
-                    <p>Pandai shooting video je tak cukup.. Platform pun kena faham</p>
-                    
-                    <p style={{fontSize: '1.4rem', fontWeight: '800', color: 'var(--terra-dark)', margin: '2rem 0', textAlign: 'center'}}><strong>And that&rsquo;s the difference.</strong></p>
-
-                    <p><strong>Cuba fikir..</strong></p>
-
-                    <p>Kalau anda content creator.. dan anda tahu algo tiktok akan check kalau engagement rate sama..</p>
-
-                    <p>Dia akan prioritise content yang durasi lebih lama dulu..</p>
-
-                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Adakah strategy anda akan berubah?</strong></p>
-                </div>
-
-                <br />
-                <br />
-
-                <div className={styles.lessonPill}>
-                    <span className={styles.lessonNumber}>02</span>
-                    <span className={styles.lessonDivider}></span>
-                    <span className={styles.lessonText}>Perangkap AI Yang Confident</span>
-                </div>
-                
-                <div className={styles.salesContent}>
-                    <p><strong>AI pun exactly sama.</strong></p>
-
-                    <p>Setiap satu kefahaman anda tentang mechanism yang AI guna</p>
-                    
-                    <p>Untuk output response dia..</p>
-
-                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Akan ubah cara anda prompt dengan mendadak!</strong></p>
-
-                    <p>Cuma, situasi AI ni lebih rumit..</p>
-                    
-                    <p>Ada orang, tak pandai prompt.. sebab tak pernah belajar.</p>
-                    
-                    <p>And I get it.</p>
-
-                    <p>AI, LLM semua ni benda baru.</p>
-                    
-                    <p><strong>But the real problem starts bila mereka mula belajar prompt formula, prompt engineering... tanpa basic foundation yang betul.</strong></p>
-                    
-                    <p>Sifat AI ni.. dia selalu bagi jawapan dalam nada yang confident. Sangat confident.</p>
-                    
-                    <p>So much so that bila dia bagi jawapan generic pun, kita akan baca macam sangat hebat.</p>
-
-                    <p>Classic case of <span className={styles.emphasis}>Confidence Bias.</span></p>
-                    
-                    <p>Tapi bila ada obvious error, output tak tepat...</p>
-                    
-                    <p>Mereka blame AI tu &ldquo;unreliable&rdquo;.</p>
-                    
-                    <p><strong>Tapi sebenarnya...</strong></p>
-                    
-                    <p>Sebab mereka tak faham <span className={styles.emphasis}>the logic, the mechanism, disebalik cara AI berfikir.</span></p>
-                    
-                    <p>AI ada context window management. Ada memory architecture. Ada embedding priorities dan token prediction patterns.</p>
-                    
-                    <p>Ada built-in limitations yang kalau anda tak tahu, anda akan frustrated dengan inconsistent results.</p>
-                    
-                    <p><strong>Exactly macam TikTok creator yang tak faham algorithm.</strong></p>
-                    
-                    <p>Mereka akan stuck dalam cycle trial-and-error forever.</p>
-                    
-                    <p>Sedangkan your competitor, yang faham the essentials...</p>
-                    
-                    <p><span className={styles.highlight}>Dapat predictable, high-quality results every single time.</span></p>
-                </div>
-
-                <br />
-                <br />
-
-                <div className={styles.lessonPill}>
-                    <span className={styles.lessonNumber}>03</span>
-                    <span className={styles.lessonDivider}></span>
-                    <span className={styles.lessonText}>The Unfair Advantage</span>
-                </div>
-                
-                <div className={styles.salesContent}>
-                    <p>Bayangkan colleague anda struggling 3-4 jam buat report..</p>
-                    
-                    <p>Anda siapkan dalam 30 minit dengan quality lagi bagus..</p>
-                    
-                    <p>Mereka tanya: <em>&ldquo;Macam mana you boleh so efficient?&rdquo;</em></p>
-                    
-                    <p>You just smile..</p>
-                    
-                    <p>Sebab anda faham <strong>Foundation AI yang mereka tak tahu.</strong></p>
-                    
-                    <p>Anda tahu macam mana setup context priority..</p>
-                    
-                    <p>Anda tahu macam mana manipulate AI memory supaya dia remember exactly apa yang anda nak..</p>
-                    
-                    <p>Anda tahu cara optimize prompt structure based on regression architecture..</p>
-                    
-                    <p><strong>Ini bukan magic.</strong></p>
-                    
-                    <p><strong>Ini systematic understanding.</strong></p>
-                    
-                    <p>Dan once anda faham foundation ni..</p>
-                    
-                    <p><span className={styles.emphasis}>Every AI tool yang keluar market, anda boleh master dengan cepat..</span></p>
-                    
-                    <p>Sebab prinsip sama across all platforms..</p>
-                    
-                    <p>ChatGPT, Claude, Gemini, Grok..</p>
-                    
-                    <p>Foundation knowledge anda akan applicable everywhere.</p>
-                    
-                    <p><strong>That&rsquo;s the power of learning the right way.</strong></p>
-                    
-                    <p><em>Dan in fact, ada satu technique yang belum saya mention lagi yang akan change everything...</em></p>
-                </div>                
-            </div>
-        </section>
-
-        {/* --- Authority Building Section --- */}
-        <section className={`${styles.section} ${styles.authoritySection}`}>
-          <div className="container">
-            <div className={styles.sectionHeader}>
-              <h2>Sebelum Saya Terangkan Dengan Detail Modul KelasGPT..</h2>
-              <p className={styles.sectionSubtitle}>Mungkin Saya Patut Perkenalkan Diri Saya Dulu..</p>
-            </div>
-            <div className={styles.authorProfile}>
-              <div className={styles.authorImage}>
-                <Image 
-                    src={imagePresets.profile('author-photo')} 
-                    alt="Fareid - KelasGPT Instructor" 
-                    width={300} 
-                    height={300} 
-                    style={{width: '100%', height: 'auto'}} 
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={getBlurDataURL('author-photo')}
-                    sizes={getImageSizes('profile')}
-                />
-              </div>
-              <div className={styles.authorContent}>
-                <h3>Hi, Saya Fareid Zulkifli</h3>
-                <div className={styles.salesContent}>
-                  <p>Kalau nama saya kedengaran familiar..</p>
-                  
-                  <p>Mungkin sebab anda pernah nampak atau menggunakan hasil kerja saya sebelum ini.</p>
-                  
-                  <p>Sebab sejak tahun 2020..</p>
-                  
-                  <p>Saya pernah publish beberapa open-source financial indicator di <strong>TradingView</strong>, platform analisis kewangan <strong>global</strong> paling popular</p>
-                  
-                  <p>Yang mana <span className={styles.emphasis}>dua hasil saya dipilih sebagai Editor&rsquo;s Pick</span> oleh platform itu sendiri,</p>
-                  
-                  <div className={styles.tradingViewProof}>
-                    <Image 
-                        src={imagePresets.content('tradingview-proof')} 
-                        alt="TradingView Editor&rsquo;s Pick Screenshot" 
-                        className={styles.tradingViewImage} 
-                        width={800} 
-                        height={600} 
-                        style={{width: '100%', height: 'auto'}} 
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL={getBlurDataURL('tradingview-proof')}
-                        sizes={getImageSizes('content')}
-                    />
-                  </div>
-                  
-                  <p>Tetapi involvement saya dalam dunia Technology As A Service bukan sekadar menulis script untuk Tradingview..</p>
-
-                  <p>Itu cuma satu dari &lsquo;hobby project&rsquo; saya..</p>
-                  
-                  <p>Kerja hakiki saya, dengan lebih <strong>8 tahun pengalaman sebagai Lead Business Consultant</strong> dalam beberapa company IT..</p>
-                  
-                  <p>Ialah memberi<br /><strong>konsultansi kepada Real Business User</strong></p>
-
-                  <p>Cara nak intergrate Teknologi dan AI <br /><span className={styles.highlight}> sesuai dengan konteks bisnes mereka..</span></p>
-
-                  <p>Antaranya:</p>
-
-                  <div className={styles.projectsList}>
-                    <div className={styles.projectItem}>
-                      <CheckCircleIcon className={styles.projectIcon} />
-                      Trading Algorithm
-                    </div>
-                    <div className={styles.projectItem}>
-                      <CheckCircleIcon className={styles.projectIcon} />
-                      Loan Evaluation Engine untuk Banking
-                    </div>
-                    <div className={styles.projectItem}>
-                      <CheckCircleIcon className={styles.projectIcon} />
-                      AI Chatbot untuk SME
-                    </div>
-                    <div className={styles.projectItem}>
-                      <CheckCircleIcon className={styles.projectIcon} />
-                      AI Intergration untuk Sales Platform
-                    </div>
-                    <div className={styles.projectItem}>
-                      <CheckCircleIcon className={styles.projectIcon} />
-                      HR Policy Management System
-                    </div>
-                  </div>
-
-                  <p><strong>Almost any niche yang perlukan teknologi ni,<br />saya pernah sentuh..</strong></p>
-
-                  <p>So trust me bila saya cakap..</p>
-
-                  <p>Real problem yang kebanyakan business user atau owner alami</p>
-
-                  <p>Selalunya sebab mereka overestimate kebolehan AI dalam unrealistic ways</p>
-                  
-                  <p>Tapi underestimate macam mana creative use of teknologi ni boleh bantu kerja atau bisnes mereka..</p>
-
-                  <p>Sebab mereka cuma nampak magic dari the end results of teknologi tersebut..<br />Apps.. Platform.. Software..</p>
-
-                  <p>Tapi once mereka faham apa yang berlaku &lsquo;behind the scene&rsquo; sistem yang mereka nak guna tu..</p>
-                  
-                  <p><span className={styles.highlight}>Tak perlu faham coding pun..</span></p>
-                  
-                  <p>Simply faham <strong>actual logic dan algorithm disebalik sistem</strong> yang mereka guna,<br />Cara mereka bekerja terus berubah.</p>
-
-                  <p>Dan tujuan saya ceritakan semua ni ialah supaya anda faham..</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className={styles.salesContent} style={{marginTop: '3rem', textAlign: 'center'}}>
-              <h3 style={{color: 'var(--terra-dark)', fontSize: '2rem', marginBottom: '1.5rem'}}>Ini BUKAN Kelas Buat Duit Dengan AI</h3>
-              
-              <p>Saya bukanlah sifu content creator atau marketing expert yang join trend AI..</p>
-              
-              <p>Saya tak janjikan cara buat duit dengan AI..</p>
-              
-              <p>Kalau itu yang anda cari..</p>
-
-              <p><strong>Mungkin ini bukan kelas yang sesuai..</strong></p>
-              
-              <p><strong>TETAPI..</strong></p>
-              
-              <p>Kalau anda mahukan someone yang <span className={styles.highlight}>berpengalaman dalam industri..</span></p>
-              
-              <p>Tolong anda breakdown konsep cara AI &lsquo;berfikir&rsquo; yang kompleks menjadi lebih mudah difahami..</p>
-              
-              <p>Ajar anda step-by-step <strong>framework, workflow</strong> untuk bina context dalam AI dengan <strong>maximum accuracy..</strong></p>
-
-              <p>Dalam masa yang sama..</p>
-
-              <p><span className={styles.highlight}>Anda tak perlu ada background teknikal..<br />Tak perlu belajar coding..</span></p>
-              
-              <p><em>Teruskan membaca..</em></p>
-            </div>
-          </div>
-        </section>
-
-        {/* --- Personal Consultant Vision --- */}
-        <section className={`${styles.section} ${styles.consultantVision}`}>
-          <div className="container">
-            <h2>Personal Expert Consultant Yang Dijanjikan</h2>
-            <div className={styles.consultantContent}>
-              <p><strong>Bayangkan anda tengah duduk dalam bilik, focused, kerja keras, planning next big move untuk career atau side business..</strong></p>
-              
-              <p>Tapi instead of groping in the dark macam most people..</p>
-              
-              <p><strong>Anda ada unfair advantage yang 99% professionals kat Malaysia tak ada.</strong></p>
-              
-              <p>Anda tahu cara transform AI jadi personal expert consultants.</p>
-              
-              <p>Specifically designed untuk YOUR goals. YOUR industry. YOUR style of working.</p>
-              
-              <p>Sedangkan colleagues anda masih guna AI macam Google search..</p>
-              
-              <p><strong>Anda dah master the framework untuk create custom AI workforce yang kerja 24/7.</strong></p>
-              
-              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0', color: 'var(--pure-white)'}}>Projek yang orang lain ambil masa sebulan...</p>
-              
-              <p style={{fontSize: '1.4rem', fontWeight: '700', margin: '2rem 0', color: 'var(--pure-white)'}}>Anda siapkan dalam 4-5 hari.</p>
-              
-              <p>Dalam masa 6 bulan, anda dah jadi go-to person dalam company untuk complex projects.</p>
-              
-              <p>Side business anda scale exponentially.</p>
-              
-              <p>Passive income streams multiply.</p>
-              
-              <p><strong>Family anda nampak perubahan.</strong> More time with them, less stress, better financial security.</p>
-              
-              <p><strong>Peers start asking: &quot;Macam mana dia boleh perform at this level?&quot;</strong></p>
-              
-              <p>The secret?</p>
-              
-              <p>You&rsquo;ve mastered something yang most Malaysian professionals tak tahu exist.</p>
-              
-              <p style={{fontSize: '1.6rem', fontWeight: '800', margin: '2rem 0', textAlign: 'center'}}><strong>Dan sebenarnya, untuk setup semua ni.. cuma ambil satu malam sahaja.</strong></p>
-            </div>
-          </div>
         </section>
 
         {/* --- KelasGPT Main Benefits Section --- */}
@@ -852,7 +650,7 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- Bonus CustomGPT Expert Section --- */}
-        <section className={`${styles.section} ${styles.customExpertsSection}`}>
+        {/* <section className={`${styles.section} ${styles.customExpertsSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
               <h2>6 Custom Expert Yang Akan Buat Competitors Anda Tertanya-tanya</h2>
@@ -1185,7 +983,7 @@ export default function Home({ productSettings }) {
               <p><em>And the best part? Setup takes 30 minutes. Results last forever.</em></p>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* --- Testimonials Section --- */}
         <section className={styles.testimonialsSection}>
