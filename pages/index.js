@@ -177,30 +177,43 @@ export default function Home({ productSettings }) {
 
             {/* Pill Element */}
             <div className={styles.heroPill}>
-              <span className={styles.heroPillText}>KelasGPT | Modul &lsquo;Deep Dive&rsquo; AI</span>
+              <span className={styles.heroPillText}>KelasGPT | Siri &lsquo;Bisnes Dengan AI&rsquo;</span>
             </div>
 
             {/* Main Headline */}
             <h1 className={styles.heroTitle}>
               
               {/* Mobile Line Breaks (4 lines) */}
-              <span className={styles.mobileBreak}>
+              {/* <span className={styles.mobileBreak}>
                 &lsquo;Open Secret&rsquo; Yang<br />
                 Hanya AI Engineers Faham..<br />
                 Termasuk <span className={styles.emphasis}>Method Khusus</span> Untuk Train Personal AI Expert
                 <div className={styles.heroSeparator}></div>
                 Sekarang Accessible<br />Untuk Orang Yang<br />
                 <span className={styles.emphasis}>Zero Technical Knowledge!</span>
+              </span> */}
+
+              <span>
+                &lsquo;Open Secret&rsquo; Yang<br />
+                Hanya AI Engineers Faham..<br />
+                Termasuk <span className={styles.emphasis}>Formula Khas</span> Untuk <span className={styles.emphasis}>Melatih</span> AI Expert Anda
+                
+                <div className={styles.heroSeparator}></div>
+
+                Setup Bisnes Anda<br />
+                Dari Kosong Sampai Launch..<br />
+                <span className={styles.emphasis}>Tak Sampai 24 JAM!</span>
               </span>
+              
 
               {/* Desktop Line Breaks (3 lines) */}
-              <span className={styles.desktopBreak}>
+              {/* <span className={styles.desktopBreak}>
                 &lsquo;Open Secret&rsquo;<br />Yang Hanya AI Engineers Faham..<br />
                 <span className={styles.emphasis}>Method Khusus</span> Train AI Expert Sendiri
                 <div className={styles.heroSeparator}></div>
                 Sekarang Accessible Untuk Orang Yang<br />
                 <span className={styles.emphasis}>Zero Technical Knowledge!</span>
-              </span>
+              </span> */}
             </h1>
 
             {/* Hero Visual Element */}
@@ -222,7 +235,10 @@ export default function Home({ productSettings }) {
             {/* Enhanced Subtext */}           
             <div className={styles.heroContent}>
               <p className={styles.heroLead}>
-                Berdasarkan <strong>Battle-Tested Framework</strong><br />dari Real Industry Implementations.<br /><br />
+                <br />Sekarang Accessible
+                <br />Untuk Orang Yang
+                <br /><strong>Zero Technical Knowledge</strong>
+                <br /><br />
                 <em style={{fontSize: '0.9em'}}>(Tak Perlu Apps Lain - ChatGPT Pun Cukup)</em>
               </p>
               
