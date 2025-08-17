@@ -190,7 +190,7 @@
   background: var(--pure-white);
   border: 1px solid var(--terra-dark);
   color: var(--terra-dark);
-  max-width: 75vw;
+  max-width: 85vw;
   width: fit-content;
 }
 
@@ -206,14 +206,28 @@
 }
 
 .heroTitle {
+  font-family: 'Manrope', sans-serif;
   font-size: 2.3rem;
-  font-weight: 900;
-  margin-bottom: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
   color: var(--text-primary);
   line-height: 1.2;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.heroSubTitle {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .mobileBreak {
@@ -242,7 +256,8 @@
   text-align: left;
 }
 
-.heroLead {
+.heroVisualCaption {
+  font-family: 'Manrope', sans-serif;
   font-size: 1.25rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -251,7 +266,7 @@
   text-align: center;
 }
 
-.heroLead strong {
+.heroVisualCaption strong {
   color: var(--terra-dark);
   font-weight: 700;
 }
@@ -266,6 +281,7 @@
 }
 
 .heroTeaser h3 {
+  font-family: 'Manrope', sans-serif;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--terra-dark);
@@ -280,6 +296,7 @@
 }
 
 .heroList li {
+  font-family: 'Manrope', sans-serif;
   position: relative;
   padding: 0.75rem 0 0.75rem 2rem;
   font-size: 1rem;
@@ -2452,6 +2469,11 @@
   .heroTitle {
     font-size: 2rem;
   }
+  
+  .heroSubTitle {
+    font-size: 1.4rem;
+    margin-bottom: 2.5rem;
+  }
 
   /* Course Outline */
   .moduleHeader {
@@ -2839,7 +2861,13 @@
   .heroTitle {
     font-size: 1.6rem;
     line-height: 1.3;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.0rem;
+  }
+  
+  .heroSubTitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
   }
   .heroSeparator {
     width: 60px;
@@ -2848,7 +2876,7 @@
   .heroContent {
     padding: 0 1rem;
   }
-  .heroLead {
+  .heroVisualCaption {
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
   }
@@ -2862,12 +2890,12 @@
   }
   .heroList li {
     padding: 0.6rem 0 0.6rem 1.8rem;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
   }
   .heroList li::before {
     width: 1rem;
     height: 1rem;
-    top: 0.6rem;
+    top: 0.85rem;
     font-size: 0.7rem;
   }
   .mobileBreak {

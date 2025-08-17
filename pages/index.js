@@ -160,7 +160,7 @@ export default function Home({ productSettings }) {
           content="Kursus video online non-teknikal yang direka untuk profesional, pelajar, dan pemilik bisnes kecil di Malaysia."
         />
         <meta property="og:image" content="/og-image.png" /> {/* Make sure you have a compelling OG image */}
-        <meta property="og:url" content="https://kelasgpt.my" />
+        <meta property="og:url" content="https://kelasgpt.com" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" />
@@ -177,50 +177,33 @@ export default function Home({ productSettings }) {
 
             {/* Pill Element */}
             <div className={styles.heroPill}>
-              <span className={styles.heroPillText}>KelasGPT | Siri &lsquo;Bisnes Dengan AI&rsquo;</span>
+              <span className={styles.heroPillText}>Belajar AI Tanpa Technical Background..</span>
             </div>
 
             {/* Main Headline */}
             <h1 className={styles.heroTitle}>
-              
-              {/* Mobile Line Breaks (4 lines) */}
-              {/* <span className={styles.mobileBreak}>
-                &lsquo;Open Secret&rsquo; Yang<br />
-                Hanya AI Engineers Faham..<br />
-                Termasuk <span className={styles.emphasis}>Method Khusus</span> Untuk Train Personal AI Expert
-                <div className={styles.heroSeparator}></div>
-                Sekarang Accessible<br />Untuk Orang Yang<br />
-                <span className={styles.emphasis}>Zero Technical Knowledge!</span>
-              </span> */}
-
               <span>
                 &lsquo;Open Secret&rsquo; Yang<br />
-                Hanya AI Engineers Faham..<br />
-                Termasuk <span className={styles.emphasis}>Formula Khas</span> Untuk <span className={styles.emphasis}>Melatih</span> AI Expert Anda
-                
+                Hanya AI Engineers Tahu..<br />
+                <span className={styles.emphasis}>3-Step Formula,</span> Khusus Untuk <span className={styles.emphasis}>Melatih</span> AI Expert Anda
                 <div className={styles.heroSeparator}></div>
-
-                Setup Bisnes Anda<br />
-                Dari Kosong Sampai Launch..<br />
-                <span className={styles.emphasis}>Tak Sampai 24 JAM!</span>
               </span>
-              
-
-              {/* Desktop Line Breaks (3 lines) */}
-              {/* <span className={styles.desktopBreak}>
-                &lsquo;Open Secret&rsquo;<br />Yang Hanya AI Engineers Faham..<br />
-                <span className={styles.emphasis}>Method Khusus</span> Train AI Expert Sendiri
-                <div className={styles.heroSeparator}></div>
-                Sekarang Accessible Untuk Orang Yang<br />
-                <span className={styles.emphasis}>Zero Technical Knowledge!</span>
-              </span> */}
             </h1>
+
+            {/* Main Sub Headline */}
+            <h2 className={styles.heroSubTitle}>
+              <span>
+                Formula Yang Sama AI Experts Ini <span className={styles.emphasis}>Dilatih </span>
+                Untuk Anda Build & Launch Profitable Digital Business...<br />
+                <span className={styles.emphasis}>Kurang Dari 24 Jam!</span>
+              </span>
+            </h2>
 
             {/* Hero Visual Element */}
             <div className={styles.heroVisual}>
               <Image 
                 src={imagePresets.hero('hero-main', { quality: 'q_85' })}
-                alt="KelasGPT Framework Visual Guide" 
+                alt="KelasGPT 3 Experts profile Card Visual" 
                 width={600} 
                 height={400} 
                 style={{width: '100%', height: 'auto'}} 
@@ -230,27 +213,22 @@ export default function Home({ productSettings }) {
                 blurDataURL={getBlurDataURL('hero-main')}
                 sizes={getImageSizes('hero')}
               />
+              <p className={styles.heroVisualCaption}>
+                <em style={{fontSize: '0.9em'}}>(Antara Expert AI Yang Disediakan)</em>
+              </p>
             </div>
 
-            {/* Enhanced Subtext */}           
+            {/* Enhanced Subtext (As Hero Image Caption) */}
             <div className={styles.heroContent}>
-              <p className={styles.heroLead}>
-                <br />Sekarang Accessible
-                <br />Untuk Orang Yang
-                <br /><strong>Zero Technical Knowledge</strong>
-                <br /><br />
-                <em style={{fontSize: '0.9em'}}>(Tak Perlu Apps Lain - ChatGPT Pun Cukup)</em>
-              </p>
-              
               <div className={styles.heroTeaser}>
-                <h3>Belajar Step-By-Step</h3>
+                <h3>Apa Yang Anda Akan Dapat:</h3>
                 
                 <ul className={styles.heroList}>
-                  <li>Belajar <strong>&lsquo;Thinking Dan Reasoning Algorithm&rsquo; AI Sebenar</strong> supaya anda boleh apply dalam semua jenis task atau niche, dengan tepat.</li>
-                  <li>Fahamkan cara pre-trained data AI disimpan.. dan anda Boleh <strong>Manipulasi Prompt DAN Response AI..</strong>untuk dapat output berkualiti, yang anda perlukan</li>
-                  <li>Kuasai <strong>Workflow Bina Context..</strong> Tak ada lagi Ungrounded Hallucination..</li>
-                  <li>Cara bina dan latih<strong> &lsquo;Pekerja AI&rsquo; sebagai Expert Advisor Dengan Betul</strong>.. Bukan sekadar &ldquo;Act like world-class expert..&rdquo;.</li>
-                  <li><strong>Teknik Prompt Ringkas, Tapi Maximum Output</strong>.. Tak perlu guna mega-prompt yang terlalu rigid dengan constraint sampai degrade performance AI</li>
+                  <li><span className={styles.emphasis}>Video AI Masterclass</span> Fahamkan cara AI Berfikir, Teknik Prompt Advanced untuk Maximum Output</li>
+                  <li><span className={styles.emphasis}>3-Step Formula Rahsia</span> untuk latih AI jadi Personal Expert Consultant (Bina Expert Consultant Anda Sendiri!)</li>
+                  <li><span className={styles.emphasis}>5 Done-For-You Expert Consultant</span> - Product Ideation, Branding, Copywriting, VEO 3 Prompt Director & Web Development (No-Code) specialist</li>
+                  <li><span className={styles.emphasis}>Source Files</span> Setiap Expert Consultant yang anda boleh guna dengan mana-mana AI platform (supaya anda tidak terikat dengan ChatGPT sahaja)</li>
+                  <li><span className={styles.emphasis}>Step-by-Step Demo Video Tutorial</span> - Complete Workflow dari cari idea sampai launch profitable digital business dalam 24 jam</li>
                 </ul>
               </div>
             </div>
