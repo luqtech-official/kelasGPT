@@ -494,6 +494,95 @@ export default function Home({ productSettings }) {
             </div>
         </section>
 
+        {/* --- The 3-Step Formula Revealed --- */}
+        <section className={`${styles.section} ${styles.mechanismSection}`}>
+          <div className="container">
+            <div className={styles.sectionHeader}>
+              <h2>Sekarang Biar Saya Explain Kenapa Framework Ni Berfungsi</h2>
+              <p>Dan Kenapa 90% Orang Yang Guna AI Tak Dapat Results Yang Expert-Level</p>
+            </div>
+            
+            <div className={styles.salesContent}>
+              <p>Okay, anda dah nampak apa yang possible bila AI dilatih dengan betul..</p>
+              
+              <p>Tapi mungkin anda tertanya-tanya..</p>
+              
+              <p><strong>"Macam mana exactly AI boleh jadi expert-level macam ni?"</strong></p>
+              
+              <p>Fair question.</p>
+              
+              <p>Sebab kalau anda pernah try guna ChatGPT atau Claude untuk kerja professional..</p>
+              
+              <p>Kadang-kadang hasil dia okay, kadang-kadang mediocre, kadang-kadang terus off-topic.</p>
+              
+              <p><strong>Kenapa inconsistent macam ni?</strong></p>
+              
+              <p>Simple.</p>
+              
+              <p>Kebanyakan orang treat AI macam search engine yang pandai cakap.</p>
+              
+              <p>Mereka hantar prompt, harap dapat jawapan yang bagus, lepas tu frustrated bila result tak meet expectation.</p>
+              
+              <p><strong>Tapi itu bukan macam mana expert consultant bekerja dalam real life.</strong></p>
+              
+              <p>Bayangkan anda hire consultant untuk bisnes anda..</p>
+              
+              <p>Consultant yang professional akan:</p>
+              
+              <div className={styles.consultantProcess}>
+                <p><strong>1. Faham context kerja anda dengan detail</strong><br />
+                Bukan sekadar tahu apa yang anda nak, tapi faham background, constraints, dan objectives anda.</p>
+                
+                <p><strong>2. Tahu exactly resources mana nak refer untuk situation anda</strong><br />
+                Dia ada structured knowledge base dan tahu bila nak guna framework mana untuk problem apa.</p>
+                
+                <p><strong>3. Apply domain expertise yang specific</strong><br />
+                Bukan generic advice yang anda boleh google, tapi insights yang datang dari years of specialized experience.</p>
+              </div>
+              
+              <p><strong>Nah, itulah exactly 3-Step Formula yang KelasGPT ajar.</strong></p>
+              
+              <p>Instead of treating AI macam smart search engine..</p>
+              
+              <p>You transform dia jadi professional consultant yang:</p>
+              
+              <ul className={styles.mechanismBenefits}>
+                <li><span className={styles.ulStrong}>Faham workflow anda</span> - Context dia build properly untuk every interaction</li>
+                <li><span className={styles.ulStrong}>Navigate knowledge dengan systematic</span> - Dia tahu exactly bila nak refer apa untuk situation yang berbeza</li>
+                <li><span className={styles.ulStrong}>Deliver specialized expertise</span> - Results yang datang dari proven frameworks, bukan generic advice</li>
+              </ul>
+              
+              <p>Bila 3 elements ni combine together dengan proper structure..</p>
+              
+              <p><strong>You get consistent, expert-level output every single time.</strong></p>
+              
+              <p>Macam GPS system - dia tak main agak-agak, dia ada systematic way untuk guide anda dari point A ke point B using the best available information.</p>
+              
+              <p>Yang paling powerful..</p>
+              
+              <p>Formula ni boleh apply untuk <em>any domain</em> yang anda nak.</p>
+              
+              <p>Copywriting, product development, business strategy, financial analysis, content creation.. <strong>anything</strong>.</p>
+              
+              <p>Sebab pada dasarnya..</p>
+              
+              <p>Anda belajar macam mana nak <em>structure knowledge and context</em> untuk AI consume dan apply dengan betul.</p>
+              
+              <p><strong>Dan 5 Expert Consultant yang anda akan dapat tu?</strong></p>
+              
+              <p>Mereka semua di-create guna exact formula yang sama.</p>
+              
+              <p>Setiap satu dah di-optimize untuk domain mereka, structured untuk deliver results yang anda perlukan, dan tested untuk ensure consistency.</p>
+              
+              <p>Tapi yang paling valuable..</p>
+              
+              <p><strong>Anda akan belajar macam mana nak create Expert Consultant sendiri untuk any niche atau industry yang anda nak.</strong></p>
+              
+              <p>Itulah kuasa sebenar 3-Step Formula ni.</p>
+            </div>
+          </div>
+        </section>
+
         {/* --- KelasGPT Main Benefits Section --- */}
         <section className={`${styles.section} ${styles.customExpertSection}`}>
           <div className="container">
