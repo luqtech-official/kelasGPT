@@ -149,7 +149,7 @@ export default function Home({ productSettings }) {
   return (
     <div className={styles.pageWrapper}>
       <Head>
-        <title>KelasGPT - Kuasai AI Untuk Gandakan Produktiviti Anda</title>
+        <title>KelasGPT - Belajar Bina Custom AI Expert Anda</title>
         <meta
           name="description"
           content="Belajar &amp; Kuasai Kecerdasan Buatan (AI) dan Large Language Models (LLM) untuk mempercepat kerja, menaik taraf kemahiran, dan menjimatkan masa. Sertai KelasGPT hari ini!"
@@ -495,495 +495,240 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- KelasGPT Main Benefits Section --- */}
-        <section className={`${styles.section} ${styles.benefitKelasSection}`}>
+        <section className={`${styles.section} ${styles.customExpertSection}`}>
           <div className="container">
             <div className={styles.sectionHeader}>
-              <h2>BONUS: 3 Ready-Made Custom AI Experts</h2>
-              <p><strong>Not only that... anda juga akan dapat 3 powerful ready-made custom AI experts!</strong></p>
+              <h2>Kenali Team Expert AI Consultant Anda</h2>
+              <p><br />Selain dari belajar bina Expert Consultant anda sendiri...<br /><br /></p>
               
-              <p>Untuk achieve semua benefit di atas, anda perlukan tools yang tepat.</p>
+              <p>Anda juga akan dapat <strong>5 Powerful, Done-For-You</strong> Custom Experts Consultant!<br /><br /></p>
               
-              <p>Dan saya dah setup untuk anda - <em>tinggal copy & paste sahaja</em>.</p>
-              
-              <p><strong>Sekali setup, guna seumur hidup untuk mana-mana kerja atau business anda ada.</strong></p>
+              <p><strong>Lifetime Access</strong> untuk mana-mana kerja atau business anda ada.</p>
+              <p><em>Tinggal click link dan terus guna sahaja</em>.</p>
             </div>
 
-            {/* Benefit 1: Copywriter (Images Left + Description Right) */}
-            <div className={styles.benefitKelasShowcase}>
-              <div className={styles.benefitKelasDescription}>
+            {/* Expert 1: Balqis - Digital Product Ideation Expert */}
+            <div className={styles.customExpertShowcase}>
+              <div className={styles.customExpertDescription}>
                 
-                <div className={styles.benefitKelasHeader}>
-                  <div className={styles.benefitKelasNumber}>Benefit #1</div>
-                  <h3>AI Copywriter Expert</h3>
+                <div className={styles.customExpertHeader}>
+                  <div className={styles.customExpertNumber}>EXPERT #1</div>
+                  <h3>Balqis - Digital Product Ideation Expert</h3>
                 </div>
                                 
                 <Image 
-                  src={imagePresets.benefit('parksaejin')}
-                  alt="Instant Professional Analysis" 
+                  src={imagePresets.benefit('balqis-photo')}
+                  alt="Balqis - Digital Product Ideation Expert" 
                   width={120} 
                   height={120} 
                   style={{width: '100%', height: '100%'}} 
                   loading="lazy"
                   placeholder="blur"
-                  blurDataURL={getBlurDataURL('parksaejin')}
+                  blurDataURL={getBlurDataURL('balqis-photo')}
                   sizes={getImageSizes('benefit')}
-                  className={styles.benefitKelasImages}
+                  className={styles.customExpertImages}
                 />
                 
-                <div className={styles.benefitKelasBadge}>COPY & PASTE TEMPLATE</div>
-                <h4>Professional Copywriter & Content Strategist</h4>
-                <p><strong>Achieve Benefit #3: Consistent Quality Output</strong></p>
-                <p>Master copywriter untuk sales pages, email campaigns, social media content, proposals, dan presentations. Dia analyze target audience, craft compelling headlines, dan ensure setiap piece of content convert.</p>
+                <div className={styles.customExpertBadge}>IDEA SPOTTER</div>
+                <h4>The Digital Product Ideation Expert</h4>
+                <p><strong>Business Stage: Ideation & Opportunity Discovery</strong></p>
+                <p>Specialist dalam generate profitable digital product ideas dari zero. Balqis analyze market trends, identify gaps, dan provide step-by-step ideation process untuk discover untapped opportunities dalam any industry.</p>
                 
-                <div className={styles.benefitKelasFeatures}>
-                  <div className={styles.feature}>Sales copy yang convert tinggi</div>
-                  <div className={styles.feature}>Professional presentations & reports</div>
-                  <div className={styles.feature}>Email marketing campaigns</div>
-                  <div className={styles.feature}>Social media content strategy</div>
+                <div className={styles.customExpertFeatures}>
+                  <div className={styles.customExpertFeature}>Market research & trend analysis</div>
+                  <div className={styles.customExpertFeature}>Profitable product idea generation</div>
+                  <div className={styles.customExpertFeature}>Competitive analysis & positioning</div>
+                  <div className={styles.customExpertFeature}>Opportunity validation framework</div>
                 </div>
                 
-                <p className={styles.benefitKelasResult}><em>Boss tak pernah minta revise lagi sebab output anda selalu spot-on.</em></p>
+                <p className={styles.customExpertResult}><em>Tak pernah kehabisan idea untuk new products atau services lagi.</em></p>
               </div>
             </div>
 
-            {/* Benefit 2: Personal Manager (Description Left + Images Right) */}
-            <div className={styles.benefitKelasShowcase}>
-              <div className={styles.benefitKelasDescription}>
+            {/* Expert 2: Sarah - Product & Branding Expert */}
+            <div className={styles.customExpertShowcase}>
+              <div className={styles.customExpertDescription}>
                 
-                <div className={styles.benefitKelasHeader}>
-                  <div className={styles.benefitKelasNumber}>EXPERT #2</div>
-                  <h3>AI Personal Manager Expert</h3>
+                <div className={styles.customExpertHeader}>
+                  <div className={styles.customExpertNumber}>EXPERT #2</div>
+                  <h3>Sarah - Product & Branding Expert</h3>
                 </div>
                 
                 <Image 
-                    src={imagePresets.benefit('parksaejin')}
-                    alt="Instant Professional Analysis" 
+                    src={imagePresets.benefit('sarah-photo')}
+                    alt="Sarah - Product & Branding Expert" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
                     loading="lazy"
                     placeholder="blur"
-                    blurDataURL={getBlurDataURL('parksaejin')}
+                    blurDataURL={getBlurDataURL('sarah-photo')}
                     sizes={getImageSizes('benefit')}
-                    className={styles.benefitKelasImages}
+                    className={styles.customExpertImages}
                   />
-                <div className={styles.benefitKelasBadge}>READY-TO-USE TEMPLATE</div>
-                <h4>Project Management & Productivity Specialist</h4>
-                <p><strong>Achieve Benefit #2: Effortless Task Management</strong></p>
-                <p>Personal manager yang handle task prioritization, project planning, deadline management, dan resource allocation. Dia analyze workload anda, identify bottlenecks, dan bagi step-by-step action plan untuk maximize productivity.</p>
+                <div className={styles.customExpertBadge}>BRAND ARCHITECT</div>
+                <h4>The Intuitive Marketing Angle Expert</h4>
+                <p><strong>Business Stage: Strategy & Planning</strong></p>
+                <p>Master dalam manage product dan branding documents. Sarah create comprehensive product briefs, creative briefs, brand guidelines, dan ensure consistent brand identity across all touchpoints untuk maximum market impact.</p>
                 
-                <div className={styles.benefitKelasFeatures}>
-                  <div className={styles.feature}>Smart task prioritization matrix</div>
-                  <div className={styles.feature}>Project timeline & milestone tracking</div>
-                  <div className={styles.feature}>Team delegation recommendations</div>
-                  <div className={styles.feature}>Productivity optimization insights</div>
+                <div className={styles.customExpertFeatures}>
+                  <div className={styles.customExpertFeature}>Product brief & documentation</div>
+                  <div className={styles.customExpertFeature}>Brand guidelines & identity</div>
+                  <div className={styles.customExpertFeature}>Creative direction & strategy</div>
+                  <div className={styles.customExpertFeature}>Brand consistency framework</div>
                 </div>
                 
-                <p className={styles.benefitKelasResult}><em>Tak pernah overwhelmed lagi - AI handle semua planning untuk anda.</em></p>
+                <p className={styles.customExpertResult}><em>Brand anda selalu consistent dan professional across all platforms.</em></p>
               </div>
             </div>
 
-            {/* Benefit 3: Content Creator (Images Left + Description Right) */}
-            <div className={styles.benefitKelasShowcase}>
-              <div className={styles.benefitKelasDescription}>
+            {/* Expert 3: Chae Ha - Copywriting Expert */}
+            <div className={styles.customExpertShowcase}>
+              <div className={styles.customExpertDescription}>
 
-                <div className={styles.benefitKelasHeader}>
-                  <div className={styles.benefitKelasNumber}>EXPERT #3</div>
-                  <h3>AI Content Creator Expert</h3>
+                <div className={styles.customExpertHeader}>
+                  <div className={styles.customExpertNumber}>EXPERT #3</div>
+                  <h3>Chae Ha - Copywriting Expert</h3>
                 </div>
 
                 <Image 
-                    src={imagePresets.benefit('parksaejin')}
-                    alt="Instant Professional Analysis" 
+                    src={imagePresets.benefit('chaeha-photo')}
+                    alt="Chae Ha - Copywriting Expert" 
                     width={120} 
                     height={120} 
                     style={{width: '100%', height: '100%'}} 
                     loading="lazy"
                     placeholder="blur"
-                    blurDataURL={getBlurDataURL('parksaejin')}
+                    blurDataURL={getBlurDataURL('chaeha-photo')}
                     sizes={getImageSizes('benefit')}
-                    className={styles.benefitKelasImages}
+                    className={styles.customExpertImages}
                   />
-                <div className={styles.benefitKelasBadge}>PROFESSIONAL-GRADE TEMPLATE</div>
-                <h4>Universal Content Creator & Strategy Expert</h4>
-                <p><strong>Achieve Benefit #1 & #4: Professional Analysis + Universal Problem Solving</strong></p>
-                <p>Master content strategist untuk any industry - finance, marketing, operations, HR. Dia create engaging content, analyze performance metrics, optimize untuk different platforms, dan ensure brand consistency across all channels.</p>
+                <div className={styles.customExpertBadge}>CONVERSION EXPERT</div>
+                <h4>The Engaging Hook Specialist</h4>
+                <p><strong>Business Stage: Marketing & Sales</strong></p>
+                <p>High-conversion copywriting specialist untuk sales pages, email campaigns, ads, dan content marketing. Chae Ha craft compelling headlines, analyze target audience psychology, dan ensure setiap piece of copy converts maksimum.</p>
                 
-                <div className={styles.benefitKelasFeatures}>
-                  <div className={styles.feature}>Multi-platform content strategy</div>
-                  <div className={styles.feature}>Brand voice consistency</div>
-                  <div className={styles.feature}>Performance analytics & optimization</div>
-                  <div className={styles.feature}>Cross-industry adaptability</div>
+                <div className={styles.customExpertFeatures}>
+                  <div className={styles.customExpertFeature}>High-converting sales copy</div>
+                  <div className={styles.customExpertFeature}>Email marketing campaigns</div>
+                  <div className={styles.customExpertFeature}>Ad copy & social content</div>
+                  <div className={styles.customExpertFeature}>Conversion optimization</div>
                 </div>
                 
-                <p className={styles.benefitKelasResult}><em>One expert untuk solve any professional content challenge.</em></p>
+                <p className={styles.customExpertResult}><em>Copy anda selalu engage dan convert - audience tak boleh ignore.</em></p>
+              </div>
+            </div>
+
+            {/* Expert 4: Irfan - Creative Director for Video Generation */}
+            <div className={styles.customExpertShowcase}>
+              <div className={styles.customExpertDescription}>
+
+                <div className={styles.customExpertHeader}>
+                  <div className={styles.customExpertNumber}>EXPERT #4</div>
+                  <h3>Irfan - Creative Director for Video Generation</h3>
+                </div>
+
+                <Image 
+                    src={imagePresets.benefit('irfan-photo')}
+                    alt="Irfan - Creative Director for Video Generation" 
+                    width={120} 
+                    height={120} 
+                    style={{width: '100%', height: '100%'}} 
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL('irfan-photo')}
+                    sizes={getImageSizes('benefit')}
+                    className={styles.customExpertImages}
+                  />
+                <div className={styles.customExpertBadge}>VIRAL CONTENT</div>
+                <h4>The VEO 3 Creative Director</h4>
+                <p><strong>Business Stage: Content Creation</strong></p>
+                <p>Creative director yang specialized dalam generate optimized VEO 3 prompts untuk video generation. Irfan create professional video concepts, storyboards, marketing materials, dan social content yang engaging.</p>
+                
+                <div className={styles.customExpertFeatures}>
+                  <div className={styles.customExpertFeature}>VEO 3 optimized prompts</div>
+                  <div className={styles.customExpertFeature}>Video concept development</div>
+                  <div className={styles.customExpertFeature}>Marketing video storyboards</div>
+                  <div className={styles.customExpertFeature}>Social media video content</div>
+                </div>
+                
+                <p className={styles.customExpertResult}><em>Video content anda selalu professional dan viral-worthy.</em></p>
+              </div>
+            </div>
+
+            {/* Expert 5: Zaki - Vibe Coding Expert */}
+            <div className={styles.customExpertShowcase}>
+              <div className={styles.customExpertDescription}>
+
+                <div className={styles.customExpertHeader}>
+                  <div className={styles.customExpertNumber}>EXPERT #5</div>
+                  <h3>Zaki - Vibe Coding Expert</h3>
+                </div>
+
+                <Image 
+                    src={imagePresets.benefit('zaki-photo')}
+                    alt="Zaki - Vibe Coding Expert" 
+                    width={120} 
+                    height={120} 
+                    style={{width: '100%', height: '100%'}} 
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL('zaki-photo')}
+                    sizes={getImageSizes('benefit')}
+                    className={styles.customExpertImages}
+                  />
+                <div className={styles.customExpertBadge}>LAUNCH READY</div>
+                <h4>The Mini Vibe-Coder Consultant</h4>
+                <p><strong>Business Stage: Implementation & Launch</strong></p>
+                <p>Build web apps dan sales pages through step-by-step process. Zaki handle PRD setup, generate optimized prompts, dan deliver ready-to-use code untuk launch your digital business without technical background.</p>
+                
+                <div className={styles.customExpertFeatures}>
+                  <div className={styles.customExpertFeature}>No-code web development</div>
+                  <div className={styles.customExpertFeature}>Sales page creation</div>
+                  <div className={styles.customExpertFeature}>PRD & technical documentation</div>
+                  <div className={styles.customExpertFeature}>Launch-ready implementations</div>
+                </div>
+                
+                <p className={styles.customExpertResult}><em>Technical implementation made simple - launch tanpa coding skills.</em></p>
               </div>
             </div>
             
             <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '4rem'}}>
-              <h3><strong>Semua Experts ni Done-For-You!</strong></h3>
-              <p>Zero technical setup required.</p>
+              <h3><strong>Inilah Team AI Yang Akan Transform Business Anda</strong></h3>
               
-              <p>Each expert direka specifically untuk achieve the exact benefits yang saya mention dalam section atas.</p>
+              <p>Bayangkan ada <strong>5 specialist consultants</strong> yang bekerja 24/7 untuk anda... setiap satu expert dalam bidang mereka, ready to deliver professional-grade results dalam minit.</p>
               
-              <p>And the best part?</p>
+              <p>Yang paling powerful - <span className={styles.emphasis}>mereka direka untuk bekerja dalam sequence</span>. Balqis discover profitable ideas → Sarah build your brand → Chae Ha craft converting copy → Irfan create viral content → Zaki launch your business.</p>
               
-              <p><strong>Sekali anda dapat sekali fail-fail yang saya gunakan untuk setup semua expert ni.</strong></p>
+              <p><strong>Complete end-to-end system untuk launch profitable digital business dalam 24 jam.</strong></p>
               
-              <p>TAPI kalau anda betul-betul nak maximize these experts, anda kena faham <span className={styles.emphasis}>cara AI berfikir (Module 2)</span> dan <span className={styles.emphasis}>advanced prompting techniques (Module 4)</span>.</p>
+              <p>Tapi apa yang bezakan Student KelasGPT dari orang yang sekadar beli ready-made AI tools...</p>
               
-              <p>Sebab bila faham foundation...</p>
+              <p>Anda akan dapat belajar:</p>
               
-              <p><strong>Anda boleh:</strong></p>
+              <div className={styles.customExpertFeatures}>
+                <div className={styles.customExpertFeature}>Macam mana setiap Expert Consultant ni dilatih (3-Step Formula)</div>
+                <div className={styles.customExpertFeature}>Custom Instruction dan Source Files setiap expert</div>
+                <div className={styles.customExpertFeature}>Complete Demo macam mana gunakan Experts ni dalam workflow kerja anda</div>
+              </div>
               
-              <ul style={{textAlign: 'left', maxWidth: '600px', margin: '1rem auto'}}>
-                <li>Customize each expert untuk specific needs industry anda</li>
-                <li>Troubleshoot bila AI bagi unexpected results</li>
-                <li>Create your own specialized experts untuk niche applications</li>
-                <li>Scale the benefits across any career change atau business pivot</li>
-                <li>Combine multiple experts untuk complex professional challenges</li>
+              <p><strong>Instead of just using them... anda boleh:</strong></p>
+              
+              <ul className={styles.capabilityList}>
+                <li><span className={styles.ulStrong}>Customize mereka</span> untuk specific industry atau niche anda</li>
+                <li><span className={styles.ulStrong}>Troubleshoot dan optimize</span> bila results tak perfect</li>
+                <li><span className={styles.ulStrong}>Create unlimited new experts</span> untuk scale business anda</li>
+                <li><span className={styles.ulStrong}>Scale across multiple businesses</span> atau career changes</li>
+                <li><span className={styles.ulStrong}>Train them dengan your unique knowledge</span> untuk competitive advantage</li>
+                <li><span className={styles.ulStrong}>Combine multiple experts</span> untuk solve complex business problems</li>
               </ul>
               
-              <p><br />Dan sebelum saya tunjuk silibus terperinci setiap modul yang KelasGPT ajar...</p>
+              <p>Itulah kuasa sebenar apabila anda <em>truly understand</em> macam mana AI berfikir.</p>
+              
+              <p><strong>Dan success stories ni membuktikan exactly apa yang possible...</strong></p>
             </div>
           </div>
         </section>
-
-        {/* --- Bonus CustomGPT Expert Section --- */}
-        {/* <section className={`${styles.section} ${styles.customExpertsSection}`}>
-          <div className="container">
-            <div className={styles.sectionHeader}>
-              <h2>6 Custom Expert Yang Akan Buat Competitors Anda Tertanya-tanya</h2>
-              <p><strong>Sementara colleagues anda masih struggle dengan basic ChatGPT...</strong></p>
-              
-              <p>Anda dah ada personal team of specialists yang kerja 24/7 untuk multiply your professional output.</p>
-              
-              <p><strong>Bayangkan tengah deadline pressure, tapi instead of panic...</strong></p>
-              
-              <p>Anda chill sebab tahu dalam 15 minit, anda boleh produce quality work yang biasanya ambil masa 3-4 hari.</p>
-              
-              <p>Video campaigns yang viral. Web applications yang sophisticated. Marketing angles yang competitors tak terfikir. Data insights yang impress management.</p>
-              
-              <p><strong>Yang best part? Setup sekali je. Guna forever.</strong></p>
-              
-              <p>Mana-mana industry anda pindah, mana-mana business anda start - these 6 experts ikut anda. <em>Macam ada unfair advantage yang orang lain tak tahu.</em></p>
-            </div>
-            
-            <div className={styles.customExpertsGrid}>
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  autoHeight={true}
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('irfan-photo')}
-                          alt="Irfan - VEO 3 Creative Director Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('irfan-profile')}
-                          alt="Professional Video Creation Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>             
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #1 - IRFAN</div>
-                  <h4>Master Video Creation dengan VEO 3</h4>
-                  <p><strong>Bayangkan kalau anda boleh:</strong> Cipta video professional-grade dalam minit je guna Google&quot;s VEO 3. Tak perlu equipment mahal, tak perlu skill video editing - cuma prompt yang tepat. Irfan akan ajar exact prompts untuk viral content, product videos, dan marketing materials yang convert tinggi. <em>Revolutionary video prompting techniques.</em></p>
-                </div>
-              </div>
-              
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('zaki-photo')}
-                          alt="Zaki - Mini vibe Coder Consultant Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('zaki-profile')}
-                          alt="Web Application Development Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #2 - ZAKI</div>
-                  <h4>Build Web Apps Tanpa Coding Skills</h4>
-                  <p><strong>Tak pernah takut technology lagi:</strong> Zaki ajar non-technical people macam mana nak build professional web applications guna LLM from scratch. Landing pages, e-commerce sites, booking systems - semua boleh buat sendiri tanpa hire expensive developers. Save RM20,000++. <em>No-code development mastery dengan AI assistance.</em></p>
-                </div>
-              </div>
-              
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('sarah-photo')}
-                          alt="Sarah - Intuitive Marketing Angle Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('sarah-profile')}
-                          alt="Marketing Angle Discovery Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #3 - SARAH</div>
-                  <h4>Discover Winning Marketing Angles</h4>
-                  <p><strong>Tak pernah confuse tentang messaging lagi:</strong> Sarah uncover hidden marketing angles yang your competitors tak nampak. Dia analyze market psychology, identify emotional triggers, dan craft messaging yang resonate dengan your target audience. Campaign anda convert 300% better. <em>Intuitive angle discovery frameworks.</em></p>
-                </div>
-              </div>
-              
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('balqis-photo')}
-                          alt="Balqis - Friendly Productivity Coach Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('balqis-profile')}
-                          alt="Productivity Coach Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #4 - BALQIS</div>
-                  <h4>Conquer Procrastination Forever</h4>
-                  <p><strong>Tak pernah procrastinate lagi:</strong> Balqis bukan just bagi motivational quotes. Dia identify ROOT CAUSE kenapa anda delay tasks, design personalized productivity systems, dan bagi step-by-step action plans yang actually work. Morning routine, focus techniques, energy management - semua custom untuk your lifestyle. <em>Psychology-based productivity mastery.</em></p>
-                </div>
-              </div>
-              
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('chaeha-photo')}
-                          alt="Chaeha - Engaging Hook Specialist Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('chaeha-profile')}
-                          alt="Hook Specialist Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #5 - CHAEHA</div>
-                  <h4>Craft Scroll-Stopping Hooks</h4>
-                  <p><strong>Audience anda tak boleh scroll past content anda:</strong> Chaeha master art of attention-grabbing. Dia study psychology behind viral content, analyze trending patterns, dan teach exact formulas untuk hooks yang make people STOP and ENGAGE. Facebook ads, LinkedIn posts, email subject lines - semua convert 10x better. <em>Proven hook psychology frameworks.</em></p>
-                </div>
-              </div>
-
-              <div className={styles.customExpertCard}>
-                <div className={styles.customExpertImage}>
-                  <Swiper
-                  modules={[Navigation, Pagination, Autoplay]}
-                  spaceBetween={10}
-                  navigation={true}
-                  pagination={{ clickable: true }}
-                  autoplay={{ delay: 3500, disableOnInteraction: true }}
-                  loop={true}
-                  className={styles.customExpertImageSwiper}
-                  >
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('ikram-photo')}
-                          alt="Ikram - Sophisticated Data Storyteller Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className={styles.customExpertImageContainer}>
-                        <Image 
-                          src={imagePresets.benefit('ikram-profile')}
-                          alt="Data Storyteller Expert" 
-                          fill
-                          style={{objectFit: 'contain'}} 
-                          loading="lazy"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </div>
-                <div className={styles.customExpertContent}>
-                  <div className={styles.customExpertTitle}>EXPERT #6 - IKRAM</div>
-                  <h4>Transform Data Into Compelling Stories</h4>
-                  <p><strong>Data tak boring lagi:</strong> Ikram ambil raw numbers, spreadsheets, atau complex analytics dan transform jadi insightful stories yang management faham. Boardroom presentations, quarterly reports, business proposals - semua data-driven tapi engaging. Boss anda akan impressed dengan your analytical depth. <em>Executive-level data storytelling mastery.</em></p>
-                </div>
-              </div>
-            </div>
-            
-            <div className={styles.salesContent} style={{textAlign: 'center', marginTop: '3rem'}}>
-              <p><strong>Tapi ini semua impossible kalau anda still stuck dengan generic AI prompts...</strong></p>
-              
-              <p>Sementara anda tengah Google &ldquo;how to use ChatGPT for work&rdquo;, your competitors dah master private AI workforce yang most people tak tahu wujud.</p>
-              
-              <p><strong>Here&quot;s what separates winners from wannabes:</strong></p>
-              
-              <p>Winners understand AI psychology. They know exactly how to architect prompts yang produce consistent professional results. Every single time.</p>
-              
-              <p>Wannabes copy-paste random prompts from Facebook groups dan wonder kenapa results tak consistent.</p>
-              
-              <p style={{fontSize: '1.2rem', fontWeight: '700', margin: '2rem 0', color: 'var(--terra-primary)'}}>The gap is widening every month.</p>
-              
-              <p><strong>6 bulan dari sekarang, ada dua jenis professionals:</strong></p>
-              
-              <p>Those yang mastered AI workforce systems (getting promoted, launching successful businesses, working less stress) dan those yang still struggling dengan basic AI tools (falling behind, working weekends, feeling overwhelmed).</p>
-              
-              <p><strong>Which one anda mahu jadi?</strong></p>
-              
-              <p><strong>The difference? They master the 3 psychological foundations yang 99% people ignore:</strong></p>
-              
-              <div className={styles.learnGrid} style={{marginTop: '2rem'}}>
-                <div className={styles.learnItem}>
-                  <CheckCircleIcon />
-                  <h3>AI Psychology Mastery - Predict exactly how AI akan respond sebelum you even send the prompt</h3>
-                </div>
-                <div className={styles.learnItem}>
-                  <CheckCircleIcon />
-                  <h3>Context Control - Make AI remember your preferences, style, dan requirements automatically</h3>
-                </div>
-                <div className={styles.learnItem}>
-                  <CheckCircleIcon />
-                  <h3>Professional Prompt Architecture - Build prompts yang deliver executive-level results every time</h3>
-                </div>
-                <div className={styles.learnItem}>
-                  <CheckCircleIcon />
-                  <h3>Context Design Workflow - Universal problem-solving framework</h3>
-                </div>
-              </div>
-              
-              <p style={{marginTop: '2rem', fontSize: '1.2rem'}}>These are the EXACT foundations yang separate professionals making RM80K dari those making RM200K+. <span className={styles.emphasis}>Anda master semua ni dalam Module 2 & Module 4.</span></p>
-              
-              <p><strong>Tapi here&quot;s the thing...</strong></p>
-              
-              <p>Even kalau anda faham psychology behind AI, you still need the TOOLS.</p>
-              
-              <p>You need the exact prompts. The templates. The step-by-step systems.</p>
-              
-              <p><strong>That&quot;s where these 6 experts come in.</strong></p>
-              
-              <p>They&quot;re not just concepts. They&quot;re ready-to-use, copy-paste professional tools yang you can deploy TODAY.</p>
-              
-              <p style={{fontSize: '1.3rem', fontWeight: '700', margin: '2rem 0', color: 'var(--terra-primary)'}}>While your competitors are still figuring out basic prompts...</p>
-              
-              <p><strong>You&quot;ll have a complete AI workforce that makes you look like a genius.</strong></p>
-              
-              <p><em>And the best part? Setup takes 30 minutes. Results last forever.</em></p>
-            </div>
-          </div>
-        </section> */}
 
         {/* --- Testimonials Section --- */}
         <section className={styles.testimonialsSection}>

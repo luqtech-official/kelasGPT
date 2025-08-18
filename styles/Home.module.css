@@ -587,9 +587,9 @@
 }
 
 /* ==========================================================================
-   8. KelasGPT Benefit Section
+   8. Custom Expert Section
    ========================================================================== */
-.benefitKelasSection {
+.customExpertSection {
   /* background: linear-gradient(135deg, var(--terra-dark), #2C1810); */
   background: linear-gradient(135deg, var(--terra-dark), var(--terra-bg));
   /* background: var(--terra-dark); */
@@ -597,15 +597,15 @@
   position: relative;
 }
 
-.benefitKelasSection .sectionHeader h2 {
+.customExpertSection .sectionHeader h2 {
   color: var(--pure-white);
 }
 
-.benefitKelasSection .sectionHeader p {
+.customExpertSection .sectionHeader p {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.benefitKelasShowcase {
+.customExpertShowcase {
   display: flex;
   align-items: center;
   gap: 4rem;
@@ -613,24 +613,24 @@
   position: relative;
 }
 
-.benefitKelasShowcase .benefitKelasImages,
-.benefitKelasShowcase .benefitKelasDescription {
+.customExpertShowcase .customExpertImages,
+.customExpertShowcase .customExpertDescription {
   flex: 1;
   min-width: 0;
 }
 
-.benefitKelasShowcase .benefitKelasImages {
+.customExpertShowcase .customExpertImages {
   border-radius: 16px;
   position: relative;
   align-self: start;
 }
 
-.benefitKelasHeader {
+.customExpertHeader {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.benefitKelasHeader .benefitKelasNumber {
+.customExpertHeader .customExpertNumber {
   display: inline-block;
   background: var(--success-green);
   color: var(--pure-white);
@@ -643,7 +643,7 @@
   box-shadow: 0 4px 15px rgba(74, 124, 89, 0.4);
 }
 
-.benefitKelasHeader h3 {
+.customExpertHeader h3 {
   color: var(--pure-white);
   margin: 0;
   font-size: 1.8rem;
@@ -651,7 +651,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.benefitKelasDescription {
+.customExpertDescription {
   background: var(--pure-white);
   color: var(--text-primary);
   padding: 3rem;
@@ -661,7 +661,7 @@
   border-left: 5px solid var(--success-green);
 }
 
-.benefitKelasDescription::before {
+.customExpertDescription::before {
   content: '';
   position: absolute;
   top: 0;
@@ -673,7 +673,7 @@
   border-radius: 0 20px 0 100%;
 }
 
-.benefitKelasBadge {
+.customExpertBadge {
   display: inline-block;
   background: linear-gradient(135deg, var(--terra-primary), var(--terra-dark));
   color: var(--pure-white);
@@ -688,32 +688,32 @@
   text-transform: uppercase;
 }
 
-.benefitKelasDescription h3 {
+.customExpertDescription h3 {
   color: var(--terra-dark);
   margin: 0 0 0.5rem 0;
   font-size: 1.8rem;
   font-weight: 700;
 }
 
-.benefitKelasDescription h4 {
+.customExpertDescription h4 {
   color: var(--terra-primary);
   margin: 0 0 1.5rem 0;
   font-size: 1.3rem;
   font-weight: 600;
 }
 
-.benefitKelasDescription p {
+.customExpertDescription p {
   color: var(--text-secondary);
   line-height: 1.7;
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
 }
 
-.benefitKelasFeatures {
+.customExpertFeatures {
   margin: 2rem 0;
 }
 
-.feature {
+.customExpertFeature {
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -724,17 +724,17 @@
   transition: all 0.3s ease;
 }
 
-.feature:last-child {
+.customExpertFeature:last-child {
   border-bottom: none;
 }
 
-.feature:hover {
+.customExpertFeature:hover {
   background: var(--terra-bg);
   padding-left: 1rem;
   border-radius: 8px;
 }
 
-.feature::before {
+.customExpertFeature::before {
   content: '✓';
   color: var(--success-green);
   font-weight: 700;
@@ -742,7 +742,7 @@
   flex-shrink: 0;
 }
 
-.benefitKelasResult {
+.customExpertResult {
   color: var(--terra-dark);
   font-style: italic;
   font-size: 1.1rem;
@@ -756,7 +756,7 @@
   position: relative;
 }
 
-.benefitKelasResult::before {
+.customExpertResult::before {
   content: '"';
   position: absolute;
   top: -0.5rem;
@@ -767,14 +767,14 @@
   font-family: Georgia, serif;
 }
 
-.benefitKelasSection .salesContent {
+.customExpertSection .salesContent {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 3rem;
   margin-top: 4rem;
 }
 
-.benefitKelasSection .salesContent ul {
+.customExpertSection .salesContent ul {
   background:rgba(44, 24, 16, 0.7);
   padding: 2rem;
   border-radius: 12px;
@@ -785,17 +785,17 @@
   max-width: 600px;
 }
 
-.benefitKelasSection .salesContent li {
+.customExpertSection .salesContent li {
   color: rgba(255, 255, 255, 0.9);
   padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.benefitKelasSection .salesContent li:last-child {
+.customExpertSection .salesContent li:last-child {
   border-bottom: none;
 }
 
-.benefitKelasSection .salesContent li::before {
+.customExpertSection .salesContent li::before {
   content: '▶';
   /* color: var(--terra-light); */
   color: rgba(255, 255, 255, 0.9);
@@ -803,204 +803,13 @@
   font-size: 0.8rem;
 }
 /* ==========================================================================
-   9. Free 5 customExperts Section
+   9. Testimonials Section
    ========================================================================== */
-.customExpertsSection {
-  background: linear-gradient(135deg, var(--terra-bg), var(--warm-gray));
-  border-top: 1px solid var(--terra-light);
-  position: relative;
-}
-
-.customExpertsSection::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--terra-primary), transparent);
-  opacity: 0.4;
-}
-
-.customExpertsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.customExpertCard {
-  background: var(--pure-white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--terra-light);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-.customExpertCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.customExpertCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--terra-primary), var(--success-green));
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.customExpertCard:hover::before {
-  opacity: 1;
-}
-
-.customExpertImage {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  border: 4px solid var(--pure-white);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: var(--terra-light);
-}
-
-.customExpertImage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 
-.customExpertImageSwiper {
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  background: var(--pure-white);
-  border: 2px solid var(--terra-light);
-  transition: all 0.3s ease;
-}
 
-.customExpertImageSwiper:hover {
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-  border-color: var(--terra-primary);
-  transform: translateY(-2px);
-}
 
-.customExpertImageContainer {
-  position: relative;
-  width: 100%;
 
-  padding-top: 85%; 
-  aspect-ratio: 4/3.2; 
-
-  /* height: auto; */
-  max-height: 450px;
-}
-
-.customExpertImageContainer img {
-  transition: transform 0.4s ease;
-  width: 100%;
-  height: auto; 
-  object-fit: contain; 
-}
-
-/* .customExpertImageContainer::after {
-  content: '';
-  display: block;
-  padding-bottom: 60%;
-} */
-
-.customExpertImageSwiper:hover img {
-  transform: scale(1.02);
-}
-
-.customExpertImageSwiper .swiper-button-next,
-.customExpertImageSwiper .swiper-button-prev {
-  color: var(--pure-white);
-  background: rgba(0, 0, 0, 0.5);
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-}
-
-.customExpertImageSwiper .swiper-button-next:hover,
-.customExpertImageSwiper .swiper-button-prev:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: scale(1.1);
-}
-
-.customExpertImageSwiper .swiper-button-next::after,
-.customExpertImageSwiper .swiper-button-prev::after {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.customExpertImageSwiper .swiper-pagination {
-  bottom: 15px;
-}
-
-.customExpertImageSwiper .swiper-pagination-bullet {
-  background: rgba(255, 255, 255, 0.6);
-  opacity: 1;
-  width: 10px;
-  height: 10px;
-  transition: all 0.3s ease;
-}
-
-.customExpertImageSwiper .swiper-pagination-bullet-active {
-  background: var(--pure-white);
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.customExpertContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.customExpertTitle {
-  font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--terra-primary);
-  margin-bottom: 1rem;
-  background: var(--terra-bg);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  border: 1px solid var(--terra-light);
-}
-
-.customExpertCard h4 {
-  font-size: 1.3rem;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.customExpertCard p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 0.95rem;
-  margin: 0;
-}
 
 .learnGrid {
   display: grid;
@@ -2495,16 +2304,6 @@
     font-size: 1.2rem;
   }
 
-  /* Expert Cards Responsive */
-  .customExpertsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .customExpertImageContainer {
-    max-height: 350px;
-    padding-top: 80%;
-  }
   .moduleContent {
     padding: 0 1.2rem 1.2rem 1.2rem;
   }
@@ -2734,49 +2533,40 @@
   }
   
   /* AI Experts Bonus */
-  .benefitKelasShowcase {
+  .customExpertShowcase {
     flex-direction: column;
     gap: 3rem;
     margin: 3rem 0;
   }
-  .benefitKelasShowcase .benefitKelasImages,
-  .benefitKelasShowcase .benefitKelasDescription {
+  .customExpertShowcase .customExpertImages,
+  .customExpertShowcase .customExpertDescription {
     flex: none;
     min-width: 0;
     max-width: 100%;
     height: auto;
   }
-  .benefitKelasShowcase .benefitKelasImages {
+  .customExpertShowcase .customExpertImages {
     order: 1;
   }
-  .benefitKelasShowcase .benefitKelasDescription {
+  .customExpertShowcase .customExpertDescription {
     order: 2;
   }
-  .benefitKelasDescription {
+  .customExpertDescription {
     padding: 2.5rem 2rem;
   }
-  .benefitKelasHeader h3 {
+  .customExpertHeader h3 {
     font-size: 1.5rem;
   }
-  .benefitKelasDescription h3 {
+  .customExpertDescription h3 {
     font-size: 1.5rem;
   }
-  .benefitKelasDescription h4 {
+  .customExpertDescription h4 {
     font-size: 1.2rem;
   }
-  .customExpertImageSwiper .swiper-button-next,
-  .customExpertImageSwiper .swiper-button-prev {
-    width: 35px;
-    height: 35px;
-  }
-  .customExpertImageSwiper .swiper-button-next::after,
-  .customExpertImageSwiper .swiper-button-prev::after {
-    font-size: 14px;
-  }
-  .benefitKelasSection .salesContent {
+  .customExpertSection .salesContent {
     padding: 2rem 1.5rem;
   }
-  .benefitKelasSection .salesContent ul {
+  .customExpertSection .salesContent ul {
     padding: 1.5rem;
   }
   
@@ -2958,38 +2748,28 @@
 }
 
 @media (max-width: 480px) {
-  .benefitKelasShowcase {
+  .customExpertShowcase {
     gap: 2rem;
     margin: 2rem 0;
   }
-  .benefitKelasDescription {
+  .customExpertDescription {
     padding: 2rem 1.5rem;
   }
-  .benefitKelasHeader {
+  .customExpertHeader {
     margin-bottom: 1.5rem;
   }
-  .benefitKelasHeader h3 {
+  .customExpertHeader h3 {
     font-size: 1.3rem;
   }
-  .benefitKelasDescription h3 {
+  .customExpertDescription h3 {
     font-size: 1.3rem;
   }
   
-  /* Mobile Expert Cards */
-  .customExpertsGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
   
-  .customExpertImageContainer {
-    max-height: 300px;
-    padding-top: 75%;
-  }
-  
-  .feature {
+  .customExpertFeature {
     font-size: 0.95rem;
   }
-  .benefitKelasResult {
+  .customExpertResult {
     padding: 1rem 1.5rem;
     font-size: 1rem;
   }
@@ -2999,4 +2779,10 @@
   .heroPillText {
     font-size: 0.7rem;
   }
+}
+
+/* --- UL Strong Styling --- */
+.ulStrong {
+  font-weight: bold;
+  color: #ffb34a;
 }
