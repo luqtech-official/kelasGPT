@@ -507,7 +507,7 @@ export default function Home({ productSettings }) {
               
               <p>Tapi mungkin anda tertanya-tanya..</p>
               
-              <p><strong>"Macam mana exactly AI boleh jadi expert-level macam ni?"</strong></p>
+              <p><strong>Macam mana exactly AI boleh jadi expert-level macam ni?</strong></p>
               
               <p>Fair question.</p>
               
