@@ -177,25 +177,36 @@ export default function Home({ productSettings }) {
 
             {/* Pill Element */}
             <div className={styles.heroPill}>
-              <span className={styles.heroPillText}>Belajar AI Tanpa Technical Background..</span>
+              <span className={styles.heroPillText}>Belajar AI <strong>Tanpa</strong> Technical Background..</span>
             </div>
+
+
+            {/* notes:
+            &#8209; : none breaking hyphen  '-'
+            &nbsp;  : none breaking space, ' '
+            */}
 
             {/* Main Headline */}
             <h1 className={styles.heroTitle}>
               <span>
-                &lsquo;Open Secret&rsquo; Yang<br />
-                Hanya AI Engineers Tahu..<br />
-                <span className={styles.emphasis}>3-Step Formula,</span> Khusus Untuk <span className={styles.emphasis}>Melatih</span> AI Expert Anda
+
+                <span className={styles.emphasis}>3-Step Formula,</span> Khusus Untuk <span className={styles.emphasis}>Melatih</span> AI&nbsp;Assistants Anda Sendiri..
                 <div className={styles.heroSeparator}></div>
+                
+                &lsquo;Blueprint&rsquo; Sebenar Yang AI&nbsp;Engineers Guna Selama Ini
+                
+                {/* <div className={styles.heroSeparator}></div> */}
+
               </span>
             </h1>
 
             {/* Main Sub Headline */}
             <h2 className={styles.heroSubTitle}>
               <span>
-                Formula Yang Sama AI Experts Ini <span className={styles.emphasis}>Dilatih </span>
-                Untuk Anda Build & Launch Profitable Digital Business...<br />
-                <span className={styles.emphasis}>Kurang Dari 24 Jam!</span>
+                <br />
+                Formula Yang Sama &lsquo;Consultant&#8209;Level&rsquo;&nbsp;Assistants Ini <span className={styles.emphasis}>Dilatih&nbsp;Untuk&nbsp;Anda </span>
+                Build&nbsp;&&nbsp;Launch <span className={styles.emphasis}>Profitable&nbsp;Digital&nbsp;Business... </span>
+                <span className={styles.highlight2}>Kurang&nbsp;Dari&nbsp;48&nbsp;Jam!</span>
               </span>
             </h2>
 
@@ -214,7 +225,7 @@ export default function Home({ productSettings }) {
                 sizes={getImageSizes('hero')}
               />
               <p className={styles.heroVisualCaption}>
-                <em style={{fontSize: '0.9em'}}>(Antara Expert AI Yang Disediakan)</em>
+                <em style={{fontSize: '0.9em'}}>(Antara AI Assistant Yang Disediakan)</em>
               </p>
             </div>
 
