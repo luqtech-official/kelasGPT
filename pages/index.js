@@ -235,11 +235,11 @@ export default function Home({ productSettings }) {
                 <h3>Apa Yang Anda Akan Dapat:</h3>
                 
                 <ul className={styles.heroList}>
-                  <li><span className={styles.emphasis}>Video AI Masterclass</span> Fahamkan cara AI Berfikir, Teknik Prompt Advanced untuk Maximum Output</li>
-                  <li><span className={styles.emphasis}>3-Step Formula Rahsia</span> untuk latih AI jadi Personal Expert Consultant (Bina Expert Consultant Anda Sendiri!)</li>
-                  <li><span className={styles.emphasis}>5 Done-For-You Expert Consultant</span> - Product Ideation, Branding, Copywriting, VEO 3 Prompt Director & Web Development (No-Code) specialist</li>
-                  <li><span className={styles.emphasis}>Source Files</span> Setiap Expert Consultant yang anda boleh guna dengan mana-mana AI platform (supaya anda tidak terikat dengan ChatGPT sahaja)</li>
-                  <li><span className={styles.emphasis}>Step-by-Step Demo Video Tutorial</span> - Complete Workflow dari cari idea sampai launch profitable digital business dalam 24 jam</li>
+                  <li><span className={styles.highlight2}>Video AI Masterclass</span> Video kelas <em>Deep&#8209;Dive</em> <strong>cara AI berfikir <bold>+</bold>&nbsp;Teknik Prompt Advanced</strong> untuk dapatkan maximum output dengan minimal prompt</li>
+                  <li><span className={styles.highlight2}>3-Step Formula Rahsia</span> untuk latih AI jadi Consultant&#8209;Level Assistant<br/><strong>(Bina Team&nbsp;AI&nbsp;Consultant Anda Sendiri!)</strong></li>
+                  <li><span className={styles.highlight2}>5 Done-For-You AI Assistant</span> Team Consultant Lengkap Dari Idea Generation sampai siap Salespage & Marketing Material.. <strong>Anda ready untuk terus menjual!</strong></li>
+                  <li><span className={styles.highlight2}>Source Files</span> Setiap AI Assistant yang anda dapat, boleh <strong>digunakan dengan mana-mana AI platform</strong> (supaya anda tidak terikat dengan ChatGPT sahaja)</li>
+                  <li><span className={styles.highlight2}>Step-by-Step Demo Video Tutorial</span> <strong>Tiru proven workflow</strong> dari cari idea sampai launch profitable digital business <strong>kurang 48 jam!</strong></li>
                 </ul>
               </div>
             </div>

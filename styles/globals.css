@@ -10,6 +10,7 @@
   --terra-primary: #CD8B76;
   --terra-dark: #A8523F;
   --terra-light: #E8C5B8;
+  --terra-verylight: #e8c5b891; /*terra-light + transparency */
   --terra-bg: #FBF8F5;
   --text-primary: #2C2C2C;
   --text-secondary: #6B5B57;
