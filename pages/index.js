@@ -239,7 +239,7 @@ export default function Home({ productSettings }) {
                   <li><span className={styles.highlight2}>3-Step Formula Rahsia</span> untuk latih AI jadi Consultant&#8209;Level Assistant<br/><strong>(Bina Team&nbsp;AI&nbsp;Consultant Anda Sendiri!)</strong></li>
                   <li><span className={styles.highlight2}>5 Done-For-You AI Assistant</span> Team Consultant Lengkap Dari Idea Generation sampai siap Salespage & Marketing Material.. <strong>Anda ready untuk terus menjual!</strong></li>
                   <li><span className={styles.highlight2}>Source Files</span> Setiap AI Assistant yang anda dapat, boleh <strong>digunakan dengan mana-mana AI platform</strong> (supaya anda tidak terikat dengan ChatGPT sahaja)</li>
-                  <li><span className={styles.highlight2}>Step-by-Step Demo Video Tutorial</span> <strong>Tiru proven workflow</strong> dari cari idea sampai launch profitable digital business <strong>kurang 48 jam!</strong></li>
+                  <li><span className={styles.highlight2}>Step-by-Step Demo Video Tutorial</span> <strong>Tiru&nbsp;Proven&nbsp;Workflow -</strong> Kaedah cari idea, bina produk dan creative&apos;s sampai launch profitable digital business <strong>kurang 48 jam!</strong></li>
                 </ul>
               </div>
             </div>
