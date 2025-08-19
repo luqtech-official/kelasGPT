@@ -19,7 +19,9 @@
       "WebFetch(domain:docs.imagekit.io)",
       "WebFetch(domain:imagekit.io)",
       "WebFetch(domain:imagekit.io)",
-      "WebFetch(domain:developers.facebook.com)"
+      "WebFetch(domain:developers.facebook.com)",
+      "Bash(rmdir:*)",
+      "WebSearch"
     ],
     "deny": []
   }
