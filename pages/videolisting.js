@@ -1,39 +1,10 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import styles from '../styles/VideoListing.module.css';
+import styles from '../styles/VideoListing2.module.css';
 
 export default function VideoListing() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (video) => {
-    setSelectedVideo(video);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedVideo(null);
-  };
-
-  // Handle keyboard events for modal
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape' && isModalOpen) {
-        closeModal();
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
-    };
-  }, [isModalOpen]);
   const courseModules = [
     {
       title: "Pengenalan Asas AI dan LLM",
@@ -202,6 +173,12 @@ export default function VideoListing() {
     }
   ];
 
+  useEffect(() => {
+    if (courseModules.length > 0 && courseModules[0].videos.length > 0) {
+      setSelectedVideo(courseModules[0].videos[0]);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -209,174 +186,113 @@ export default function VideoListing() {
         <meta name="description" content="Akses eksklusif kepada kandungan video lengkap KelasGPT" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
 
       <div className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>KelasGPT</h1>
-          <p className={styles.subtitle}>Kandungan Kursus Video Lengkap</p>
-          <div className={styles.divider}></div>
+          <p className={styles.subtitle}>AI-Powered Learning Hub</p>
         </header>
 
-        <main className={styles.main}>
-          <div className={styles.intro}>
-            <h2>Selamat Datang ke Kursus KelasGPT</h2>
-            <p>
-              Terima kasih kerana menyertai KelasGPT. Di bawah adalah kandungan lengkap kursus yang telah anda beli. 
-              Setiap video direka untuk memberikan anda pemahaman mendalam tentang penggunaan AI dan LLM dalam kehidupan 
-              dan perniagaan harian. Klik pada mana-mana video untuk menontonnya.
-            </p>
-          </div>
-
-          <div className={styles.courseContent}>
-            {courseModules.map((module, moduleIndex) => (
-              <section key={moduleIndex} className={styles.module}>
-                <div className={styles.moduleHeader}>
-                  <h3 className={styles.moduleTitle}>{module.title}</h3>
-                  <p className={styles.moduleDescription}>{module.description}</p>
+        <div className={styles.mainLayout}>
+          {/* Left Column */}
+          <div className={styles.leftColumn}>
+            <section className={styles.currentlyWatching}>
+              <h2>Currently Watching</h2>
+              {selectedVideo ? (
+                <div className={styles.videoPlayer}>
+                  <iframe
+                    src={selectedVideo.url}
+                    title={selectedVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
                 </div>
+              ) : (
+                <p>Select a video to start watching.</p>
+              )}
+            </section>
 
-                <div className={styles.videoGrid}>
-                  {module.videos.map((video, videoIndex) => (
-                    <div key={videoIndex} className={styles.videoCard}>
-                      <div className={styles.videoInfo}>
-                        <h4 className={styles.videoTitle}>{video.title}</h4>
-                        <p className={styles.videoDescription}>{video.description}</p>
-                        <div className={styles.videoMeta}>
-                          <span className={styles.duration}>{video.duration}</span>
-                          <span className={styles.separator}>•</span>
-                          <span className={styles.moduleNumber}>
-                            Modul {moduleIndex + 1}.{videoIndex + 1}
-                          </span>
+            <section className={styles.courseContent}>
+              <h2>Course Content</h2>
+              {courseModules.map((module, moduleIndex) => (
+                <div key={moduleIndex} className={styles.module}>
+                  <div className={styles.moduleHeader}>
+                    <h3 className={styles.moduleTitle}>{module.title}</h3>
+                    <p className={styles.moduleDescription}>{module.description}</p>
+                  </div>
+                  <div className={styles.videoList}>
+                    {module.videos.map((video, videoIndex) => (
+                      <div
+                        key={videoIndex}
+                        className={`${styles.videoCard} ${selectedVideo && selectedVideo.url === video.url ? styles.selected : ''}`}
+                        onClick={() => setSelectedVideo(video)}
+                      >
+                        <div className={styles.videoInfo}>
+                          <h4>{video.title}</h4>
+                          <div className={styles.videoMeta}>
+                            <span>{video.duration}</span>
+                            <span>•</span>
+                            <span>Modul {moduleIndex + 1}.{videoIndex + 1}</span>
+                          </div>
                         </div>
-                      </div>
-                      <div className={styles.videoActions}>
-                        <button 
-                          onClick={() => openModal(video)}
-                          className={styles.watchButton}
-                        >
-                          <svg className={styles.playIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <polygon points="5,3 19,12 5,21" fill="currentColor" />
+                        <button className={styles.watchButton}>
+                          <svg className={styles.playIcon} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
                           </svg>
-                          Tonton Video
                         </button>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-
-          {/* AI Experts Section */}
-          <div className={styles.expertSection}>
-            <div className={styles.sectionHeader}>
-              <h2>AI Experts Eksklusif</h2>
-              <p>
-                Akses terus kepada 6 AI Expert yang dilatih khas untuk membantu anda dalam pelbagai bidang. 
-                Setiap expert dilengkapi dengan sumber fail khusus untuk pembelajaran mendalam.
-              </p>
-            </div>
-
-            <div className={styles.expertGrid}>
-              {aiExperts.map((expert, index) => (
-                <div key={index} className={styles.expertCard}>
-                  <div className={styles.expertInfo}>
-                    <h3 className={styles.expertName}>{expert.name}</h3>
-                    <h4 className={styles.expertTitle}>{expert.title}</h4>
-                    <p className={styles.expertDescription}>{expert.description}</p>
-                  </div>
-                  
-                  <div className={styles.expertActions}>
-                    <a 
-                      href={expert.accessExpert}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.expertButton}
-                    >
-                      <svg className={styles.chatIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                      </svg>
-                      Access Expert
-                    </a>
-                    <a 
-                      href={expert.sourceFile}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.sourceButton}
-                    >
-                      <svg className={styles.fileIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                      </svg>
-                      Source Files
-                    </a>
+                    ))}
                   </div>
                 </div>
               ))}
-            </div>
+            </section>
           </div>
 
-          <div className={styles.footer}>
-            <div className={styles.footerContent}>
-              <h3>Sokongan & Bantuan</h3>
-              <p>
-                Jika anda menghadapi sebarang masalah dengan video atau mempunyai soalan tentang kursus, 
-                sila hubungi kami untuk mendapatkan sokongan.
-              </p>
+          {/* Right Column */}
+          <div className={styles.rightColumn}>
+            <section className={styles.expertSection}>
+              <h2>AI Experts</h2>
+              <div className={styles.expertGrid}>
+                {aiExperts.map((expert, index) => (
+                  <div key={index} className={styles.expertCard}>
+                    <div className={styles.expertInfo}>
+                      <h3>{expert.name}</h3>
+                      <h4>{expert.title}</h4>
+                      <p>{expert.description}</p>
+                    </div>
+                    <div className={styles.expertActions}>
+                      <a href={expert.accessExpert} target="_blank" rel="noopener noreferrer" className={styles.expertButton}>
+                        <svg className={styles.chatIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        Access Expert
+                      </a>
+                      <a href={expert.sourceFile} target="_blank" rel="noopener noreferrer" className={styles.sourceButton}>
+                        <svg className={styles.fileIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Source Files
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.supportSection}>
+              <h3>Support & Help</h3>
               <div className={styles.contactInfo}>
                 <p>📧 Email: support@kelasgpt.com</p>
                 <p>💬 WhatsApp: +60 12-345-6789</p>
               </div>
-            </div>
+            </section>
           </div>
-        </main>
-
-        {/* Video Modal */}
-        {isModalOpen && selectedVideo && (
-          <div className={styles.modalOverlay} onClick={closeModal}>
-            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-              <div className={styles.modalHeader}>
-                <h3 className={styles.modalTitle}>{selectedVideo.title}</h3>
-                <button 
-                  className={styles.closeButton}
-                  onClick={closeModal}
-                  aria-label="Close modal"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
-              <div className={styles.modalBody}>
-                <div className={styles.videoContainer}>
-                  <iframe
-                    src={selectedVideo.url.includes('youtube.com/embed') ? 
-                      `${selectedVideo.url}&enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}` : 
-                      selectedVideo.url
-                    }
-                    title={selectedVideo.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className={styles.videoIframe}
-                  ></iframe>
-                </div>
-                <div className={styles.videoDetails}>
-                  <p className={styles.modalDescription}>{selectedVideo.description}</p>
-                  <div className={styles.modalMeta}>
-                    <span className={styles.modalDuration}>Durasi: {selectedVideo.duration}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </>
   );

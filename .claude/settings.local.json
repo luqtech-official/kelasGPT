@@ -21,7 +21,8 @@
       "WebFetch(domain:imagekit.io)",
       "WebFetch(domain:developers.facebook.com)",
       "Bash(rmdir:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:huly.io)"
     ],
     "deny": []
   }
