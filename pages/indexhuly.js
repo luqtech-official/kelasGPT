@@ -175,7 +175,7 @@ export default function Home({ productSettings }) {
       </Head>
 
       {/* The SocialProof component is kept as requested */}
-      <SocialProof />
+      {/* <SocialProof /> */}
       
       <main className={styles.main}>
         
