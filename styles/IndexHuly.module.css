@@ -453,14 +453,14 @@
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotate 8s linear infinite;
-  
+/*   
   mask: 
   linear-gradient(#fff 0 0) content-box, 
   linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask: 
   linear-gradient(#fff 0 0) content-box, 
-  linear-gradient(#fff 0 0);
+  linear-gradient(#fff 0 0); */
   /* -webkit-mask-composite: xor; */
 
   z-index: -1;
