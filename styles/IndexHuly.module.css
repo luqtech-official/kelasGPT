@@ -12,17 +12,17 @@
 /* Registers the --angle property for smooth animation */
 @property --angle {
   syntax: '<angle>';
-  initial-value: 0deg;
+  initial-value: 53deg;
   inherits: false;
 }
 
 /* Keyframes for rotating glowing border effect */
 @keyframes rotation {
   from {
-    --angle: 0deg;
+    --angle: 53deg;
   }
   to {
-    --angle: 360deg;
+    --angle: 413deg;
   }
 }
 
@@ -39,7 +39,7 @@
   background-image: radial-gradient(circle at 1px 1px,
     rgba(255,255,255,0.08) 1px,
     transparent 0);
-  background-size: 5px 5px;
+  background-size: 3px 3px;
   padding: 0.75rem 0 0 0;
 }
 
@@ -405,7 +405,7 @@
   bottom: -3px;
   border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  animation: rotation 6s linear infinite;
+  animation: rotation 10s linear infinite;
   z-index: -1;
   will-change: transform;
 }
@@ -424,7 +424,7 @@
   filter: blur(20px);
   opacity: 70%;
   z-index: -2;
-  animation: rotation 6s linear infinite;
+  animation: rotation 10s linear infinite;
   will-change: transform, filter;
 }
 
@@ -2930,6 +2930,13 @@
     right: -0.5px;
     bottom: -0.5px;
   }
+
+  .heroVisualContent::before {
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+}
 
   .heroTeaser {
     margin: 2rem 0;
