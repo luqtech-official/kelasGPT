@@ -448,28 +448,24 @@
 .heroVisualContent::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   padding: 2px;          /* border thickness */
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotate 8s linear infinite;
-/*   
-  mask: 
-  linear-gradient(#fff 0 0) content-box, 
-  linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask: 
-  linear-gradient(#fff 0 0) content-box, 
-  linear-gradient(#fff 0 0); */
-  /* -webkit-mask-composite: xor; */
-
   z-index: -1;
 }
 
 .heroVisualContent::after {
   content: '';
   position: absolute;
-  inset: -10px; 
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px; 
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   filter: blur(20px);
