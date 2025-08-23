@@ -389,11 +389,13 @@
 .heroVisualContent {
   background: #111;
   border-radius: 14px;
+  --angle: 0deg;
   position:relative;
   z-index: 0;
 }
 
 /* DO NOT TOUCH  */
+/* Border Animation */
 .heroVisualContent::after{
   content: '';
   position: absolute;
@@ -401,13 +403,15 @@
   left: -3px;
   right: -3px;
   bottom: -3px;
-  border-radius: inherit;
+  border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotation 6s linear infinite;
   z-index: -1;
+  will-change: transform;
 }
 
 /* DO NOT TOUCH  */
+/* Border Glow */
 .heroVisualContent::before {
   content: '';
   position: absolute;
@@ -415,12 +419,13 @@
   left: -20px;
   right: -20px;
   bottom: -20px;
-  border-radius: inherit;
+  border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   filter: blur(20px);
   opacity: 70%;
   z-index: -2;
   animation: rotation 6s linear infinite;
+  will-change: transform, filter;
 }
 
 
