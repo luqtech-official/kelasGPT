@@ -216,24 +216,21 @@ export default function Home({ productSettings }) {
             </h2>
 
             {/* Hero Visual Element with Animated Glowing Border */}
-            {/* <div className={styles.heroVisualContainer}> */}
-              {/* <div className={styles.heroVisualAnimated}> */}
-                <div className={styles.heroVisualContent}>
-                  <Image 
-                    src={imagePresets.hero('hero-main', { quality: 'q_85' })}
-                    alt="KelasGPT 3 Experts profile Card Visual" 
-                    width={600} 
-                    height={400} 
-                    style={{width: '100%', height: 'auto'}} 
-                    loading="eager"
-                    priority
-                    placeholder="blur"
-                    blurDataURL={getBlurDataURL('hero-main')}
-                    sizes={getImageSizes('hero')}
-                  />
-                </div>
-              {/* </div>
-            </div> */}
+            <div className={styles.heroVisualContent}>
+              <Image 
+                src={imagePresets.hero('hero-main', { quality: 'q_90' })}
+                alt="KelasGPT 3 Experts profile Card Visual" 
+                width={600} 
+                height={400} 
+                style={{width: '100%', height: 'auto'}} 
+                loading="eager"
+                priority
+                placeholder="blur"
+                blurDataURL={getBlurDataURL('hero-main')}
+                sizes={getImageSizes('hero')}
+                className={styles.heroImage}
+              />
+            </div>
           </div>
         </section>
 

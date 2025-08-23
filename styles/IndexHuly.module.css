@@ -389,89 +389,80 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* max-width: 800px; */
+  max-width: 800px;
   margin: 0 auto 2rem auto;
 }
 
 /* Middle layer with rotating vibrant conic gradient border */
 .heroVisualAnimated {
-  
   position: relative;
   border-radius: 16px;
-  padding: 4px;
-  --angle: 0deg;
-  background: conic-gradient(
-    from var(--angle),
-    #0088ff 0deg,  
-    #0066cc 45deg,
-    #111 90deg,
-    #111 135deg,
-    #ff6600 180deg,
-    #cc4400 225deg,
-    #111 270deg,
-    #111 315deg,
-    #0088ff 360deg
-  );
+  padding: 10px;
+  background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotate 8s linear infinite;
 }
 
-.heroVisualAnimated::before {
-  
-  position: relative;
-  border-radius: 16px;
-  padding: 8px;
-  background: conic-gradient(
-    from var(--angle),
-    #0088ff 0deg,  
-    #0066cc 45deg,
-    #111 90deg,
-    #111 135deg,
-    #ff6600 180deg,
-    #cc4400 225deg,
-    #111 270deg,
-    #111 315deg,
-    #0088ff 360deg
-  );
+.heroVisualAnimated::after {
+  content: '';
+  position: absolute;
+  border-radius: inherit;
+  inset: -40px;
+  background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotate 8s linear infinite;
+  filter: blur(80px);
+  mask: radial-gradient(circle, transparent 70%, black 100%);
+  /* z-index: -1; */
 }
+
 
 .heroVisualContent {
   /* Main content box */
-  background: #111; /* inner background */
-  border-radius: 12px;
-  position: relative;
-  z-index: 0;
+  background: #111;
+  border-radius: 14px;
+  padding: 2px;
+  position:relative;
   padding: 0em;
-  color: white; /* so you can see text */
+  z-index: 0;
 }
 
+/* DO NOT TOUCH  */
 .heroVisualContent::before {
   content: '';
   position: absolute;
+  /* inset: -2px; */
   top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
-  padding: 2px;          /* border thickness */
+  padding: 2px;
+  padding: 2px;
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   animation: rotate 8s linear infinite;
   z-index: -1;
 }
 
+/* DO NOT TOUCH  */
 .heroVisualContent::after {
   content: '';
   position: absolute;
+  /* inset: -10px; */
   top: -10px;
   left: -10px;
   right: -10px;
-  bottom: -10px; 
+  bottom: -10px;
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  filter: blur(20px);
-  /* opacity: 80%; */
+  filter: blur(50px);
+  opacity: 70%;
   z-index: -2;
   animation: rotate 8s linear infinite;
+}
+
+
+.heroImage {
+  border-radius: 12px;
+  z-index: 1;
 }
 
 .heroContent {
@@ -2962,28 +2953,12 @@
   .heroContent {
     padding: 0 1rem;
   }
-  .heroVisualCaption {
-    font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-  }
+
   .heroVisualContainer {
     max-width: 95%;
     margin: 0 auto 1.5rem auto;
   }
-  .heroVisualAnimated {
-    border-radius: 12px;
-    padding: 3px; /* Slightly thicker for better visibility */
-    /* Strong glow on tablet for great visibility */
-    box-shadow: 
-      0 0 8px rgba(0, 136, 255, 0.7),
-      0 0 20px rgba(255, 102, 0, 0.6),
-      0 0 40px rgba(0, 136, 255, 0.5),
-      0 0 60px rgba(255, 102, 0, 0.4),
-      0 0 80px rgba(0, 136, 255, 0.3);
-  }
-  .heroVisualContent {
-    border-radius: 9px;
-  }
+
   .heroTeaser {
     margin: 2rem 0;
     padding: 1.5rem;
@@ -3071,21 +3046,7 @@
     max-width: 100%;
     margin: 0 auto 1rem auto;
   }
-  .heroVisualAnimated {
-    border-radius: 8px;
-    padding: 2px;
-    /* Slower animation on very small screens to reduce battery drain */
-    animation: rotate 6s linear infinite;
-    /* Noticeable glow even on small screens */
-    box-shadow: 
-      0 0 6px rgba(0, 136, 255, 0.6),
-      0 0 15px rgba(255, 102, 0, 0.5),
-      0 0 30px rgba(0, 136, 255, 0.4),
-      0 0 45px rgba(255, 102, 0, 0.3);
-  }
-  .heroVisualContent {
-    border-radius: 6px;
-  }
+  
   /* Mechanism Section Mobile */
   .mechanismSection .sectionHeader h2 {
     font-size: 1.6rem;
