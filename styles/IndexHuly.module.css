@@ -432,10 +432,14 @@
   z-index: -2;
   animation: rotation 10s linear infinite;
   will-change: transform, filter;
+  
+  isolation: isolate;
+  contain: layout style paint;
+  /* iOS Safari fixes */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 
 
