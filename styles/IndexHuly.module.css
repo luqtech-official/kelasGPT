@@ -386,13 +386,18 @@
   opacity: 0.6;
 }
 
+.heroVisualWrapper {
+  position: relative;
+  padding: 25px; /* Space for the blur effect */
+}
+
 .heroVisualContent {
   background: #111;
   border-radius: 14px;
   --angle: 0deg;
   position:relative;
   z-index: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* DO NOT TOUCH  */
@@ -427,6 +432,8 @@
   z-index: -2;
   animation: rotation 10s linear infinite;
   will-change: transform, filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 
