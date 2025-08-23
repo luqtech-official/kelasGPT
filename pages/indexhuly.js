@@ -174,16 +174,25 @@ export default function Home({ productSettings }) {
 
       <main className={styles.main}>
         {/* Navigation Bar */}
-        <nav className={styles.navbar}>
+        {/* <nav className={styles.navbar}>
           <div className={styles.navContainer}>
             <div className={styles.navBrand}>
               <span className={styles.navBrandText}>KelasGPT</span>
             </div>
           </div>
-        </nav>
+        </nav> */}
         
         {/* --- Hero Section --- */}
         <section className={`${styles.section} ${styles.hero}`}>
+          {/* Navigation Bar */}
+          <nav className={styles.navbar}>
+            <div className={styles.navContainer}>
+              <div className={styles.navBrand}>
+                <span className={styles.navBrandText}>KelasGPT</span>
+              </div>
+            </div>
+          </nav>
+
           <div className="container">
 
             {/* Pill Element */}
