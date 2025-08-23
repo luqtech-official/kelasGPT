@@ -312,7 +312,7 @@
   background-image: radial-gradient(circle at 1px 1px,
     rgba(255,255,255,0.08) 1px,
     transparent 0);
-  background-size: 4px 4px;
+  background-size: 6px 6px;
 }
 
 .heroPill {
@@ -443,11 +443,11 @@
 .heroVisualContent::before {
   content: '';
   position: absolute;
-  inset: -2px;
-  padding: 4px;          /* border thickness */
+  inset: -1px;
+  padding: 2px;          /* border thickness */
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  animation: rotate 6s linear infinite;
+  animation: rotate 8s linear infinite;
   
   mask: 
   linear-gradient(#fff 0 0) content-box, 
@@ -468,9 +468,9 @@
   border-radius: inherit;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
   filter: blur(60px);
-  opacity: 70%;
+  opacity: 80%;
   z-index: -2;
-  animation: rotate 6s linear infinite;
+  animation: rotate 8s linear infinite;
 }
 
 .heroContent {
@@ -2573,12 +2573,6 @@
   .sectionHeader h2 {
     font-size: 1.8rem;
   }
-
-  .hero {
-  text-align: left;
-  padding: 4rem 0 2rem;
-  background: black;
-  }
   
   .heroTitle {
     font-size: 2.5rem;
@@ -2949,6 +2943,7 @@
 
   /* Hero */
   .hero {
+    text-align: left;
     padding: 4rem 0 1.5rem;
   }
   .heroTitle {
