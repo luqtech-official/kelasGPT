@@ -148,6 +148,8 @@ export default function Home({ productSettings }) {
 
   return (
     <div className={styles.pageWrapper}>
+      
+      
       <Head>
         <title>KelasGPT - Belajar Bina Custom AI Expert Anda</title>
         <meta
@@ -171,6 +173,22 @@ export default function Home({ productSettings }) {
 
 
       <main className={styles.main}>
+        {/* Navigation Bar */}
+        <nav className={styles.navbar}>
+          <div className={styles.navContainer}>
+            <div className={styles.navBrand}>
+              <Image 
+                src="/favicon.ico" 
+                alt="KelasGPT Logo" 
+                width={24} 
+                height={24} 
+                className={styles.navLogo}
+              />
+              <span className={styles.navBrandText}>KelasGPT</span>
+            </div>
+          </div>
+        </nav>
+        
         {/* --- Hero Section --- */}
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">

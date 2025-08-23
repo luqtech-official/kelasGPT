@@ -8,6 +8,7 @@
 :root {
   /* Terra Cotta Color Scheme */
   --terra-primary: #CD8B76;
+  --terra-vibrant: #ff7d4d;
   --terra-dark: #A8523F;
   --terra-light: #E8C5B8;
   --terra-verylight: #e8c5b891; /*terra-light + transparency */
@@ -20,51 +21,11 @@
   --warm-gray: #F5F1EB;
 
   /* CTA Button Color Design */
-  /*------------------------------------ Start of CTA button Design ------------------------------------*/
-  /* To switch themes, move the start '/*' and end '*/
-  /* to surround the block you want to disable.   */
-  
-  /* Red (Original) */
-  /* --cta-btn-bg-1: #e74c3c;
-  --cta-btn-bg-2: #c0392b;
-  --cta-btn-shadow-1: 0 12px 30px rgba(231, 76, 60, 0.4);
-  --cta-btn-shadow-2: 0 18px 40px rgba(231, 76, 60, 0.5); */
- 
-  
-  /* Blue */
   --cta-btn-bg-1: #3498db;
   --cta-btn-bg-2: #2980b9;
   --cta-btn-shadow-1:  0 12px 30px rgba(52, 152, 219, 0.45);
   --cta-btn-shadow-2: 0 18px 40px rgba(52, 152, 219, 0.55); 
  
-
-  /* Teal */
-  /* --cta-btn-bg-1: #3498db;
-  --cta-btn-bg-2: #2980b9;
-  --cta-btn-shadow-1:  0 12px 30px rgba(52, 152, 219, 0.45);
-  --cta-btn-shadow-2: 0 18px 40px rgba(52, 152, 219, 0.55); */
- 
-
-    /* Dark Green (Forest) */
-  /* --cta-btn-bg-1: #2C7D4F;
-  --cta-btn-bg-2: #1D5D3B;
-  --cta-btn-shadow-1: 0 12px 30px rgba(44, 125, 79, 0.45);
-  --cta-btn-shadow-2: 0 18px 40px rgba(44, 125, 79, 0.55); */
-  
-
-  /* Dark Blue (Midnight) */
-  /* --cta-btn-bg-1: #34495e;
-  --cta-btn-bg-2: #2c3e50;
-  --cta-btn-shadow-1: 0 12px 30px rgba(52, 73, 94, 0.45);
-  --cta-btn-shadow-2: 0 18px 40px rgba(52, 73, 94, 0.55); */
- 
-   /* Black/Gray (Graphite) */
-  /* --cta-btn-bg-1: #434343;
-  --cta-btn-bg-2: #000000;
-  --cta-btn-shadow-1: 0 12px 30px rgba(0, 0, 0, 0.35);
-  --cta-btn-shadow-2: 0 18px 40px rgba(0, 0, 0, 0.45); */
-
-  /*------------------------------------ End of CTA button Design ------------------------------------*/
 
   /* Legacy Color Palette (kept for compatibility) */
   --background: #f8f9fa;
@@ -78,8 +39,7 @@
 
   /* Typography */
   --font-body: 'Inter', sans-serif;
-  --font-heading: 'Inter', sans-serif;
-  /* --font-heading: 'Plus Jakarta Sans', sans-serif; */
+  --font-heading: 'Manrope', sans-serif;
 
   /* Layout */
   --border-radius: 12px;
@@ -95,6 +55,9 @@
   --accent-color: #00aaff;
   --accent-glow: rgba(0, 170, 255, 0.5);
   --secondary-text-color: #aaa;
+
+  /* Hero image border animation */
+  --ring: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
 }
 
 /* Modern CSS Reset */
@@ -128,7 +91,7 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -143,6 +106,7 @@ img, picture, video, canvas, svg {
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  z-index: -2;
 }

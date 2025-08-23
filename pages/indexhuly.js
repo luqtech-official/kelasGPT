@@ -139,25 +139,19 @@ export default function Home({ productSettings }) {
       trackViewContent({
         productName: productSettings.productName,
         productPrice: productSettings.productPrice,
-        currency: 'MYR'
+        productId: 'kelasgpt-course',
+        category: 'education'
       });
     }
-    
-    // Progress bar animation on page load
-    setTimeout(() => {
-      const progressBar = document.querySelector('.earlyBirdAccess .${styles.statusFill}');
-      if (progressBar) {
-        const targetProgress = calculateProgress(productSettings.discountunittotal, productSettings.discountunitleft);
-        progressBar.style.width = `${targetProgress}%`;
-      }
-    }, 500);
-    
   }, [productSettings]);
-  
+
+
   return (
     <div className={styles.pageWrapper}>
+      
+      
       <Head>
-        <title>KelasGPT - Belajar Bina Custom AI Expert Anda (Huly Test)</title>
+        <title>KelasGPT - Belajar Bina Custom AI Expert Anda</title>
         <meta
           name="description"
           content="Belajar &amp; Kuasai Kecerdasan Buatan (AI) dan Large Language Models (LLM) untuk mempercepat kerja, menaik taraf kemahiran, dan menjimatkan masa. Sertai KelasGPT hari ini!"
@@ -176,22 +170,38 @@ export default function Home({ productSettings }) {
 
       {/* The SocialProof component is kept as requested */}
       {/* <SocialProof /> */}
-      
+
+
       <main className={styles.main}>
+        {/* Navigation Bar */}
+        <nav className={styles.navbar}>
+          <div className={styles.navContainer}>
+            <div className={styles.navBrand}>
+              <span className={styles.navBrandText}>KelasGPT</span>
+            </div>
+          </div>
+        </nav>
         
         {/* --- Hero Section --- */}
         <section className={`${styles.section} ${styles.hero}`}>
           <div className="container">
+
+            {/* Pill Element */}
             <div className={styles.heroPill}>
-              <span className={styles.heroPillText}>Belajar AI <strong>Tanpa</strong> Technical Background..</span>
+              <span className={styles.heroPillText}>Tanpa Coding. Tanpa Technical Background.</span>
             </div>
+
+            {/* notes:
+            &#8209; : none breaking hyphen  '-'
+            &nbsp;  : none breaking space, ' '
+            */}
 
             {/* Main Headline */}
             <h1 className={styles.heroTitle}>
               <span>
-                Dari ZERO AI Skill... <br className={styles.desktopBreak} /><br className={styles.mobileBreak} />
-                Build <span className={styles.highlight}>Complete AI Consultant Team</span><br className={styles.desktopBreak} /><br className={styles.mobileBreak} />
-                Yang Expert Level Consultant&nbsp;<span className={styles.highlight2}>Kurang 48 Jam!</span>
+
+                Belajar AI&nbsp;Untuk&nbsp;Bisnes: <span className={styles.heroEmphasis}>3&#8209;Step&nbsp;Formula Melatih Team&nbsp;AI&nbsp;Assistant</span> Anda&nbsp;Sendiri..
+                
               </span>
             </h1>
 
@@ -199,32 +209,37 @@ export default function Home({ productSettings }) {
             <h2 className={styles.heroSubTitle}>
               <span>
                 <br />
-                Formula Yang Sama &lsquo;Consultant&#8209;Level&rsquo;&nbsp;Assistants Ini <span className={styles.emphasis}>Dilatih&nbsp;Untuk&nbsp;Anda </span>
-                Build&nbsp;&&nbsp;Launch <span className={styles.emphasis}>Profitable&nbsp;Digital&nbsp;Business... </span>
-                <span className={styles.highlight2}>Kurang&nbsp;Dari&nbsp;48&nbsp;Jam!</span>
+                Dapatkan sekali <span className={styles.subHeroEmphasis}>Done&#8209;For&#8209;You </span>
+                <br />Team&nbsp;AI&nbsp;Assistant untuk bantu lancar&nbsp;&&nbsp;urus
+                <br /><span className={styles.subHeroEmphasis}>Digital&nbsp;Business Anda!</span>
               </span>
             </h2>
 
-            {/* Hero Visual Element */}
-            <div className={styles.heroVisual}>
-              <Image 
-                src={imagePresets.hero('hero-main', { quality: 'q_85' })}
-                alt="KelasGPT 3 Experts profile Card Visual" 
-                width={600} 
-                height={400} 
-                style={{width: '100%', height: 'auto'}} 
-                loading="eager"
-                priority
-                placeholder="blur"
-                blurDataURL={getBlurDataURL('hero-main')}
-                sizes={getImageSizes('hero')}
-              />
-              <p className={styles.heroVisualCaption}>
-                <em style={{fontSize: '0.9em'}}>(Antara AI Assistant Yang Disediakan)</em>
-              </p>
-            </div>
+            {/* Hero Visual Element with Animated Glowing Border */}
+            {/* <div className={styles.heroVisualContainer}> */}
+              {/* <div className={styles.heroVisualAnimated}> */}
+                <div className={styles.heroVisualContent}>
+                  <Image 
+                    src={imagePresets.hero('hero-main', { quality: 'q_85' })}
+                    alt="KelasGPT 3 Experts profile Card Visual" 
+                    width={600} 
+                    height={400} 
+                    style={{width: '100%', height: 'auto'}} 
+                    loading="eager"
+                    priority
+                    placeholder="blur"
+                    blurDataURL={getBlurDataURL('hero-main')}
+                    sizes={getImageSizes('hero')}
+                  />
+                </div>
+              {/* </div>
+            </div> */}
+          </div>
+        </section>
 
-            {/* Enhanced Subtext (As Hero Image Caption) */}
+        {/* --- Whats In It For Me Section --- */}
+        <section className={`${styles.wiifm}`}>
+          <div className="container">
             <div className={styles.heroContent}>
               <div className={styles.heroTeaser}>
                 <h3>Apa Yang Anda Akan Dapat:</h3>
@@ -293,7 +308,7 @@ export default function Home({ productSettings }) {
 
                     <p>Dia akan prioritise content yang durasi lebih lama dulu..</p>
 
-                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: '#ef4444', margin: '1.5rem 0'}}><strong>Adakah strategy anda akan berubah?</strong></p>
+                    <p style={{fontSize: '1.2rem', fontWeight: '700', color: 'var(--urgent-red)', margin: '1.5rem 0'}}><strong>Adakah strategy anda akan berubah?</strong></p>
                 </div>
 
                 <br />
@@ -1426,19 +1441,19 @@ export default function Home({ productSettings }) {
                                 className={styles.securePaymentLogo}
                                 />
                           </div>
-                            <p className={styles.primaryCTASubtext}>Tinggal <span style={{fontWeight: '700', color: '#ef4444'}}>{Number(productSettings.discountunitleft) || 0}</span> Early Bird slot sahaja<br />• Instant Access<br />• 100% Tiada Upsell</p>
+                            <p className={styles.primaryCTASubtext}>Tinggal <span style={{fontWeight: '700', color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</span> Early Bird slot sahaja<br />• Instant Access<br />• 100% Tiada Upsell</p>
                         </div>
 
                         {/* --- Author's Note Section --- */}
                         <div className={styles.authorNote}>
-                            <h4 style={{color: '#3d7eff', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Nota Penulis:</h4>
+                            <h4 style={{color: 'var(--terra-dark)', marginBottom: '1.5rem', fontWeight: '700', fontSize: '1.1rem'}}>Nota Penulis:</h4>
                             <p style={{marginBottom: '1rem'}}>The reason anda dah baca sampai sini..</p>
                             <p style={{marginBottom: '1rem'}}>Sebab anda tahu ini <strong>apa yang anda mahu</strong>.</p>
                             <p style={{marginBottom: '1rem'}}>Kalau anda baca setiap perkataan yang saya tulis...</p>
                             <p style={{marginBottom: '1rem'}}>Anda tahu setiap apa yang saya cakap <strong>makes perfect sense</strong>.</p>
                             <p style={{marginBottom: '2rem'}}>And this is <strong>exactly</strong> apa yang anda perlukan.</p>
                             
-                            <p style={{fontSize: '1.1rem', lineHeight: '1.6', fontWeight: '600', color: '#3d7eff'}}>
+                            <p style={{fontSize: '1.1rem', lineHeight: '1.6', fontWeight: '600', color: 'var(--terra-dark)'}}>
                                 <strong>Persoalan yang tinggal:</strong><br /><br />Adakah anda cukup decisive untuk <em>trust your judgment</em>... 
                                 <br />atau overthink something yang anda dah tahu <strong>jawapannya</strong>?
                             </p>
@@ -1512,7 +1527,7 @@ export default function Home({ productSettings }) {
                           
                         <p>Semua akan jadi natural untuk anda, an elite AI User dan enjoy the real unfair advantage.<br /><br /></p>
                         
-                        <p>{productSettings.allowdiscount && <span>Final Reminder:<br />Cuma <strong style={{color: '#ef4444'}}>{Number(productSettings.discountunitleft) || 0}</strong> Early Bird slots yang tinggal!</span>}</p>
+                        <p>{productSettings.allowdiscount && <span>Final Reminder:<br />Cuma <strong style={{color: 'var(--urgent-red)'}}>{Number(productSettings.discountunitleft) || 0}</strong> Early Bird slots yang tinggal!</span>}</p>
                     </div>
                     
                     <div className={styles.primaryCTASection}>
