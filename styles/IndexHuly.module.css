@@ -421,25 +421,25 @@
 .heroVisualContent::before {
   content: '';
   position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
+  top: -30px;
+  left: -30px;
+  right: -30px;
+  bottom: -30px;
   border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0066cc 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  filter: blur(20px);
+  filter: saturate(180%) blur(20px);
   opacity: 70%;
   z-index: -2;
   animation: rotation 10s linear infinite;
-  will-change: transform, filter;
+  will-change: filter;
   
-  isolation: isolate;
-  contain: layout style paint;
   /* iOS Safari fixes */
+  /* isolation: isolate;
+  contain: layout style paint;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+  backface-visibility: hidden; */
 }
 
 

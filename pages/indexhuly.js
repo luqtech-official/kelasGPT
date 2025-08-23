@@ -216,7 +216,7 @@ export default function Home({ productSettings }) {
             </h2>
 
             {/* Hero Visual Element with Animated Glowing Border */}
-            <div className={styles.heroVisualWrapper}>
+            {/* <div className={styles.heroVisualWrapper}> */}
               <div className={styles.heroVisualContent}>
               <Image 
                 src={imagePresets.hero('hero-main', { quality: 'q_90' })}
@@ -232,7 +232,7 @@ export default function Home({ productSettings }) {
                 className={styles.heroImage}
               />
             </div>
-            </div>
+            {/* </div> */}
           </div>
         </section>
 
