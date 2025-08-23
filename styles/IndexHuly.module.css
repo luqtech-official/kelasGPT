@@ -386,10 +386,10 @@
   opacity: 0.6;
 }
 
-.heroVisualWrapper {
+/* .heroVisualWrapper {
   position: relative;
-  padding: 25px; /* Space for the blur effect */
-}
+  padding: 25px;
+} */
 
 .heroVisualContent {
   background: #111;
