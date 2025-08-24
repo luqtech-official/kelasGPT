@@ -38,6 +38,7 @@
   --success: #28a745;
 
   /* Typography */
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Manrope', sans-serif;
 

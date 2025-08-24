@@ -342,7 +342,7 @@
 }
 
 .heroPillText {
-  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, 'Consolas';
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 1rem;
   white-space: nowrap;
   overflow: hidden;
@@ -414,7 +414,7 @@
   bottom: -3px;
   border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0088ff 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  animation: rotation 8s linear infinite;
+  animation: rotation 6s linear infinite;
   z-index: -1;
   will-change: transform;
 }
@@ -610,7 +610,7 @@
 }
 
 .lessonNumber {
-  font-family: 'SF Mono', ui-monospace, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 0.8rem;
   font-weight: 400;
   flex-shrink: 0;
@@ -625,7 +625,7 @@
 }
 
 .lessonText {
-  font-family: 'SF Mono', ui-monospace, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -1294,7 +1294,7 @@
   color: var(--terra-primary);
   background: var(--terra-bg);
   border: 1px solid var(--terra-primary);
-  font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Consolas', 'Monaco', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.3rem 0.8rem;

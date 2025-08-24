@@ -1534,7 +1534,7 @@
   font-weight: 500;
   margin: 4px 0 0 0;
   opacity: 0.8;
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   letter-spacing: 0.02em;
 }
 
@@ -1961,7 +1961,7 @@
 }
 
 .orderNumber {
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 10px;
   color: #94a3b8;
   font-weight: 500;
@@ -2560,7 +2560,7 @@
   border-radius: 6px;
   font-size: 11px;
   font-weight: 600;
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   border: 1px solid rgba(148, 163, 184, 0.2);
   z-index: 2;
 }
@@ -2765,7 +2765,7 @@
 
 /* Phone number */
 .phoneNumber {
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 13px;
   color: #cbd5e1;
   font-weight: 500;
@@ -2777,7 +2777,7 @@
   font-weight: 700;
   color: #34d399;
   font-size: 14px;
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
 }
 
 /* Date and time */
@@ -2790,7 +2790,7 @@
 
 /* IP Address */
 .ipAddress {
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 11px;
   color: #64748b;
   background: rgba(51, 65, 85, 0.4);

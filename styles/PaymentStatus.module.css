@@ -80,7 +80,7 @@
 }
 
 .orderNumber {
-  font-family: 'SF Mono', Monaco, monospace;
+  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
   font-size: 0.9rem;
   font-weight: 600;
   color: #4338ca;

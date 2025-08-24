@@ -10,14 +10,7 @@ import { imagePresets, getBlurDataURL, getImageSizes } from "../lib/imagekit";
 import { trackViewContent } from "../lib/facebook-pixel";
 // import { ResponsiveImage } from '../components/ResponsiveImage';
 
-// Swiper components and modules
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-
-// Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+// Swiper components removed - not used in this component
 
 // --- SVG Icon Components ----
 // Using simple functional components for SVG icons for reusability and cleanliness.
@@ -125,24 +118,29 @@ export default function Home({ productSettings }) {
   const [checkoutUrl, setCheckoutUrl] = useState('/checkout');
 
   useEffect(() => {
+    // Critical operations first (no delay)
     const id = getOrCreateVisitorId();
     setVisitorId(id);
-    trackPageView('/', id);
-
+    
     // Only append visitor ID if it exists
     if (id) {
       setCheckoutUrl(`/checkout?vid=${id}`);
     }
     
-    // Track ViewContent event for Facebook Pixel - Simple and reliable
-    if (productSettings) {
-      trackViewContent({
-        productName: productSettings.productName,
-        productPrice: productSettings.productPrice,
-        productId: 'kelasgpt-course',
-        category: 'education'
-      });
-    }
+    // Defer non-critical tracking to not block FCP
+    setTimeout(() => {
+      trackPageView('/', id);
+      
+      // Track ViewContent event for Facebook Pixel - Simple and reliable
+      if (productSettings) {
+        trackViewContent({
+          productName: productSettings.productName,
+          productPrice: productSettings.productPrice,
+          productId: 'kelasgpt-course',
+          category: 'education'
+        });
+      }
+    }, 100); // Small delay to allow FCP
   }, [productSettings]);
 
 
@@ -232,7 +230,7 @@ export default function Home({ productSettings }) {
             {/* <div className={styles.heroVisualWrapper}> */}
               <div className={styles.heroVisualContent}>
               <Image 
-                src={imagePresets.hero('hero-main', { quality: 'q_90' })}
+                src={imagePresets.hero('hero-main', { quality: 'q_85' })}
                 alt="KelasGPT 3 Experts profile Card Visual" 
                 width={600} 
                 height={400} 
@@ -1450,6 +1448,7 @@ export default function Home({ productSettings }) {
                                 alt="FPX Payment Logo"
                                 width={600} 
                                 height={12}
+                                loading="lazy"
                                 className={styles.securePaymentLogo}
                                 />
                           </div>
@@ -1559,6 +1558,7 @@ export default function Home({ productSettings }) {
                                 alt="FPX Payment Logo"
                                 width={600} 
                                 height={12}
+                                loading="lazy"
                                 className={styles.securePaymentLogo}
                                 />
                           </div>
