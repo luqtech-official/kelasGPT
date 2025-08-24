@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Enable compression for better performance
+  compress: true,
   compiler: {
     removeConsole: true,
   },
