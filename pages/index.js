@@ -46,7 +46,7 @@ export default function Home() {
             opacity: 0.8
           }}>
             <p style={{ marginBottom: '1rem' }}>
-              We're working on something amazing for Malaysian businesses.
+              Were working on something amazing for Malaysian businesses.
             </p>
             <p style={{ marginBottom: '1rem' }}>
               Stay tuned for the future of AI-powered business solutions.
