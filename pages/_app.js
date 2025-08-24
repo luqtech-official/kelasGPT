@@ -29,8 +29,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 export default function App({ Component, pageProps }) {
   return (
     <>
-      {/* Facebook Pixel - Battle-tested standard implementation */}
-      <Script id="facebook-pixel" strategy="afterInteractive">
+      {/* Facebook Pixel - Lazy loaded for optimal performance */}
+      <Script id="facebook-pixel" strategy="lazyOnload">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
