@@ -351,7 +351,7 @@
 }
 
 .heroTitle {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 4rem;
   font-weight: 700;
   margin-bottom: 0rem;
@@ -362,7 +362,7 @@
 }
 
 .heroSubTitle {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.7rem;
   font-weight: 300;
   margin-bottom: 3rem;
@@ -432,7 +432,7 @@
 }
 
 .heroVisualCaption {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.25rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -462,7 +462,7 @@
 }
 
 .heroTeaser h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--terra-dark);
@@ -477,7 +477,7 @@
 }
 
 .heroList li {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   position: relative;
   padding: 0.75rem 0 0.75rem 2rem;
   font-size: 1rem;

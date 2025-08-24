@@ -323,7 +323,7 @@
 }
 
 .heroPillText {
-  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
+  font-family: var(--font-ibm-plex-mono);
   font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -334,7 +334,7 @@
 }
 
 .heroTitle {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -346,7 +346,7 @@
 }
 
 .heroSubTitle {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.7rem;
   font-weight: 300;
   margin-bottom: 3rem;
@@ -385,7 +385,7 @@
 }
 
 .heroVisualCaption {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.25rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -409,7 +409,7 @@
 }
 
 .heroTeaser h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--terra-dark);
@@ -424,7 +424,7 @@
 }
 
 .heroList li {
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-manrope);
   position: relative;
   padding: 0.75rem 0 0.75rem 2rem;
   font-size: 1rem;
@@ -557,7 +557,7 @@
 }
 
 .lessonNumber {
-  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
+  font-family: var(--font-ibm-plex-mono);
   font-size: 0.8rem;
   font-weight: 400;
   flex-shrink: 0;
@@ -572,7 +572,7 @@
 }
 
 .lessonText {
-  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
+  font-family: var(--font-ibm-plex-mono);
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -1241,7 +1241,7 @@
   color: var(--terra-primary);
   background: var(--terra-bg);
   border: 1px solid var(--terra-primary);
-  font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
+  font-family: var(--font-ibm-plex-mono);
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.3rem 0.8rem;

@@ -164,7 +164,7 @@ export default function Home({ productSettings }) {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <meta name="theme-color" content="#111111"/>
+        <meta name="theme-color" content="#000000"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   
         <link rel="icon" href="/favicon.ico" />
@@ -175,14 +175,6 @@ export default function Home({ productSettings }) {
 
 
       <main className={styles.main}>
-        {/* Navigation Bar */}
-        {/* <nav className={styles.navbar}>
-          <div className={styles.navContainer}>
-            <div className={styles.navBrand}>
-              <span className={styles.navBrandText}>KelasGPT</span>
-            </div>
-          </div>
-        </nav> */}
         
         {/* --- Hero Section --- */}
         <section className={`${styles.section} ${styles.hero}`}>

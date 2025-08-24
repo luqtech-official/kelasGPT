@@ -1,17 +1,29 @@
 import "@/styles/globals.css";
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Manrope, IBM_Plex_Mono } from 'next/font/google';
 import Script from 'next/script';
 
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
+  style: ["normal", "italic"], 
   variable: '--font-inter',
+  display: 'swap',
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const manrope = Manrope({
   subsets: ['latin'],
-  weight: ['700', '800'],
-  variable: '--font-plus-jakarta-sans',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ["normal"], 
+  variable: '--font-manrope',
+  display: 'swap',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['300', '400', '600'],
+  style: ["normal", "italic"], 
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
 });
 
 export default function App({ Component, pageProps }) {
@@ -36,7 +48,7 @@ export default function App({ Component, pageProps }) {
         `}
       </Script>
 
-      <main className={`${inter.variable} ${plusJakartaSans.variable}`}>
+      <main className={`${inter.variable} ${manrope.variable} ${ibmPlexMono.variable}`}>
         <Component {...pageProps} />
       </main>
     </>

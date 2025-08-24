@@ -37,10 +37,12 @@
   --white: #ffffff;
   --success: #28a745;
 
-  /* Typography */
-  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Manrope', sans-serif;
+  /* Typography - Using Next.js font variables for self-hosted fonts */
+  --font-inter: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-manrope: var(--font-manrope), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ibm-plex-mono: var(--font-ibm-plex-mono), 'SF Mono', ui-monospace, monospace;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: var(--font-manrope), -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Layout */
   --border-radius: 12px;
