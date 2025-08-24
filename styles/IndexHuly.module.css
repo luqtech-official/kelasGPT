@@ -414,7 +414,7 @@
   bottom: -3px;
   border-radius: 17px;
   background: conic-gradient(from var(--angle), #0088ff 0deg, #0088ff 45deg, #111 90deg, #111 135deg, #FB6F2D 180deg, #FB6F2D 225deg, #111 270deg, #111 315deg, #0088ff 360deg);
-  animation: rotation 12s linear infinite;
+  animation: rotation 8s linear infinite;
   z-index: -1;
   will-change: transform;
 }

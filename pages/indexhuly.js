@@ -165,6 +165,10 @@ export default function Home({ productSettings }) {
         <meta property="og:url" content="https://kelasgpt.com" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
+
+        <meta name="theme-color" content="#111111"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
