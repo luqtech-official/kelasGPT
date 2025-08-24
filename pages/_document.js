@@ -5,10 +5,9 @@ export default function Document() {
   return (
     <Html lang="ms">
       <Head>
-        {/* Critical font preloads - instant above-the-fold rendering */}
-        <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="https://fonts.gstatic.com/s/manrope/v15/xn7_YHE41ni1AdIRggexSuXd.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Google Fonts preconnect for faster loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Critical font CSS - only essential weights for FCP */}
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -25,6 +24,7 @@ export default function Document() {
         
         {/* Non-critical fonts - loaded after page interaction */}
         <Script
+          id="load-non-critical-fonts"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
