@@ -8,6 +8,7 @@ import { imagePresets, getBlurDataURL, getImageSizes } from '../lib/imagekit';
 export default function VideoListing() {
   const [selectedVideoForModal, setSelectedVideoForModal] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const courseModules = [
     {
@@ -187,18 +188,45 @@ export default function VideoListing() {
     document.body.style.overflow = 'unset';
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const scrollToSection = (sectionClass) => {
+    const element = document.querySelector(`.${sectionClass}`);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+      setIsMobileMenuOpen(false); // Close menu after navigation
+    }
+  };
+
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.keyCode === 27) {
         closeVideoModal();
+        setIsMobileMenuOpen(false);
       }
     };
+
+    const handleClickOutside = (event) => {
+      // Close mobile menu when clicking outside
+      if (isMobileMenuOpen && !event.target.closest(`.${styles.mobileNav}`) && !event.target.closest(`.${styles.hamburgerIcon}`)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     document.addEventListener('keydown', handleEsc, false);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       document.removeEventListener('keydown', handleEsc, false);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -211,15 +239,19 @@ export default function VideoListing() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       </Head>
 
-      <div className={styles.container}>
-        {/* <BackgroundGlows /> */}
-        
+      <div className={styles.siteContainer}>        
         <header className={styles.header}>
           <div className={styles.logo}>
-            <div className={styles.logoIcon}>KG</div>
+            <Image 
+              src="/favicon.ico" 
+              alt="KelasGPT Logo" 
+              width={32} 
+              height={32}
+              className={styles.logoIcon}
+            />
             <div className={styles.brandInfo}>
               <span className={styles.logoText}>KelasGPT</span>
-              <span className={styles.subtitle}>AI-Powered Learning Hub</span>
+              <span className={styles.subtitle}>Belajar AI Untuk Bisnes</span>
             </div>
           </div>
           <div className={styles.courseStats}>
@@ -246,7 +278,64 @@ export default function VideoListing() {
               Certificate
             </span>
           </div>
+          
+          {/* Mobile Hamburger Menu */}
+          <button 
+            className={styles.hamburgerIcon} 
+            onClick={toggleMobileMenu}
+            aria-label="Toggle navigation menu"
+          >
+            <div className={`${styles.hamburgerLine} ${isMobileMenuOpen ? styles.hamburgerLineActive : ''}`}></div>
+            <div className={`${styles.hamburgerLine} ${isMobileMenuOpen ? styles.hamburgerLineActive : ''}`}></div>
+            <div className={`${styles.hamburgerLine} ${isMobileMenuOpen ? styles.hamburgerLineActive : ''}`}></div>
+          </button>
         </header>
+
+        {/* Mobile Navigation Menu */}
+        <div className={`${styles.mobileNav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}>
+          <nav className={styles.mobileNavContent}>
+            <button 
+              className={styles.mobileNavItem}
+              onClick={() => scrollToSection(styles.courseSection)}
+            >
+              <svg className={styles.mobileNavIcon} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <span>Course Videos</span>
+            </button>
+            
+            <button 
+              className={styles.mobileNavItem}
+              onClick={() => scrollToSection(styles.assistantsSection)}
+            >
+              <svg className={styles.mobileNavIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span>AI Assistants</span>
+            </button>
+            
+            <button 
+              className={styles.mobileNavItem}
+              onClick={() => scrollToSection(styles.toolsSection)}
+            >
+              <svg className={styles.mobileNavIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+              </svg>
+              <span>Tools & Resources</span>
+            </button>
+            
+            <button 
+              className={styles.mobileNavItem}
+              onClick={() => scrollToSection(styles.supportSection)}
+            >
+              <svg className={styles.mobileNavIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"></path>
+              </svg>
+              <span>Support & Help</span>
+            </button>
+          </nav>
+        </div>
 
         <main className={styles.mainContent}>
           {/* Left Column - Course Content */}
@@ -332,7 +421,7 @@ export default function VideoListing() {
                           <svg className={styles.chatIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                           </svg>
-                          Chat
+                          Open
                         </a>
                         <a 
                           href={assistant.sourceFile} 
@@ -350,6 +439,60 @@ export default function VideoListing() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </section>
+
+            {/* Tools & Resources Section */}
+            <section className={styles.toolsSection}>
+              <h3>Tools & Resources</h3>
+              <p>Useful web tools to enhance your workflow</p>
+              <div className={styles.toolsList}>
+                <a 
+                  href="https://youtubetotranscript.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={styles.toolLink}
+                >
+                  <svg className={styles.toolIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                  <div className={styles.toolInfo}>
+                    <span className={styles.toolName}>YouTube Transcript</span>
+                    <span className={styles.toolDesc}>Convert YouTube videos to text</span>
+                  </div>
+                </a>
+                <a 
+                  href="https://markdownlivepreview.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={styles.toolLink}
+                >
+                  <svg className={styles.toolIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                  <div className={styles.toolInfo}>
+                    <span className={styles.toolName}>Markdown Preview</span>
+                    <span className={styles.toolDesc}>Live markdown editor and preview</span>
+                  </div>
+                </a>
+                <a 
+                  href="https://platform.openai.com/chat/edit?models=gpt-5&optimize=true" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={styles.toolLink}
+                >
+                  <svg className={styles.toolIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                  </svg>
+                  <div className={styles.toolInfo}>
+                    <span className={styles.toolName}>OpenAI Chat Editor</span>
+                    <span className={styles.toolDesc}>Advanced AI conversation interface</span>
+                  </div>
+                </a>
               </div>
             </section>
 
@@ -422,13 +565,3 @@ function VideoModal({ video, onClose }) {
   return createPortal(modalContent, document.body);
 }
 
-// Background Glows Component
-function BackgroundGlows() {
-  return (
-    <div className={styles.backgroundGlows}>
-      <div className={styles.glow1} />
-      <div className={styles.glow2} />
-      <div className={styles.glow3} />
-    </div>
-  );
-}
