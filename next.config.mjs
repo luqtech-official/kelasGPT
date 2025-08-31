@@ -6,6 +6,14 @@ const nextConfig = {
   compiler: {
     removeConsole: true,
   },
+  // Optimize package imports to reduce Edge requests
+  experimental: {
+    optimizePackageImports: [
+      'next/image', 
+      'next/head', 
+      'next/link'
+    ]
+  },
   // Environment variables are no longer exposed to the browser for security
   // Server-side code can still access process.env directly
   images: {

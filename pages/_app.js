@@ -4,15 +4,15 @@ import Script from 'next/script';
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ["normal", "italic"], 
+  weight: ['400', '700'],
+  style: ["normal"], 
   variable: '--font-inter',
   display: 'swap',
 });
 
 const manrope = Manrope({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400','700'],
   style: ["normal"], 
   variable: '--font-manrope',
   display: 'swap',
@@ -20,8 +20,8 @@ const manrope = Manrope({
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
-  style: ["normal", "italic"], 
+  weight: ['400'],
+  style: ["normal"], 
   variable: '--font-ibm-plex-mono',
   display: 'swap',
 });
