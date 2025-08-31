@@ -6,7 +6,7 @@ import Image from "next/image";
 import styles from "@/styles/IndexHuly.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
-import { imagePresets, getBlurDataURL, getImageSizes } from "../lib/imagekit";
+import { getBlurDataURL, getImageSizes } from "../lib/imagekit";
 import { trackViewContent } from "../lib/facebook-pixel";
 // import { ResponsiveImage } from '../components/ResponsiveImage';
 
@@ -222,10 +222,11 @@ export default function Home({ productSettings }) {
             {/* <div className={styles.heroVisualWrapper}> */}
               <div className={styles.heroVisualContent}>
               <Image 
-                src={imagePresets.hero('hero-main', { quality: 'q_85' })}
+                src="hero-main"
                 alt="KelasGPT 3 Experts profile Card Visual" 
                 width={600} 
-                height={400} 
+                height={400}
+                quality={85} 
                 style={{width: '100%', height: 'auto'}} 
                 loading="eager"
                 priority
@@ -351,7 +352,7 @@ export default function Home({ productSettings }) {
             <div className={styles.authorProfile}>
               <div className={styles.authorImage}>
                 <Image 
-                    src={imagePresets.profile('author-photo')} 
+                    src="author-photo"
                     alt="Fareid - KelasGPT Instructor" 
                     width={500} 
                     height={500} 
@@ -377,7 +378,7 @@ export default function Home({ productSettings }) {
                   
                   <div className={styles.tradingViewProof}>
                     <Image 
-                        src={imagePresets.content('tradingview-proof')} 
+                        src="tradingview-proof"
                         alt="TradingView Editor&rsquo;s Pick Screenshot" 
                         className={styles.tradingViewImage} 
                         width={800} 
@@ -454,7 +455,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
                             <Image 
-                                src={imagePresets.content('writing-sample')} 
+                                src="writing-sample"
                                 alt="AI Writing Style Sample" 
                                 width={800} 
                                 height={500} 
@@ -475,7 +476,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
                             <Image 
-                                src={imagePresets.content('sales-report-sample')} 
+                                src="sales-report-sample"
                                 alt="AI Sales Report Sample" 
                                 width={800} 
                                 height={500} 
@@ -496,7 +497,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.useCaseCard}>
                         <div className={styles.useCaseImage}>
                             <Image 
-                                src={imagePresets.content('infographic-sample')} 
+                                src="infographic-sample"
                                 alt="AI Infographic Sample" 
                                 width={800} 
                                 height={500} 
@@ -629,7 +630,7 @@ export default function Home({ productSettings }) {
                 </div>
                                 
                 <Image 
-                  src={imagePresets.benefit('balqis-photo')}
+                  src="balqis-photo"
                   alt="Balqis - Digital Product Ideation Expert" 
                   width={120} 
                   height={120} 
@@ -667,7 +668,7 @@ export default function Home({ productSettings }) {
                 </div>
                 
                 <Image 
-                    src={imagePresets.benefit('sarah-photo')}
+                    src="sarah-photo"
                     alt="Sarah - Product & Branding Expert" 
                     width={120} 
                     height={120} 
@@ -704,7 +705,7 @@ export default function Home({ productSettings }) {
                 </div>
 
                 <Image 
-                    src={imagePresets.benefit('chaeha-photo')}
+                    src="chaeha-photo"
                     alt="Chae Ha - Copywriting Expert" 
                     width={120} 
                     height={120} 
@@ -741,7 +742,7 @@ export default function Home({ productSettings }) {
                 </div>
 
                 <Image 
-                    src={imagePresets.benefit('irfan-photo')}
+                    src="irfan-photo"
                     alt="Irfan - Creative Director for Video Generation" 
                     width={120} 
                     height={120} 
@@ -778,7 +779,7 @@ export default function Home({ productSettings }) {
                 </div>
 
                 <Image 
-                    src={imagePresets.benefit('zaki-photo')}
+                    src="zaki-photo"
                     alt="Zaki - Vibe Coding Expert" 
                     width={120} 
                     height={120} 

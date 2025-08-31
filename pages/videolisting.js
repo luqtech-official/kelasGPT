@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import styles from '../styles/VideoListing.module.css';
-import { imagePresets, getBlurDataURL, getImageSizes } from '../lib/imagekit';
+import { getBlurDataURL, getImageSizes } from '../lib/imagekit';
 
 export default function VideoListing() {
   const [selectedVideoForModal, setSelectedVideoForModal] = useState(null);
@@ -393,7 +393,7 @@ export default function VideoListing() {
                   <div key={index} className={styles.assistantCard}>
                     <div className={styles.assistantPhoto}>
                       <Image 
-                        src={imagePresets.benefit(assistant.photo)}
+                        src={assistant.photo}
                         alt={assistant.name}
                         width={40}
                         height={40}
