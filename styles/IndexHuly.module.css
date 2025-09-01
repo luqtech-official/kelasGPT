@@ -217,7 +217,6 @@
 }
 
 .sectionHeader h2 {
-  font-family: var(--font-inter);
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 1rem;
@@ -2979,7 +2978,6 @@
     text-align: center;
   }
   .authorContent h3 {
-    font-family: var(--font-inter);
     font-size: 1.4rem;
     text-align: center;
   }
