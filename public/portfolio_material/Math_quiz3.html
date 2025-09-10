@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Daily Math Adventure</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>html,body{height:100%}body{background:#f8f9fa}.brand{font-weight:700}.pill{border-radius:999px;padding:.35rem .7rem}.progress-sm{height:.75rem}.q-card{max-width:640px}.emoji{font-size:2rem}.big-input{font-size:1.5rem}.sticker{width:64px;height:64px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.08);margin:.25rem;background:#fff}.pulse-s{animation:pulseS .4s ease}.pulse-w{animation:pulseW .4s ease}@keyframes pulseS{0%{box-shadow:0 0 0 0 rgba(25,135,84,.4)}100%{box-shadow:0 0 0 18px rgba(25,135,84,0)}}@keyframes pulseW{0%{box-shadow:0 0 0 0 rgba(255,193,7,.4)}100%{box-shadow:0 0 0 18px rgba(255,193,7,0)}}.mascot{transition:transform .2s}.bounce{transform:translateY(-6px)}.wobble{transform:rotate(-6deg)}.focus-ring:focus{outline:2px auto -webkit-focus-ring-color;outline-offset:2px}.sticky-top-row{position:sticky;top:.5rem;z-index:10}.offcanvas-md{--bs-offcanvas-width:420px}@media (prefers-reduced-motion:reduce){.pulse-s,.pulse-w,.mascot,.bounce,.wobble{animation:none;transition:none}}</style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-white shadow-sm">
+  <div class="container">
+    <span class="navbar-brand mb-0 h1 brand">Daily Math Adventure</span>
+    <div class="d-flex gap-2 align-items-center">
+      <span id="streakBadge" class="badge rounded-pill text-bg-info">🔥 0-day streak</span>
+      <button id="parentModeBtn" class="btn btn-sm btn-outline-secondary">Parent</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <!-- Onboarding / Start -->
+  <div id="onboardingCard" class="card q-card mx-auto">
+    <div class="card-body">
+      <h5 class="card-title">Ready for today’s 30-question practice?</h5>
+      <p class="text-muted mb-3">Short, fun sessions that build strong number sense.</p>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cfgAddSub" checked>
+            <label class="form-check-label" for="cfgAddSub">Addition & subtraction within 20</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cfgMult">
+            <label class="form-check-label" for="cfgMult">Easy multiplication (0–5)</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cfgAudio" checked>
+            <label class="form-check-label" for="cfgAudio">Audio feedback</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cfgTimer" checked>
+            <label class="form-check-label" for="cfgTimer">10-minute timer</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label mb-1" for="cfgQuickChoices">Quick choices</label>
+            <select id="cfgQuickChoices" class="form-select form-select-sm">
+              <option value="on" selected>On</option>
+              <option value="off">Off</option>
+            </select>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cfgHints" checked>
+            <label class="form-check-label" for="cfgHints">Show gentle hints</label>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex gap-2 mt-3">
+        <button id="startBtn" class="btn btn-primary btn-lg">Start Session</button>
+        <button id="albumBtn" class="btn btn-outline-secondary">Sticker Album</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session UI -->
+  <div id="sessionUI" class="d-none">
+    <div class="q-card mx-auto">
+      <div class="sticky-top-row bg-transparent pb-2">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="flex-grow-1 me-3">
+            <div class="progress progress-sm" role="progressbar" aria-label="Progress">
+              <div id="progressBar" class="progress-bar" style="width:0%">0 / 30</div>
+            </div>
+          </div>
+          <span id="timerPill" class="pill text-bg-dark d-none">10:00</span>
+          <span id="scorePill" class="pill text-bg-primary">Score: 0</span>
+        </div>
+      </div>
+
+      <div id="questionCard" class="card card-body text-center">
+        <div class="mb-2"><span class="mascot" id="mascot">🦊</span></div>
+        <h2 id="questionText" class="mb-3">–</h2>
+        <div class="row g-2 justify-content-center">
+          <div class="col-8 col-md-6">
+            <input id="answerInput" class="form-control form-control-lg big-input focus-ring" inputmode="numeric" autocomplete="off" placeholder="Type your answer" aria-label="Answer">
+          </div>
+          <div class="col-auto">
+            <button id="submitBtn" class="btn btn-success btn-lg">Submit</button>
+          </div>
+          <div class="col-auto">
+            <button id="skipBtn" class="btn btn-outline-secondary btn-lg">I’m not sure</button>
+          </div>
+        </div>
+        <div id="quickChoices" class="mt-3 d-flex justify-content-center gap-2"></div>
+        <div id="feedbackArea" class="mt-3"></div>
+        <div class="mt-2">
+          <button id="hintBtn" class="btn btn-link btn-sm">Hint</button>
+          <button id="pauseBtn" class="btn btn-link btn-sm">Pause</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="text-center small text-muted py-3">Tiny steps, big wins—practice a little every day.</footer>
+
+<!-- Results Modal -->
+<div class="modal fade" id="resultsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Session Complete!</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <div id="stars" class="mb-3 fs-3">⭐️</div>
+        <p id="summaryText" class="mb-2"></p>
+        <div id="earnedStickers" class="mb-3"></div>
+        <div class="d-flex gap-2">
+          <button id="playAgainBtn" class="btn btn-primary">Play Again</button>
+          <button id="reviewBtn" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#reviewDrawer">Review Mistakes</button>
+          <button id="shareBtn" class="btn btn-outline-primary">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Review Drawer -->
+<div class="offcanvas offcanvas-end offcanvas-md" tabindex="-1" id="reviewDrawer" aria-labelledby="reviewTitle">
+  <div class="offcanvas-header">
+    <h5 id="reviewTitle">Review</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="reviewList" class="list-group small"></div>
+  </div>
+</div>
+
+<!-- Parent Modal -->
+<div class="modal fade" id="parentModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Parent Settings</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <div id="parentGate">
+          <p class="text-muted">Enter 4-digit PIN to manage settings.</p>
+          <input id="pinInput" class="form-control w-auto" maxlength="4" inputmode="numeric" placeholder="••••">
+          <div class="form-text">First time? Set any 4 digits.</div>
+          <button id="pinBtn" class="btn btn-primary mt-2">Continue</button>
+        </div>
+        <div id="parentPanel" class="d-none">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="ppAddSub" checked><label class="form-check-label" for="ppAddSub">Addition & subtraction</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="ppMult"><label class="form-check-label" for="ppMult">Easy multiplication</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="ppTimer" checked><label class="form-check-label" for="ppTimer">Timer</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="ppAudio" checked><label class="form-check-label" for="ppAudio">Audio</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="ppHints" checked><label class="form-check-label" for="ppHints">Hints</label>
+          </div>
+          <div class="mt-2">
+            <label class="form-label">Max number (add/sub)</label>
+            <input id="ppMax" type="number" min="10" max="20" step="1" class="form-control w-auto" value="20">
+          </div>
+          <div class="d-flex gap-2 mt-3">
+            <button id="exportBtn" class="btn btn-outline-secondary">Export History CSV</button>
+            <button id="resetBtn" class="btn btn-danger">Reset App</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Simple sounds -->
+<audio id="sndCorrect" preload="auto" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA"></audio>
+<audio id="sndOops" preload="auto" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script>
+(() => {
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  const KEY = {
+    config: 'mathkid.config',
+    streak: 'mathkid.streak',
+    history: 'mathkid.history',
+    stickers: 'mathkid.stickers',
+    pin: 'mathkid.pin'
+  };
+
+  const defaultConfig = {
+    addsub: true,
+    mult: false,
+    timer: true,
+    audio: true,
+    hints: true,
+    quickChoices: 'on',
+    maxAS: 20
+  };
+
+  const STATE = {
+    questions: [],
+    currentIndex: 0,
+    correct: 0,
+    startTime: 0,
+    timeLeft: 600,
+    timerId: null,
+    streak: 0,
+    stickers: [],
+    wrongLog: [],
+    config: {}
+  };
+
+  function loadJSON(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+    catch { return fallback; }
+  }
+  function saveJSON(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function initApp() {
+    STATE.config = Object.assign({}, defaultConfig, loadJSON(KEY.config, {}));
+    STATE.streak = loadJSON(KEY.streak, {count:0,last:''});
+    STATE.stickers = loadJSON(KEY.stickers, []);
+    updateStreakBadge();
+    // Seed UI from config
+    $('#cfgAddSub').checked = STATE.config.addsub;
+    $('#cfgMult').checked = STATE.config.mult;
+    $('#cfgTimer').checked = STATE.config.timer;
+    $('#cfgAudio').checked = STATE.config.audio;
+    $('#cfgHints').checked = STATE.config.hints;
+    $('#cfgQuickChoices').value = STATE.config.quickChoices;
+
+    $('#startBtn').addEventListener('click', onStart);
+    $('#albumBtn').addEventListener('click', showAlbum);
+    $('#submitBtn').addEventListener('click', submitAnswer);
+    $('#skipBtn').addEventListener('click', skipQuestion);
+    $('#hintBtn').addEventListener('click', showHint);
+    $('#pauseBtn').addEventListener('click', togglePause);
+    $('#parentModeBtn').addEventListener('click', openParent);
+    $('#playAgainBtn').addEventListener('click', () => { bootstrap.Modal.getOrCreateInstance('#resultsModal').hide(); onStart(); });
+    $('#reviewBtn').addEventListener('click', () => {});
+    $('#shareBtn').addEventListener('click', shareSummary);
+    $('#pinBtn').addEventListener('click', handlePIN);
+    $('#exportBtn').addEventListener('click', exportCSV);
+    $('#resetBtn').addEventListener('click', resetApp);
+
+    $('#ppAddSub').addEventListener('change', e => { STATE.config.addsub = e.target.checked; persistConfig(); syncStartPanel(); });
+    $('#ppMult').addEventListener('change', e => { STATE.config.mult = e.target.checked; persistConfig(); syncStartPanel(); });
+    $('#ppTimer').addEventListener('change', e => { STATE.config.timer = e.target.checked; persistConfig(); syncStartPanel(); });
+    $('#ppAudio').addEventListener('change', e => { STATE.config.audio = e.target.checked; persistConfig(); syncStartPanel(); });
+    $('#ppHints').addEventListener('change', e => { STATE.config.hints = e.target.checked; persistConfig(); syncStartPanel(); });
+    $('#ppMax').addEventListener('change', e => { const v = Math.max(10, Math.min(20, Number(e.target.value)||20)); STATE.config.maxAS = v; e.target.value = v; persistConfig(); });
+
+    $('#cfgAddSub').addEventListener('change', e => { STATE.config.addsub = e.target.checked; persistConfig(); syncParentPanel(); });
+    $('#cfgMult').addEventListener('change', e => { STATE.config.mult = e.target.checked; persistConfig(); syncParentPanel(); });
+    $('#cfgTimer').addEventListener('change', e => { STATE.config.timer = e.target.checked; persistConfig(); syncParentPanel(); });
+    $('#cfgAudio').addEventListener('change', e => { STATE.config.audio = e.target.checked; persistConfig(); syncParentPanel(); });
+    $('#cfgHints').addEventListener('change', e => { STATE.config.hints = e.target.checked; persistConfig(); syncParentPanel(); });
+    $('#cfgQuickChoices').addEventListener('change', e => { STATE.config.quickChoices = e.target.value; persistConfig(); });
+
+    $('#answerInput').addEventListener('keydown', e => { if (e.key === 'Enter') submitAnswer(); });
+
+    updateParentPanel();
+  }
+
+  function persistConfig() {
+    saveJSON(KEY.config, STATE.config);
+  }
+
+  function syncStartPanel() {
+    $('#cfgAddSub').checked = STATE.config.addsub;
+    $('#cfgMult').checked = STATE.config.mult;
+    $('#cfgTimer').checked = STATE.config.timer;
+    $('#cfgAudio').checked = STATE.config.audio;
+    $('#cfgHints').checked = STATE.config.hints;
+  }
+  function syncParentPanel() {
+    $('#ppAddSub').checked = STATE.config.addsub;
+    $('#ppMult').checked = STATE.config.mult;
+    $('#ppTimer').checked = STATE.config.timer;
+    $('#ppAudio').checked = STATE.config.audio;
+    $('#ppHints').checked = STATE.config.hints;
+  }
+
+  function onStart() {
+    // Pull latest config from onboarding controls
+    STATE.config.addsub = $('#cfgAddSub').checked;
+    STATE.config.mult = $('#cfgMult').checked;
+    STATE.config.timer = $('#cfgTimer').checked;
+    STATE.config.audio = $('#cfgAudio').checked;
+    STATE.config.hints = $('#cfgHints').checked;
+    STATE.config.quickChoices = $('#cfgQuickChoices').value;
+    persistConfig();
+
+    buildSession();
+    STATE.currentIndex = 0;
+    STATE.correct = 0;
+    STATE.wrongLog = [];
+    STATE.startTime = Date.now();
+    setProgress(0);
+    $('#scorePill').textContent = 'Score: 0';
+    $('#feedbackArea').innerHTML = '';
+    $('#onboardingCard').classList.add('d-none');
+    $('#sessionUI').classList.remove('d-none');
+    $('#questionCard').classList.remove('pulse-s','pulse-w');
+
+    // Timer
+    clearInterval(STATE.timerId);
+    if (STATE.config.timer) {
+      STATE.timeLeft = 600;
+      $('#timerPill').classList.remove('d-none');
+      updateTimerPill();
+      STATE.timerId = setInterval(tick, 1000);
+    } else {
+      $('#timerPill').classList.add('d-none');
+    }
+
+    renderQuestion();
+  }
+
+  function buildSession() {
+    const qs = [];
+    const max = STATE.config.maxAS || 20;
+    const wantAS = STATE.config.addsub;
+    const wantM = STATE.config.mult;
+
+    while (qs.length < 30) {
+      let q;
+      const opPick = (!wantAS && wantM) ? 'x' : (wantAS && !wantM) ? (Math.random()<0.5?'+':'-') : (Math.random()<0.34?'x':(Math.random()<0.5?'+':'-'));
+      if (opPick === '+' || opPick === '-') {
+        const a = randInt(0, max);
+        const b = randInt(0, max);
+        if (opPick === '+') {
+          const ans = a + b;
+          if (ans <= max) q = makeQ(a, b, '+', ans);
+        } else {
+          // ensure non-negative
+          const big = Math.max(a,b), small = Math.min(a,b);
+          const ans = big - small;
+          q = makeQ(big, small, '-', ans);
+        }
+      } else {
+        if (!wantM) continue;
+        const a = randInt(0, 5);
+        const b = randInt(0, 5);
+        q = makeQ(a, b, '×', a*b, true);
+      }
+      if (!q) continue;
+      q.choices = genChoices(q.answer);
+      q.steps = explainSteps(q);
+      qs.push(q);
+    }
+    STATE.questions = qs;
+  }
+
+  function makeQ(a,b,op,ans,isMult=false){
+    return {a,b,op,answer:ans,isMult};
+  }
+
+  function genChoices(answer) {
+    const set = new Set([answer]);
+    while (set.size < 3) {
+      const delta = [1,2,3][randInt(0,2)] * (Math.random()<0.5?-1:1);
+      const n = Math.max(0, answer + delta);
+      set.add(n);
+    }
+    const arr = Array.from(set);
+    // shuffle
+    for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+    return arr;
+  }
+
+  function explainSteps(q) {
+    if (q.op === '+') {
+      const big = Math.max(q.a,q.b), small = Math.min(q.a,q.b);
+      return `Start at ${big}, count on ${small}.`;
+    } else if (q.op === '-') {
+      return `Take away ${q.b} from ${q.a}. Count back ${q.b}.`;
+    } else {
+      return `${q.a} groups of ${q.b}. Add ${q.b} ${q.a} times.`;
+    }
+  }
+
+  function renderQuestion() {
+    const q = STATE.questions[STATE.currentIndex];
+    if (!q) return endSession();
+    $('#questionText').textContent = `${q.a} ${q.op} ${q.b} = ?`;
+    $('#answerInput').value = '';
+    $('#answerInput').focus();
+    const qc = $('#quickChoices');
+    qc.innerHTML = '';
+    if (STATE.config.quickChoices === 'on') {
+      q.choices.forEach(n => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-outline-primary btn-lg';
+        btn.textContent = n;
+        btn.addEventListener('click', () => { $('#answerInput').value = n; submitAnswer(); });
+        qc.appendChild(btn);
+      });
+    }
+    $('#feedbackArea').innerHTML = '';
+  }
+
+  function submitAnswer() {
+    const q = STATE.questions[STATE.currentIndex];
+    if (!q) return;
+    const val = Number($('#answerInput').value);
+    if (Number.isNaN(val)) {
+      toast('Please enter a number 🙂');
+      return;
+    }
+    const isCorrect = (val === q.answer);
+    if (isCorrect) handleCorrect(q);
+    else handleWrong(q, val);
+    goNext();
+  }
+
+  function skipQuestion() {
+    const q = STATE.questions[STATE.currentIndex];
+    handleWrong(q, null, true);
+    goNext();
+  }
+
+  function handleCorrect(q) {
+    STATE.correct++;
+    $('#scorePill').textContent = `Score: ${STATE.correct}`;
+    sound('#sndCorrect');
+    mascotAnim('bounce');
+    confettiBurst();
+    feedback('🎉 Great!', 'success');
+    pulse('s');
+    maybeAwardSticker();
+  }
+
+  function handleWrong(q, given, skipped=false) {
+    sound('#sndOops');
+    mascotAnim('wobble');
+    feedback(skipped ? '👍 Let’s try the next one!' : '💪 Almost! You’ve got this.', 'warning');
+    pulse('w');
+    STATE.wrongLog.push({
+      q:`${q.a} ${q.op} ${q.b} = ?`,
+      correct:q.answer,
+      given: given===null? 'skipped' : given,
+      steps:q.steps
+    });
+  }
+
+  function goNext() {
+    STATE.currentIndex++;
+    setProgress(STATE.currentIndex);
+    if (STATE.currentIndex >= 30) {
+      endSession();
+    } else {
+      setTimeout(renderQuestion, 350);
+    }
+  }
+
+  function setProgress(i) {
+    const pct = Math.min(100, Math.round((i/30)*100));
+    const bar = $('#progressBar');
+    bar.style.width = pct + '%';
+    bar.textContent = `${i} / 30`;
+  }
+
+  function tick() {
+    STATE.timeLeft--;
+    updateTimerPill();
+    if (STATE.timeLeft <= 0) endSession();
+  }
+
+  function updateTimerPill() {
+    const m = Math.floor(STATE.timeLeft/60);
+    const s = STATE.timeLeft%60;
+    $('#timerPill').textContent = `${String(m).padStart(1,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  function endSession() {
+    clearInterval(STATE.timerId);
+    // streak update
+    const today = new Date(); const ymd = today.toISOString().slice(0,10);
+    const passed = STATE.correct >= 24; // 80% of 30
+    if (passed) {
+      if (STATE.streak.last === ymd) {
+        // already counted today
+      } else if (isYesterday(STATE.streak.last, ymd) || STATE.streak.last === '') {
+        STATE.streak.count = (STATE.streak.last?STATE.streak.count:0) + 1;
+        STATE.streak.last = ymd;
+      } else {
+        STATE.streak.count = 1;
+        STATE.streak.last = ymd;
+      }
+      saveJSON(KEY.streak, STATE.streak);
+    }
+    updateStreakBadge();
+    // history
+    const entry = {
+      date: ymd,
+      score: STATE.correct,
+      timeUsed: STATE.config.timer ? (600-STATE.timeLeft) : null
+    };
+    const hist = loadJSON(KEY.history, []);
+    hist.unshift(entry); if (hist.length>10) hist.pop();
+    saveJSON(KEY.history, hist);
+
+    // results view
+    const stars = calcStars(STATE.correct, STATE.timeLeft);
+    $('#stars').textContent = '⭐️'.repeat(stars);
+    $('#summaryText').textContent = `You got ${STATE.correct}/30 correct${STATE.config.timer?` in ${fmtTimeUsed(entry.timeUsed)}`:''}. ${STATE.correct>=24?'Fantastic streak progress!':'Keep practicing—tomorrow will be even better!'}`;
+    renderEarnedStickers();
+    bootstrap.Modal.getOrCreateInstance('#resultsModal').show();
+  }
+
+  function renderEarnedStickers(){
+    const wrap = $('#earnedStickers');
+    wrap.innerHTML = '';
+    const latest = STATE.stickers.slice(-6);
+    latest.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'sticker';
+      div.textContent = s;
+      wrap.appendChild(div);
+    });
+  }
+
+  function calcStars(score, timeLeft) {
+    if (!STATE.config.timer) return score>=27?3:score>=24?2:1;
+    const timeUsed = 600 - timeLeft;
+    if (score>=28 && timeUsed<=360) return 3;
+    if (score>=24 && timeUsed<=540) return 2;
+    return 1;
+  }
+
+  function showHint() {
+    if (!STATE.config.hints) return;
+    const q = STATE.questions[STATE.currentIndex];
+    if (!q) return;
+    let txt='';
+    if (q.op==='+') txt = `Hint: Start at ${Math.max(q.a,q.b)} and count up ${Math.min(q.a,q.b)}.`;
+    else if (q.op==='-') txt = `Hint: Start at ${q.a} and count back ${q.b}.`;
+    else txt = `Hint: Think ${q.a} groups of ${q.b}.`;
+    toast(txt);
+  }
+
+  function togglePause() {
+    if (!STATE.config.timer) return;
+    if (STATE.timerId) {
+      clearInterval(STATE.timerId);
+      STATE.timerId = null;
+      $('#pauseBtn').textContent = 'Resume';
+    } else {
+      STATE.timerId = setInterval(tick, 1000);
+      $('#pauseBtn').textContent = 'Pause';
+    }
+  }
+
+  function mascotAnim(kind) {
+    const m = $('#mascot');
+    if (kind==='bounce'){ m.classList.add('bounce'); setTimeout(()=>m.classList.remove('bounce'),250); }
+    if (kind==='wobble'){ m.classList.add('wobble'); setTimeout(()=>m.classList.remove('wobble'),250); }
+  }
+
+  function pulse(type) {
+    const card = $('#questionCard');
+    card.classList.remove('pulse-s','pulse-w');
+    void card.offsetWidth;
+    card.classList.add(type==='s'?'pulse-s':'pulse-w');
+  }
+
+  function feedback(text, kind) {
+    const el = $('#feedbackArea');
+    el.innerHTML = `<span class="emoji">${kind==='success'?'😄':'🙂'}</span> <span class="ms-2">${text}</span>`;
+  }
+
+  function sound(id) {
+    if (!STATE.config.audio) return;
+    const el = $(id);
+    if (el) { el.currentTime = 0; el.play().catch(()=>{}); }
+  }
+
+  function confettiBurst() {
+    if (window.confetti) confetti({scalar:.8, spread: 70, ticks: 120, origin:{y:.7}});
+  }
+
+  function isYesterday(prev, today){
+    if (!prev) return true;
+    const d1 = new Date(prev+'T00:00:00'); const d2 = new Date(today+'T00:00:00');
+    return (d2 - d1) === 86400000;
+    }
+
+  function updateStreakBadge() {
+    $('#streakBadge').textContent = `🔥 ${STATE.streak.count||0}-day streak`;
+  }
+
+  function shareSummary() {
+    const text = $('#summaryText').textContent + ' #DailyMathAdventure';
+    if (navigator.share) navigator.share({text}).catch(()=>{ navigator.clipboard.writeText(text); toast('Copied summary!'); });
+    else { navigator.clipboard.writeText(text); toast('Copied summary!'); }
+  }
+
+  function showAlbum() {
+    const stickers = loadJSON(KEY.stickers, []);
+    const list = stickers.length ? stickers.slice(-30).map(s=>`<span class="sticker">${s}</span>`).join('') : '<div class="text-muted">No stickers yet—earn some by getting answers right!</div>';
+    const body = document.createElement('div');
+    body.innerHTML = list;
+    const modal = tempModal('Sticker Album', body);
+    modal.show();
+  }
+
+  function tempModal(title, contentNode) {
+    const wrap = document.createElement('div');
+    wrap.className = 'modal fade';
+    wrap.innerHTML = `<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">${title}</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"></div></div></div>`;
+    document.body.appendChild(wrap);
+    wrap.querySelector('.modal-body').appendChild(contentNode);
+    const inst = new bootstrap.Modal(wrap);
+    wrap.addEventListener('hidden.bs.modal', ()=>wrap.remove());
+    return inst;
+  }
+
+  function openParent() {
+    $('#parentGate').classList.remove('d-none');
+    $('#parentPanel').classList.add('d-none');
+    $('#pinInput').value = '';
+    bootstrap.Modal.getOrCreateInstance('#parentModal').show();
+  }
+
+  function handlePIN() {
+    const pin = (''+$('#pinInput').value).trim();
+    if (!/^\d{4}$/.test(pin)) { toast('Enter a 4-digit PIN'); return; }
+    const saved = localStorage.getItem(KEY.pin);
+    if (!saved) {
+      localStorage.setItem(KEY.pin, hash(pin));
+      toast('PIN set!');
+    } else if (saved !== hash(pin)) {
+      toast('Wrong PIN');
+      return;
+    }
+    updateParentPanel();
+    $('#parentGate').classList.add('d-none');
+    $('#parentPanel').classList.remove('d-none');
+  }
+
+  function updateParentPanel() {
+    $('#ppAddSub').checked = STATE.config.addsub;
+    $('#ppMult').checked = STATE.config.mult;
+    $('#ppTimer').checked = STATE.config.timer;
+    $('#ppAudio').checked = STATE.config.audio;
+    $('#ppHints').checked = STATE.config.hints;
+    $('#ppMax').value = STATE.config.maxAS || 20;
+  }
+
+  function exportCSV() {
+    const hist = loadJSON(KEY.history, []);
+    const rows = [['date','score','time_used_sec']].concat(hist.map(h=>[h.date,h.score,h.timeUsed??'']));
+    const csv = rows.map(r=>r.join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'math_history.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function resetApp() {
+    [KEY.config, KEY.streak, KEY.history, KEY.stickers, KEY.pin].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+
+  function buildReviewList() {
+    const list = $('#reviewList'); list.innerHTML = '';
+    if (!STATE.wrongLog.length) {
+      list.innerHTML = '<div class="text-muted">No mistakes—awesome!</div>';
+      return;
+    }
+    STATE.wrongLog.forEach(item => {
+      const a = document.createElement('a');
+      a.className = 'list-group-item list-group-item-action';
+      a.innerHTML = `<div class="d-flex w-100 justify-content-between"><strong>${item.q}</strong><small>Correct: ${item.correct}</small></div><div class="mb-1">You: ${item.given}</div><small class="text-muted">${item.steps}</small>`;
+      list.appendChild(a);
+    });
+  }
+
+  function maybeAwardSticker() {
+    const pool = ['⭐️','🚀','🦄','🐯','🍭','🍓','🌈','⚽️','🐼','🎈'];
+    const pick = pool[randInt(0, pool.length-1)];
+    STATE.stickers.push(pick);
+    saveJSON(KEY.stickers, STATE.stickers);
+  }
+
+  function toast(msg) {
+    // simple lightweight toast
+    const t = document.createElement('div');
+    t.className = 'position-fixed bottom-0 start-50 translate-middle-x bg-dark text-white px-3 py-2 rounded-pill mb-3';
+    t.style.zIndex = 1080;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(), 1800);
+  }
+
+  function fmtTimeUsed(sec) {
+    const m = Math.floor(sec/60), s=sec%60; return `${m}m ${s}s`;
+  }
+
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  function hash(s){ // tiny non-crypto hash
+    let h=0; for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i); h|=0;}
+    return String(h);
+  }
+
+  // Hook up review drawer to build content on open
+  document.addEventListener('shown.bs.offcanvas', (e) => {
+    if (e.target.id === 'reviewDrawer') buildReviewList();
+  });
+
+  // Close results -> keep review drawer usable
+  document.addEventListener('shown.bs.modal', (e) => {
+    if (e.target.id === 'resultsModal') renderEarnedStickers();
+  });
+
+  // Kickoff
+  initApp();
+})();
+</script>
+</body>
+</html>

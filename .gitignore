@@ -36,6 +36,7 @@ kelasgpt_expert/
 # misc
 .DS_Store
 *.pem
+random*
 
 
 # debug

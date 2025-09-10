@@ -13,7 +13,10 @@ export default function SocialProof() {
 
   // This effect runs once when the component mounts to fetch the notification data.
   useEffect(() => {
-    fetch("/social_noti.json")
+    fetch(
+      "https://cdn.jsdelivr.net/gh/luqtech-official/kelasgpt-public-resources@latest/data/social_noti.json",
+      { cache: 'no-store' }
+    )
       .then((res) => res.json())
       .then((data) => {
         setNotifications(data);

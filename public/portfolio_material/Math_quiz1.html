@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daily Math Adventure — 30 Questions</title>
+<style>
+  :root{
+    --bg:#f7fbff;
+    --card:#ffffff;
+    --ink:#19324f;
+    --muted:#4f6b8a;
+    --accent:#1ea7fd;
+    --accent-2:#7fdc5b;
+    --warn:#ffb703;
+    --bad:#ff5a5f;
+    --good:#2ecc71;
+    --shadow:0 10px 24px rgba(19,68,116,.15);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at -10% -10%, #e4f3ff 0%, rgba(228,243,255,0) 60%),
+      radial-gradient(900px 500px at 110% 10%, #fff2d9 0%, rgba(255,242,217,0) 55%),
+      var(--bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .app{
+    width:min(920px, 96vw);
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  header{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;
+  }
+  .title{
+    display:flex;align-items:center;gap:12px;font-weight:900;font-size:1.2rem;letter-spacing:.3px
+  }
+  .title .badge{
+    background:linear-gradient(135deg,var(--accent),#76d1ff);
+    color:white;border-radius:999px;padding:6px 12px;font-size:.8rem;font-weight:800;
+    box-shadow:0 6px 18px rgba(30,167,253,.28);
+  }
+  .streak{
+    display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700
+  }
+  .streak .dot{width:10px;height:10px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(255,183,3,.18) inset}
+  .card{
+    background:#fbfeff;border:2px solid #ebf5ff;border-radius:16px;padding:16px;margin-top:10px
+  }
+
+  /* progress */
+  .progress-wrap{margin:10px 0 18px}
+  .progress{
+    height:14px;border-radius:999px;background:#ecf3f9;overflow:hidden;position:relative
+  }
+  .progress .bar{
+    height:100%;width:0%;background:linear-gradient(90deg, var(--accent), #59d1ff);
+    transition:width .35s ease; border-radius:999px
+  }
+  .progress .tick{
+    position:absolute;top:50%;transform:translateY(-50%);width:2px;height:14px;background:#d8e6f3;opacity:.85
+  }
+  .meta{
+    display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-weight:700;font-size:.9rem;
+  }
+  .pill{padding:6px 10px;border-radius:999px;background:#eef7ff;border:1px solid #dff1ff}
+
+  /* question area */
+  .question{
+    display:grid;grid-template-columns:1fr;gap:10px;align-items:center;justify-items:center;margin:8px 0 6px;
+    text-align:center
+  }
+  .eq{
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-weight:900;letter-spacing:.5px
+  }
+  .input-wrap{
+    display:flex;align-items:center;gap:10px
+  }
+  input.answer{
+    width:170px;max-width:50vw;text-align:center;font-size:2rem;padding:14px 12px;border-radius:14px;border:2px solid #cfe8ff;
+    outline:none;font-weight:800;color:var(--ink);background:white;
+    box-shadow:inset 0 2px 0 rgba(0,0,0,.03)
+  }
+  input.answer:focus{border-color:var(--accent)}
+  .big-btn{
+    font-size:1.2rem;font-weight:900;padding:14px 18px;border-radius:14px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,#00c16a,#7ce97f);color:white;box-shadow:0 12px 20px rgba(0,193,106,.22);
+    transition:transform .05s ease
+  }
+  .big-btn:active{transform:translateY(1px)}
+  .ghost-btn{
+    font-size:1rem;font-weight:800;padding:12px 14px;border-radius:12px;border:2px solid #cfe8ff;background:#f7fbff;color:var(--ink)
+  }
+  .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+  /* keypad */
+  .pad{
+    display:grid;grid-template-columns:repeat(3, min(140px, 25vw));gap:10px;justify-content:center;margin-top:8px
+  }
+  .key{
+    background:#ffffff;border:2px solid #d7ebff;border-radius:14px;padding:14px 6px;font-size:1.6rem;font-weight:900;
+    box-shadow:0 8px 14px rgba(25,50,79,.06);cursor:pointer;user-select:none
+  }
+  .key:active{transform:translateY(1px)}
+  .key.wide{grid-column:span 2}
+  .key.good{background: #eafff0;border-color:#c8f5d9}
+  .key.bad{background: #fff0f0;border-color:#ffd7d7}
+
+  /* mode chips */
+  .modes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+  .chip{
+    padding:8px 12px;border-radius:999px;border:2px solid #cfe8ff;background:#f6fbff;font-weight:800;cursor:pointer
+  }
+  .chip.active{border-color:#8ad3ff;background:#e7f6ff}
+
+  /* result screen */
+  .result{
+    text-align:center;padding:18px 8px
+  }
+  .score{
+    font-size:clamp(2rem, 6vw, 3rem);font-weight:900;margin:8px 0
+  }
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px
+  }
+  .mini{
+    background:#fff;border:2px solid #eaf3fb;border-radius:12px;padding:10px;font-weight:800;text-align:center
+  }
+  .history{
+    margin-top:8px;font-size:.95rem;color:var(--muted)
+  }
+
+  /* confetti canvas */
+  canvas#boom{position:absolute;inset:0;pointer-events:none}
+
+  /* helper */
+  .sr-only{position:absolute;left:-9999px}
+  .fade-in{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <div class="app" role="application" aria-label="Daily Math Adventure">
+    <canvas id="boom"></canvas>
+    <header>
+      <div class="title">
+        <span aria-hidden="true" style="font-size:1.4rem">🧮✨</span>
+        <div>Daily Math <span style="opacity:.65">Adventure</span></div>
+        <span class="badge">30 Qs</span>
+      </div>
+      <div class="streak" id="streak">
+        <span class="dot" aria-hidden="true"></span>
+        <span><span id="streakCount">0</span>-day streak</span>
+      </div>
+    </header>
+
+    <div id="screenStart" class="card fade-in" aria-live="polite">
+      <p style="margin:0 0 8px;font-weight:800;color:var(--muted);text-align:center">
+        Practice every day! Answer 30 quick questions to keep your streak alive. 🌟
+      </p>
+      <div class="modes" role="radiogroup" aria-label="Choose practice type">
+        <button class="chip active" data-mode="addsub" aria-checked="true" role="radio">Add & Sub (0-20)</button>
+        <button class="chip" data-mode="add" role="radio" aria-checked="false">Addition (0-20)</button>
+        <button class="chip" data-mode="sub" role="radio" aria-checked="false">Subtraction (0-20)</button>
+        <button class="chip" data-mode="mix" role="radio" aria-checked="false">Mix + × (easy)</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:6px">
+        <label class="pill" style="display:flex;align-items:center;gap:8px">
+          🔢 Questions: <input id="qCount" type="range" min="10" max="30" step="5" value="30" style="accent-color:#1ea7fd">
+          <span id="qCountOut" style="min-width:2ch;text-align:right">30</span>
+        </label>
+        <label class="pill" style="display:flex;align-items:center;gap:8px">
+          ⏱️ Timer per Q: <input id="qTimer" type="range" min="0" max="20" step="5" value="0" style="accent-color:#1ea7fd">
+          <span id="qTimerOut">Off</span>
+        </label>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="startBtn" class="big-btn" aria-label="Start practice">▶️ Start</button>
+        <button id="resetStreak" class="ghost-btn" title="Clear local progress">Reset Progress</button>
+      </div>
+      <div class="history" id="recent"></div>
+    </div>
+
+    <div id="screenQuiz" class="card" hidden>
+      <div class="progress-wrap">
+        <div class="meta" style="justify-content:space-between">
+          <div><b id="counter">1</b>/<span id="total">30</span></div>
+          <div class="pill">⭐ <span id="score">0</span></div>
+        </div>
+        <div class="progress" aria-label="Progress towards finishing questions">
+          <!-- tick marks -->
+          <div class="bar" id="bar"></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <div class="eq" aria-live="polite"><span id="A">3</span> <span id="OP">+</span> <span id="B">4</span> = ?</div>
+        <div class="input-wrap">
+          <label class="sr-only" for="answer">Your answer</label>
+          <input id="answer" class="answer" inputmode="numeric" pattern="[0-9]*" autocomplete="off" />
+          <button id="submit" class="big-btn">Check ✅</button>
+        </div>
+        <div class="meta" id="timerWrap" hidden>
+          <span class="pill">⏱️ <span id="timeLeft">--</span>s</span>
+          <span class="pill">Streak this session: <span id="sessionStreak">0</span></span>
+        </div>
+      </div>
+
+      <div class="pad" aria-label="Number keypad">
+        <!-- keys 1-9, 0, clear, back, enter -->
+      </div>
+      <div class="row" style="margin-top:6px">
+        <button id="skip" class="ghost-btn">Skip ↷</button>
+        <button id="hint" class="ghost-btn">Hint 💡</button>
+      </div>
+    </div>
+
+    <div id="screenEnd" class="card" hidden>
+      <div class="result">
+        <div class="score" id="finalScore">🎉 Great job!</div>
+        <div class="grid">
+          <div class="mini">✅ Correct: <span id="sumCorrect">0</span></div>
+          <div class="mini">❌ Tries: <span id="sumTries">0</span></div>
+          <div class="mini">⏱️ Average: <span id="avgTime">0.0</span>s</div>
+          <div class="mini">🔥 Daily streak: <span id="streakOut">0</span></div>
+        </div>
+        <div class="history" id="endMsg"></div>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:8px">
+        <button id="playAgain" class="big-btn">Play Again ▶️</button>
+        <button id="seeReview" class="ghost-btn">Review Questions 📘</button>
+      </div>
+      <div id="review" class="card" style="margin-top:10px" hidden>
+        <div id="reviewList" class="grid"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* -------------------- Utilities & State -------------------- */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const rand = (a,b)=> Math.floor(Math.random()*(b-a+1))+a;
+
+const S = {
+  mode: 'addsub',
+  total: 30,
+  i: 0,
+  score: 0,
+  tries: 0,
+  sessionStreak: 0,
+  perQTimer: 0,
+  timerId: null,
+  timeLeft: 0,
+  questions: [],
+  history: [], // per question
+};
+
+const STORAGE_KEY = 'kidmath.daily.v1';
+const loadStore = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+const saveStore = (obj) => localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+
+function todayStr(){
+  const d = new Date(); d.setHours(0,0,0,0);
+  return d.toISOString().slice(0,10);
+}
+function daysBetween(isoA, isoB){
+  const a=new Date(isoA), b=new Date(isoB);
+  return Math.round((b-a)/(1000*60*60*24));
+}
+
+/* -------------------- Streak & Recent -------------------- */
+function updateStreakUI(){
+  const store = loadStore();
+  const streak = store.streak || 0;
+  $('#streakCount').textContent = streak;
+  // recent sessions list
+  const recent = (store.sessions||[]).slice(-5).reverse();
+  $('#recent').innerHTML = recent.length
+    ? "<b>Recent sessions:</b> " + recent.map(x=> `${x.date} (${x.correct}/${x.total})`).join(' · ')
+    : "<i>No sessions yet — start your first adventure!</i>";
+}
+
+function applySessionResult(){
+  const store = loadStore();
+  const d = todayStr();
+  // streak update
+  const last = store.lastDay || null;
+  let streak = store.streak || 0;
+  if(!last){ streak = 1; }
+  else{
+    const gap = daysBetween(last, d);
+    if(gap === 0){ /* same day, keep */ }
+    else if(gap === 1){ streak += 1; }
+    else { streak = 1; }
+  }
+  store.lastDay = d;
+  store.streak = streak;
+
+  // sessions history
+  store.sessions = store.sessions || [];
+  store.sessions.push({
+    date: d, correct: S.score, total: S.total, avgTime: avgTime().toFixed(1), mode: S.mode
+  });
+  // bests
+  store.best = store.best || {};
+  store.best.bestCorrect = Math.max(store.best.bestCorrect||0, S.score);
+  store.best.fastest = Math.min(store.best.fastest||Infinity, parseFloat(avgTime().toFixed(2)));
+
+  saveStore(store);
+  $('#streakOut').textContent = streak;
+  $('#streakCount').textContent = streak;
+  $('#endMsg').innerHTML =
+    `🏆 Best correct: <b>${store.best.bestCorrect||0}</b> · ⚡ Fastest avg: <b>${(store.best.fastest===Infinity? '—' : store.best.fastest+'s')}</b>`;
+}
+
+/* -------------------- Question Generator -------------------- */
+function makeQuestion(){
+  const mode = S.mode;
+  let a,b,op,ans, hint="";
+  if(mode==='add' || (mode==='addsub' && Math.random()<0.5)){
+    a = rand(0,20); b = rand(0,20-a); op = '+'; ans = a+b;
+    hint = `${a} + ${b} = ?  (Count up ${b})`;
+  }else if(mode==='sub' || (mode==='addsub')){
+    b = rand(0,20); a = rand(b,20); op = '−'; ans = a-b;
+    hint = `${a} − ${b} = ?  (Count back ${b})`;
+  }else if(mode==='mix'){ // add with small x
+    if(Math.random()<0.7){
+      a = rand(0,20); b = rand(0,20-a); op = '+'; ans = a+b;
+      hint = `Try making 10s: ${a}+${b}`;
+    }else{
+      a = rand(0,9); b = rand(0,9); op = '×'; ans = a*b;
+      hint = `${a} groups of ${b}`;
+    }
+  }
+  return {a,b,op,ans, tries:0, time:0, correct:false, hint};
+}
+
+function buildDeck(){
+  S.questions = Array.from({length:S.total}, makeQuestion);
+}
+
+/* -------------------- UI Wiring -------------------- */
+function showStart(){
+  $('#screenStart').hidden=false;
+  $('#screenQuiz').hidden=true;
+  $('#screenEnd').hidden=true;
+  updateStreakUI();
+  drawTicks(($('#total').textContent|0)||30); // prepaint
+}
+function startGame(){
+  S.i=0; S.score=0; S.tries=0; S.sessionStreak=0; S.history=[];
+  S.total = parseInt($('#qCount').value,10);
+  S.perQTimer = parseInt($('#qTimer').value,10);
+  $('#total').textContent = S.total;
+  buildDeck();
+  $('#screenStart').hidden=true;
+  $('#screenQuiz').hidden=false;
+  nextQ(true);
+}
+function endGame(){
+  $('#screenQuiz').hidden=true;
+  $('#screenEnd').hidden=false;
+
+  $('#sumCorrect').textContent = S.score;
+  $('#sumTries').textContent = S.tries;
+  $('#avgTime').textContent = avgTime().toFixed(1);
+  $('#finalScore').textContent = S.score === S.total
+    ? '🌟 Perfect! You’re a Math Star!'
+    : S.score >= Math.round(S.total*0.8)
+      ? '🎉 Great job!'
+      : '👏 Nice practice!';
+
+  applySessionResult();
+  updateStreakUI();
+}
+
+function avgTime(){
+  const t = S.history.reduce((acc,q)=> acc+q.time, 0);
+  return S.history.length ? t/S.history.length : 0;
+}
+
+function renderQ(){
+  const q = S.questions[S.i];
+  $('#A').textContent = q.a;
+  $('#B').textContent = q.b;
+  $('#OP').textContent = q.op;
+  $('#counter').textContent = S.i+1;
+  $('#score').textContent = S.score;
+  $('#sessionStreak').textContent = S.sessionStreak;
+  $('#answer').value = '';
+  $('#answer').focus();
+  setProgress();
+
+  // timer
+  clearInterval(S.timerId);
+  if(S.perQTimer>0){
+    $('#timerWrap').hidden=false;
+    S.timeLeft = S.perQTimer;
+    $('#timeLeft').textContent = S.timeLeft;
+    S.timerId = setInterval(()=>{
+      S.timeLeft--;
+      $('#timeLeft').textContent = S.timeLeft;
+      if(S.timeLeft<=0){
+        clearInterval(S.timerId);
+        blinkKeypad('bad');
+        revealHint();
+        // treat as a skip, record and move on
+        recordTry(q, false, S.perQTimer);
+        S.sessionStreak = 0;
+        S.i++;
+        if(S.i>=S.total) endGame(); else nextQ();
+      }
+    },1000);
+  }else{
+    $('#timerWrap').hidden=true;
+  }
+}
+
+function recordTry(q, correct, timeSpent){
+  q.tries++;
+  S.tries++;
+  q.time += timeSpent;
+  if(correct && !q.correct){
+    q.correct = true;
+    S.score++;
+    S.sessionStreak++;
+  }else if(!correct){
+    S.sessionStreak = 0;
+  }
+}
+
+function nextQ(first=false){
+  if(!first){
+    const prev = S.questions[S.i-1];
+    S.history.push({...prev});
+  }
+  if(S.i>=S.total){ endGame(); return; }
+  renderQ();
+}
+
+function setProgress(){
+  const pct = (S.i / S.total) * 100;
+  $('#bar').style.width = pct + '%';
+}
+
+function drawTicks(total){
+  const wrap = $('.progress');
+  // remove old tick elements except bar
+  wrap.querySelectorAll('.tick').forEach(el=>el.remove());
+  const steps = Math.min(10, total); // up to 10 ticks
+  for(let i=1;i<steps;i++){
+    const t = document.createElement('div');
+    t.className='tick';
+    t.style.left = (i/steps*100)+'%';
+    wrap.appendChild(t);
+  }
+}
+
+/* -------------------- Input & Feedback -------------------- */
+function submitAnswer(){
+  const q = S.questions[S.i];
+  const val = parseInt($('#answer').value,10);
+  if(Number.isNaN(val)) return;
+  // time spent for this attempt:
+  let attemptTime = 0;
+  if(S.perQTimer>0){
+    attemptTime = (S.perQTimer - S.timeLeft);
+  }
+  const correct = val===q.ans;
+  recordTry(q, correct, attemptTime);
+  if(correct){
+    goodBeep(); burst();
+    blinkKeypad('good');
+    clearInterval(S.timerId);
+    S.i++;
+    setTimeout(()=> {
+      if(S.i>=S.total) endGame(); else nextQ();
+    }, 350);
+  }else{
+    badBeep();
+    wiggle($('#answer'));
+  }
+}
+
+function blinkKeypad(cls){
+  $$('.key').forEach(k=>{
+    k.classList.add(cls);
+    setTimeout(()=>k.classList.remove(cls), 200);
+  });
+}
+
+function wiggle(el){
+  el.style.transition='transform .08s';
+  el.style.transform='translateX(-6px)';
+  setTimeout(()=>{ el.style.transform='translateX(6px)'; },80);
+  setTimeout(()=>{ el.style.transform=''; },160);
+}
+
+/* -------------------- Number Pad -------------------- */
+function buildPad(){
+  const pad = $('.pad');
+  const keys = ['1','2','3','4','5','6','7','8','9','0','⌫','Clear','Enter'];
+  pad.innerHTML='';
+  keys.forEach(k=>{
+    const btn = document.createElement('button');
+    btn.className='key';
+    if(k==='Clear') btn.classList.add('wide');
+    btn.textContent = k;
+    btn.addEventListener('click', ()=>{
+      const input = $('#answer');
+      if(/\d/.test(k)){ input.value = (input.value + k).slice(0,3); } // cap length
+      else if(k==='⌫'){ input.value = input.value.slice(0,-1); }
+      else if(k==='Clear'){ input.value=''; }
+      else if(k==='Enter'){ submitAnswer(); }
+      input.focus();
+    });
+    pad.appendChild(btn);
+  });
+}
+
+/* -------------------- Hints -------------------- */
+function revealHint(){
+  const q = S.questions[S.i];
+  const m = q.op==='+' ? '🧠 Try counting on your fingers.' :
+            q.op==='−' ? '🧠 Try using number line: start at '+q.a+' and hop back '+q.b+'.' :
+            '🧠 Think of repeated addition.';
+  const custom = q.hint || m;
+  $('#hint').textContent = 'Hint 💡: ' + custom;
+}
+
+/* -------------------- Audio (WebAudio beeps) -------------------- */
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+function beep(type='good'){
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = 'sine';
+  if(type==='good'){ o.frequency.value = 880; }
+  else { o.frequency.value = 220; }
+  g.gain.setValueAtTime(.0001, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.2, ctx.currentTime+.01);
+  g.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime+.2);
+  o.connect(g).connect(ctx.destination);
+  o.start(); o.stop(ctx.currentTime+.22);
+}
+const goodBeep = ()=>beep('good');
+const badBeep = ()=>beep('bad');
+
+/* -------------------- Confetti -------------------- */
+const canvas = document.getElementById('boom');
+const c = canvas.getContext('2d');
+let confetti = [];
+function sizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+window.addEventListener('resize', sizeCanvas);
+sizeCanvas();
+
+function burst(){
+  const W = canvas.width, H = canvas.height;
+  for(let i=0;i<24;i++){
+    confetti.push({
+      x: W*0.5, y: H*0.35, vx: (Math.random()-0.5)*6, vy: -Math.random()*6-2,
+      g: .18+Math.random()*0.1, r: 3+Math.random()*3, life: 60+Math.random()*20, rot: Math.random()*Math.PI
+    });
+  }
+}
+function drawConfetti(){
+  c.clearRect(0,0,canvas.width,canvas.height);
+  confetti.forEach(p=>{
+    p.vy += p.g; p.x += p.vx; p.y += p.vy; p.life -= 1; p.rot += .2;
+    c.save();
+    c.translate(p.x,p.y); c.rotate(p.rot);
+    c.fillStyle = `hsl(${(p.life*6)%360} 80% 60%)`;
+    c.fillRect(-p.r,-p.r,p.r*2,p.r*2);
+    c.restore();
+  });
+  confetti = confetti.filter(p=>p.life>0 && p.y<canvas.height+20);
+  requestAnimationFrame(drawConfetti);
+}
+drawConfetti();
+
+/* -------------------- Events -------------------- */
+document.addEventListener('DOMContentLoaded', ()=>{
+  buildPad();
+  showStart();
+  drawTicks(30);
+
+  // mode chips
+  $$('.chip').forEach(ch=>{
+    ch.addEventListener('click', ()=>{
+      $$('.chip').forEach(x=>x.classList.remove('active'));
+      ch.classList.add('active');
+      S.mode = ch.dataset.mode;
+      // small haptic beep (if allowed)
+      try{ goodBeep(); }catch(e){}
+    });
+  });
+
+  $('#qCount').addEventListener('input', e=>{
+    $('#qCountOut').textContent = e.target.value;
+    drawTicks(parseInt(e.target.value,10));
+  });
+  $('#qTimer').addEventListener('input', e=>{
+    const v = parseInt(e.target.value,10);
+    $('#qTimerOut').textContent = v===0 ? 'Off' : v+'s';
+  });
+
+  $('#startBtn').addEventListener('click', startGame);
+  $('#resetStreak').addEventListener('click', ()=>{
+    if(confirm('Reset all local progress (streak & history)?')){
+      localStorage.removeItem(STORAGE_KEY);
+      updateStreakUI();
+    }
+  });
+
+  $('#submit').addEventListener('click', submitAnswer);
+  $('#skip').addEventListener('click', ()=>{
+    const q = S.questions[S.i];
+    recordTry(q,false, S.perQTimer>0 ? (S.perQTimer - S.timeLeft) : 0);
+    S.sessionStreak=0;
+    S.i++; if(S.i>=S.total) endGame(); else nextQ();
+  });
+  $('#hint').addEventListener('click', revealHint);
+
+  $('#playAgain').addEventListener('click', ()=>{
+    $('#screenEnd').hidden=true; $('#screenStart').hidden=false;
+    updateStreakUI();
+  });
+  $('#seeReview').addEventListener('click', ()=>{
+    const box = $('#review');
+    box.hidden = !box.hidden;
+    if(!box.hidden) renderReview();
+  });
+
+  // keyboard enter/backspace
+  document.addEventListener('keydown', (e)=>{
+    if($('#screenQuiz').hidden) return;
+    if(e.key==='Enter'){ submitAnswer(); }
+    if(e.key==='Backspace'){
+      const input = $('#answer');
+      input.value = input.value.slice(0,-1);
+    }
+    if(/^\d$/.test(e.key)){
+      const input = $('#answer');
+      input.value = (input.value + e.key).slice(0,3);
+    }
+  });
+});
+
+function nextQOrEnd(){ S.i++; (S.i>=S.total) ? endGame() : nextQ(); }
+
+function renderReview(){
+  const wrap = $('#reviewList');
+  wrap.innerHTML='';
+  const all = S.history.concat(S.questions[S.i-1] || []).filter(Boolean); // include last answered
+  all.forEach((q,idx)=>{
+    const el = document.createElement('div');
+    el.className = 'mini';
+    const sign = q.op==='−' ? '-' : q.op;
+    const tries = q.tries;
+    el.innerHTML = `${idx+1}. ${q.a} ${sign} ${q.b} = <b>${q.ans}</b><br>
+      Tries: ${tries} · Time: ${q.time.toFixed(1)}s`;
+    wrap.appendChild(el);
+  });
+}
+
+/* Ensure canvas size matches after DOM visible toggles */
+const ro = new ResizeObserver(sizeCanvas);
+ro.observe($('.app'));
+</script>
+</body>
+</html>

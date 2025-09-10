@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Safari Adventure! 🦊</title>
+  <!-- Bootstrap 5.3.0 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #FF9E6D;
+      --light-green: #E6F7E6;
+      --math-font: 'Comic Sans MS', 'Marker Felt', cursive, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-green);
+      font-family: var(--math-font);
+      min-height: 100vh;
+      padding: 15px;
+      user-select: none;
+    }
+    
+    .math-font {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      color: #5D4037;
+      text-shadow: 2px 2px 0 #FFF;
+      margin: 10px 0;
+    }
+    
+    .keypad-btn {
+      border-radius: 20px !important;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+      transition: all 0.1s;
+      min-height: 60px;
+      margin: 5px;
+    }
+    
+    .keypad-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    }
+    
+    .bg-orange {
+      background-color: var(--orange) !important;
+      color: #FFF;
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 15px;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    
+    .feedback-area {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      .math-font { font-size: 2.8rem; }
+      .keypad-btn { font-size: 1.5rem; min-height: 55px; }
+    }
+    
+    @media (prefers-reduced-motion) {
+      .confetti { animation: none; }
+      .keypad-btn:active { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="mb-4">
+    <h1 class="display-4 text-orange">🦊 Math Safari!</h1>
+    <p class="lead">Help Kiki the Fox collect berries!</p>
+    <div class="progress mt-3" style="height: 20px;">
+      <div id="progress-bar" class="progress-bar bg-orange" style="width: 0%"></div>
+    </div>
+  </header>
+
+  <main class="bg-white rounded-4 shadow-lg p-4 mx-auto" style="max-width: 600px;">
+    <div id="question-container" class="mb-4 p-3 bg-light rounded-3">
+      <h2 id="question" class="math-font">5 + 3 = ?</h2>
+    </div>
+    
+    <div id="keypad" class="grid-3 mb-4"></div>
+    
+    <div id="feedback" class="feedback-area"></div>
+  </main>
+
+  <footer class="mt-4">
+    <button id="mute-btn" class="btn btn-sm btn-outline-secondary">
+      🔇 Mute Sounds
+    </button>
+  </footer>
+
+  <!-- Hidden sound effects -->
+  <audio id="success-sound">
+    <source src="data:audio/mpeg;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARXAkwgAAAAQAAAAAAAA3gAAAAATEQTKgAAAARGG0g5GAYjn/hAGAIQAEkCRqj2yBWCFCBCRIiCv6ixh59jHFSE9v+Oj6DSQBbmSgK7gEEAQAUEQQAAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIA......" type="audio/mpeg">
+  </audio>
+  <audio id="error-sound">
+    <source src="data:audio/mpeg;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARXAkwgAAAAQAAAAAAAA3gAAAAATEQTKgAAAARGG0g5GAYjn/hAGAIQAEkCRqj2yBWCFCBCRIiCv6ixh59jHFSE9v+Oj6DSQBbmSgK7gEEAQAUEQQAAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAIIAIggAgCCIAIAII......" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Game configuration
+    const TOTAL_QUESTIONS = 30;
+    const MAX_NUMBER = 10;
+    
+    // Game state
+    let currentQ = 0;
+    let score = 0;
+    let isMuted = false;
+    let questions = [];
+    
+    // Initialize game
+    document.addEventListener('DOMContentLoaded', () => {
+      questions = generateQuestions();
+      renderKeypad();
+      loadNextQuestion();
+      setupMuteButton();
+    });
+    
+    // Generate age-appropriate math questions
+    function generateQuestions() {
+      return Array.from({length: TOTAL_QUESTIONS}, () => {
+        const isAddition = Math.random() > 0.3;
+        const a = Math.floor(Math.random() * (MAX_NUMBER + 1));
+        const b = isAddition 
+          ? Math.floor(Math.random() * (MAX_NUMBER - a + 1))
+          : Math.floor(Math.random() * (a + 1));
+        
+        return {
+          text: isAddition ? `${a} + ${b} = ?` : `${a} - ${b} = ?`,
+          answer: isAddion ? a + b : a - b
+        };
+      });
+    }
+    
+    // Render child-friendly keypad
+    function renderKeypad() {
+      const keypad = document.getElementById('keypad');
+      keypad.innerHTML = '';
+      
+      [1,2,3,4,5,6,7,8,9,0,'🔄','✅'].forEach(key => {
+        const btn = document.createElement('button');
+        btn.className = `btn keypad-btn ${key === '✅' ? 'bg-orange' : 'btn-light'}`;
+        btn.textContent = key;
+        btn.dataset.value = (key === '🔄' ? 'clear' : key === '✅' ? 'submit' : key);
+        btn.addEventListener('click', handleKeypadInput);
+        keypad.appendChild(btn);
+      });
+    }
+    
+    // Track user input
+    let userInput = '';
+    
+    function handleKeypadInput(e) {
+      const value = e.target.dataset.value;
+      
+      if (value === 'clear') {
+        userInput = '';
+        updateQuestionDisplay();
+      } else if (value === 'submit') {
+        checkAnswer();
+      } else {
+        userInput += value;
+        updateQuestionDisplay();
+      }
+    }
+    
+    // Update question display with user input
+    function updateQuestionDisplay() {
+      const currentQuestion = questions[currentQ].text.replace('?', userInput || '_');
+      document.getElementById('question').textContent = currentQuestion;
+    }
+    
+    // Check if answer is correct
+    function checkAnswer() {
+      if (userInput === '') return;
+      
+      const isCorrect = parseInt(userInput) === questions[currentQ].answer;
+      
+      if (isCorrect) {
+        score++;
+        updateProgressBar();
+        giveFeedback(true);
+      } else {
+        giveFeedback(false);
+      }
+    }
+    
+    // Visual progress tracking
+    function updateProgressBar() {
+      const progress = ((currentQ + 1) / TOTAL_QUESTIONS) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+    
+    // Provide immediate feedback
+    function giveFeedback(isCorrect) {
+      const feedback = document.getElementById('feedback');
+      const currentQuestion = questions[currentQ];
+      
+      if (isCorrect) {
+        feedback.innerHTML = '🌟 <span class="text-success">Berry collected!</span> 🍇';
+        if (!isMuted) document.getElementById('success-sound').play();
+        createConfetti();
+      } else {
+        feedback.innerHTML = '🐌 <span class="text-danger">Try again!</span>';
+        if (!isMuted) document.getElementById('error-sound').play();
+      }
+      
+      // Auto-advance after 1.5 seconds
+      setTimeout(() => {
+        if (isCorrect || userInput.length >= 2) {
+          userInput = '';
+          if (++currentQ < TOTAL_QUESTIONS) {
+            loadNextQuestion();
+          } else {
+            showResults();
+          }
+        } else {
+          updateQuestionDisplay();
+        }
+        feedback.innerHTML = '';
+      }, 1500);
+    }
+    
+    // Load next question
+    function loadNextQuestion() {
+      userInput = '';
+      updateQuestionDisplay();
+      updateProgressBar();
+    }
+    
+    // Show final results
+    function showResults() {
+      document.getElementById('question').textContent = 
+        `You collected ${score} berries! 🍇🍇🍇`;
+      document.getElementById('keypad').innerHTML = 
+        `<button class="btn btn-lg bg-orange w-100" onclick="location.reload()">
+          Play Again!
+        </button>`;
+      document.getElementById('progress-bar').style.width = '100%';
+    }
+    
+    // Confetti celebration effect
+    function createConfetti() {
+      const confettiCount = 30;
+      const colors = ['#FF9E6D', '#7BC950', '#5D4037', '#FFD54F'];
+      
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animation = `fall ${Math.random() * 3 + 2}s ease-out`;
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(confetti);
+        
+        // Remove after animation
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+    
+    // Mute sound control
+    function setupMuteButton() {
+      const muteBtn = document.getElementById('mute-btn');
+      muteBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        muteBtn.innerHTML = isMuted ? '🔊 Unmute' : '🔇 Mute';
+      });
+    }
+  </script>
+</body>
+</html>
