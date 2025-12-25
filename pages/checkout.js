@@ -74,7 +74,7 @@ export default function Checkout({ productSettings }) {
     setDiscountMessage({ type: '', text: '' });
     
     try {
-      const response = await fetch('/api/validate-discount', {
+      const response = await fetch('/api/discount-validator', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
