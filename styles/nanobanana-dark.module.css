@@ -1,0 +1,531 @@
+/* Nanobanana Dark Mode - The Digital Atelier / Darkroom Theme */
+
+/* ==========================================================================
+   0. Variables & Reset
+   ========================================================================== */
+.pageWrapper {
+  --bg-dark: #050505;
+  --bg-panel: #0F0F0F;
+  --text-main: #FFFFFF;
+  --text-muted: #888888;
+  --accent-color: #FFE135; /* Electric Banana */
+  --accent-dim: rgba(255, 225, 53, 0.15);
+  --border-color: #333333;
+  --grid-line: rgba(255, 255, 255, 0.05);
+  
+  --font-display: var(--font-manrope), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* ==========================================================================
+   1. Typography & Common Elements
+   ========================================================================== */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.sectionHeader h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #fff, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionHeader p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.monoLabel {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Viewfinder Corners Effect */
+.viewfinder {
+  position: relative;
+}
+.viewfinder::before, .viewfinder::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--text-muted);
+  border-style: solid;
+  transition: all 0.3s ease;
+}
+.viewfinder::before { top: -10px; left: -10px; border-width: 2px 0 0 2px; }
+.viewfinder::after { bottom: -10px; right: -10px; border-width: 0 2px 2px 0; }
+
+.viewfinder:hover::before { top: -5px; left: -5px; border-color: var(--accent-color); }
+.viewfinder:hover::after { bottom: -5px; right: -5px; border-color: var(--accent-color); }
+
+
+/* ==========================================================================
+   2. Navbar
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 0;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
+  backdrop-filter: blur(5px);
+}
+
+.navBrandText {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   3. Hero Section - "The Studio"
+   ========================================================================== */
+.hero {
+  text-align: center;
+  padding: 8rem 0 4rem; 
+  background: black;
+  /* Add subtle pixel pattern background that gets dramatically illuminated by the moving light */
+  background-image: radial-gradient(circle at 1px 1px,
+    rgba(255,255,255,0.08) 1px,
+    transparent 0);
+  background-size: 4px 4px;
+  position: relative;
+}
+
+.heroContent {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.heroPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.heroPillText {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-color);
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.04em;
+}
+
+.heroTitle span {
+  display: block;
+}
+
+.heroEmphasis {
+  color: var(--text-muted); /* Creating contrast by dimming the emphasis or using outline */
+  -webkit-text-stroke: 1px var(--text-main); 
+  color: transparent;
+}
+
+.heroSubTitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
+
+/* Hero Visual - Floating Tablet/Book Effect */
+.heroVisualWrapper {
+  perspective: 1000px;
+  margin-top: 2rem;
+}
+
+.heroVisualContent {
+  transform: rotateX(10deg) scale(0.9);
+  transition: transform 0.5s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.heroVisualContent:hover {
+  transform: rotateX(0deg) scale(0.95);
+}
+
+.heroVisualOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to top, var(--bg-dark), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* ==========================================================================
+   4. Bento Grid / WIIFM Section
+   ========================================================================== */
+.wiifm {
+  padding: 4rem 0;
+  background: black;
+  background-image: radial-gradient(circle at 1px 1px,
+    rgba(255,255,255,0.08) 1px,
+    transparent 0);
+  background-size: 4px 4px;
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.bentoCard {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.bentoCard:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-5px);
+}
+
+.bentoIcon {
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+}
+
+.bentoCard h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.bentoCard p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Specific Spans for Grid */
+.span4 { grid-column: span 4; }
+.span6 { grid-column: span 6; }
+.span12 { grid-column: span 12; }
+
+@media (max-width: 900px) {
+  .span4, .span6 { grid-column: span 12; }
+}
+
+
+/* ==========================================================================
+   5. Problem/Agitate Section - "The Noise"
+   ========================================================================== */
+.noiseSection {
+  padding: 6rem 0;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #050505 70%);
+}
+
+.noiseContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.noiseText p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.noiseHighlight {
+  border-left: 2px solid var(--accent-color);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: var(--text-main);
+}
+
+
+/* ==========================================================================
+   6. Visual Styles Gallery - "The Darkroom"
+   ========================================================================== */
+.gallerySection {
+  padding: 6rem 0;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.galleryItem {
+  position: relative;
+  group: pointer;
+}
+
+.galleryImageWrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  filter: grayscale(20%);
+  transition: all 0.4s ease;
+}
+
+.galleryItem:hover .galleryImageWrapper {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+
+.galleryOverlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  padding: 2rem 1.5rem;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.galleryItem:hover .galleryOverlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.galleryTag {
+  background: var(--accent-color);
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.galleryTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.galleryDesc {
+  font-size: 0.9rem;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   7. Curriculum - "The File Directory"
+   ========================================================================== */
+.curriculumSection {
+  padding: 6rem 0;
+}
+
+.directoryList {
+  border-top: 1px solid var(--border-color);
+}
+
+.directoryItem {
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.directoryItem:hover {
+  background: var(--bg-panel);
+}
+
+.directoryHeader {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.directoryFolderIcon {
+  margin-right: 1.5rem;
+  color: var(--text-muted);
+}
+
+.directoryInfo {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.chapterTitle {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.chapterMeta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.directoryContent {
+  padding: 0 0 2rem 3.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.bonusCard {
+  border: 1px dashed var(--accent-color);
+  background: var(--accent-dim);
+}
+
+
+/* ==========================================================================
+   8. Pricing & CTA - "The Checkout"
+   ========================================================================== */
+.pricingSection {
+  padding: 8rem 0;
+}
+
+.pricingTicket {
+  background: var(--text-main); /* Inverted scheme: White ticket on black bg */
+  color: var(--bg-dark);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: 2px;
+  position: relative;
+  /* Perforated edge effect */
+  background-image: radial-gradient(circle at 0 50%, var(--bg-dark) 10px, transparent 11px),
+                    radial-gradient(circle at 100% 50%, var(--bg-dark) 10px, transparent 11px);
+  background-size: 100% 50px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.ticketHeader {
+  text-align: center;
+  border-bottom: 2px dashed #ddd;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.priceTag {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.priceSub {
+  font-family: var(--font-mono);
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.ticketIncludes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.ticketIncludes li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.checkIcon {
+  color: #000;
+  margin-right: 1rem;
+}
+
+.buyButton {
+  display: block;
+  width: 100%;
+  padding: 1.2rem;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+.buyButton:hover {
+  transform: scale(1.02);
+  background: var(--accent-color);
+  color: #000;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .heroTitle { font-size: 2.5rem; }
+  .pricingTicket { padding: 2rem; }
+  .bentoGrid { display: flex; flex-direction: column; }
+}
