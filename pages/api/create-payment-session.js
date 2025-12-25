@@ -6,8 +6,17 @@ import { getDiscountAmount } from "../../lib/discount-codes"; // Import discount
 
 export default async function handler(req, res) {
   const logger = createLogger(req);
+
+  // Handle preflight/OPTIONS request
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Allow', 'POST');
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    res.setHeader('Allow', 'POST');
+    logger.warn({ method: req.method }, 'Method Not Allowed - Expected POST');
+    return res.status(405).json({ message: `Method ${req.method} Not Allowed` });
   }
 
   const { name, email, phone, honeypot, discountCode } = req.body; // Extract discountCode
