@@ -34,13 +34,27 @@ export default function Checkout({ productSettings }) {
     email: '',
     phone: ''
   });
+  
+  // Discount Code State
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscountCode, setAppliedDiscountCode] = useState(null);
+  const [appliedDiscountAmount, setAppliedDiscountAmount] = useState(0);
+  const [discountMessage, setDiscountMessage] = useState({ type: '', text: '' });
+  const [isCheckingDiscount, setIsCheckingDiscount] = useState(false);
+
   const router = useRouter();
 
   // Memoize formatted price to prevent unnecessary recalculations
-  const formattedPrice = useMemo(() => 
-    formatPrice(productSettings.productPrice), 
-    [productSettings.productPrice]
-  );
+  const formattedPrice = useMemo(() => {
+    // Calculate final price: (Base - Initial Discount) - Coupon Discount
+    // OR if default logic is (Base - Discount), then we subtract coupon from that.
+    
+    // Original Logic: productPrice is already (Base - discountamount)
+    // New Logic: productPrice - appliedDiscountAmount
+    
+    const finalPrice = Math.max(0, productSettings.productPrice - appliedDiscountAmount);
+    return formatPrice(finalPrice);
+  }, [productSettings.productPrice, appliedDiscountAmount]);
 
   const formatteddiscountPrice = useMemo(() => 
     formatPrice(productSettings.discountamount), 
@@ -51,6 +65,40 @@ export default function Checkout({ productSettings }) {
     formatPrice(productSettings.baseproductprice), 
     [productSettings.baseproductprice]
   );
+
+  // Function to handle discount application
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()) return;
+    
+    setIsCheckingDiscount(true);
+    setDiscountMessage({ type: '', text: '' });
+    
+    try {
+      const response = await fetch('/api/validate-discount', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: discountCode }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.isValid) {
+        setAppliedDiscountCode(data.code);
+        setAppliedDiscountAmount(data.discountAmount);
+        setDiscountMessage({ type: 'success', text: `Code ${data.code} applied! -RM${data.discountAmount}` });
+      } else {
+        setAppliedDiscountCode(null);
+        setAppliedDiscountAmount(0);
+        setDiscountMessage({ type: 'error', text: data.message || 'Invalid code' });
+      }
+    } catch (err) {
+      setDiscountMessage({ type: 'error', text: 'Error checking code' });
+    } finally {
+      setIsCheckingDiscount(false);
+    }
+  };
 
   // Input sanitization function
   const sanitizeInput = useCallback((input) => {
@@ -129,6 +177,7 @@ export default function Checkout({ productSettings }) {
       name: sanitizeInput(formData.name),
       email: sanitizeInput(formData.email),
       phone: sanitizeInput(formData.phone), // No formatting to remove
+      discountCode: appliedDiscountCode, // Send the validated code
       honeypot: '' // Honeypot is always empty for real users
     };
 
@@ -151,7 +200,7 @@ export default function Checkout({ productSettings }) {
 
     trackInitiateCheckout({
       productName: productSettings.productName,
-      productPrice: productSettings.productPrice,
+      productPrice: productSettings.productPrice - appliedDiscountAmount, // Log actual final price
       productId: 'kelasgpt-course',
       category: 'education'
     }, customerData);
@@ -387,14 +436,70 @@ export default function Checkout({ productSettings }) {
 
             <div className={styles.divider}></div>
 
+            {/* Discount Code Input Section */}
+            <div className={styles.discountSection}>
+              <label className={styles.discountLabel}>Have a discount code?</label>
+              <div className={styles.discountInputWrapper}>
+                <input 
+                  type="text" 
+                  placeholder="Enter code (e.g. SAVE20)"
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  className={styles.discountInput}
+                  disabled={!!appliedDiscountCode || isCheckingDiscount}
+                />
+                {!appliedDiscountCode ? (
+                  <button 
+                    type="button" 
+                    onClick={handleApplyDiscount}
+                    className={styles.applyButton}
+                    disabled={!discountCode || isCheckingDiscount}
+                  >
+                    {isCheckingDiscount ? '...' : 'Apply'}
+                  </button>
+                ) : (
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      setAppliedDiscountCode(null);
+                      setAppliedDiscountAmount(0);
+                      setDiscountCode('');
+                      setDiscountMessage({ type: '', text: '' });
+                    }}
+                    className={styles.removeButton}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+              <p className={styles.discountRemark}>Codes are not case sensitive</p>
+              {discountMessage.text && (
+                <p className={discountMessage.type === 'success' ? styles.successMessage : styles.errorMessage}>
+                  {discountMessage.text}
+                </p>
+              )}
+            </div>
+
+            <div className={styles.divider}></div>
+
             <div className={styles.priceRow}>
                 <p>Subtotal</p>
                 <p>{formattedbasePrice}</p>
             </div>
+            
+            {/* Standard Discount */}
             <div className={styles.priceRow}>
-                <p>Discount</p>
+                <p>Standard Discount</p>
                 <p>-{formatteddiscountPrice}</p>
             </div>
+
+            {/* Promo Code Discount */}
+            {appliedDiscountAmount > 0 && (
+              <div className={styles.priceRow} style={{ color: 'var(--success-green)' }}>
+                <p>Promo Code ({appliedDiscountCode})</p>
+                <p>-{formatPrice(appliedDiscountAmount)}</p>
+              </div>
+            )}
 
             <div className={styles.divider}></div>
 

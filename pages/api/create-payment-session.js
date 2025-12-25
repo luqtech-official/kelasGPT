@@ -2,6 +2,7 @@ import { addCustomer, addOrder, supabase } from "../../lib/supabase";
 import crypto from 'crypto';
 import { createLogger } from '../../lib/pino-logger';
 import { getPaymentSettings } from "../../lib/settings";
+import { getDiscountAmount } from "../../lib/discount-codes"; // Import discount validator
 
 export default async function handler(req, res) {
   const logger = createLogger(req);
@@ -9,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { name, email, phone, honeypot } = req.body;
+  const { name, email, phone, honeypot, discountCode } = req.body; // Extract discountCode
 
   // Honeypot check
   if (honeypot) {
@@ -34,16 +35,38 @@ export default async function handler(req, res) {
   const orderNumber = `ORD-${Date.now()}`;
 
   try {
-    logger.info({ email, name }, `Starting payment session creation for order ${orderNumber}`);
+    logger.info({ email, name, discountCode }, `Starting payment session creation for order ${orderNumber}`);
 
     // Get product settings
     const productSettings = await getPaymentSettings();
-    logger.info({ 
-      productName: productSettings.productName, 
-      productPrice: productSettings.productPrice 
-    }, `Using product settings for order ${orderNumber}`);
+    let productPriceNum = parseFloat(productSettings.productPrice);
+    
+    // --- DISCOUNT LOGIC START ---
+    let finalAmount = productPriceNum;
+    let appliedDiscount = 0;
+    let orderNotes = "";
 
-
+    if (discountCode) {
+      // Re-validate code on server side
+      const discountValue = getDiscountAmount(discountCode);
+      if (discountValue > 0) {
+        appliedDiscount = discountValue;
+        finalAmount = Math.max(0, productPriceNum - discountValue); // Ensure no negative price
+        orderNotes = `Applied Code: ${discountCode.toUpperCase()}`;
+        
+        logger.info({ 
+          orderNumber, 
+          discountCode, 
+          originalPrice: productPriceNum, 
+          discountValue, 
+          finalAmount 
+        }, "Discount code applied successfully");
+      } else {
+        logger.warn({ orderNumber, discountCode }, "Invalid discount code provided during checkout");
+        // We continue with original price if code is invalid, rather than failing
+      }
+    }
+    // --- DISCOUNT LOGIC END ---
 
     // Save customer data
     const customerDataToInsert = {
@@ -58,15 +81,6 @@ export default async function handler(req, res) {
     const { data: customerResult, error: customerError } = await addCustomer(customerDataToInsert);
 
     if (customerError) {
-      // Handle race condition where email was submitted between validation and insert - TEMPORARILY DISABLED FOR TESTING
-      // if (customerError.code === '23505') { // Unique constraint violation
-      //   logger.warn({ error: customerError }, `Race condition detected for email: ${email}`);
-      //   return res.status(409).json({ 
-      //     message: "Email already submitted. Please try again in a moment.",
-      //     code: "RACE_CONDITION"
-      //   });
-      // }
-      
       logger.error({ error: customerError }, 'Error saving customer to Supabase');
       return res.status(500).json({ message: "Internal Server Error" });
     }
@@ -79,15 +93,16 @@ export default async function handler(req, res) {
     const customerId = customerResult[0].customer_id;
     logger.info({ customerId }, `Customer created successfully for order ${orderNumber}`);
 
-    // Save order data using dynamic product settings
-    const productPriceNum = parseFloat(productSettings.productPrice);
+    // Save order data using dynamic final amount
     const orderDataToInsert = {
       customer_id: customerId,
       order_number: orderNumber,
-      total_amount: productPriceNum,
+      total_amount: productPriceNum, // Original price
       product_name: productSettings.productName,
       product_price: productPriceNum,
-      final_amount: productPriceNum,
+      final_amount: finalAmount, // Discounted price
+      discount_amount: appliedDiscount, // Record the discount
+      order_notes: orderNotes, // Record the code used
       currency_code: "MYR",
       order_status: "pending",
       payment_method: "fpx",
@@ -111,7 +126,9 @@ export default async function handler(req, res) {
     const callbackUrl = `${baseAppUrl}/api/payment-callback`;
     const cancelUrl = `${baseAppUrl}/api/payment/cancelled?order_number=${orderNumber}`;
     const timeoutUrl = `${baseAppUrl}/api/payment/timeout?order_number=${orderNumber}`;
-    const amount = productSettings.productPrice; // Use dynamic price
+    
+    // IMPORTANT: Use the final discounted amount formatted as string
+    const transactionAmount = finalAmount.toFixed(2); 
     
     const checksumToken = process.env.SECUREPAY_CHECKSUM_TOKEN;
     
@@ -131,7 +148,7 @@ export default async function handler(req, res) {
       orderNumber,     // order_number
       productSettings.productDescription || `Payment for order ${orderNumber}`, // product_description
       redirectUrl,     // redirect_url
-      amount,          // transaction_amount
+      transactionAmount, // transaction_amount (DISCOUNTED)
       uid              // uid
     ].join('|');
 
@@ -143,7 +160,7 @@ export default async function handler(req, res) {
       checksum: checksum.substring(0, 8) + '...',
       uidLength: uid.length,
       orderNumber,
-      amount,
+      amount: transactionAmount,
       name,
       email
     }, `Checksum generation for order ${orderNumber}`);
@@ -153,7 +170,7 @@ export default async function handler(req, res) {
       token: authToken,
       checksum: checksum,
       order_number: orderNumber,
-      transaction_amount: amount,
+      transaction_amount: transactionAmount, // Use discounted amount
       product_description: productSettings.productDescription || `Payment for order ${orderNumber}`,
       buyer_name: name,
       buyer_email: email,
@@ -230,120 +247,5 @@ export default async function handler(req, res) {
   } catch (error) {
     logger.error({ message: error.message, stack: error.stack }, `Unhandled error in checkout for order ${orderNumber}`);
     res.status(500).json({ message: "Internal Server Error" });
-  }
-}
-
-/**
- * Validates email status and determines if submission can proceed
- * @param {string} email - Email address to validate
- * @returns {Object} - Validation result with canProceed flag and error details
- */
-async function validateEmailStatus(logger, email) {
-  try {
-    // Check if email already exists with payment status
-    const { data: existingCustomer, error: checkError } = await supabase
-      .from("customers")
-      .select("email_address, payment_status, created_at")
-      .eq("email_address", email)
-      .maybeSingle();
-
-    if (checkError && checkError.code !== 'PGRST116') {
-      logger.error({ error: checkError }, `Error checking existing customer for email: ${email}`);
-      return {
-        canProceed: false,
-        reason: 'database_error',
-        error: { message: "Internal Server Error" }
-      };
-    }
-
-    if (!existingCustomer) {
-      // No existing customer, can proceed
-      return { canProceed: true };
-    }
-
-    const { payment_status, created_at } = existingCustomer;
-    
-    switch (payment_status) {
-      case 'pending':
-        // Check if pending order is older than 10 minutes
-        let createUTCTimestamp;
-        try {
-          ({ createUTCTimestamp } = await import('../../lib/timezone-utils.js'));
-        } catch (importError) {
-          logger.warn('Failed to import timezone-utils in create-payment-session, using fallback', { error: importError.message });
-          createUTCTimestamp = () => new Date().toISOString();
-        }
-        
-        const currentTime = new Date(createUTCTimestamp()).getTime();
-        const orderTime = new Date(created_at).getTime();
-        const orderAge = currentTime - orderTime;
-        const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
-        
-        if (orderAge > tenMinutes) {
-          logger.info({ 
-            orderAge: Math.round(orderAge / 1000 / 60), // minutes
-            status: payment_status 
-          }, `Allowing retry for old pending order: ${email}`);
-          return { canProceed: true };
-        }
-        
-        const remainingMinutes = Math.ceil((tenMinutes - orderAge) / 1000 / 60);
-        return {
-          canProceed: false,
-          reason: 'pending_order',
-          status: payment_status,
-          error: {
-            message: `Order in progress. Please wait ${remainingMinutes} more minute(s) or contact support if needed.`,
-            code: "ORDER_PENDING",
-            action: "If you don't receive confirmation within 10 minutes, contact support.",
-            supportEmail: "support@kelasgpt.com",
-            waitTime: remainingMinutes
-          }
-        };
-        
-      case 'paid':
-        return {
-          canProceed: false,
-          reason: 'already_paid',
-          status: payment_status,
-          error: {
-            message: "You've already purchased this course!",
-            code: "ORDER_COMPLETED",
-            action: "Check your email for the video link. Didn't receive it?",
-            supportEmail: "support@kelasgpt.com"
-          }
-        };
-        
-      case 'failed':
-        logger.info({ 
-          previousStatus: payment_status,
-          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
-        }, `Customer retry after failed payment: ${email}`);
-        return { canProceed: true };
-        
-      case 'abandoned':
-      case 'expired':
-        logger.info({ 
-          previousStatus: payment_status,
-          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
-        }, `Customer retry after ${payment_status} session: ${email}`);
-        return { canProceed: true };
-        
-      default:
-        // Unknown status, allow to proceed but log
-        logger.warn({ 
-          status: payment_status,
-          orderAge: Math.round((Date.now() - new Date(created_at).getTime()) / 1000 / 60) // minutes
-        }, `Unknown payment status for email: ${email}`);
-        return { canProceed: true };
-    }
-    
-  } catch (error) {
-    logger.error({ message: error.message, stack: error.stack }, `Unexpected error in email validation for: ${email}`);
-    return {
-      canProceed: false,
-      reason: 'validation_error',
-      error: { message: "Internal Server Error" }
-    };
   }
 }
