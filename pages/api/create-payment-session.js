@@ -2,7 +2,7 @@ import { addCustomer, addOrder, supabase } from "../../lib/supabase";
 import crypto from 'crypto';
 import { createLogger } from '../../lib/pino-logger';
 import { getPaymentSettings } from "../../lib/settings";
-import { getDiscountAmount } from "../../lib/discount-codes"; // Import discount validator
+import { getDiscountAmount, getDiscountDetails } from "../../lib/discount-codes"; // Import discount validator
 
 export default async function handler(req, res) {
   const logger = createLogger(req);
@@ -57,17 +57,19 @@ export default async function handler(req, res) {
 
     if (discountCode) {
       // Re-validate code on server side
-      const discountValue = getDiscountAmount(discountCode);
-      if (discountValue > 0) {
-        appliedDiscount = discountValue;
-        finalAmount = Math.max(0, productPriceNum - discountValue); // Ensure no negative price
-        orderNotes = `Applied Code: ${discountCode.toUpperCase()}`;
+      const discountDetails = getDiscountDetails(discountCode);
+      if (discountDetails) {
+        appliedDiscount = discountDetails.amount;
+        finalAmount = Math.max(0, productPriceNum - appliedDiscount); // Ensure no negative price
+        const agentId = discountDetails.agentId || 'UNKNOWN';
+        orderNotes = `Code: ${discountCode.toUpperCase()} - Agent ${agentId}`;
         
         logger.info({ 
           orderNumber, 
-          discountCode, 
+          discountCode,
+          agentId,
           originalPrice: productPriceNum, 
-          discountValue, 
+          discountValue: appliedDiscount, 
           finalAmount 
         }, "Discount code applied successfully");
       } else {
