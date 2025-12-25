@@ -44,7 +44,7 @@ export default function handler(req, res) {
       });
     }
   } catch (error) {
-    console.error('Error in validate-discount:', error);
+    console.error('Error in discount-validator:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
