@@ -1,6 +1,11 @@
 import { supabase } from '../../lib/supabase';
 
 export default async function handler(req, res) {
+  // Disable caching for this dynamic API endpoint
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
