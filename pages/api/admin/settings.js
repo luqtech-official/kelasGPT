@@ -1,6 +1,5 @@
 import { supabase } from "../../../lib/supabase";
 import { requireAuth } from "../../../lib/adminAuth";
-import { clearSettingsCache } from "../../../lib/settings";
 
 async function handler(req, res) {
   if (req.method === 'GET') {
@@ -161,9 +160,6 @@ async function updateSettings(req, res) {
       throw new Error('Failed to update some settings');
     }
 
-    // Clear settings cache to force refresh
-    clearSettingsCache();
-    
     // Log the settings update
     console.log(`Settings updated by admin ${req.admin.username}:`, Object.keys(validatedSettings));
 

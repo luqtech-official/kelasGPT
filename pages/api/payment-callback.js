@@ -139,7 +139,7 @@ export default async function handler(req, res) {
         // Log email attempt
         let createUTCTimestamp;
         try {
-          ({ createUTCTimestamp } = await import('../../../lib/timezone-utils.js'));
+          ({ createUTCTimestamp } = await import('../../lib/timezone-utils.js'));
         } catch (importError) {
           logger.warn('Failed to import timezone-utils in payment-callback, using fallback', { error: importError.message });
           createUTCTimestamp = () => new Date().toISOString();
