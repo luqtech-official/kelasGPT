@@ -6,6 +6,16 @@ export default async function handler(req, res) {
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
 
+  // Verify Environment Variables
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('CRITICAL: Supabase environment variables are missing.');
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Configuration Error: Missing API Keys in Production.',
+      hint: 'Please check Vercel Environment Variables.' 
+    });
+  }
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -21,7 +31,7 @@ export default async function handler(req, res) {
     // We fetch necessary columns to compute stats
     let query = supabase
       .from('orders')
-      .select('order_notes, payment_status, final_amount, created_at')
+      .select('order_notes, order_status, final_amount, created_at')
       .ilike('order_notes', '%Agent%'); // Filter early
 
     const { data: orders, error } = await query;
@@ -59,7 +69,7 @@ export default async function handler(req, res) {
           }
   
           const stats = agentStats[extractedId];
-          const status = order.payment_status?.toLowerCase() || 'unknown';
+          const status = order.order_status?.toLowerCase() || 'unknown';
   
           if (status === 'paid' || status === 'success') {
             stats.paid += 1;
