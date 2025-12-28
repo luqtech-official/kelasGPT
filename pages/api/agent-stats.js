@@ -1,4 +1,11 @@
 import { supabase } from '../../lib/supabase';
+import { getProductSettings } from '../../lib/settings';
+import rateLimit from '../../lib/rate-limit';
+
+const limiter = rateLimit({
+  interval: 60 * 1000, // 60 seconds
+  uniqueTokenPerInterval: 500, // Max 500 users per second
+});
 
 export default async function handler(req, res) {
   // Disable caching for this dynamic API endpoint
@@ -20,13 +27,20 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  // Optional: Add simple secret key auth if "manual access" implies some protection
-  // const { secret } = req.query;
-  // if (secret !== process.env.ADMIN_SECRET) ... (Skipping for now as per instructions)
+  try {
+    // Rate Limiting: 10 requests per minute per IP
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    await limiter.check(res, 10, ip);
+  } catch {
+    return res.status(429).json({ message: 'Rate limit exceeded' });
+  }
 
   const { agentId } = req.query;
 
-  try {
+  try {    // Get Commission Settings
+    const settings = await getProductSettings();
+    const commissionRate = settings.commisionPerUnit || 10; // Default to 10 if missing
+
     // 1. Fetch orders that have "Agent" in notes
     // We fetch necessary columns to compute stats
     let query = supabase
@@ -49,31 +63,32 @@ export default async function handler(req, res) {
         // Regex to extract Agent ID: "Agent <AGENT_ID>"
         // Case insensitive match
         const match = order.order_notes.match(/Agent\s+(\w+)/i);
-        
+
         if (match && match[1]) {
           const extractedId = match[1].toUpperCase();
-  
+
           // If filtering by specific agentId, skip others
           if (agentId && extractedId !== agentId.toUpperCase()) {
             return;
           }
-  
+
           if (!agentStats[extractedId]) {
             agentStats[extractedId] = {
               agentId: extractedId,
               paid: 0,
               pending: 0,
               failed: 0,
-              totalRevenue: 0
+              totalCommission: 0
             };
           }
-  
+
           const stats = agentStats[extractedId];
           const status = order.order_status?.toLowerCase() || 'unknown';
-  
+
           if (status === 'paid' || status === 'success') {
             stats.paid += 1;
-            stats.totalRevenue += (order.final_amount || 0);
+            // Calculate commission: Count * Rate
+            stats.totalCommission += commissionRate;
           } else if (status === 'pending') {
             stats.pending += 1;
           } else {
@@ -87,8 +102,8 @@ export default async function handler(req, res) {
     // 3. Convert to array and sort
     const results = Object.values(agentStats).sort((a, b) => b.paid - a.paid);
 
-    return res.status(200).json({ 
-      success: true, 
+    return res.status(200).json({
+      success: true,
       data: results,
       filter: agentId ? agentId.toUpperCase() : 'ALL',
       count: results.length

@@ -7,6 +7,7 @@ export default function AgentTracker() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [searched, setSearched] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -14,9 +15,17 @@ export default function AgentTracker() {
 
     setLoading(true);
     setSearched(true);
+    setErrorMsg('');
     
     try {
       const res = await fetch(`/api/agent-stats?agentId=${encodeURIComponent(search)}`);
+      
+      if (res.status === 429) {
+        setErrorMsg("You're searching too fast! Please take a break and wait a minute.");
+        setData(null);
+        return;
+      }
+
       const json = await res.json();
       
       if (json.success && json.data.length > 0) {
@@ -27,6 +36,7 @@ export default function AgentTracker() {
     } catch (error) {
       console.error('Failed to fetch data', error);
       setData(null);
+      setErrorMsg("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -55,6 +65,8 @@ export default function AgentTracker() {
 
       {loading ? (
         <div className={styles.loader}>Searching database...</div>
+      ) : errorMsg ? (
+        <div className={styles.emptyState} style={{color: '#dc2626'}}>{errorMsg}</div>
       ) : !searched ? (
         <div className={styles.emptyState}>Please enter your ID to begin.</div>
       ) : !data ? (
@@ -86,9 +98,9 @@ export default function AgentTracker() {
             <div className={styles.statCard} style={{borderColor: '#3b82f6'}}>
               <div className={styles.statValue} style={{color: '#2563eb'}}>
                 <span style={{fontSize: '1.5rem', verticalAlign: 'top', marginRight: '4px'}}>RM</span>
-                {data.totalRevenue.toLocaleString('en-MY')}
+                {(data.totalCommission || 0).toLocaleString('en-MY')}
               </div>
-              <div className={styles.statLabel}>Total Revenue Generated</div>
+              <div className={styles.statLabel}>Total Commission Earned</div>
             </div>
           </div>
         </div>

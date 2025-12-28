@@ -82,6 +82,11 @@ export default function Checkout({ productSettings }) {
         body: JSON.stringify({ code: discountCode }),
       });
       
+      if (response.status === 429) {
+        setDiscountMessage({ type: 'error', text: "Whoa there! You're trying too many codes. Please wait a minute." });
+        return;
+      }
+      
       const data = await response.json();
       
       if (data.isValid) {

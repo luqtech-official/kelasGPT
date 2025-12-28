@@ -1,6 +1,12 @@
 import { getDiscountAmount } from '../../lib/discount-codes';
+import rateLimit from '../../lib/rate-limit';
 
-export default function handler(req, res) {
+const limiter = rateLimit({
+  interval: 60 * 1000, // 60 seconds
+  uniqueTokenPerInterval: 500, // Max 500 users per second
+});
+
+export default async function handler(req, res) {
   // Set CORS headers to allow requests from the same origin and potentially others if needed
   res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust this to specific domain in strict prod environments if needed
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -9,6 +15,14 @@ export default function handler(req, res) {
   // Handle preflight/OPTIONS request
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
+  }
+
+  try {
+    // Rate Limiting: 10 requests per minute per IP
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    await limiter.check(res, 10, ip);
+  } catch {
+    return res.status(429).json({ message: 'Rate limit exceeded' });
   }
 
   // Allow GET for connectivity check

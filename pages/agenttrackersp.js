@@ -6,15 +6,24 @@ export default function AgentTrackerSP() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const fetchData = async (agentId = '') => {
     setLoading(true);
+    setErrorMsg('');
     try {
       const url = agentId 
         ? `/api/agent-stats?agentId=${encodeURIComponent(agentId)}`
         : '/api/agent-stats';
       
       const res = await fetch(url);
+      
+      if (res.status === 429) {
+        setErrorMsg("Too many requests. Please wait a minute before refreshing.");
+        setLoading(false);
+        return;
+      }
+
       const json = await res.json();
       
       if (json.success) {
@@ -22,6 +31,7 @@ export default function AgentTrackerSP() {
       }
     } catch (error) {
       console.error('Failed to fetch data', error);
+      setErrorMsg("Failed to load data.");
     } finally {
       setLoading(false);
     }
@@ -59,6 +69,8 @@ export default function AgentTrackerSP() {
 
       {loading ? (
         <div className={styles.loader}>Loading records...</div>
+      ) : errorMsg ? (
+        <div className={styles.emptyState} style={{color: '#dc2626'}}>{errorMsg}</div>
       ) : data.length === 0 ? (
         <div className={styles.emptyState}>No records found.</div>
       ) : (
@@ -70,7 +82,7 @@ export default function AgentTrackerSP() {
                 <th>Paid Orders</th>
                 <th>Pending</th>
                 <th>Failed/Cancelled</th>
-                <th>Total Revenue</th>
+                <th>Total Commission</th>
               </tr>
             </thead>
             <tbody>
@@ -82,7 +94,7 @@ export default function AgentTrackerSP() {
                   <td style={{color: '#059669', fontWeight: 'bold'}}>{row.paid}</td>
                   <td style={{color: '#d97706'}}>{row.pending}</td>
                   <td style={{color: '#dc2626'}}>{row.failed}</td>
-                  <td>RM {row.totalRevenue.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</td>
+                  <td>RM {(row.totalCommission || 0).toLocaleString('en-MY', { minimumFractionDigits: 2 })}</td>
                 </tr>
               ))}
             </tbody>
