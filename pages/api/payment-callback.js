@@ -127,60 +127,30 @@ export default async function handler(req, res) {
         return res.status(200).json({ message: 'Payment processed, email sending failed' });
       }
 
-      // --- Commission Logic Start ---
+      // --- Commission & Tracking Logic Start ---
       if (order.agent_id) {
         try {
             const agentId = order.agent_id;
             
-            // 1. Fetch current comm_per_sale for this agent to ensure accuracy
-            const { data: agentData, error: agentFetchError } = await supabase
+            // Fetch current comm_per_sale for this agent to record the correct amount
+            const { data: agentData } = await supabase
               .from('agents')
               .select('comm_per_sale')
               .eq('agent_id', agentId)
               .single();
               
-            if (agentData) {
-               const commission = Number(agentData.comm_per_sale) || 10;
-               
-               // 2. Increment pending and total commission
-               // We use a raw RPC call if possible for atomicity, but standard update is acceptable here 
-               // given the low volume. Ideally: "pending_settlement = pending_settlement + commission"
-               
-               // Since we can't easily do "increment" without RPC in JS client without a read-write cycle,
-               // we will try to use an RPC if available, or fall back to read-modify-write.
-               // For now, let's try a direct RPC call pattern or just standard flow.
-               
-               const { error: commError } = await supabase.rpc('increment_agent_commission', {
-                 p_agent_id: agentId,
-                 p_amount: commission
-               });
+            const commission = agentData ? Number(agentData.comm_per_sale) : 10;
+            
+            // Use the atomic RPC function for all counters and commission
+            await supabase.rpc('record_agent_sale_event', {
+              p_agent_id: agentId,
+              p_event_type: 'paid',
+              p_comm_amount: commission
+            });
 
-               if (commError) {
-                 // Fallback: Read-Modify-Write (less safe for high concurrency but works for MVP)
-                 logger.warn({ error: commError }, "RPC increment_agent_commission failed, falling back to manual update");
-                 
-                 const { data: currentAgent } = await supabase
-                    .from('agents')
-                    .select('pending_settlement, total_comm')
-                    .eq('agent_id', agentId)
-                    .single();
-                 
-                 if (currentAgent) {
-                   await supabase
-                     .from('agents')
-                     .update({
-                       pending_settlement: (Number(currentAgent.pending_settlement) || 0) + commission,
-                       total_comm: (Number(currentAgent.total_comm) || 0) + commission
-                     })
-                     .eq('agent_id', agentId);
-                 }
-               }
-
-               logger.info({ agentId, commission }, `Commission tracked for order ${order_number}`);
-            }
+            logger.info({ agentId, commission }, `Commission and success stats tracked for order ${order_number}`);
         } catch (commError) {
-          logger.error({ error: commError }, `Failed to update commission for order ${order_number}`);
-          // Don't fail the request, just log the error
+          logger.error({ error: commError }, `Failed to update commission/stats for order ${order_number}`);
         }
       }
       // --- Commission Logic End ---
@@ -293,6 +263,26 @@ export default async function handler(req, res) {
         previousStatus: statusUpdateResult.data.previous_status,
         newStatus: statusUpdateResult.data.new_status
       }, `Payment status updated atomically for failed order ${order_number}`);
+
+      // --- AGENT TRACKING: Failed ---
+      try {
+        const { data: orderData } = await supabase
+          .from('orders')
+          .select('agent_id')
+          .eq('order_number', order_number)
+          .single();
+          
+        if (orderData?.agent_id) {
+          await supabase.rpc('record_agent_sale_event', {
+            p_agent_id: orderData.agent_id,
+            p_event_type: 'failed'
+          });
+          logger.info({ agentId: orderData.agent_id }, `Failure stats tracked for order ${order_number}`);
+        }
+      } catch (trackError) {
+        logger.warn({ trackError }, "Failed to track agent failure event");
+      }
+      // --- END TRACKING ---
     }
 
     logger.info(`Callback processing completed successfully for order ${order_number}`);

@@ -80,6 +80,9 @@ export default function AdminLayout({ children, title = 'Admin Dashboard' }) {
               <Link href="/admin/customers" className={`${styles.navLink} ${router.pathname === '/admin/customers' ? styles.navLinkActive : ''}`}>
                 Customers
               </Link>
+              <Link href="/admin/agents" className={`${styles.navLink} ${router.pathname === '/admin/agents' ? styles.navLinkActive : ''}`}>
+                Agents
+              </Link>
               <Link href="/admin/settings" className={`${styles.navLink} ${router.pathname === '/admin/settings' ? styles.navLinkActive : ''}`}>
                 Settings
               </Link>

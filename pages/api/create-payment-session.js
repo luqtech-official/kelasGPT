@@ -141,6 +141,19 @@ export default async function handler(req, res) {
     }
     logger.info(`Order created successfully for order ${orderNumber}`);
 
+    // --- AGENT TRACKING: Created ---
+    if (finalAgentId) {
+      try {
+        await supabase.rpc('record_agent_sale_event', {
+          p_agent_id: finalAgentId,
+          p_event_type: 'created'
+        });
+      } catch (trackError) {
+        logger.warn({ trackError, finalAgentId }, "Failed to track agent creation event");
+      }
+    }
+    // --- END TRACKING ---
+
     // SecurePay Integration
     const uid = process.env.SECUREPAY_API_UID;
     const authToken = process.env.SECUREPAY_AUTH_TOKEN;
