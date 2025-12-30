@@ -100,6 +100,17 @@ export default async function handler(req, res) {
     const customerId = customerResult[0].customer_id;
     logger.info({ customerId }, `Customer created successfully for order ${orderNumber}`);
 
+    // Resolve Agent ID safely before inserting
+    let finalAgentId = null;
+    if (discountCode) {
+        try {
+            const details = await getDiscountDetails(discountCode);
+            finalAgentId = details?.agentId || null;
+        } catch (err) {
+            logger.warn({ err, discountCode }, "Failed to resolve agent ID during order creation");
+        }
+    }
+
     // Save order data using dynamic final amount
     const orderDataToInsert = {
       customer_id: customerId,
@@ -110,7 +121,7 @@ export default async function handler(req, res) {
       final_amount: finalAmount, // Discounted price
       discount_amount: appliedDiscount, // Record the discount
       discount_code: discountCode ? discountCode.toUpperCase() : null, // Record the code
-      agent_id: discountCode ? (await getDiscountDetails(discountCode))?.agentId || null : null, // Record the agent ID
+      agent_id: finalAgentId, // Record the agent ID
       order_notes: orderNotes, // Keep order notes for backward compatibility
       currency_code: "MYR",
       order_status: "pending",
