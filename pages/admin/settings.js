@@ -45,7 +45,8 @@ export default function Settings() {
   }, []);
 
   const fetchAnalyticsStats = async () => {
-    const response = await fetch('/api/admin/analytics-stats');
+    // Cache-busting
+    const response = await fetch('/api/admin/analytics-stats?t=' + Date.now());
     const data = await response.json();
     setAnalyticsStats(data);
   };
@@ -61,7 +62,8 @@ export default function Settings() {
 
   const loadSettings = async () => {
     try {
-      const response = await fetch('/api/admin/settings');
+      // Cache-busting
+      const response = await fetch('/api/admin/settings?t=' + Date.now());
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);

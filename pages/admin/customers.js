@@ -59,7 +59,8 @@ export default function Customers() {
         page: currentPage.toString(),
         limit: CUSTOMERS_PER_PAGE.toString(),
         search: debouncedSearchTerm,  // ✅ Use debounced value for API calls
-        status: statusFilter
+        status: statusFilter,
+        t: Date.now().toString() // ✅ Cache-busting
       });
 
       const response = await fetch(`/api/admin/customers?${params}`);

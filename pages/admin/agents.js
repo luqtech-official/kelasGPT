@@ -12,6 +12,10 @@ export default function AgentsManagement() {
   const [editingAgent, setEditingAgent] = useState(null); 
   const [deletingAgent, setDeletingAgent] = useState(null);
   
+  // Loading States for Actions
+  const [processingId, setProcessingId] = useState(null); // For individual agent actions (toggle)
+  const [isSubmitting, setIsSubmitting] = useState(false); // For modal submissions
+
   // Payout Manager State
   const [payoutManager, setPayoutManager] = useState(null); // { agent: agentObj, orders: [], selectedIds: [], loading: false }
 
@@ -137,6 +141,7 @@ export default function AgentsManagement() {
   const handlePayoutAction = async () => {
     if (!payoutManager || payoutManager.selectedIds.length === 0) return;
     
+    setIsSubmitting(true);
     const isRevert = payoutManager.showHistory;
     const action = isRevert ? 'revert_payout' : 'settle_payout';
     
@@ -160,12 +165,14 @@ export default function AgentsManagement() {
       
       if (result.success) {
         setPayoutManager(null);
-        fetchAgents();
+        await fetchAgents();
       } else {
         alert(result.message);
       }
     } catch (error) {
       alert(`Failed to ${isRevert ? 'revert' : 'process'} payout`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -191,6 +198,7 @@ export default function AgentsManagement() {
   };
 
   const handleToggleStatus = async (agent) => {
+    setProcessingId(agent.agent_id);
     try {
       const response = await fetch('/api/admin/agents', {
         method: 'PUT',
@@ -203,12 +211,14 @@ export default function AgentsManagement() {
       const result = await response.json();
       
       if (result.success) {
-        fetchAgents();
+        await fetchAgents();
       } else {
         alert(result.message);
       }
     } catch (error) {
       alert('Failed to update status');
+    } finally {
+      setProcessingId(null);
     }
   };
 
@@ -361,11 +371,19 @@ export default function AgentsManagement() {
                       <td className={styles.tableBodyCell}>
                         <button 
                           onClick={() => handleToggleStatus(agent)}
+                          disabled={processingId === agent.agent_id}
                           className={`${styles.statusBadge} ${agent.is_active ? styles.paid : styles.failed}`}
-                          style={{cursor: 'pointer', border: 'none', width: '100%'}}
+                          style={{
+                              cursor: processingId === agent.agent_id ? 'wait' : 'pointer', 
+                              border: 'none', 
+                              width: '100%',
+                              opacity: processingId === agent.agent_id ? 0.7 : 1
+                          }}
                           title={`Click to ${agent.is_active ? 'deactivate' : 'activate'}`}
                         >
-                          {agent.is_active ? 'Active' : 'Inactive'}
+                          {processingId === agent.agent_id 
+                            ? 'Updating...' 
+                            : (agent.is_active ? 'Active' : 'Inactive')}
                         </button>
                       </td>
                       <td className={styles.tableBodyCell}>
@@ -629,10 +647,17 @@ export default function AgentsManagement() {
                         <button 
                             onClick={handlePayoutAction} 
                             className={styles.confirmButton} 
-                            style={{background: payoutManager.showHistory ? '#ef4444' : '#10b981', color: 'white'}}
-                            disabled={payoutManager.selectedIds.length === 0}
+                            style={{
+                                background: payoutManager.showHistory ? '#ef4444' : '#10b981', 
+                                color: 'white',
+                                opacity: isSubmitting ? 0.7 : 1,
+                                cursor: isSubmitting ? 'wait' : 'pointer'
+                            }}
+                            disabled={payoutManager.selectedIds.length === 0 || isSubmitting}
                         >
-                            {payoutManager.showHistory ? 'Revert Payment' : 'Confirm Settlement'}
+                            {isSubmitting 
+                                ? 'Processing...' 
+                                : (payoutManager.showHistory ? 'Revert Payment' : 'Confirm Settlement')}
                         </button>
                     </div>
                 </>
