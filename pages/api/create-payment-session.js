@@ -53,6 +53,7 @@ export default async function handler(req, res) {
       // --- DISCOUNT LOGIC START ---
       let appliedDiscount = 0;
       let orderNotes = '';
+      let finalAmount = productPriceNum; // Default to full price
     
       if (discountCode) {
         // Validate discount code (now async)
