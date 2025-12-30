@@ -50,16 +50,16 @@ export default function AgentTracker() {
 
       <div className={styles.header}>
         <h1 className={styles.title}>Agent Portal</h1>
-        <p className={styles.subtitle}>Enter your Agent ID to view your sales performance.</p>
+        <p className={styles.subtitle}>Enter your <strong>Secret Agent ID</strong> to view your sales performance.</p>
       </div>
 
       <form className={styles.searchWrapper} onSubmit={handleSearch}>
         <input 
           type="text" 
-          placeholder="Enter Agent ID (e.g. PROMO)" 
+          placeholder="Enter Secret Agent ID" 
           className={styles.searchInput}
           value={search}
-          onChange={(e) => setSearch(e.target.value.toUpperCase())}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </form>
 

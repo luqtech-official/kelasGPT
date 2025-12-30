@@ -9,12 +9,16 @@ export default function AgentsManagement() {
   
   // Modals
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [editingAgent, setEditingAgent] = useState(null); // If null, modal is closed
-  const [payingAgent, setPayingAgent] = useState(null); // Confirmation for payment
+  const [editingAgent, setEditingAgent] = useState(null); 
+  const [deletingAgent, setDeletingAgent] = useState(null);
+  
+  // Payout Manager State
+  const [payoutManager, setPayoutManager] = useState(null); // { agent: agentObj, orders: [], selectedIds: [], loading: false }
 
   // Form State
   const [formData, setFormData] = useState({
     agent_id: '',
+    discount_code: '',
     agent_name: '',
     email: '',
     phone: '',
@@ -62,7 +66,7 @@ export default function AgentsManagement() {
       
       if (result.success) {
         setIsCreateModalOpen(false);
-        setFormData({ agent_id: '', agent_name: '', email: '', phone: '', discount_amount: 0, comm_per_sale: 10, bank_name: '', bank_account_number: '', bank_holder_name: '' });
+        setFormData({ agent_id: '', discount_code: '', agent_name: '', email: '', phone: '', discount_amount: 0, comm_per_sale: 10, bank_name: '', bank_account_number: '', bank_holder_name: '' });
         fetchAgents();
       } else {
         alert(result.message);
@@ -96,33 +100,120 @@ export default function AgentsManagement() {
     }
   };
 
-  const handleMarkPaid = async () => {
-    if (!payingAgent) return;
+  const openPayoutManager = async (agent) => {
+    setPayoutManager({ agent, orders: [], selectedIds: [], loading: true, showHistory: false });
+    try {
+        const response = await fetch(`/api/admin/agents?action=orders&agent_id=${agent.agent_id}`);
+        const result = await response.json();
+        if (result.success) {
+            // By default, we load all and let the UI filter
+            setPayoutManager({ 
+                agent, 
+                orders: result.orders, 
+                selectedIds: [], // Start with empty selection
+                loading: false,
+                showHistory: false
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Failed to load orders");
+        setPayoutManager(null);
+    }
+  };
+
+  const toggleOrderSelection = (orderId) => {
+    if (!payoutManager) return;
+    const current = payoutManager.selectedIds;
+    const updated = current.includes(orderId) 
+        ? current.filter(id => id !== orderId)
+        : [...current, orderId];
+    
+    setPayoutManager({ ...payoutManager, selectedIds: updated });
+  };
+
+  const handlePayoutAction = async () => {
+    if (!payoutManager || payoutManager.selectedIds.length === 0) return;
+    
+    const isRevert = payoutManager.showHistory;
+    const action = isRevert ? 'revert_payout' : 'settle_payout';
+    
+    // Calculate total amount from selected orders
+    const totalAmount = payoutManager.orders
+        .filter(o => payoutManager.selectedIds.includes(o.order_id))
+        .reduce((sum, o) => sum + (o.commission_amount || 10), 0);
+
     try {
       const response = await fetch('/api/admin/agents', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'mark_paid',
-          agent_id: payingAgent.agent_id
+          action: action,
+          agent_id: payoutManager.agent.agent_id,
+          order_ids: payoutManager.selectedIds,
+          total_amount: totalAmount
         })
       });
       const result = await response.json();
       
       if (result.success) {
-        setPayingAgent(null);
+        setPayoutManager(null);
         fetchAgents();
       } else {
         alert(result.message);
       }
     } catch (error) {
-      alert('Failed to process payment');
+      alert(`Failed to ${isRevert ? 'revert' : 'process'} payout`);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!deletingAgent) return;
+    try {
+      const response = await fetch('/api/admin/agents', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agent_id: deletingAgent.agent_id })
+      });
+      const result = await response.json();
+      
+      if (result.success) {
+        setDeletingAgent(null);
+        fetchAgents();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert('Failed to delete agent');
+    }
+  };
+
+  const handleToggleStatus = async (agent) => {
+    try {
+      const response = await fetch('/api/admin/agents', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agent_id: agent.agent_id,
+          is_active: !agent.is_active
+        })
+      });
+      const result = await response.json();
+      
+      if (result.success) {
+        fetchAgents();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert('Failed to update status');
     }
   };
 
   const openEditModal = (agent) => {
     setFormData({
       agent_id: agent.agent_id, // Read only
+      discount_code: agent.discount_code || '',
       agent_name: agent.agent_name || '',
       email: agent.email || '',
       phone: agent.phone || '',
@@ -236,9 +327,9 @@ export default function AgentsManagement() {
                     <tr key={agent.agent_id} className={styles.tableBodyRow}>
                       <td className={styles.tableBodyCell}>
                         <div className={styles.customerInfo}>
-                          <span className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_id}</span>
-                          <span className={styles.customerEmail}>{agent.agent_name || 'No Name'}</span>
-                          <span className={styles.customerEmail} style={{opacity: 0.7}}>Code: {agent.agent_id}</span>
+                          <span className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_name || 'No Name'}</span>
+                          <span className={styles.customerEmail}>ID (Secret): {agent.agent_id}</span>
+                          <span className={styles.customerEmail} style={{color: '#60a5fa', fontWeight: 'bold'}}>Code (Public): {agent.discount_code}</span>
                         </div>
                       </td>
                       <td className={styles.tableBodyCell}>
@@ -266,26 +357,38 @@ export default function AgentsManagement() {
                         </div>
                       </td>
                       <td className={styles.tableBodyCell}>
-                        <span className={`${styles.statusBadge} ${agent.is_active ? styles.paid : styles.failed}`}>
+                        <button 
+                          onClick={() => handleToggleStatus(agent)}
+                          className={`${styles.statusBadge} ${agent.is_active ? styles.paid : styles.failed}`}
+                          style={{cursor: 'pointer', border: 'none', width: '100%'}}
+                          title={`Click to ${agent.is_active ? 'deactivate' : 'activate'}`}
+                        >
                           {agent.is_active ? 'Active' : 'Inactive'}
-                        </span>
+                        </button>
                       </td>
                       <td className={styles.tableBodyCell}>
                         <div style={{display:'flex', gap:'8px'}}>
                           <button 
-                            onClick={() => setPayingAgent(agent)}
+                            onClick={() => openPayoutManager(agent)}
                             className={styles.exportButton}
                             style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', padding: '6px 12px', fontSize: '11px'}}
-                            disabled={Number(agent.pending_settlement) <= 0}
                           >
-                            Mark Paid
+                            Manage Payouts
                           </button>
-                          <button 
+                          <button   
                             onClick={() => openEditModal(agent)}
                             className={styles.refreshBtn}
                             style={{background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', padding: '6px 12px', fontSize: '11px'}}
                           >
                             Edit
+                          </button>
+                          <button 
+                            onClick={() => setDeletingAgent(agent)}
+                            className={styles.refreshBtn}
+                            style={{background: 'rgba(239, 68, 68, 0.2)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', padding: '6px 12px', fontSize: '11px'}}
+                            title="Delete Agent"
+                          >
+                            🗑️
                           </button>
                         </div>
                       </td>
@@ -306,13 +409,17 @@ export default function AgentsManagement() {
             <form onSubmit={handleCreate}>
               <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px'}}>
                 <div>
-                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Agent Code (ID)</label>
-                  <input required type="text" value={formData.agent_id} onChange={e => setFormData({...formData, agent_id: e.target.value.toUpperCase()})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} placeholder="e.g. SUMMER2025" />
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Agent ID (Secret / Tracking)</label>
+                  <input required type="text" value={formData.agent_id} onChange={e => setFormData({...formData, agent_id: e.target.value})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} placeholder="e.g. agent_sarah_001" />
                 </div>
                 <div>
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Discount Code (Public / Customer)</label>
+                  <input required type="text" value={formData.discount_code} onChange={e => setFormData({...formData, discount_code: e.target.value.toUpperCase()})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} placeholder="e.g. SARAH50" />
+                </div>
+              </div>
+              <div style={{marginBottom:'16px'}}>
                   <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Agent Name</label>
                   <input required type="text" value={formData.agent_name} onChange={e => setFormData({...formData, agent_name: e.target.value})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} placeholder="John Doe" />
-                </div>
               </div>
               
               <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px'}}>
@@ -355,6 +462,16 @@ export default function AgentsManagement() {
           <div className={styles.confirmContent} style={{background: '#1e293b', border: '1px solid #334155', color: 'white', maxWidth:'500px'}}>
             <h3 className={styles.confirmTitle} style={{color: 'white'}}>Edit Agent: {editingAgent.agent_id}</h3>
             <form onSubmit={handleUpdate}>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px'}}>
+                <div>
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Agent ID (Secret - Fixed)</label>
+                  <input disabled type="text" value={formData.agent_id} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #1e293b', color: '#64748b'}} />
+                </div>
+                <div>
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Discount Code (Public)</label>
+                  <input required type="text" value={formData.discount_code} onChange={e => setFormData({...formData, discount_code: e.target.value.toUpperCase()})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} />
+                </div>
+              </div>
               <div style={{marginBottom:'16px'}}>
                   <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Agent Name</label>
                   <input required type="text" value={formData.agent_name} onChange={e => setFormData({...formData, agent_name: e.target.value})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} />
@@ -394,25 +511,148 @@ export default function AgentsManagement() {
         </div>
       )}
 
-      {/* PAYMENT CONFIRMATION MODAL */}
-      {payingAgent && (
+      {/* PAYOUT MANAGER MODAL */}
+      {payoutManager && (
+        <div className={styles.confirmModal}>
+          <div className={styles.confirmContent} style={{background: '#1e293b', border: '1px solid #334155', color: 'white', maxWidth:'700px'}}>
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'1px solid #334155', paddingBottom:'12px', marginBottom:'16px'}}>
+                <h3 className={styles.confirmTitle} style={{color: 'white', margin:0}}>
+                  Payout Manager: {payoutManager.agent.agent_name}
+                </h3>
+                <div style={{display:'flex', gap:'8px', background:'rgba(0,0,0,0.2)', padding:'4px', borderRadius:'6px'}}>
+                    <button 
+                        onClick={() => setPayoutManager({...payoutManager, showHistory: false, selectedIds: []})}
+                        style={{
+                            background: !payoutManager.showHistory ? '#3b82f6' : 'transparent',
+                            color: !payoutManager.showHistory ? 'white' : '#94a3b8',
+                            border:'none', padding:'6px 12px', borderRadius:'4px', fontSize:'12px', cursor:'pointer', fontWeight:'500'
+                        }}
+                    >
+                        Unpaid Orders
+                    </button>
+                    <button 
+                        onClick={() => setPayoutManager({...payoutManager, showHistory: true, selectedIds: []})}
+                        style={{
+                            background: payoutManager.showHistory ? '#3b82f6' : 'transparent',
+                            color: payoutManager.showHistory ? 'white' : '#94a3b8',
+                            border:'none', padding:'6px 12px', borderRadius:'4px', fontSize:'12px', cursor:'pointer', fontWeight:'500'
+                        }}
+                    >
+                        Payment History
+                    </button>
+                </div>
+            </div>
+            
+            {payoutManager.loading ? (
+                <div style={{padding:'40px', textAlign:'center', color:'#94a3b8'}}>Loading orders...</div>
+            ) : (
+                <>
+                    <div style={{maxHeight:'300px', overflowY:'auto', marginBottom:'20px', border:'1px solid #334155', borderRadius:'6px'}}>
+                        <table style={{width:'100%', fontSize:'13px', borderCollapse:'collapse'}}>
+                            <thead style={{background:'#0f172a', position:'sticky', top:0}}>
+                                <tr>
+                                    <th style={{padding:'8px', textAlign:'left', color:'#94a3b8'}}>Select</th>
+                                    <th style={{padding:'8px', textAlign:'left', color:'#94a3b8'}}>Date</th>
+                                    <th style={{padding:'8px', textAlign:'left', color:'#94a3b8'}}>Order ID</th>
+                                    <th style={{padding:'8px', textAlign:'right', color:'#94a3b8'}}>Comm. (RM)</th>
+                                    <th style={{padding:'8px', textAlign:'center', color:'#94a3b8'}}>{payoutManager.showHistory ? 'Settled Date' : 'Status'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {payoutManager.orders.filter(o => payoutManager.showHistory ? o.payout_status === 'paid' : o.payout_status === 'unpaid').length === 0 ? (
+                                    <tr><td colSpan={5} style={{padding:'20px', textAlign:'center', color:'#64748b'}}>
+                                        {payoutManager.showHistory ? 'No payment history found.' : 'No unpaid orders found.'}
+                                    </td></tr>
+                                ) : (
+                                    payoutManager.orders
+                                        .filter(o => payoutManager.showHistory ? o.payout_status === 'paid' : o.payout_status === 'unpaid')
+                                        .map(order => {
+                                            const daysOld = Math.floor((new Date() - new Date(order.created_at)) / (1000 * 60 * 60 * 24));
+                                            const isRecent = daysOld < 7;
+                                            
+                                            return (
+                                                <tr key={order.order_id} style={{borderBottom:'1px solid #334155', background: payoutManager.selectedIds.includes(order.order_id) ? 'rgba(59, 130, 246, 0.1)' : 'transparent'}}>
+                                                    <td style={{padding:'8px'}}>
+                                                        <input 
+                                                            type="checkbox" 
+                                                            checked={payoutManager.selectedIds.includes(order.order_id)} 
+                                                            onChange={() => toggleOrderSelection(order.order_id)}
+                                                        />
+                                                    </td>
+                                                    <td style={{padding:'8px', color:'#cbd5e1'}}>
+                                                        {new Date(order.created_at).toLocaleDateString()}
+                                                        {!payoutManager.showHistory && isRecent && (
+                                                            <span title="Less than 7 days old (Grace Period)" style={{marginLeft:'6px', fontSize:'10px', background:'#fbbf24', color:'black', padding:'1px 4px', borderRadius:'4px', cursor:'help'}}>
+                                                                ⚠️ {daysOld}d
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                    <td style={{padding:'8px', fontFamily:'monospace', color:'#cbd5e1'}}>{order.order_number}</td>
+                                                    <td style={{padding:'8px', textAlign:'right', fontWeight:'600', color:'#fbbf24'}}>
+                                                        {order.commission_amount.toFixed(2)}
+                                                    </td>
+                                                    <td style={{padding:'8px', textAlign:'center', color:'#94a3b8', fontSize:'11px'}}>
+                                                        {payoutManager.showHistory && order.payout_settled_at 
+                                                            ? new Date(order.payout_settled_at).toLocaleDateString() 
+                                                            : <span style={{color:'#fbbf24'}}>PENDING</span>}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', background:'rgba(0,0,0,0.2)', padding:'12px', borderRadius:'8px'}}>
+                        <div>
+                            <div style={{fontSize:'12px', color:'#94a3b8'}}>Selected for {payoutManager.showHistory ? 'Reversal' : 'Payout'}</div>
+                            <div style={{fontSize:'18px', fontWeight:'700', color:'#white'}}>
+                                {payoutManager.selectedIds.length} Orders
+                            </div>
+                        </div>
+                        <div style={{textAlign:'right'}}>
+                            <div style={{fontSize:'12px', color:'#94a3b8'}}>Total Amount</div>
+                            <div style={{fontSize:'24px', fontWeight:'700', color: payoutManager.showHistory ? '#f87171' : '#fbbf24'}}>
+                                RM {payoutManager.orders
+                                    .filter(o => payoutManager.selectedIds.includes(o.order_id))
+                                    .reduce((sum, o) => sum + (o.commission_amount || 0), 0)
+                                    .toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.confirmActions} style={{marginTop:'24px'}}>
+                        <button onClick={() => setPayoutManager(null)} className={`${styles.confirmButton} ${styles.confirmCancel}`} style={{background:'transparent', color:'#cbd5e1', border:'1px solid #475569'}}>Cancel</button>
+                        <button 
+                            onClick={handlePayoutAction} 
+                            className={styles.confirmButton} 
+                            style={{background: payoutManager.showHistory ? '#ef4444' : '#10b981', color: 'white'}}
+                            disabled={payoutManager.selectedIds.length === 0}
+                        >
+                            {payoutManager.showHistory ? 'Revert Payment' : 'Confirm Settlement'}
+                        </button>
+                    </div>
+                </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deletingAgent && (
         <div className={styles.confirmModal}>
           <div className={styles.confirmContent} style={{background: '#1e293b', border: '1px solid #334155', color: 'white'}}>
-            <h3 className={styles.confirmTitle} style={{color: 'white'}}>Confirm Payment Settlement</h3>
+            <h3 className={styles.confirmTitle} style={{color: '#ef4444'}}>Delete Agent?</h3>
             <p className={styles.confirmMessage} style={{color: '#cbd5e1'}}>
-              You are about to mark <strong>RM {payingAgent.pending_settlement}</strong> as PAID for agent <strong>{payingAgent.agent_name}</strong>.
+              Are you sure you want to delete agent <strong>{deletingAgent.agent_name}</strong> ({deletingAgent.agent_id})?
             </p>
-            <div style={{background: 'rgba(0,0,0,0.2)', padding:'12px', borderRadius:'8px', marginBottom:'20px', fontSize:'13px', color:'#94a3b8'}}>
-              <p style={{margin:'0 0 4px 0'}}><strong>Bank:</strong> {payingAgent.bank_name || 'N/A'}</p>
-              <p style={{margin:'0 0 4px 0'}}><strong>Account:</strong> {payingAgent.bank_account_number || 'N/A'}</p>
-              <p style={{margin:'0'}}><strong>Holder:</strong> {payingAgent.bank_holder_name || 'N/A'}</p>
-            </div>
-            <p style={{fontSize:'12px', color:'#ef4444', fontStyle:'italic'}}>
-              Note: This action only updates the system records. You must manually transfer the money via your bank.
+            <p className={styles.confirmMessage} style={{color: '#94a3b8', fontSize: '12px', marginTop: '-10px'}}>
+              This action cannot be undone. Agents with existing orders cannot be deleted.
             </p>
             <div className={styles.confirmActions} style={{marginTop:'24px'}}>
-              <button onClick={() => setPayingAgent(null)} className={`${styles.confirmButton} ${styles.confirmCancel}`} style={{background:'transparent', color:'#cbd5e1', border:'1px solid #475569'}}>Cancel</button>
-              <button onClick={handleMarkPaid} className={styles.confirmButton} style={{background: '#10b981', color: 'white'}}>Confirm Paid</button>
+              <button onClick={() => setDeletingAgent(null)} className={`${styles.confirmButton} ${styles.confirmCancel}`} style={{background:'transparent', color:'#cbd5e1', border:'1px solid #475569'}}>Cancel</button>
+              <button onClick={handleDelete} className={styles.confirmButton} style={{background: '#ef4444', color: 'white'}}>Delete Permanently</button>
             </div>
           </div>
         </div>

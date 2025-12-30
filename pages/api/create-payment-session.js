@@ -103,10 +103,15 @@ export default async function handler(req, res) {
 
     // Resolve Agent ID safely before inserting
     let finalAgentId = null;
+    let commissionEarned = 10; // Default commission
+
     if (discountCode) {
         try {
             const details = await getDiscountDetails(discountCode);
             finalAgentId = details?.agentId || null;
+            if (details?.commPerSale) {
+                commissionEarned = details.commPerSale;
+            }
         } catch (err) {
             logger.warn({ err, discountCode }, "Failed to resolve agent ID during order creation");
         }
@@ -123,6 +128,7 @@ export default async function handler(req, res) {
       discount_amount: appliedDiscount, // Record the discount
       discount_code: discountCode ? discountCode.toUpperCase() : null, // Record the code
       agent_id: finalAgentId, // Record the agent ID
+      commission_earned: finalAgentId ? commissionEarned : 0, // Record fixed commission at time of sale
       order_notes: orderNotes, // Keep order notes for backward compatibility
       currency_code: "MYR",
       order_status: "pending",
