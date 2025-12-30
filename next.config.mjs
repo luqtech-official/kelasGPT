@@ -49,15 +49,21 @@ const nextConfig = {
         ],
       },
       {
-        // Don't cache HTML pages and API routes
-        source: '/((?!_next/static|favicon.ico|robots.txt|sitemap.xml).*)',
+        // Strictly disable caching for admin routes
+        source: '/admin/:path*',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate' },
         ],
       },
+      {
+        // Strictly disable caching for API routes to ensure data freshness
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
+      // Public pages will fall back to default Next.js caching (usually SSG/ISR or default headers)
+      // We removed the blanket 'max-age=0' rule so public pages can be cached properly.
     ];
   },
 };
