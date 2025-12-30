@@ -634,7 +634,14 @@ export default function Customers() {
                 </thead>
                 <tbody>
                   {customers.length > 0 ? customers.map((customer) => (
-                    <tr key={customer.customer_id} className={styles.tableBodyRow}>
+                    <tr 
+                      key={customer.customer_id} 
+                      className={styles.tableBodyRow}
+                      style={{ 
+                        position: 'relative', 
+                        zIndex: activeDropdown === customer.customer_id ? 50 : 'auto' 
+                      }}
+                    >
                       {/* Customer Name & Email */}
                       <td className={styles.tableBodyCell}>
                         <div className={styles.customerName}>{customer.full_name}</div>
@@ -643,7 +650,7 @@ export default function Customers() {
                       
                       {/* Payment Status */}
                       <td className={styles.tableBodyCell}>
-                        <div style={{ position: 'relative' }}>
+                        <div style={{ position: 'relative', zIndex: activeDropdown === customer.customer_id ? 1000 : 'auto' }}>
                           <div
                             className={`${styles.statusBadge} ${styles[customer.payment_status]}`}
                             onClick={(e) => {

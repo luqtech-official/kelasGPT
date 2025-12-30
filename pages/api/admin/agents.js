@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         // Fetch orders for a specific agent for Payout Manager
         const { data: orders, error } = await supabase
           .from('orders')
-          .select('order_id, order_number, created_at, final_amount, comm_amount:commission_earned, payout_status, order_status, payout_settled_at')
+          .select('order_id, order_number, created_at, final_amount, comm_amount:commission_earned, payout_status, order_status, payout_settled_at, customers(full_name, email_address)')
           .eq('agent_id', agent_id)
           .eq('order_status', 'paid') // Only show successful orders
           .order('created_at', { ascending: false });

@@ -1,5 +1,5 @@
 import { requireAuth } from '../../../lib/adminAuth-clean';
-import { supabase, getEmailStatusForCustomers, getCustomersWithOrders } from '../../../lib/supabase';
+import { supabase, getEmailStatusForCustomers, getCustomersWithOrders, updateCustomerAtomic } from '../../../lib/supabase';
 import { 
   successResponse, 
   validationErrorResponse, 
@@ -170,16 +170,16 @@ async function customersHandler(req, res) {
   else if (req.method === 'POST') {
     try {
       // ✅ SECURITY: Validate and sanitize request body
-      const { customer_id, notes, payment_status } = req.body;
+      const { customer_id, notes, payment_status, order_number } = req.body;
 
       if (!customer_id) {
         return validationErrorResponse(res, 'Customer ID is required');
       }
 
-      // Get customer info first
+      // Get customer info AND orders (to find latest)
       const { data: customer, error: customerError } = await supabase
         .from('customers')
-        .select('*')
+        .select('*, orders(order_number, created_at)')
         .eq('customer_id', customer_id)
         .single();
       
@@ -187,7 +187,23 @@ async function customersHandler(req, res) {
         return notFoundResponse(res, 'Customer not found');
       }
 
-      // Prepare update data
+      // Determine order number to update
+      // 1. Explicitly provided in request
+      // 2. Or fallback to latest order (to match UI "Latest Order" context)
+      let targetOrderNumber = order_number;
+      
+      if (!targetOrderNumber && customer.orders && customer.orders.length > 0) {
+        // Find latest order by date
+        const latestOrder = customer.orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+        targetOrderNumber = latestOrder.order_number;
+      }
+
+      // DIRECT UPDATE STRATEGY
+      // To ensure data consistency and fix potential RPC failures, we will update:
+      // 1. The customer table directly
+      // 2. The order table directly (if order number exists)
+      
+      let updatedCustomer = null;
       const updateData = {};
 
       if (notes !== undefined) {
@@ -197,21 +213,58 @@ async function customersHandler(req, res) {
       if (payment_status && payment_status !== customer.payment_status) {
         updateData.payment_status = payment_status;
       }
-
-      // Apply simple update
-      const { data: updatedCustomer, error: updateError } = await supabase
+      
+      // 1. Update Customer Table
+      const { data: directCustomer, error: customerUpdateError } = await supabase
         .from('customers')
         .update(updateData)
         .eq('customer_id', customer_id)
         .select()
         .single();
+        
+      if (customerUpdateError) {
+        console.error('Direct customer update failed:', customerUpdateError);
+        throw customerUpdateError;
+      }
+      
+      updatedCustomer = directCustomer;
 
-      if (updateError) {
-        console.error('Customer update failed:', updateError);
-        return internalErrorResponse(res, 'Failed to update customer');
+      // 2. Update Order Table (if applicable)
+      if (targetOrderNumber && payment_status) {
+        const orderUpdateData = {
+          order_status: payment_status
+        };
+        
+        // Also update payout_status if relevant
+        if (payment_status === 'paid') {
+          // If marking as paid, payout might become pending (or stay whatever it is, usually we just update order_status)
+          // But let's leave payout logic to other triggers to avoid complexity
+        }
+        
+        const { error: orderUpdateError } = await supabase
+          .from('orders')
+          .update(orderUpdateData)
+          .eq('order_number', targetOrderNumber);
+          
+        if (orderUpdateError) {
+          console.error(`Failed to update order ${targetOrderNumber}:`, orderUpdateError);
+          
+          // CRITICAL: ROLLBACK CUSTOMER UPDATE
+          // If order update fails, we must revert customer status to prevent data mismatch
+          console.log(`Rolling back customer ${customer_id} status to ${customer.payment_status}`);
+          
+          await supabase
+            .from('customers')
+            .update({ payment_status: customer.payment_status })
+            .eq('customer_id', customer_id);
+            
+          return internalErrorResponse(res, 'Failed to update order status - changes reverted');
+        } else {
+          console.log(`Successfully synced order ${targetOrderNumber} to status: ${payment_status}`);
+        }
       }
 
-      return successResponse(res, updatedCustomer, 'Customer updated successfully');
+      return successResponse(res, updatedCustomer, 'Customer and order updated successfully');
 
     } catch (error) {
       console.error('Admin customer update failed:', error.message);
