@@ -1,35 +1,8 @@
 import { useState, useEffect } from "react";
 import AdminLayout from '@/components/AdminLayout';
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Admin.module.css";
 
 export default function Settings() {
-  const [settings, setSettings] = useState({
-    // Social Proof Settings
-    socialProofEnabled: true,
-    socialProofInterval: 8000,
-    socialProofDuration: 4000,
-    socialProofBannerColor: '#28a745',
-    socialProofTextColor: '#ffffff',
-    
-    // Product Settings
-    productName: 'KelasGPT - Belajar GPT-4 macam pro!',
-    productPrice: 99.00,
-    discountamount: 0,
-    baseproductprice: 197.00,
-    productDescription: 'Belajar cara menggunakan GPT-4 untuk tingkatkan produktiviti dan bina penyelesaian AI anda sendiri.',
-    productDownloadLink: 'https://drive.google.com/file/d/example/view',
-    
-    // Email Settings
-    emailFromName: 'KelasGPT Team',
-    emailFromAddress: 'noreply@kelasgpt.my',
-    emailSubject: 'Terima kasih! Link download KelasGPT anda',
-    
-    // Site Settings
-    siteTitle: 'KelasGPT - Belajar GPT-4 macam pro!',
-    siteDescription: 'Belajar cara menggunakan GPT-4 untuk tingkatkan produktiviti dan bina penyelesaian AI anda sendiri. Sertai sekarang!',
-    maintenanceMode: false
-  });
-  
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [analyticsStats, setAnalyticsStats] = useState({
@@ -40,399 +13,176 @@ export default function Settings() {
   });
 
   useEffect(() => {
-    loadSettings();
     fetchAnalyticsStats();
   }, []);
 
   const fetchAnalyticsStats = async () => {
-    // Cache-busting
-    const response = await fetch('/api/admin/analytics-stats?t=' + Date.now());
-    const data = await response.json();
-    setAnalyticsStats(data);
+    try {
+      setLoading(true);
+      const response = await fetch('/api/admin/analytics-stats?t=' + Date.now());
+      const data = await response.json();
+      setAnalyticsStats(data);
+    } catch (error) {
+      console.error('Error fetching analytics stats:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAnalyticsCleanup = async () => {
-    const response = await fetch('/api/admin/cleanup-analytics', { method: 'POST' });
-    const result = await response.json();
-    // Show cleanup results and refresh stats
-    fetchAnalyticsStats();
-    setMessage(result.message || 'Cleanup process completed.');
-    setTimeout(() => setMessage(''), 5000);
-  };
-
-  const loadSettings = async () => {
     try {
-      // Cache-busting
-      const response = await fetch('/api/admin/settings?t=' + Date.now());
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
+      setLoading(true);
+      const response = await fetch('/api/admin/cleanup-analytics', { method: 'POST' });
       const result = await response.json();
       
-      if (result.success) {
-        // Convert API format to component format
-        const apiSettings = result.data;
-        const componentSettings = {};
-        
-        Object.keys(apiSettings).forEach(key => {
-          componentSettings[key] = apiSettings[key].value;
-        });
-        
-        setSettings(prev => ({ ...prev, ...componentSettings }));
-      } else {
-        throw new Error(result.message || 'Failed to load settings');
-      }
-    } catch (error) {
-      console.error('Error loading settings:', error);
-      setMessage('Failed to load settings. Using defaults.');
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setSettings(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-
-    try {
-      const response = await fetch('/api/admin/settings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ settings }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const result = await response.json();
+      // Show cleanup results and refresh stats
+      await fetchAnalyticsStats();
+      setMessage(result.message || 'Cleanup process completed.');
       
-      if (result.success) {
-        setMessage('Settings saved successfully!');
-        
-        // Clear message after 3 seconds
-        setTimeout(() => setMessage(''), 3000);
-      } else {
-        throw new Error(result.message || 'Failed to save settings');
-      }
-      
-      setLoading(false);
+      // Clear message after 5 seconds
+      setTimeout(() => setMessage(''), 5000);
     } catch (error) {
-      console.error('Error saving settings:', error);
-      setMessage(error.message || 'Error saving settings. Please try again.');
+      console.error('Error executing cleanup:', error);
+      setMessage('Failed to execute cleanup.');
+    } finally {
       setLoading(false);
     }
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: '8px 12px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '14px',
-    marginBottom: '15px'
-  };
-
-  const sectionStyle = {
-    background: 'white',
-    padding: '20px',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    marginBottom: '20px'
   };
 
   return (
-    <AdminLayout title="Settings">
-      <h1 className={styles.title}>Platform Settings</h1>
+    <AdminLayout title="System Settings">
+      {/* Command Bar */}
+      <div className={styles.commandBar}>
+        <div className={styles.commandBarHeader}>
+          <div className={styles.titleSection}>
+            <h1 className={styles.customersTitle}>System Settings</h1>
+            <p className={styles.newSubtitle}>Manage system performance and data retention.</p>
+          </div>
+        </div>
+      </div>
 
+      {/* Messages */}
       {message && (
         <div style={{
-          padding: '12px',
-          borderRadius: '4px',
-          marginBottom: '20px',
-          background: message.includes('Error') ? '#f8d7da' : '#d4edda',
-          color: message.includes('Error') ? '#721c24' : '#155724',
-          border: `1px solid ${message.includes('Error') ? '#f5c6cb' : '#c3e6cb'}`
+          padding: '12px 16px',
+          borderRadius: '8px',
+          marginBottom: '24px',
+          background: message.includes('Failed') || message.includes('Error') ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+          color: message.includes('Failed') || message.includes('Error') ? '#ef4444' : '#10b981',
+          border: `1px solid ${message.includes('Failed') || message.includes('Error') ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)'}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '14px',
+          fontWeight: '500'
         }}>
+          <span>{message.includes('Failed') || message.includes('Error') ? '⚠️' : '✅'}</span>
           {message}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        {/* Site Settings */}
-        <div style={sectionStyle}>
-          <h2 style={{ marginTop: 0, color: '#333' }}>Site Configuration</h2>
-          
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Site Title
-          </label>
-          <input
-            type="text"
-            name="siteTitle"
-            value={settings.siteTitle}
-            onChange={handleInputChange}
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Site Description
-          </label>
-          <textarea
-            name="siteDescription"
-            value={settings.siteDescription}
-            onChange={handleInputChange}
-            rows={3}
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <input
-              type="checkbox"
-              name="maintenanceMode"
-              checked={settings.maintenanceMode}
-              onChange={handleInputChange}
-            />
-            <span>Enable Maintenance Mode</span>
-          </label>
-        </div>
-
-        {/* Product Settings */}
-        <div style={sectionStyle}>
-          <h2 style={{ marginTop: 0, color: '#333' }}>Product Configuration</h2>
-          
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Product Name
-          </label>
-          <input
-            type="text"
-            name="productName"
-            value={settings.productName}
-            onChange={handleInputChange}
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Base Product Price (RM)
-          </label>
-          <input
-            type="number"
-            name="baseproductprice"
-            value={settings.baseproductprice}
-            onChange={handleInputChange}
-            step="0.01"
-            min="0"
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Discount Amount (RM)
-          </label>
-          <input
-            type="number"
-            name="discountamount"
-            value={settings.discountamount}
-            onChange={handleInputChange}
-            step="0.01"
-            min="0"
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Product Price (RM)
-          </label>
-          <input
-            type="number"
-            name="productPrice"
-            value={settings.productPrice}
-            onChange={handleInputChange}
-            step="0.01"
-            min="0"
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Product Description
-          </label>
-          <textarea
-            name="productDescription"
-            value={settings.productDescription}
-            onChange={handleInputChange}
-            rows={3}
-            style={inputStyle}
-          />
-
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Product Download Link
-          </label>
-          <input
-            type="url"
-            name="productDownloadLink"
-            value={settings.productDownloadLink}
-            onChange={handleInputChange}
-            placeholder="https://drive.google.com/file/d/example/view"
-            style={inputStyle}
-          />
-        </div>
-
-        {/* Social Proof Settings */}
-        <div style={sectionStyle}>
-          <h2 style={{ marginTop: 0, color: '#333' }}>Social Proof Notifications</h2>
-          
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '15px' }}>
-            <input
-              type="checkbox"
-              name="socialProofEnabled"
-              checked={settings.socialProofEnabled}
-              onChange={handleInputChange}
-            />
-            <span>Enable Social Proof Notifications</span>
-          </label>
-
-          <div style={{ display: 'flex', gap: '15px', marginBottom: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                Banner Color
-              </label>
-              <input
-                type="color"
-                name="socialProofBannerColor"
-                value={settings.socialProofBannerColor}
-                onChange={handleInputChange}
-                style={{ ...inputStyle, height: '40px' }}
-              />
+      {/* Settings Grid */}
+      <div className={styles.cardsGrid} style={{ gridTemplateColumns: '1fr', gap: '24px' }}>
+        
+        {/* Analytics Data Management Card */}
+        <div className={styles.statCard} style={{ cursor: 'default', height: 'auto', display: 'block' }}>
+          <div className={styles.statHeader} style={{ marginBottom: '16px' }}>
+            <div className={styles.statTitle} style={{ fontSize: '16px', fontWeight: '600', color: '#f8fafc' }}>
+              Analytics Data Management
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                Text Color
-              </label>
-              <input
-                type="color"
-                name="socialProofTextColor"
-                value={settings.socialProofTextColor}
-                onChange={handleInputChange}
-                style={{ ...inputStyle, height: '40px' }}
-              />
+            <div className={styles.statIcon} style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+              📊
             </div>
           </div>
-
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                Display Duration (ms)
-              </label>
-              <input
-                type="number"
-                name="socialProofDuration"
-                value={settings.socialProofDuration}
-                onChange={handleInputChange}
-                min="1000"
-                max="10000"
-                step="500"
-                style={inputStyle}
-              />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                Interval Between (ms)
-              </label>
-              <input
-                type="number"
-                name="socialProofInterval"
-                value={settings.socialProofInterval}
-                onChange={handleInputChange}
-                min="3000"
-                max="20000"
-                step="500"
-                style={inputStyle}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Email Settings */}
-        <div style={sectionStyle}>
-          <h2 style={{ marginTop: 0, color: '#333' }}>Email Configuration</h2>
           
-          <div style={{ display: 'flex', gap: '15px', marginBottom: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                From Name
-              </label>
-              <input
-                type="text"
-                name="emailFromName"
-                value={settings.emailFromName}
-                onChange={handleInputChange}
-                style={inputStyle}
-              />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-                From Email Address
-              </label>
-              <input
-                type="email"
-                name="emailFromAddress"
-                value={settings.emailFromAddress}
-                onChange={handleInputChange}
-                style={inputStyle}
-              />
-            </div>
+          <div style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.6', marginBottom: '24px' }}>
+            <p style={{ marginBottom: '12px' }}>
+              <strong>What does this do?</strong><br/>
+              This tool helps maintain system performance by archiving old raw traffic data.
+            </p>
+            <ul style={{ paddingLeft: '20px', margin: 0 }}>
+              <li>Monitors the <code>page_views</code> table size.</li>
+              <li>Identifies raw traffic records older than <strong>3 days</strong>.</li>
+              <li>Summarizes detailed data into daily totals (saved to <code>analytics_daily</code>).</li>
+              <li>Permanently removes the old raw data to save storage space.</li>
+            </ul>
           </div>
 
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>
-            Email Subject
-          </label>
-          <input
-            type="text"
-            name="emailSubject"
-            value={settings.emailSubject}
-            onChange={handleInputChange}
-            style={inputStyle}
-          />
-        </div>
+          <div style={{ 
+            background: 'rgba(15, 23, 42, 0.4)', 
+            borderRadius: '12px', 
+            padding: '20px', 
+            border: '1px solid rgba(148, 163, 184, 0.1)'
+          }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+              <div>
+                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>
+                  Current Total Records
+                </div>
+                <div style={{ fontSize: '24px', fontWeight: '700', color: '#f8fafc' }}>
+                  {loading ? '...' : analyticsStats.currentRecords.toLocaleString()}
+                </div>
+              </div>
+              
+              <div>
+                <div style={{ fontSize: '12px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>
+                  Oldest Record Date
+                </div>
+                <div style={{ fontSize: '24px', fontWeight: '700', color: '#f8fafc' }}>
+                  {loading ? '...' : (analyticsStats.oldestRecord || 'N/A')}
+                </div>
+              </div>
+            </div>
 
-        {/* Analytics Data Management */}
-        <div style={sectionStyle}>
-          <h2 style={{ marginTop: 0, color: '#333' }}>Analytics Data Management</h2>
-          <div className={styles.analyticsStats}>
-            <p>Current records: {analyticsStats.currentRecords}</p>
-            <p>Oldest record: {analyticsStats.oldestRecord}</p>
-            {analyticsStats.canCleanup && (
-              <button onClick={handleAnalyticsCleanup} className={styles.primary} style={{marginTop: '10px'}}>
-                Archive {analyticsStats.recordsToCleanup} old records
+            <div style={{ 
+              paddingTop: '20px', 
+              borderTop: '1px solid rgba(148, 163, 184, 0.1)', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '16px'
+            }}>
+              <div>
+                {analyticsStats.canCleanup ? (
+                  <span style={{ color: '#fbbf24', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>⚠️</span>
+                    Found {analyticsStats.recordsToCleanup.toLocaleString()} records ready for archival.
+                  </span>
+                ) : (
+                  <span style={{ color: '#10b981', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>✓</span>
+                    Database is optimized. No cleanup needed.
+                  </span>
+                )}
+              </div>
+
+              <button 
+                onClick={handleAnalyticsCleanup}
+                disabled={!analyticsStats.canCleanup || loading}
+                className={styles.refreshBtn}
+                style={{
+                  background: analyticsStats.canCleanup 
+                    ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' 
+                    : 'rgba(148, 163, 184, 0.1)',
+                  cursor: analyticsStats.canCleanup ? 'pointer' : 'not-allowed',
+                  opacity: loading ? 0.7 : 1,
+                  border: 'none',
+                  color: analyticsStats.canCleanup ? 'white' : '#64748b',
+                  boxShadow: analyticsStats.canCleanup ? '0 4px 12px rgba(245, 158, 11, 0.3)' : 'none'
+                }}
+              >
+                {loading ? 'Processing...' : (
+                  <>
+                    <span>📦</span> Archive & Cleanup Data
+                  </>
+                )}
               </button>
-            )}
+            </div>
           </div>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '30px' }}>
-          <button 
-            type="submit" 
-            className={styles.primary}
-            disabled={loading}
-            style={{ 
-              minWidth: '200px',
-              padding: '12px 24px',
-              fontSize: '16px',
-              opacity: loading ? 0.6 : 1
-            }}
-          >
-            {loading ? 'Saving...' : 'Save Settings'}
-          </button>
-        </div>
-      </form>
+      </div>
     </AdminLayout>
   );
 }

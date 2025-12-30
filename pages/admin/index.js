@@ -62,7 +62,7 @@ export default function AdminDashboard() {
     // console.log('Start: fetchDashboardData()');
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/dashboard');
+      const response = await fetch(`/api/admin/dashboard?t=${Date.now()}`);
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
