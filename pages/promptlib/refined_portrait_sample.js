@@ -6,16 +6,37 @@ export default function Prompt345345() {
   const [copied, setCopied] = useState(false);
 
   // Placeholder prompt - minimalist yet complex enough to test the view
-  const promptContent = `You are an expert system architect and code strategist.
-  
-Your task is to analyze the following codebase structure and suggest a refactoring plan that improves modularity without breaking existing dependencies.
+  const promptContent = `# Core Transformation Objective
+Transform the provided reference image into a refined portrait photograph. Preserve the subject’s identity and facial structure while elevating the overall visual quality into a professional studio-style portrait.
 
-Please focus on:
-1. Identifying circular dependencies.
-2. Suggesting a cleaner separation of concerns for the API layer.
-3. Proposing a modern error handling strategy.
+---
+## Composition & Framing
+Portrait orientation, chest-up or head-and-shoulders framing. The subject is centered or slightly off-center using a classic studio composition. Clean background with gentle depth separation to draw full attention to the subject.
 
-Output your response in Markdown format, prioritizing actionable steps.`;
+---
+## Lighting & Mood
+Soft studio lighting with a cinematic touch. Use a key light to sculpt the face and enhance confidence, complemented by subtle fill light to maintain smooth skin tones. Add a gentle rim or hair light for separation from the background. Overall mood should feel confident, intimate, and subtly romantic, with warm highlights and soft shadows.
+
+---
+## Facial Expression & Pose
+The subject appears calm, self-assured, and emotionally present. Expression should convey quiet confidence with a hint of romantic warmth. Relaxed posture, natural head tilt, and soft eye contact with the camera.
+
+---
+## Color Palette & Atmosphere
+Warm and muted color tones, with soft highlights and smooth gradients. Romantic ambience achieved through gentle contrast, creamy skin tones, and slightly desaturated backgrounds. Avoid harsh or overly vibrant colors.
+
+---
+## Texture & Detail
+High-detail skin texture with natural retouching. Smooth but realistic complexion, sharp eyes, and softly defined facial features. Avoid over-sharpening or artificial beauty effects.
+
+---
+## Photographic Style
+Professional studio portrait photography. Shallow depth of field, high-resolution clarity, realistic lens behavior. Inspired by editorial and fine-art portrait photography rather than casual or social media styles.
+
+---
+## Quality & Realism Constraints
+Photorealistic output, natural proportions, accurate anatomy. No distortion, no exaggerated features, no cartoon or illustration style. Maintain a polished yet authentic photographic look.
+`;
 
   const handleCopy = async () => {
     try {
@@ -36,7 +57,7 @@ Output your response in Markdown format, prioritizing actionable steps.`;
 
       <div className={styles.card}>
         <header className={styles.header}>
-          <h1 className={styles.title}>System Architect Prompt</h1>
+          <h1 className={styles.title}>Refined Portrait Photograph Sample</h1>
         </header>
 
         <main className={styles.content}>

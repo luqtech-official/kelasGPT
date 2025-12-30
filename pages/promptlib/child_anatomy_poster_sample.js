@@ -6,16 +6,36 @@ export default function Prompt345345() {
   const [copied, setCopied] = useState(false);
 
   // Placeholder prompt - minimalist yet complex enough to test the view
-  const promptContent = `You are an expert system architect and code strategist.
-  
-Your task is to analyze the following codebase structure and suggest a refactoring plan that improves modularity without breaking existing dependencies.
+  const promptContent = `Create an educational infographic poster for elementary school children with the theme "Basic Human Anatomy"
+ 
+The main character should be a cute 3D papercraft-style Malay boy positioned at the center of the poster. He should have a bright smile and a welcoming, friendly pose. The character should look like a premium handmade paper doll.
+ 
+At the top of the poster, place a large headline in a playful, child-friendly font reading: "TUBUH BADAN KITA."
 
-Please focus on:
-1. Identifying circular dependencies.
-2. Suggesting a cleaner separation of concerns for the API layer.
-3. Proposing a modern error handling strategy.
+The layout should feature the main character at the center. Around this character, include multiple floating paper-cut bubble charts that explain different anatomy parts.
 
-Output your response in Markdown format, prioritizing actionable steps.`;
+Each anatomy part should be connected to the character using crayon-drawn arrows and hand-drawn dotted lines. Text blocks must be clearly readable and placed on both the left and right sides of the  central figure, maintaining a balanced, center-focused composition.
+
+Then depict simplified anatomy parts using playful paper shapes:
+* The brain should appear as a pink, cloud-shaped paper cutout labeled "Otak."
+* The heart should be a red paper heart labeled "Jantung."
+* The lungs should look like bluish, lung-like paper forms labeled "Paru-Paru."
+* The stomach should be a cute, bean-shaped paper form labeled "Perut."
+
+All labels should use a rounded sans-serif font that is clear and easy to read. The text should only include:
+* OTAK: Untuk Berfikir
+* JANTUNG: Untuk Pam Darah
+* PARU PARU: Untuk Bernafas
+* PERUT: Untuk Cerna Makanan
+
+Use washi tape to secure labels.
+Add colorful sewn-on buttons as decorative details.
+All connections between elements should be drawn with hand-drawn dotted lines and crayon-style arrows.
+
+The poster should use a vertical portrait aspect ratio of 9:16.
+Render the image in good quality at 2K resolution.
+Apply an Octane-rendered style finish look with realistic paper textures.
+`;
 
   const handleCopy = async () => {
     try {
@@ -36,7 +56,7 @@ Output your response in Markdown format, prioritizing actionable steps.`;
 
       <div className={styles.card}>
         <header className={styles.header}>
-          <h1 className={styles.title}>System Architect Prompt</h1>
+          <h1 className={styles.title}>Child Anatomy Poster Sample</h1>
         </header>
 
         <main className={styles.content}>
