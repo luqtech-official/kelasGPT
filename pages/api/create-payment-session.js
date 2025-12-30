@@ -52,7 +52,6 @@ export default async function handler(req, res) {
     
       // --- DISCOUNT LOGIC START ---
       let appliedDiscount = 0;
-      let orderNotes = '';
       let finalAmount = productPriceNum; // Default to full price
     
       if (discountCode) {
@@ -61,8 +60,6 @@ export default async function handler(req, res) {
         if (discountDetails) {
           appliedDiscount = discountDetails.amount;
           finalAmount = Math.max(0, productPriceNum - appliedDiscount); // Ensure no negative price
-          const agentId = discountDetails.agentId || 'UNKNOWN';
-          orderNotes = `Code: ${discountCode.toUpperCase()} - Agent ${agentId}`;
           
           logger.info({
             orderNumber,
@@ -129,7 +126,7 @@ export default async function handler(req, res) {
       discount_code: discountCode ? discountCode.toUpperCase() : null, // Record the code
       agent_id: finalAgentId, // Record the agent ID
       commission_earned: finalAgentId ? commissionEarned : 0, // Record fixed commission at time of sale
-      order_notes: orderNotes, // Keep order notes for backward compatibility
+      order_notes: null, // No longer using this for discount info
       currency_code: "MYR",
       order_status: "pending",
       payment_method: "fpx",

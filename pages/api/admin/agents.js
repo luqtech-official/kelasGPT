@@ -116,35 +116,64 @@ export default async function handler(req, res) {
              return res.status(400).json({ success: false, message: 'No orders selected' });
         }
 
-        // 1. Mark orders as paid and record timestamp
+        // 1. Mark orders as paid (Idempotent & Safe)
+        // Only update orders that are currently 'unpaid' to avoid double-counting if request is replayed
         const { error: orderError } = await supabase
             .from('orders')
             .update({ 
                 payout_status: 'paid',
                 payout_settled_at: new Date().toISOString()
             })
-            .in('order_id', order_ids);
+            .in('order_id', order_ids)
+            .eq('payout_status', 'unpaid'); 
             
         if (orderError) throw orderError;
 
-        // 2. Update Agent Aggregates
-        // We reduce pending_settlement and increase comm_paid
-        const { data: currentAgent } = await supabase
-            .from('agents')
-            .select('pending_settlement, comm_paid')
-            .eq('agent_id', agent_id)
-            .single();
+        // 2. Update Agent Aggregates with Optimistic Locking
+        // This loop ensures we don't overwrite changes made by other admins/processes concurrently
+        const amount = Number(total_amount);
+        let retries = 3;
+        let success = false;
+
+        while (retries > 0 && !success) {
+            const { data: currentAgent } = await supabase
+                .from('agents')
+                .select('pending_settlement, comm_paid')
+                .eq('agent_id', agent_id)
+                .single();
             
-        if (currentAgent) {
-            const amount = Number(total_amount);
-            await supabase
+            if (!currentAgent) {
+                // Agent deleted or missing?
+                return res.status(404).json({ success: false, message: 'Agent not found' });
+            }
+
+            const currentPending = Number(currentAgent.pending_settlement) || 0;
+            const currentPaid = Number(currentAgent.comm_paid) || 0;
+
+            const { data, error } = await supabase
                 .from('agents')
                 .update({
-                    pending_settlement: Math.max(0, (Number(currentAgent.pending_settlement) || 0) - amount),
-                    comm_paid: (Number(currentAgent.comm_paid) || 0) + amount,
+                    pending_settlement: Math.max(0, currentPending - amount),
+                    comm_paid: currentPaid + amount,
                     last_settlement_at: new Date().toISOString()
                 })
-                .eq('agent_id', agent_id);
+                .eq('agent_id', agent_id)
+                .eq('pending_settlement', currentPending) // Optimistic Lock
+                .eq('comm_paid', currentPaid)           // Optimistic Lock
+                .select();
+            
+            if (!error && data && data.length > 0) {
+                success = true;
+            } else {
+                retries--;
+                // Wait briefly before retry to reduce contention
+                await new Promise(r => setTimeout(r, 50));
+            }
+        }
+
+        if (!success) {
+            logger.error({ agent_id }, 'Failed to update agent stats after retries');
+            return res.status(409).json({ success: false, message: 'Concurrency error. Please refresh and try again.' });
         }
 
         return res.status(200).json({ success: true, message: 'Payout settled successfully' });
@@ -157,35 +186,61 @@ export default async function handler(req, res) {
              return res.status(400).json({ success: false, message: 'No orders selected' });
         }
 
-        // 1. Mark orders as unpaid and clear timestamp
+        // 1. Mark orders as unpaid (Idempotent & Safe)
+        // Only revert orders that are currently 'paid'
         const { error: orderError } = await supabase
             .from('orders')
             .update({ 
                 payout_status: 'unpaid',
                 payout_settled_at: null
             })
-            .in('order_id', order_ids);
+            .in('order_id', order_ids)
+            .eq('payout_status', 'paid');
             
         if (orderError) throw orderError;
 
-        // 2. Update Agent Aggregates (Reverse logic)
-        // Increase pending_settlement, Decrease comm_paid
-        const { data: currentAgent } = await supabase
-            .from('agents')
-            .select('pending_settlement, comm_paid')
-            .eq('agent_id', agent_id)
-            .single();
+        // 2. Update Agent Aggregates with Optimistic Locking
+        const amount = Number(total_amount);
+        let retries = 3;
+        let success = false;
+
+        while (retries > 0 && !success) {
+            const { data: currentAgent } = await supabase
+                .from('agents')
+                .select('pending_settlement, comm_paid')
+                .eq('agent_id', agent_id)
+                .single();
             
-        if (currentAgent) {
-            const amount = Number(total_amount);
-            await supabase
+            if (!currentAgent) {
+                return res.status(404).json({ success: false, message: 'Agent not found' });
+            }
+
+            const currentPending = Number(currentAgent.pending_settlement) || 0;
+            const currentPaid = Number(currentAgent.comm_paid) || 0;
+
+            const { data, error } = await supabase
                 .from('agents')
                 .update({
-                    pending_settlement: (Number(currentAgent.pending_settlement) || 0) + amount,
-                    comm_paid: Math.max(0, (Number(currentAgent.comm_paid) || 0) - amount),
+                    pending_settlement: currentPending + amount,
+                    comm_paid: Math.max(0, currentPaid - amount),
                     // We don't update last_settlement_at because that tracks the last *positive* payment action
                 })
-                .eq('agent_id', agent_id);
+                .eq('agent_id', agent_id)
+                .eq('pending_settlement', currentPending) // Lock
+                .eq('comm_paid', currentPaid)           // Lock
+                .select();
+            
+            if (!error && data && data.length > 0) {
+                success = true;
+            } else {
+                retries--;
+                await new Promise(r => setTimeout(r, 50));
+            }
+        }
+
+        if (!success) {
+            logger.error({ agent_id }, 'Failed to update agent stats after retries during revert');
+            return res.status(409).json({ success: false, message: 'Concurrency error. Please refresh and try again.' });
         }
 
         return res.status(200).json({ success: true, message: 'Payout reversed successfully' });
