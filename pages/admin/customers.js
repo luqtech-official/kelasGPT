@@ -683,7 +683,20 @@ export default function Customers() {
                       
                       {/* Contact (Phone) */}
                       <td className={styles.tableBodyCell}>
-                        <div className={styles.phoneNumber}>{customer.phone_number}</div>
+                        <div className={styles.phoneNumber} style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                          <span>{customer.phone_number}</span>
+                          {customer.phone_number && (
+                            <a 
+                              href={`https://wa.me/${customer.phone_number.replace(/[^0-9]/g, '').replace(/^01/, '601')}`}
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{textDecoration:'none', fontSize:'10px', background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color:'white', padding:'2px 6px', borderRadius:'4px', display:'inline-flex', alignItems:'center', fontWeight:'bold', border: '1px solid rgba(22, 163, 74, 0.2)'}}
+                              title="Chat on WhatsApp"
+                            >
+                              WA ↗
+                            </a>
+                          )}
+                        </div>
                       </td>
                       
                       {/* Email Status */}

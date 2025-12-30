@@ -340,6 +340,20 @@ export default function AgentsManagement() {
                       <td className={styles.tableBodyCell}>
                         <div className={styles.customerInfo}>
                           <span className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_name || 'No Name'}</span>
+                          {agent.phone && (
+                            <div style={{display:'flex', alignItems:'center', gap:'6px', marginTop:'2px', marginBottom:'2px'}}>
+                                <span className={styles.customerEmail} style={{color: '#94a3b8'}}>{agent.phone}</span>
+                                <a 
+                                    href={`https://wa.me/${agent.phone.replace(/[^0-9]/g, '').replace(/^01/, '601')}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    style={{textDecoration:'none', fontSize:'10px', background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color:'white', padding:'2px 6px', borderRadius:'4px', display:'inline-flex', alignItems:'center', border: '1px solid rgba(22, 163, 74, 0.2)'}}
+                                    title="Chat on WhatsApp"
+                                >
+                                    WhatsApp ↗
+                                </a>
+                            </div>
+                          )}
                           <span className={styles.customerEmail}>ID (Secret): {agent.agent_id}</span>
                           <span className={styles.customerEmail} style={{color: '#60a5fa', fontWeight: 'bold'}}>Code (Public): {agent.discount_code}</span>
                         </div>
@@ -391,7 +405,7 @@ export default function AgentsManagement() {
                           <button 
                             onClick={() => openPayoutManager(agent)}
                             className={styles.exportButton}
-                            style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', padding: '6px 12px', fontSize: '11px'}}
+                            style={{background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', padding: '6px 12px', fontSize: '11px'}}
                           >
                             Manage Payouts
                           </button>
@@ -453,9 +467,22 @@ export default function AgentsManagement() {
                 </div>
               </div>
 
-              <div style={{marginBottom:'16px'}}>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px'}}>
+                <div>
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>WhatsApp Number</label>
+                  <input 
+                    type="text" 
+                    value={formData.phone || '+6'} 
+                    onChange={e => setFormData({...formData, phone: e.target.value})} 
+                    className={styles.searchInput} 
+                    style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} 
+                    placeholder="+601..."
+                  />
+                </div>
+                <div>
                   <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Email</label>
                   <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} />
+                </div>
               </div>
 
               <div style={{marginTop:'24px', paddingTop:'16px', borderTop:'1px solid #334155'}}>
@@ -508,9 +535,22 @@ export default function AgentsManagement() {
                 </div>
               </div>
 
-              <div style={{marginBottom:'16px'}}>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px', marginBottom:'16px'}}>
+                <div>
+                  <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>WhatsApp Number</label>
+                  <input 
+                    type="text" 
+                    value={formData.phone || '+6'} 
+                    onChange={e => setFormData({...formData, phone: e.target.value})} 
+                    className={styles.searchInput} 
+                    style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} 
+                    placeholder="+601..."
+                  />
+                </div>
+                <div>
                   <label style={{fontSize:'12px', color:'#94a3b8', display:'block', marginBottom:'4px'}}>Email</label>
                   <input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={styles.searchInput} style={{background: '#0f172a', border: '1px solid #334155', color: 'white'}} />
+                </div>
               </div>
 
               <div style={{marginTop:'24px', paddingTop:'16px', borderTop:'1px solid #334155'}}>
@@ -648,7 +688,7 @@ export default function AgentsManagement() {
                             onClick={handlePayoutAction} 
                             className={styles.confirmButton} 
                             style={{
-                                background: payoutManager.showHistory ? '#ef4444' : '#10b981', 
+                                background: payoutManager.showHistory ? '#ef4444' : '#059669', 
                                 color: 'white',
                                 opacity: isSubmitting ? 0.7 : 1,
                                 cursor: isSubmitting ? 'wait' : 'pointer'
