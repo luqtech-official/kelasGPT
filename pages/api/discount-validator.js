@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ isValid: false, message: 'Code is required' });
     }
 
-    const discountAmount = getDiscountAmount(code);
+    const discountAmount = await getDiscountAmount(code);
 
     if (discountAmount > 0) {
       return res.status(200).json({

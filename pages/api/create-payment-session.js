@@ -50,35 +50,31 @@ export default async function handler(req, res) {
     const productSettings = await getPaymentSettings();
     let productPriceNum = parseFloat(productSettings.productPrice);
     
-    // --- DISCOUNT LOGIC START ---
-    let finalAmount = productPriceNum;
-    let appliedDiscount = 0;
-    let orderNotes = "";
-
-    if (discountCode) {
-      // Re-validate code on server side
-      const discountDetails = getDiscountDetails(discountCode);
-      if (discountDetails) {
-        appliedDiscount = discountDetails.amount;
-        finalAmount = Math.max(0, productPriceNum - appliedDiscount); // Ensure no negative price
-        const agentId = discountDetails.agentId || 'UNKNOWN';
-        orderNotes = `Code: ${discountCode.toUpperCase()} - Agent ${agentId}`;
-        
-        logger.info({ 
-          orderNumber, 
-          discountCode,
-          agentId,
-          originalPrice: productPriceNum, 
-          discountValue: appliedDiscount, 
-          finalAmount 
-        }, "Discount code applied successfully");
-      } else {
-        logger.warn({ orderNumber, discountCode }, "Invalid discount code provided during checkout");
-        // We continue with original price if code is invalid, rather than failing
+      // --- DISCOUNT LOGIC START ---
+      let appliedDiscount = 0;
+      let orderNotes = '';
+    
+      if (discountCode) {
+        // Validate discount code (now async)
+        const discountDetails = await getDiscountDetails(discountCode);
+        if (discountDetails) {
+          appliedDiscount = discountDetails.amount;
+          finalAmount = Math.max(0, productPriceNum - appliedDiscount); // Ensure no negative price
+          const agentId = discountDetails.agentId || 'UNKNOWN';
+          orderNotes = `Code: ${discountCode.toUpperCase()} - Agent ${agentId}`;
+          
+          logger.info({
+            orderNumber,
+            discountCode,
+            originalPrice: productPriceNum,
+            discountValue: appliedDiscount,
+            finalAmount
+          }, "Discount code applied successfully");
+        } else {
+          logger.warn({ orderNumber, discountCode }, "Invalid discount code provided during checkout");
+        }
       }
-    }
-    // --- DISCOUNT LOGIC END ---
-
+      // --- DISCOUNT LOGIC END ---
     // Save customer data
     const customerDataToInsert = {
       full_name: name,
@@ -113,13 +109,18 @@ export default async function handler(req, res) {
       product_price: productPriceNum,
       final_amount: finalAmount, // Discounted price
       discount_amount: appliedDiscount, // Record the discount
-      order_notes: orderNotes, // Record the code used
+      discount_code: discountCode ? discountCode.toUpperCase() : null, // Record the code
+      agent_id: discountCode ? (await getDiscountDetails(discountCode))?.agentId || null : null, // Record the agent ID
+      order_notes: orderNotes, // Keep order notes for backward compatibility
       currency_code: "MYR",
       order_status: "pending",
       payment_method: "fpx",
       payment_gateway: "securepay",
       order_source: "website",
     };
+    
+    logger.info({ orderDataToInsert }, `DEBUG: Inserting order data for ${orderNumber}`); // Added Debug Log
+
     const { data: orderResult, error: orderError } = await addOrder(orderDataToInsert);
 
     if (orderError) {

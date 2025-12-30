@@ -114,10 +114,10 @@ export default async function handler(req, res) {
         customerId: statusUpdateResult.data.customer_id
       }, `Database updated atomically for successful order ${order_number}`);
 
-      // Get order details for email
+      // Get order details for email and commission tracking
       const { data: order, error: orderError } = await supabase
         .from('orders')
-        .select(`order_id, customer_id, customers (full_name, email_address)`)
+        .select(`order_id, customer_id, order_notes, agent_id, discount_code, customers (full_name, email_address)`)
         .eq('order_number', order_number)
         .single();
 
@@ -126,6 +126,64 @@ export default async function handler(req, res) {
         // Payment processed successfully, but can't send email - this is OK
         return res.status(200).json({ message: 'Payment processed, email sending failed' });
       }
+
+      // --- Commission Logic Start ---
+      if (order.agent_id) {
+        try {
+            const agentId = order.agent_id;
+            
+            // 1. Fetch current comm_per_sale for this agent to ensure accuracy
+            const { data: agentData, error: agentFetchError } = await supabase
+              .from('agents')
+              .select('comm_per_sale')
+              .eq('agent_id', agentId)
+              .single();
+              
+            if (agentData) {
+               const commission = Number(agentData.comm_per_sale) || 10;
+               
+               // 2. Increment pending and total commission
+               // We use a raw RPC call if possible for atomicity, but standard update is acceptable here 
+               // given the low volume. Ideally: "pending_settlement = pending_settlement + commission"
+               
+               // Since we can't easily do "increment" without RPC in JS client without a read-write cycle,
+               // we will try to use an RPC if available, or fall back to read-modify-write.
+               // For now, let's try a direct RPC call pattern or just standard flow.
+               
+               const { error: commError } = await supabase.rpc('increment_agent_commission', {
+                 p_agent_id: agentId,
+                 p_amount: commission
+               });
+
+               if (commError) {
+                 // Fallback: Read-Modify-Write (less safe for high concurrency but works for MVP)
+                 logger.warn({ error: commError }, "RPC increment_agent_commission failed, falling back to manual update");
+                 
+                 const { data: currentAgent } = await supabase
+                    .from('agents')
+                    .select('pending_settlement, total_comm')
+                    .eq('agent_id', agentId)
+                    .single();
+                 
+                 if (currentAgent) {
+                   await supabase
+                     .from('agents')
+                     .update({
+                       pending_settlement: (Number(currentAgent.pending_settlement) || 0) + commission,
+                       total_comm: (Number(currentAgent.total_comm) || 0) + commission
+                     })
+                     .eq('agent_id', agentId);
+                 }
+               }
+
+               logger.info({ agentId, commission }, `Commission tracked for order ${order_number}`);
+            }
+        } catch (commError) {
+          logger.error({ error: commError }, `Failed to update commission for order ${order_number}`);
+          // Don't fail the request, just log the error
+        }
+      }
+      // --- Commission Logic End ---
 
       // --- Send transactional email with Mailjet ---
       let emailLogId = null;

@@ -132,7 +132,7 @@ Scientific accuracy, educational infographic, anatomical illustration, wildlife 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Prompt Library - System Architect</title>
+        <title>Prompt Library</title>
         <meta name="description" content="A Curated Prompt AI Image Generation." />
       </Head>
 
