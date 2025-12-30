@@ -12,6 +12,11 @@ const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
 async function handler(req, res) {
   const logger = createLogger(req);
 
+  // Disable Caching for Admin Data
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }

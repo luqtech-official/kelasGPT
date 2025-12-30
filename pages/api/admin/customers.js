@@ -11,6 +11,11 @@ import {
 async function customersHandler(req, res) {
   const startTime = Date.now();
 
+  // Disable Caching for Admin Data
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (req.method === 'GET') {
     try {
       // ✅ SECURITY: Validate and sanitize query parameters

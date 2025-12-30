@@ -1,6 +1,11 @@
 import { requireAuth } from '../../../lib/adminAuth-clean';
 
 async function handler(req, res) {
+  // Disable Caching for Admin Data
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   try {
     return res.status(200).json({
       success: true,

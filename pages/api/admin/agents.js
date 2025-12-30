@@ -4,6 +4,11 @@ import { createLogger } from '../../../lib/pino-logger';
 export default async function handler(req, res) {
   const logger = createLogger(req);
 
+  // Disable Caching for Admin Data (Critical for financial stats)
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   // Basic Admin Auth Check (You might have a middleware, but mimicking existing pattern)
   // Assuming the frontend handles the session check via AdminLayout or similar, 
   // but strictly we should check for a valid session here. 

@@ -2,6 +2,11 @@ import { supabase } from "../../../lib/supabase";
 import { requireAuth } from "../../../lib/adminAuth";
 
 async function handler(req, res) {
+  // Disable Caching for Admin Data
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (req.method === 'GET') {
     return getSettings(req, res);
   } else if (req.method === 'POST') {
