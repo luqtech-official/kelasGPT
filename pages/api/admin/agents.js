@@ -227,11 +227,23 @@ export default async function handler(req, res) {
         return res.status(200).json({ success: true, message: 'All pending orders marked as paid' });
       } else {
         // Normal update (edit details)
-        updateData = {
-          ...updates,
-          discount_code: updates.discount_code ? updates.discount_code.toUpperCase().trim() : undefined,
-          updated_at: new Date().toISOString()
-        };
+        // Strict allow-list to prevent errors with unknown columns
+        if (updates.agent_name) updateData.agent_name = updates.agent_name;
+        if (updates.email !== undefined) updateData.email = updates.email;
+        if (updates.phone !== undefined) updateData.phone = updates.phone;
+        if (updates.bank_name !== undefined) updateData.bank_name = updates.bank_name;
+        if (updates.bank_account_number !== undefined) updateData.bank_account_number = updates.bank_account_number;
+        if (updates.bank_holder_name !== undefined) updateData.bank_holder_name = updates.bank_holder_name;
+        
+        if (updates.discount_amount !== undefined) updateData.discount_amount = Number(updates.discount_amount);
+        if (updates.comm_per_sale !== undefined) updateData.comm_per_sale = Number(updates.comm_per_sale);
+        if (updates.is_active !== undefined) updateData.is_active = updates.is_active;
+        
+        if (updates.discount_code) {
+             updateData.discount_code = updates.discount_code.toUpperCase().trim();
+        }
+
+        updateData.updated_at = new Date().toISOString();
       }
       
       if (Object.keys(updateData).length > 0) {
