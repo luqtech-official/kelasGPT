@@ -643,13 +643,13 @@ export default function Customers() {
                       }}
                     >
                       {/* Customer Name & Email */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Customer">
                         <div className={styles.customerName}>{customer.full_name}</div>
                         <div className={styles.customerEmail}>{customer.email_address}</div>
                       </td>
                       
                       {/* Payment Status */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Status">
                         <div style={{ position: 'relative', zIndex: activeDropdown === customer.customer_id ? 1000 : 'auto' }}>
                           <div
                             className={`${styles.statusBadge} ${styles[customer.payment_status]}`}
@@ -689,7 +689,7 @@ export default function Customers() {
                       </td>
                       
                       {/* Contact (Phone) */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Contact">
                         <div className={styles.phoneNumber} style={{display:'flex', alignItems:'center', gap:'8px'}}>
                           <span>{customer.phone_number}</span>
                           {customer.phone_number && (
@@ -707,7 +707,7 @@ export default function Customers() {
                       </td>
                       
                       {/* Email Status */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Email Status">
                         <div className={styles.emailStatusContainer}>
                           <div className={styles.emailStatusBadge}>
                             {(() => {
@@ -743,24 +743,24 @@ export default function Customers() {
                       </td>
                       
                       {/* Order Number */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Order">
                         <span className={styles.orderNumber}>{customer.latest_order_number || 'No orders'}</span>
                       </td>
                       
                       {/* Amount */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Amount">
                         <span className={styles.amount}>
                           RM {customer.latest_order_total ? customer.latest_order_total.toFixed(2) : '0.00'}
                         </span>
                       </td>
                       
                       {/* Date */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Date">
                         <div className={styles.dateTime}>{formatDate(customer.created_at)}</div>
                       </td>
                       
                       {/* IP Address */}
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Location">
                         <span className={styles.ipAddress}>
                           {customer.masked_ip || customer.ip_address}
                         </span>

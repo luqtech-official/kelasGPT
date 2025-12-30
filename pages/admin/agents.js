@@ -355,7 +355,7 @@ export default function AgentsManagement() {
                 <tbody>
                   {filteredAgents.map(agent => (
                     <tr key={agent.agent_id} className={styles.tableBodyRow}>
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Agent">
                         <div className={styles.customerInfo}>
                           <span className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_name || 'No Name'}</span>
                           {agent.phone && (
@@ -376,7 +376,7 @@ export default function AgentsManagement() {
                           <span className={styles.customerEmail} style={{color: '#60a5fa', fontWeight: 'bold'}}>Code (Public): {agent.discount_code}</span>
                         </div>
                       </td>
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Sales">
                         <div className={styles.statusInfo}>
                           <span className={styles.statusBadge} style={{background: 'rgba(52, 211, 153, 0.2)', color: '#34d399'}}>
                             {agent.total_sales_count} Sales
@@ -386,7 +386,7 @@ export default function AgentsManagement() {
                           </span>
                         </div>
                       </td>
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Commission">
                         <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
                           <div style={{fontSize:'14px', fontWeight:'700', color: '#fbbf24'}}>
                             RM {agent.pending_settlement}
@@ -400,7 +400,7 @@ export default function AgentsManagement() {
                           </div>
                         </div>
                       </td>
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Status">
                         <button 
                           onClick={() => handleToggleStatus(agent)}
                           disabled={processingId === agent.agent_id}
@@ -418,7 +418,7 @@ export default function AgentsManagement() {
                             : (agent.is_active ? 'Active' : 'Inactive')}
                         </button>
                       </td>
-                      <td className={styles.tableBodyCell}>
+                      <td className={styles.tableBodyCell} data-label="Actions">
                         <div style={{display:'flex', gap:'8px'}}>
                           <button 
                             onClick={() => openPayoutManager(agent)}
