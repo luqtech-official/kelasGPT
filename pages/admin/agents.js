@@ -32,7 +32,8 @@ export default function AgentsManagement() {
   const fetchAgents = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/agents');
+      // Cache-busting: append timestamp to prevent caching issues
+      const response = await fetch('/api/admin/agents?t=' + Date.now());
       const result = await response.json();
       
       if (result.success) {
@@ -103,7 +104,8 @@ export default function AgentsManagement() {
   const openPayoutManager = async (agent) => {
     setPayoutManager({ agent, orders: [], selectedIds: [], loading: true, showHistory: false });
     try {
-        const response = await fetch(`/api/admin/agents?action=orders&agent_id=${agent.agent_id}`);
+        // Cache-busting: append timestamp
+        const response = await fetch(`/api/admin/agents?action=orders&agent_id=${agent.agent_id}&t=${Date.now()}`);
         const result = await response.json();
         if (result.success) {
             // By default, we load all and let the UI filter
