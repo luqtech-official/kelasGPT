@@ -127,7 +127,7 @@ export default function Home({ productSettings }) {
               </div>
               
               <h1 className={styles.heroTitle}>
-                <span>Hasilkan Gambar AI</span>
+                <span>Belajar Hasilkan Gambar AI</span>
                 <span className={styles.heroEmphasis}>Yang Memukau</span>
               </h1>
               
@@ -139,7 +139,7 @@ export default function Home({ productSettings }) {
                  <div className={styles.heroVisualContent}>
                     <div className={styles.heroVisualOverlay}></div>
                     <Image 
-                        src="hero-main"
+                        src="nanobanana-hero"
                         alt="Teknik Prompting Gambar AI Book Cover Visual" 
                         width={800} 
                         height={500}
@@ -147,7 +147,7 @@ export default function Home({ productSettings }) {
                         style={{width: '100%', height: 'auto', display: 'block'}} 
                         priority
                         placeholder="blur"
-                        blurDataURL={getBlurDataURL('hero-main')}
+                        blurDataURL={getBlurDataURL('nanobanana-hero')}
                     />
                  </div>
               </div>
@@ -238,7 +238,7 @@ export default function Home({ productSettings }) {
                     {/* Style 1 */}
                     <div className={`${styles.galleryItem} ${styles.viewfinder}`}>
                         <div className={styles.galleryImageWrapper}>
-                            <Image src="hero-main" alt="Photorealistic" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image src="nanobanana-food" alt="Photorealistic" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
                             <div className={styles.galleryOverlay}>
                                 <span className={styles.galleryTag}>REALISM</span>
                                 <div className={styles.galleryTitle}>Photorealistic</div>
@@ -250,7 +250,7 @@ export default function Home({ productSettings }) {
                     {/* Style 2 */}
                     <div className={`${styles.galleryItem} ${styles.viewfinder}`}>
                         <div className={styles.galleryImageWrapper}>
-                            <Image src="hero-main" alt="Cinematic" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image src="nanobanana-woman-after" alt="Cinematic" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
                             <div className={styles.galleryOverlay}>
                                 <span className={styles.galleryTag}>CINEMATIC</span>
                                 <div className={styles.galleryTitle}>Movie Concept</div>
@@ -262,7 +262,7 @@ export default function Home({ productSettings }) {
                     {/* Style 3 */}
                     <div className={`${styles.galleryItem} ${styles.viewfinder}`}>
                         <div className={styles.galleryImageWrapper}>
-                            <Image src="hero-main" alt="Anime" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image src="nanobanana-style-after" alt="Anime" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
                             <div className={styles.galleryOverlay}>
                                 <span className={styles.galleryTag}>2D ART</span>
                                 <div className={styles.galleryTitle}>Anime & Manga</div>
@@ -274,7 +274,7 @@ export default function Home({ productSettings }) {
                     {/* Style 4 */}
                     <div className={`${styles.galleryItem} ${styles.viewfinder}`}>
                         <div className={styles.galleryImageWrapper}>
-                            <Image src="hero-main" alt="3D Render" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image src="nanobanana-nature" alt="3D Render" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
                             <div className={styles.galleryOverlay}>
                                 <span className={styles.galleryTag}>3D DESIGN</span>
                                 <div className={styles.galleryTitle}>3D Render</div>
@@ -286,7 +286,7 @@ export default function Home({ productSettings }) {
                     {/* Style 5 */}
                     <div className={`${styles.galleryItem} ${styles.viewfinder}`}>
                         <div className={styles.galleryImageWrapper}>
-                            <Image src="hero-main" alt="Logo" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image src="nanobanana-infographic" alt="Logo" width={400} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
                             <div className={styles.galleryOverlay}>
                                 <span className={styles.galleryTag}>VECTOR</span>
                                 <div className={styles.galleryTitle}>Logo & Icon</div>
