@@ -84,7 +84,7 @@ export default function SocialProof() {
       <div className={styles.notification}>
         <div className={styles.content}>
           <div className={styles.mainText}>
-            <span className={styles.customerName}>{currentNotification.name}</span> sudah sertai{" "}
+            <span className={styles.customerName}>{currentNotification.name}</span> telah membeli{" "}
             <span className={styles.productName}>{currentNotification.productName}</span> pada {currentNotification.when}.
           </div>
           <div className={styles.verification}>
