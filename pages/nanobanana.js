@@ -3,7 +3,8 @@ import { trackPageView, getOrCreateVisitorId } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "@/styles/nanobanana-dark.module.css"; 
+import styles from "@/styles/nanobanana-dark.module.css";
+import SocialProof from "@/components/SocialProof";
 import { getProductSettings } from "../lib/settings";
 import { getBlurDataURL } from "../lib/imagekit";
 import { trackViewContent } from "../lib/facebook-pixel";
@@ -87,6 +88,8 @@ export default function Home({ productSettings }) {
         <meta property="og:image" content="/og-image-nanobanana.png" />
         <meta name="theme-color" content="#050505"/>
       </Head>
+
+      <SocialProof />
 
       <main>
         {/* --- Navbar --- */}
