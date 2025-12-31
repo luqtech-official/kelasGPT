@@ -214,7 +214,7 @@ export default function Settings() {
               gap: '16px'
             }}>
               <span style={{ color: '#94a3b8', fontSize: '13px' }}>
-                This action dispatches the 'social-noti.yml' workflow on the 'main' branch.
+                This action dispatches the &apos;social-noti.yml&apos; workflow on the &apos;main&apos; branch.
               </span>
 
               <div style={{ display: 'flex', gap: '12px' }}>
