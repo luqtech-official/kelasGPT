@@ -1,531 +1,861 @@
-/* Nanobanana Dark Mode - The Digital Atelier / Darkroom Theme */
-
 /* ==========================================================================
-   0. Variables & Reset
+   Refined Dark Mode Sales Letter Styles (2026)
    ========================================================================== */
+
 .pageWrapper {
-  --bg-dark: #050505;
-  --bg-panel: #0F0F0F;
-  --text-main: #FFFFFF;
-  --text-muted: #888888;
-  --accent-color: #FFE135; /* Electric Banana */
-  --accent-dim: rgba(255, 225, 53, 0.15);
-  --border-color: #333333;
-  --grid-line: rgba(255, 255, 255, 0.05);
-  
-  --font-display: var(--font-manrope), sans-serif;
-  --font-body: var(--font-inter), sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-  
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  min-height: 100vh;
-  font-family: var(--font-body);
-  overflow-x: hidden;
+    background-color: #050505;
+    color: #f0f0f0;
+    font-family: var(--font-inter, sans-serif);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
+  
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
-/* ==========================================================================
-   1. Typography & Common Elements
-   ========================================================================== */
-.sectionHeader {
-  text-align: center;
-  margin-bottom: 4rem;
-  position: relative;
-}
-
-.sectionHeader h2 {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #fff, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.sectionHeader p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
+/* --- Typography --- */
+.monoLabel {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-color, #ff6b35);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .highlight {
-  color: var(--accent-color);
-  font-weight: 600;
+    color: var(--accent-color, #ff6b35);
 }
 
-.monoLabel {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent-color);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  display: block;
-  margin-bottom: 1rem;
-}
-
-/* Viewfinder Corners Effect */
-.viewfinder {
-  position: relative;
-}
-.viewfinder::before, .viewfinder::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: var(--text-muted);
-  border-style: solid;
-  transition: all 0.3s ease;
-}
-.viewfinder::before { top: -10px; left: -10px; border-width: 2px 0 0 2px; }
-.viewfinder::after { bottom: -10px; right: -10px; border-width: 0 2px 2px 0; }
-
-.viewfinder:hover::before { top: -5px; left: -5px; border-color: var(--accent-color); }
-.viewfinder:hover::after { bottom: -5px; right: -5px; border-color: var(--accent-color); }
-
-
-/* ==========================================================================
-   2. Navbar
-   ========================================================================== */
+/* --- Navbar --- */
 .navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 1.5rem 0;
-  background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
-  backdrop-filter: blur(5px);
+    padding: 2rem 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
 }
 
 .navBrandText {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: -0.05em;
-  color: var(--text-main);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
-/* ==========================================================================
-   3. Hero Section - "The Studio"
-   ========================================================================== */
+/* --- Hero Section --- */
 .hero {
-  text-align: center;
-  padding: 8rem 0 4rem; 
-  background: black;
-  /* Add subtle pixel pattern background that gets dramatically illuminated by the moving light */
-  background-image: radial-gradient(circle at 1px 1px,
-    rgba(255,255,255,0.08) 1px,
-    transparent 0);
-  background-size: 4px 4px;
-  position: relative;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    text-align: center;
 }
 
 .heroContent {
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .heroPill {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 100px;
-  background: rgba(255,255,255,0.05);
-  margin-bottom: 2rem;
-  backdrop-filter: blur(10px);
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 2rem;
 }
 
 .heroPillText {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--accent-color);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }
 
 .heroTitle {
-  font-family: var(--font-display);
-  font-size: 4.5rem;
-  line-height: 1.1;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.04em;
-}
-
-.heroTitle span {
-  display: block;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
 }
 
 .heroEmphasis {
-  color: var(--text-muted); /* Creating contrast by dimming the emphasis or using outline */
-  -webkit-text-stroke: 1px var(--text-main); 
-  color: transparent;
+    background: linear-gradient(90deg, #ff6b35, #ff9f43);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .heroSubTitle {
-  font-size: 1.25rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 600px;
-  margin: 0 auto 4rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #a0a0a0;
+    max-width: 700px;
+    margin: 0 auto 3rem;
 }
 
-/* Hero Visual - Floating Tablet/Book Effect */
 .heroVisualWrapper {
-  perspective: 1000px;
-  margin-top: 2rem;
+    margin-top: 3rem;
+    position: relative;
 }
 
 .heroVisualContent {
-  transform: rotateX(10deg) scale(0.9);
-  transition: transform 0.5s ease;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
-  border: 1px solid var(--border-color);
-  position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 1px solid #333;
 }
 
-.heroVisualContent:hover {
-  transform: rotateX(0deg) scale(0.95);
+.heroCaption {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
 }
 
-.heroVisualOverlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to top, var(--bg-dark), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-
-
-/* ==========================================================================
-   4. Bento Grid / WIIFM Section
-   ========================================================================== */
-.wiifm {
-  padding: 4rem 0;
-  background: black;
-  background-image: radial-gradient(circle at 1px 1px,
-    rgba(255,255,255,0.08) 1px,
-    transparent 0);
-  background-size: 4px 4px;
-}
-
-.bentoGrid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-
-.bentoCard {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.bentoCard:hover {
-  border-color: var(--accent-color);
-  transform: translateY(-5px);
-}
-
-.bentoIcon {
-  color: var(--accent-color);
-  margin-bottom: 1.5rem;
-}
-
-.bentoCard h4 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.bentoCard p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-/* Specific Spans for Grid */
-.span4 { grid-column: span 4; }
-.span6 { grid-column: span 6; }
-.span12 { grid-column: span 12; }
-
-@media (max-width: 900px) {
-  .span4, .span6 { grid-column: span 12; }
-}
-
-
-/* ==========================================================================
-   5. Problem/Agitate Section - "The Noise"
-   ========================================================================== */
+/* --- Noise / Problem Section --- */
 .noiseSection {
-  padding: 6rem 0;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #050505 70%);
+    padding: 6rem 0;
+    border-top: 1px solid #222;
 }
 
 .noiseContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-  max-width: 800px;
-  margin: 0 auto;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .noiseText p {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #ccc;
-  margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 1.5rem;
 }
 
 .noiseHighlight {
-  border-left: 2px solid var(--accent-color);
-  padding-left: 1.5rem;
-  margin: 2rem 0;
-  font-style: italic;
-  color: var(--text-main);
+    background: rgba(255, 107, 53, 0.1);
+    border-left: 4px solid #ff6b35;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 2rem 0;
+    border-radius: 0 10px 10px 0;
 }
 
-
-/* ==========================================================================
-   6. Visual Styles Gallery - "The Darkroom"
-   ========================================================================== */
+/* --- Gallery / Bento Grid --- */
 .gallerySection {
-  padding: 6rem 0;
+    padding: 6rem 0;
+    border-top: 1px solid #222;
 }
 
-.galleryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+.sectionHeader {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
 }
 
-.galleryItem {
-  position: relative;
-  group: pointer;
+.sectionHeader h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-.galleryImageWrapper {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  aspect-ratio: 4/5;
-  filter: grayscale(20%);
-  transition: all 0.4s ease;
+.sectionHeader p {
+    color: #888;
+    font-size: 1.1rem;
 }
 
-.galleryItem:hover .galleryImageWrapper {
-  filter: grayscale(0%);
-  transform: scale(1.02);
+.bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    grid-auto-rows: minmax(250px, auto);
 }
 
-.galleryOverlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-  padding: 2rem 1.5rem;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.3s ease;
+.bentoCard {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-.galleryItem:hover .galleryOverlay {
-  transform: translateY(0);
-  opacity: 1;
+.span6 { grid-column: span 6; }
+.span4 { grid-column: span 4; }
+.span12 { grid-column: span 12; }
+
+@media (max-width: 768px) {
+    .span6, .span4, .span12 { grid-column: span 12; }
 }
 
-.galleryTag {
-  background: var(--accent-color);
-  color: #000;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+.bentoImageArea {
+    height: 200px;
+    position: relative;
 }
 
-.galleryTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+.span12 .bentoImageArea {
+    height: 350px;
 }
 
-.galleryDesc {
-  font-size: 0.9rem;
-  color: #ccc;
-  line-height: 1.4;
+.imageOverlay {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
+.bentoContent {
+    padding: 1.5rem;
+}
 
-/* ==========================================================================
-   7. Curriculum - "The File Directory"
-   ========================================================================== */
+.bentoCard h4 {
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+    font-weight: 600;
+}
+
+.bentoCard p {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.5;
+}
+
+.bentoIcon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 107, 53, 0.1);
+    color: #ff6b35;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0 0 1.5rem;
+}
+
+.bentoCard .bentoIcon + h4 {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+.bentoCard .bentoIcon + h4 + p {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Curriculum List --- */
 .curriculumSection {
-  padding: 6rem 0;
+    padding: 6rem 0;
+    background: #0a0a0a;
+    border-top: 1px solid #222;
 }
 
-.directoryList {
-  border-top: 1px solid var(--border-color);
+.chapterList {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.directoryItem {
-  border-bottom: 1px solid var(--border-color);
-  background: transparent;
-  transition: background 0.2s ease;
+.chapterGroup {
+    margin-bottom: 4rem;
 }
 
-.directoryItem:hover {
-  background: var(--bg-panel);
+.groupTitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
 }
 
-.directoryHeader {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  cursor: pointer;
-  width: 100%;
+.groupDesc {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+    font-style: italic;
 }
 
-.directoryFolderIcon {
-  margin-right: 1.5rem;
-  color: var(--text-muted);
+.benefitList {
+    list-style: none;
+    padding: 0;
 }
 
-.directoryInfo {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+.benefitList li {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+    color: #ccc;
 }
 
-.chapterTitle {
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  color: var(--text-main);
+.benefitList li::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: #ff6b35;
+    font-size: 0.8rem;
+    top: 0.2rem;
 }
 
-.chapterMeta {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.benefitList li strong {
+    color: #fff;
+    font-weight: 600;
+    margin-right: 0.5rem;
 }
 
-.directoryContent {
-  padding: 0 0 2rem 3.5rem;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.bonusCard {
-  border: 1px dashed var(--accent-color);
-  background: var(--accent-dim);
-}
-
-
-/* ==========================================================================
-   8. Pricing & CTA - "The Checkout"
-   ========================================================================== */
+/* --- Pricing Ticket --- */
 .pricingSection {
-  padding: 8rem 0;
+    padding: 6rem 0;
+    border-top: 1px solid #222;
 }
 
 .pricingTicket {
-  background: var(--text-main); /* Inverted scheme: White ticket on black bg */
-  color: var(--bg-dark);
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 3rem;
-  border-radius: 2px;
-  position: relative;
-  /* Perforated edge effect */
-  background-image: radial-gradient(circle at 0 50%, var(--bg-dark) 10px, transparent 11px),
-                    radial-gradient(circle at 100% 50%, var(--bg-dark) 10px, transparent 11px);
-  background-size: 100% 50px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
+    background: #fff;
+    color: #000;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    position: relative;
+    box-shadow: 0 0 100px rgba(255, 255, 255, 0.1);
 }
+
+.pricingTicket::before, .pricingTicket::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: #050505;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.pricingTicket::before { left: -10px; }
+.pricingTicket::after { right: -10px; }
 
 .ticketHeader {
-  text-align: center;
-  border-bottom: 2px dashed #ddd;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
-.priceTag {
-  font-size: 4rem;
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 1;
+.ticketHeader h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1px;
 }
 
-.priceSub {
-  font-family: var(--font-mono);
-  color: #666;
-  font-size: 0.9rem;
+.valueStack {
+    margin-bottom: 2rem;
 }
 
-.ticketIncludes {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 2rem 0;
+.stackItem {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.ticketIncludes li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-weight: 500;
+.stackIcon {
+    flex-shrink: 0;
+    color: #ff6b35;
 }
 
-.checkIcon {
-  color: #000;
-  margin-right: 1rem;
+.stackText {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.stackText strong {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+}
+
+.stackText span {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.badge {
+    background: #ff6b35;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 
 .buyButton {
-  display: block;
-  width: 100%;
-  padding: 1.2rem;
-  background: #000;
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.2s;
 }
 
 .buyButton:hover {
-  transform: scale(1.02);
-  background: var(--accent-color);
-  color: #000;
+    transform: scale(1.02);
 }
 
-/* Mobile Adjustments */
+.priceTag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+/* --- Transformation Comparison Section --- */
+.comparisonSection {
+    padding: 6rem 0;
+    background: #080808;
+    border-top: 1px solid #222;
+}
+
+.comparisonGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.comparisonCard {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+}
+
+.comparisonHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.comparisonHeader h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.comparisonHeader p {
+    color: #888;
+}
+
+.comparisonImages {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
-  .heroTitle { font-size: 2.5rem; }
-  .pricingTicket { padding: 2rem; }
-  .bentoGrid { display: flex; flex-direction: column; }
+    .comparisonImages {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .arrowDivider {
+        transform: rotate(90deg);
+    }
+}
+
+.imageContainer {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #444;
+}
+
+.imageLabel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 2;
+    border: 1px solid #555;
+}
+
+.labelBefore {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.labelAfter {
+    border-color: #27ae60;
+    color: #27ae60;
+}
+
+.arrowDivider {
+    color: var(--accent-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+.objectionSection {
+    padding: 6rem 0;
+    background: #050505;
+    border-top: 1px solid #222;
+}
+
+.objectionContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.objectionContainer::before {
+    content: '?';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 15rem;
+    color: rgba(255, 255, 255, 0.03);
+    font-weight: 900;
+    transform: rotate(15deg);
+}
+
+.objectionTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.objectionAnswer {
+    font-size: 1.1rem;
+    color: #ccc;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.freeTierList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.freeTierItem {
+    background: #080808;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.freeTierItem h4 {
+    color: var(--accent-color, #ff6b35);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.freeTierItem p {
+    color: #888;
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.highlightGreen {
+    color: #27ae60;
+    font-weight: 700;
+}
+.contactSection {
+    padding: 3rem 0;
+    background: #080808;
+    border-top: 1px solid #222;
+}
+
+.contactContent {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contactTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.contactMethods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.contactMethod {
+    background: #111;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.contactMethod:hover {
+    transform: translateY(-3px);
+    border-color: #444;
+}
+
+.contactLabel {
+    color: #888;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contactContext {
+    color: #666;
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.whatsappButton, .chatbotButton, .emailButton {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.whatsappButton {
+    background: #25D366;
+    color: #fff;
+}
+
+.chatbotButton {
+    background: linear-gradient(135deg, #ff6b35, #ff9f43);
+    color: #fff;
+}
+
+.emailButton {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+/* --- Legal Footer --- */
+.legalFooter {
+    padding: 4rem 0;
+    background: #000;
+    border-top: 1px solid #222;
+    color: #666;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.disclaimerContent {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.footerMeta p {
+    margin-bottom: 0.5rem;
+}
+
+.legalLinks {
+    margin-top: 1rem;
+}
+
+.legalLink {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.legalLink:hover {
+    color: #ff6b35;
+}
+
+.linkSeparator {
+    margin: 0 0.5rem;
+    color: #444;
+}
+
+.disclaimerText p {
+    line-height: 1.6;
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* Secure Payment Helpers */
+.securePaymentText {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.securePaymentIcon {
+    color: #27ae60;
+}
+
+.securePaymentLogo {
+    height: 14px;
+    width: auto;
+    opacity: 0.7;
+}
+
+/* --- Mobile Optimizations for Contact & Footer --- */
+@media (max-width: 768px) {
+    .contactSection {
+        padding: 2rem 0;
+    }
+
+    .contactTitle {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contactMethods {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .contactMethod {
+        padding: 1rem;
+    }
+
+    .contactLabel {
+        font-size: 0.7rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .contactContext {
+        font-size: 0.65rem;
+        margin-top: 0.5rem;
+    }
+
+    .whatsappButton, .emailButton {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    .legalFooter {
+        padding: 2rem 0;
+    }
+
+    .disclaimerContent {
+        gap: 1.5rem;
+    }
+}
+
+/* --- Core Pillars Section --- */
+.coreSkillsSection {
+    padding: 6rem 0;
+    background: #050505;
+    border-top: 1px solid #222;
+}
+
+.skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.skillCard {
+    background: linear-gradient(145deg, #111, #080808);
+    border: 1px solid #222;
+    padding: 2.5rem;
+    border-radius: 20px;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.skillCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.skillIcon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 107, 53, 0.1);
+    color: var(--accent-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.skillCard h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.skillCard p {
+    font-size: 0.95rem;
+    color: #888;
+    line-height: 1.6;
+}
+
+/* --- Reason Box in Pricing --- */
+.reasonBox {
+    background: #151515;
+    border: 1px dashed #444;
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin: 1.5rem 2rem;
+    text-align: left;
+}
+
+.reasonBox h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reasonBox p {
+    font-size: 0.9rem;
+    color: #888;
+    line-height: 1.5;
+    margin: 0;
+    font-style: italic;
 }
