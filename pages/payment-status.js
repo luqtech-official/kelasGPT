@@ -135,7 +135,7 @@ export default function PaymentStatusPage() {
     <div className={styles.checkoutContainer}>
       <Head>
         <title>{getStatusTitle()} - KelasGPT</title>
-        <meta name="description" content="Your payment status for KelasGPT course" />
+        <meta name="description" content="Your payment status for KelasGPT eBook" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -235,7 +235,7 @@ export default function PaymentStatusPage() {
                           margin: '0 0 0.25rem 0',
                           fontWeight: '500'
                         }}>
-                          Check your email for course access
+                          Check your email for ebook download link
                         </p>
                         <p style={{
                           fontSize: '0.8rem',
@@ -378,14 +378,14 @@ export default function PaymentStatusPage() {
                     margin: '0 0 0.5rem 0',
                     lineHeight: '1.4'
                   }}>
-                    If You Want to Jump into the course Right Away..
+                    If You Want to Download the eBook Right Away..
                   </p>
                   <p style={{
                     fontSize: '0.875rem',
                     color: '#6b7280',
                     margin: '0'
                   }}>
-                    Click <strong style={{color: '#374151'}}>Access Course</strong> Below
+                    Click <strong style={{color: '#374151'}}>Download eBook</strong> Below
                   </p>
                 </div>
               )}
@@ -409,7 +409,7 @@ export default function PaymentStatusPage() {
                     height: '44px',
                     boxSizing: 'border-box'
                   }}>
-                    Access Course
+                    Download eBook
                   </Link>
                 )}
                 
@@ -501,14 +501,14 @@ export default function PaymentStatusPage() {
                   }}>
                     Email:
                   </div>
-                  <a href="mailto:support@kelasgpt.com" style={{
+                  <a href="mailto:Luqtech.official@gmail.com" style={{
                     color: '#6b7280',
                     textDecoration: 'none',
                     fontSize: '0.875rem',
                     fontWeight: '500',
                     transition: 'color 0.15s ease'
                   }}>
-                    support@kelasgpt.com
+                    Luqtech.official@gmail.com
                   </a>
                 </div>
                 <div style={{textAlign: 'center'}}>
@@ -520,14 +520,14 @@ export default function PaymentStatusPage() {
                   }}>
                     WhatsApp:
                   </div>
-                  <a href="https://wa.me/60123456789" style={{
+                  <a href="https://wa.me/601123919067" style={{
                     color: '#059669',
                     textDecoration: 'underline',
                     fontSize: '0.875rem',
                     fontWeight: '500',
                     transition: 'color 0.15s ease'
                   }}>
-                    +012-345 6789
+                    +011-2391 9067
                   </a>
                 </div>
               </div>

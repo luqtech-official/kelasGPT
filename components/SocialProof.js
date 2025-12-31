@@ -13,31 +13,45 @@ export default function SocialProof() {
 
   // This effect runs once when the component mounts to fetch the notification data.
   useEffect(() => {
-    fetch(
-      "https://cdn.jsdelivr.net/gh/luqtech-official/kelasgpt-public-resources@latest/data/social_noti.json",
-      { cache: 'no-store' }
-    )
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchNotifications = async () => {
+      const primaryUrl = "https://raw.githubusercontent.com/luqtech-official/kelasgpt-public-resources/main/data/social_noti.json";
+      const fallbackUrl = "https://cdn.jsdelivr.net/gh/luqtech-official/kelasgpt-public-resources@main/data/social_noti.json";
+
+      try {
+        // Try fetching from the primary source (GitHub Raw)
+        const res = await fetch(primaryUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Primary fetch failed');
+        const data = await res.json();
         setNotifications(data);
-      })
-      .catch((error) => {
-        // Log an error if the notification data fails to load.
-        console.error('Failed to load social notifications:', error);
-      });
+      } catch (err) {
+        // If primary fails, try the fallback (jsDelivr)
+        console.warn('Primary source failed, trying fallback...', err);
+        try {
+          const resFallback = await fetch(fallbackUrl, { cache: 'no-store' });
+          if (!resFallback.ok) throw new Error('Fallback fetch failed');
+          const dataFallback = await resFallback.json();
+          setNotifications(dataFallback);
+        } catch (fallbackErr) {
+          console.error('Failed to load social notifications from both sources:', fallbackErr);
+        }
+      }
+    };
+
+    fetchNotifications();
   }, []);
 
   // This effect sets up the interval to display notifications sequentially.
   // It runs only when the `notifications` array has been populated.
   useEffect(() => {
     if (notifications.length > 0) {
+      let interval;
+
       const showNextNotification = () => {
         // Set the notification to be displayed using the current index from the ref.
         setCurrentNotification(notifications[currentIndexRef.current]);
         setIsVisible(true);
         
         // Increment the index for the next call.
-        // The modulo operator (%) ensures the index loops back to 0 after the last notification.
         currentIndexRef.current = (currentIndexRef.current + 1) % notifications.length;
         
         // Set a timeout to hide the notification after it has been visible for 5 seconds.
@@ -46,15 +60,18 @@ export default function SocialProof() {
         }, 5000); // Hide after 5 seconds
       };
 
-      // Show the first notification immediately when the component is ready.
-      showNextNotification();
+      // Add an initial delay of 5 seconds before showing the first notification
+      const initialDelay = setTimeout(() => {
+        showNextNotification();
+        // Set up an interval to show the next notification every 10 seconds.
+        interval = setInterval(showNextNotification, 10000);
+      }, 5000);
 
-      // Set up an interval to show the next notification every 10 seconds.
-      const interval = setInterval(showNextNotification, 10000);
-
-      // The cleanup function clears the interval when the component unmounts
-      // to prevent memory leaks.
-      return () => clearInterval(interval);
+      // The cleanup function clears the timeouts/intervals when the component unmounts
+      return () => {
+        clearTimeout(initialDelay);
+        if (interval) clearInterval(interval);
+      };
     }
   }, [notifications]);
 

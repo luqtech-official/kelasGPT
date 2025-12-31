@@ -33,6 +33,17 @@ export default function Customers() {
   const [resendingEmail, setResendingEmail] = useState(null);
   const [resendModal, setResendModal] = useState(null);
   const [exportLoading, setExportLoading] = useState(false);
+  const [expandedRows, setExpandedRows] = useState(new Set());
+
+  const toggleRow = (id) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedRows(newExpanded);
+  };
 
   const fetchCSRFToken = useCallback(async () => {
     try {
@@ -636,7 +647,8 @@ export default function Customers() {
                   {customers.length > 0 ? customers.map((customer) => (
                     <tr 
                       key={customer.customer_id} 
-                      className={styles.tableBodyRow}
+                      className={`${styles.tableBodyRow} ${expandedRows.has(customer.customer_id) ? styles.expanded : ''}`}
+                      onClick={() => toggleRow(customer.customer_id)}
                       style={{ 
                         position: 'relative', 
                         zIndex: activeDropdown === customer.customer_id ? 50 : 'auto' 
@@ -644,8 +656,10 @@ export default function Customers() {
                     >
                       {/* Customer Name & Email */}
                       <td className={styles.tableBodyCell} data-label="Customer">
-                        <div className={styles.customerName}>{customer.full_name}</div>
-                        <div className={styles.customerEmail}>{customer.email_address}</div>
+                        <div>
+                          <div className={styles.customerName}>{customer.full_name}</div>
+                          <div className={styles.customerEmail}>{customer.email_address}</div>
+                        </div>
                       </td>
                       
                       {/* Payment Status */}
@@ -690,7 +704,7 @@ export default function Customers() {
                       
                       {/* Contact (Phone) */}
                       <td className={styles.tableBodyCell} data-label="Contact">
-                        <div className={styles.phoneNumber} style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                        <div className={styles.phoneNumber} style={{display:'flex', flexDirection: 'column', alignItems:'flex-start', gap:'4px'}}>
                           <span>{customer.phone_number}</span>
                           {customer.phone_number && (
                             <a 
@@ -700,7 +714,7 @@ export default function Customers() {
                               style={{textDecoration:'none', fontSize:'10px', background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color:'white', padding:'2px 6px', borderRadius:'4px', display:'inline-flex', alignItems:'center', fontWeight:'bold', border: '1px solid rgba(22, 163, 74, 0.2)'}}
                               title="Chat on WhatsApp"
                             >
-                              WA ↗
+                              WhatsApp ↗
                             </a>
                           )}
                         </div>

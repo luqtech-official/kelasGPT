@@ -182,6 +182,98 @@ export default function Settings() {
           </div>
         </div>
 
+        {/* Content Management Card */}
+        <div className={styles.statCard} style={{ cursor: 'default', height: 'auto', display: 'block' }}>
+          <div className={styles.statHeader} style={{ marginBottom: '16px' }}>
+            <div className={styles.statTitle} style={{ fontSize: '16px', fontWeight: '600', color: '#f8fafc' }}>
+              Content Management
+            </div>
+            <div className={styles.statIcon} style={{ background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7' }}>
+              📝
+            </div>
+          </div>
+          
+          <div style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.6', marginBottom: '24px' }}>
+            <p style={{ marginBottom: '12px' }}>
+              <strong>Social Proof Notifications</strong><br/>
+              Manually trigger the GitHub workflow to update the social notification data (social_noti.json) from the latest sales.
+            </p>
+          </div>
+
+          <div style={{ 
+            background: 'rgba(15, 23, 42, 0.4)', 
+            borderRadius: '12px', 
+            padding: '20px', 
+            border: '1px solid rgba(148, 163, 184, 0.1)'
+          }}>
+             <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '16px'
+            }}>
+              <span style={{ color: '#94a3b8', fontSize: '13px' }}>
+                This action dispatches the 'social-noti.yml' workflow on the 'main' branch.
+              </span>
+
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <a 
+                  href="https://github.com/luqtech-official/kelasgpt-public-resources/actions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.refreshBtn}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    cursor: 'pointer',
+                    color: 'white',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  <span>👁️</span> View Status
+                </a>
+
+                <button 
+                  onClick={async () => {
+                    try {
+                      setLoading(true);
+                      const response = await fetch('/api/admin/trigger-workflow', { method: 'POST' });
+                      const result = await response.json();
+                      setMessage(result.message);
+                      setTimeout(() => setMessage(''), 5000);
+                    } catch (error) {
+                      console.error('Error triggering workflow:', error);
+                      setMessage('Failed to trigger workflow.');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  disabled={loading}
+                  className={styles.refreshBtn}
+                  style={{
+                    background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                    cursor: 'pointer',
+                    opacity: loading ? 0.7 : 1,
+                    border: 'none',
+                    color: 'white',
+                    boxShadow: '0 4px 12px rgba(139, 92, 246, 0.3)'
+                  }}
+                >
+                  {loading ? 'Triggering...' : (
+                    <>
+                      <span>🚀</span> Update Social Notifications
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </AdminLayout>
   );

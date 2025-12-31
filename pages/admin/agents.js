@@ -6,6 +6,7 @@ export default function AgentsManagement() {
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState('management');
   
   // Modals
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -19,6 +20,17 @@ export default function AgentsManagement() {
   // Payout Manager State
   const [payoutManager, setPayoutManager] = useState(null); // { agent: agentObj, orders: [], selectedIds: [], loading: false }
   const [payoutConfirmation, setPayoutConfirmation] = useState(null); // { type: 'settle' | 'revert', count: number, amount: number }
+  const [expandedRows, setExpandedRows] = useState(new Set());
+
+  const toggleRow = (id) => {
+    const newExpanded = new Set(expandedRows);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedRows(newExpanded);
+  };
 
   // Form State
   const [formData, setFormData] = useState({
@@ -33,6 +45,11 @@ export default function AgentsManagement() {
     bank_account_number: '',
     bank_holder_name: ''
   });
+
+  // Report State
+  const [reportSort, setReportSort] = useState('agent_name_asc');
+  const [reportPage, setReportPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
 
   const fetchAgents = useCallback(async () => {
     try {
@@ -259,6 +276,39 @@ export default function AgentsManagement() {
     (agent.agent_name && agent.agent_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
+  // Report Logic
+  const getSortedReportAgents = () => {
+    let sorted = [...filteredAgents];
+    switch(reportSort) {
+        case 'agent_name_asc':
+            sorted.sort((a, b) => (a.agent_name || '').localeCompare(b.agent_name || ''));
+            break;
+        case 'total_comm_desc':
+            sorted.sort((a, b) => (Number(b.total_comm) || 0) - (Number(a.total_comm) || 0));
+            break;
+        case 'pending_comm_desc':
+            sorted.sort((a, b) => (Number(b.pending_settlement) || 0) - (Number(a.pending_settlement) || 0));
+            break;
+        default:
+            break;
+    }
+    return sorted;
+  };
+  
+  const sortedReportData = getSortedReportAgents();
+  const totalReportPages = Math.ceil(sortedReportData.length / ITEMS_PER_PAGE);
+  const paginatedReportData = sortedReportData.slice(
+    (reportPage - 1) * ITEMS_PER_PAGE, 
+    reportPage * ITEMS_PER_PAGE
+  );
+
+  // Global Totals (from full 'agents' list as requested)
+  const globalStats = agents.reduce((acc, curr) => ({
+      sales: acc.sales + (Number(curr.total_sales_count) || 0),
+      pending: acc.pending + (Number(curr.pending_settlement) || 0),
+      comm: acc.comm + (Number(curr.total_comm) || 0)
+  }), { sales: 0, pending: 0, comm: 0 });
+
   return (
     <AdminLayout title="Agent Management">
       <div className={styles.newDashboardContainer}>
@@ -282,194 +332,344 @@ export default function AgentsManagement() {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className={styles.cardsSection}>
-          <div className={styles.cardsGrid} style={{gridTemplateColumns: 'repeat(3, 1fr)'}}>
-            {/* Pending Payouts */}
-            <div className={styles.newMetricCard}>
-              <div className={styles.cardHeader}>
-                <h3 className={styles.cardTitle}>Pending Payouts</h3>
-                <span className={styles.cardIcon}>💰</span>
-              </div>
-              <div className={styles.cardValue} style={{color: '#fbbf24'}}>RM {totalPendingPayout.toFixed(2)}</div>
-              <div className={styles.cardSubtext}>
-                Amount waiting to be settled
-              </div>
-            </div>
-
-            {/* Total Paid */}
-            <div className={styles.newMetricCard}>
-              <div className={styles.cardHeader}>
-                <h3 className={styles.cardTitle}>Total Paid Out</h3>
-                <span className={styles.cardIcon}>✅</span>
-              </div>
-              <div className={styles.cardValue} style={{color: '#34d399'}}>RM {totalPaid.toFixed(2)}</div>
-              <div className={styles.cardSubtext}>
-                Lifetime commissions paid
-              </div>
-            </div>
-
-            {/* Total Sales */}
-            <div className={styles.newMetricCard}>
-              <div className={styles.cardHeader}>
-                <h3 className={styles.cardTitle}>Total Agent Sales</h3>
-                <span className={styles.cardIcon}>📈</span>
-              </div>
-              <div className={styles.cardValue}>{totalSales}</div>
-              <div className={styles.cardSubtext}>
-                Successful transactions via agents
-              </div>
-            </div>
-          </div>
+        {/* TABS */}
+        <div style={{padding: '0 20px 20px 20px', display: 'flex', gap: '12px'}}>
+          <button 
+            onClick={() => setActiveTab('management')}
+            style={{
+              background: activeTab === 'management' ? '#3b82f6' : 'transparent',
+              color: activeTab === 'management' ? 'white' : '#94a3b8',
+              border: activeTab === 'management' ? 'none' : '1px solid rgba(148, 163, 184, 0.2)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+          >
+            Agent Management
+          </button>
+          <button 
+            onClick={() => setActiveTab('report')}
+            style={{
+              background: activeTab === 'report' ? '#3b82f6' : 'transparent',
+              color: activeTab === 'report' ? 'white' : '#94a3b8',
+              border: activeTab === 'report' ? 'none' : '1px solid rgba(148, 163, 184, 0.2)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+          >
+            Sales Report
+          </button>
         </div>
 
-        {/* Agents Table */}
-        <div className={styles.tableSection}>
-          <div className={styles.tableContainer}>
-            <div className={styles.tableHeader} style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-              <div>
-                <h3 className={styles.tableTitle}>All Agents</h3>
-                <p className={styles.tableSubtitle}>View performance and manage accounts</p>
+        {activeTab === 'management' && (
+          <>
+            {/* Stats Cards */}
+            <div className={styles.cardsSection}>
+              <div className={styles.cardsGrid} style={{gridTemplateColumns: 'repeat(3, 1fr)'}}>
+                {/* Pending Payouts */}
+                <div className={styles.newMetricCard}>
+                  <div className={styles.cardHeader}>
+                    <h3 className={styles.cardTitle}>Pending Payouts</h3>
+                    <span className={styles.cardIcon}>💰</span>
+                  </div>
+                  <div className={styles.cardValue} style={{color: '#fbbf24'}}>RM {totalPendingPayout.toFixed(2)}</div>
+                  <div className={styles.cardSubtext}>
+                    Amount waiting to be settled
+                  </div>
+                </div>
+
+                {/* Total Paid */}
+                <div className={styles.newMetricCard}>
+                  <div className={styles.cardHeader}>
+                    <h3 className={styles.cardTitle}>Total Paid Out</h3>
+                    <span className={styles.cardIcon}>✅</span>
+                  </div>
+                  <div className={styles.cardValue} style={{color: '#34d399'}}>RM {totalPaid.toFixed(2)}</div>
+                  <div className={styles.cardSubtext}>
+                    Lifetime commissions paid
+                  </div>
+                </div>
+
+                {/* Total Sales */}
+                <div className={styles.newMetricCard}>
+                  <div className={styles.cardHeader}>
+                    <h3 className={styles.cardTitle}>Total Agent Sales</h3>
+                    <span className={styles.cardIcon}>📈</span>
+                  </div>
+                  <div className={styles.cardValue}>{totalSales}</div>
+                  <div className={styles.cardSubtext}>
+                    Successful transactions via agents
+                  </div>
+                </div>
               </div>
-              <input 
-                type="text" 
-                placeholder="Search agents..." 
-                className={styles.searchInput}
-                style={{maxWidth: '250px', background: 'rgba(30, 41, 59, 0.5)', color: 'white', border: '1px solid rgba(255,255,255,0.1)'}}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
             </div>
 
-            <div className={styles.tableWrapper}>
-              <table className={styles.newTable}>
-                <thead>
-                  <tr className={styles.tableHeadRow}>
-                    <th className={styles.tableHeadCell}>Agent Details</th>
-                    <th className={styles.tableHeadCell}>Performance</th>
-                    <th className={styles.tableHeadCell}>Commission</th>
-                    <th className={styles.tableHeadCell}>Status</th>
-                    <th className={styles.tableHeadCell}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAgents.map(agent => (
-                    <tr key={agent.agent_id} className={styles.tableBodyRow}>
-                      <td className={styles.tableBodyCell} data-label="Agent">
-                        <div className={styles.customerInfo}>
-                          <span className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_name || 'No Name'}</span>
-                          {agent.phone && (
-                            <div style={{display:'flex', alignItems:'center', gap:'6px', marginTop:'2px', marginBottom:'2px'}}>
-                                <span className={styles.customerEmail} style={{color: '#94a3b8'}}>{agent.phone}</span>
-                                <a 
-                                    href={`https://wa.me/${agent.phone.replace(/[^0-9]/g, '').replace(/^01/, '601')}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    style={{textDecoration:'none', fontSize:'10px', background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color:'white', padding:'2px 6px', borderRadius:'4px', display:'inline-flex', alignItems:'center', border: '1px solid rgba(22, 163, 74, 0.2)'}}
-                                    title="Chat on WhatsApp"
-                                >
-                                    WhatsApp ↗
-                                </a>
-                            </div>
-                          )}
-                          <span className={styles.customerEmail}>ID (Secret): {agent.agent_id}</span>
-                          <span className={styles.customerEmail} style={{color: '#60a5fa', fontWeight: 'bold'}}>Code (Public): {agent.discount_code}</span>
-                        </div>
-                      </td>
-                      <td className={styles.tableBodyCell} data-label="Sales">
-                        <div className={styles.statusInfo}>
-                          <span className={styles.statusBadge} style={{background: 'rgba(52, 211, 153, 0.2)', color: '#34d399'}}>
-                            {agent.total_sales_count} Sales
-                          </span>
-                          <span className={styles.statusBadge} style={{background: 'rgba(251, 191, 36, 0.2)', color: '#fbbf24'}}>
-                            {agent.pending_sales_count} Pending
-                          </span>
-                        </div>
-                      </td>
-                      <td className={styles.tableBodyCell} data-label="Commission">
-                        <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
-                          <div style={{fontSize:'14px', fontWeight:'700', color: '#fbbf24'}}>
-                            RM {agent.pending_settlement}
-                            <span style={{fontSize:'10px', color:'#94a3b8', fontWeight:'400', marginLeft:'4px'}}>pending</span>
-                          </div>
-                          <div style={{fontSize:'12px', color: '#94a3b8'}}>
-                            RM {agent.total_comm} lifetime
-                          </div>
-                          <div style={{fontSize:'11px', color: '#64748b'}}>
-                            Rate: RM{agent.comm_per_sale}/sale
-                          </div>
-                        </div>
-                      </td>
-                      <td className={styles.tableBodyCell} data-label="Status">
-                        <button 
-                          onClick={() => handleToggleStatus(agent)}
-                          disabled={processingId === agent.agent_id}
-                          className={`${styles.statusBadge} ${agent.is_active ? styles.paid : styles.failed}`}
-                          style={{
-                              cursor: processingId === agent.agent_id ? 'wait' : 'pointer', 
-                              border: 'none', 
-                              width: '100%',
-                              opacity: processingId === agent.agent_id ? 0.7 : 1
-                          }}
-                          title={`Click to ${agent.is_active ? 'deactivate' : 'activate'}`}
+            {/* Agents Table */}
+            <div className={styles.tableSection}>
+              <div className={styles.tableContainer}>
+                <div className={styles.tableHeader} style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                  <div>
+                    <h3 className={styles.tableTitle}>All Agents</h3>
+                    <p className={styles.tableSubtitle}>View performance and manage accounts</p>
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Search agents..." 
+                    className={styles.searchInput}
+                    style={{maxWidth: '250px', background: 'rgba(30, 41, 59, 0.5)', color: 'white', border: '1px solid rgba(255,255,255,0.1)'}}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.tableWrapper}>
+                  <table className={styles.dataTable}>
+                    <thead className={styles.tableHead}>
+                      <tr>
+                        <th className={styles.tableHeadCell}>Agent Details</th>
+                        <th className={styles.tableHeadCell}>Performance</th>
+                        <th className={styles.tableHeadCell}>Commission</th>
+                        <th className={styles.tableHeadCell}>Status</th>
+                        <th className={styles.tableHeadCell}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAgents.map(agent => (
+                        <tr 
+                          key={agent.agent_id} 
+                          className={`${styles.tableBodyRow} ${expandedRows.has(agent.agent_id) ? styles.expanded : ''}`}
+                          onClick={() => toggleRow(agent.agent_id)}
                         >
-                          {processingId === agent.agent_id 
-                            ? 'Updating...' 
-                            : (agent.is_active ? 'Active' : 'Inactive')}
-                        </button>
-                      </td>
-                      <td className={styles.tableBodyCell} data-label="Actions">
-                        <div style={{display:'flex', gap:'8px'}}>
-                          <button 
-                            onClick={() => openPayoutManager(agent)}
-                            className={styles.exportButton}
-                            style={{
-                              background: 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)', 
-                              padding: '6px 12px', 
-                              fontSize: '11px',
-                              boxShadow: '0 4px 12px rgba(29, 78, 216, 0.3)'
-                            }}
-                          >
-                            Manage Payouts
-                          </button>
-                          <button   
-                            onClick={() => openEditModal(agent)}
-                            className={styles.refreshBtn}
-                            style={{
-                              background: 'rgba(255,255,255,0.1)', 
-                              border: '1px solid rgba(255,255,255,0.2)', 
-                              color: 'white', 
-                              padding: '6px 12px', 
-                              fontSize: '11px',
-                              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-                            }}
-                          >
-                            Edit
-                          </button>
-                          <button 
-                            onClick={() => setDeletingAgent(agent)}
-                            className={styles.refreshBtn}
-                            style={{
-                              background: 'rgba(239, 68, 68, 0.2)', 
-                              border: '1px solid rgba(239, 68, 68, 0.4)', 
-                              color: '#fca5a5', 
-                              padding: '6px 12px', 
-                              fontSize: '11px',
-                              boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
-                            }}
-                            title="Delete Agent"
-                          >
-                            🗑️
-                          </button>
-                        </div>
-                      </td>
+                          <td className={styles.tableBodyCell} data-label="Agent">
+                            <div className={styles.customerInfo}>
+                              <div className={styles.customerName} style={{fontSize: '14px'}}>{agent.agent_name || 'No Name'}</div>
+                              <div className={styles.expandedOnly}>
+                                {agent.phone && (
+                                  <div style={{display:'flex', alignItems:'center', gap:'6px', marginTop:'2px', marginBottom:'2px'}}>
+                                      <span className={styles.customerEmail} style={{color: '#94a3b8'}}>{agent.phone}</span>
+                                      <a 
+                                          href={`https://wa.me/${agent.phone.replace(/[^0-9]/g, '').replace(/^01/, '601')}`} 
+                                          target="_blank" 
+                                          rel="noopener noreferrer"
+                                          style={{textDecoration:'none', fontSize:'10px', background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)', color:'white', padding:'2px 6px', borderRadius:'4px', display:'inline-flex', alignItems:'center', border: '1px solid rgba(22, 163, 74, 0.2)'}}
+                                          title="Chat on WhatsApp"
+                                      >
+                                          WhatsApp ↗
+                                      </a>
+                                  </div>
+                                )}
+                              </div>
+                              <span className={`${styles.customerEmail} ${styles.expandedOnly}`}>ID (Secret): {agent.agent_id}</span>
+                              <span className={`${styles.customerEmail} ${styles.expandedOnly}`} style={{color: '#60a5fa', fontWeight: 'bold'}}>Code (Public): {agent.discount_code}</span>
+                            </div>
+                          </td>
+                          <td className={styles.tableBodyCell} data-label="Sales">
+                            <div className={styles.statusInfo}>
+                              <span className={styles.statusBadge} style={{background: 'rgba(52, 211, 153, 0.2)', color: '#34d399'}}>
+                                {agent.total_sales_count} Sales
+                              </span>
+                              <span className={styles.statusBadge} style={{background: 'rgba(251, 191, 36, 0.2)', color: '#fbbf24'}}>
+                                {agent.pending_sales_count} Pending
+                              </span>
+                            </div>
+                          </td>
+                          <td className={styles.tableBodyCell} data-label="Commission">
+                            <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                              <div style={{fontSize:'14px', fontWeight:'700', color: '#fbbf24'}}>
+                                RM {agent.pending_settlement}
+                                <span style={{fontSize:'10px', color:'#94a3b8', fontWeight:'400', marginLeft:'4px'}}>pending</span>
+                              </div>
+                              <div style={{fontSize:'12px', color: '#94a3b8'}}>
+                                RM {agent.total_comm} lifetime
+                              </div>
+                            </div>
+                          </td>
+                          <td className={styles.tableBodyCell} data-label="Status">
+                            <button 
+                              onClick={() => handleToggleStatus(agent)}
+                              disabled={processingId === agent.agent_id}
+                              className={`${styles.statusBadge} ${agent.is_active ? styles.paid : styles.failed}`}
+                              style={{
+                                  cursor: processingId === agent.agent_id ? 'wait' : 'pointer', 
+                                  border: 'none', 
+                                  width: 'auto',
+                                  opacity: processingId === agent.agent_id ? 0.7 : 1
+                              }}
+                              title={`Click to ${agent.is_active ? 'deactivate' : 'activate'}`}
+                            >
+                              {processingId === agent.agent_id 
+                                ? 'Updating...' 
+                                : (agent.is_active ? 'Active' : 'Inactive')}
+                            </button>
+                          </td>
+                          <td className={styles.tableBodyCell} data-label="Actions">
+                            <div style={{display:'flex', gap:'8px'}}>
+                              <button 
+                                onClick={() => openPayoutManager(agent)}
+                                className={styles.exportButton}
+                                style={{
+                                  background: 'linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%)', 
+                                  padding: '6px 10px', 
+                                  fontSize: '11px',
+                                  boxShadow: '0 4px 12px rgba(29, 78, 216, 0.3)'
+                                }}
+                              >
+                                Payouts
+                              </button>
+                              <button   
+                                onClick={() => openEditModal(agent)}
+                                className={styles.refreshBtn}
+                                style={{
+                                  background: 'rgba(255,255,255,0.1)', 
+                                  border: '1px solid rgba(255,255,255,0.2)', 
+                                  color: 'white', 
+                                  padding: '6px 10px', 
+                                  fontSize: '11px',
+                                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button 
+                                onClick={() => setDeletingAgent(agent)}
+                                className={styles.refreshBtn}
+                                style={{
+                                  background: 'rgba(239, 68, 68, 0.2)', 
+                                  border: '1px solid rgba(239, 68, 68, 0.4)', 
+                                  color: '#fca5a5', 
+                                  padding: '6px 10px', 
+                                  fontSize: '11px',
+                                  boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+                                }}
+                                title="Delete Agent"
+                              >
+                                🗑️
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === 'report' && (
+          <div className={styles.tableSection}>
+            <div className={styles.tableContainer}>
+              <div className={styles.tableHeader} style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                <div>
+                    <h3 className={styles.tableTitle}>Agent Sales Report</h3>
+                    <p className={styles.tableSubtitle}>Performance summary for all agents</p>
+                </div>
+                <div style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                    <span style={{color:'#94a3b8', fontSize:'13px'}}>Sort by:</span>
+                    <select 
+                        value={reportSort} 
+                        onChange={(e) => { setReportSort(e.target.value); setReportPage(1); }}
+                        style={{
+                            background: '#0f172a', 
+                            color: 'white', 
+                            border: '1px solid #334155', 
+                            borderRadius: '6px', 
+                            padding: '6px 10px',
+                            fontSize: '13px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <option value="agent_name_asc">Agent Name (Asc)</option>
+                        <option value="total_comm_desc">Total Commission (Desc)</option>
+                        <option value="pending_comm_desc">Pending Commission (Desc)</option>
+                    </select>
+                </div>
+              </div>
+              <div className={styles.tableWrapper} style={{overflowX: 'auto'}}>
+                <table className={`${styles.dataTable} ${styles.noMobileCard}`}>
+                  <thead className={styles.tableHead}>
+                    <tr>
+                      <th className={styles.tableHeadCell}>Agent Name</th>
+                      <th className={styles.tableHeadCell}>Agent ID</th>
+                      <th className={styles.tableHeadCell} style={{textAlign: 'right'}}>Total Sales</th>
+                      <th className={styles.tableHeadCell} style={{textAlign: 'right'}}>Pending Comm. (RM)</th>
+                      <th className={styles.tableHeadCell} style={{textAlign: 'right'}}>Total Comm. (RM)</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {paginatedReportData.map(agent => (
+                      <tr key={agent.agent_id} className={styles.tableBodyRow}>
+                        <td className={styles.tableBodyCell} style={{fontWeight: '600', color: '#f1f5f9'}}>{agent.agent_name || 'No Name'}</td>
+                        <td className={styles.tableBodyCell} style={{fontFamily: 'monospace', color: '#94a3b8'}}>{agent.agent_id}</td>
+                        <td className={styles.tableBodyCell} style={{textAlign: 'right', color: '#f1f5f9'}}>{agent.total_sales_count}</td>
+                        <td className={styles.tableBodyCell} style={{textAlign: 'right', color: '#fbbf24', fontWeight: '600'}}>{agent.pending_settlement.toFixed(2)}</td>
+                        <td className={styles.tableBodyCell} style={{textAlign: 'right', color: '#34d399', fontWeight: '600'}}>{agent.total_comm.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  {/* Footer with Totals */}
+                  <tfoot style={{background: '#1e293b', borderTop: '2px solid #334155'}}>
+                    <tr>
+                        <td colSpan={2} style={{padding: '16px', textAlign: 'right', fontWeight: 'bold', color: '#94a3b8', textTransform:'uppercase', letterSpacing:'1px'}}>
+                            Grand Total (All Records)
+                        </td>
+                        <td style={{padding: '16px', textAlign: 'right', fontWeight: 'bold', color: 'white', fontSize:'15px'}}>
+                            {globalStats.sales}
+                        </td>
+                        <td style={{padding: '16px', textAlign: 'right', fontWeight: 'bold', color: '#fbbf24', fontSize:'15px'}}>
+                            {globalStats.pending.toFixed(2)}
+                        </td>
+                        <td style={{padding: '16px', textAlign: 'right', fontWeight: 'bold', color: '#34d399', fontSize:'15px'}}>
+                            {globalStats.comm.toFixed(2)}
+                        </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+              {/* Pagination Controls */}
+              {totalReportPages > 1 && (
+                  <div style={{display:'flex', justifyContent:'center', alignItems:'center', gap:'12px', padding:'16px', borderTop:'1px solid #334155'}}>
+                      <button 
+                        onClick={() => setReportPage(p => Math.max(1, p - 1))}
+                        disabled={reportPage === 1}
+                        style={{
+                            background: reportPage === 1 ? 'transparent' : '#334155',
+                            color: reportPage === 1 ? '#64748b' : 'white',
+                            border: '1px solid #475569',
+                            padding: '6px 12px',
+                            borderRadius: '6px',
+                            cursor: reportPage === 1 ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                          Previous
+                      </button>
+                      <span style={{color:'#94a3b8', fontSize:'13px'}}>
+                          Page {reportPage} of {totalReportPages}
+                      </span>
+                      <button 
+                        onClick={() => setReportPage(p => Math.min(totalReportPages, p + 1))}
+                        disabled={reportPage === totalReportPages}
+                        style={{
+                            background: reportPage === totalReportPages ? 'transparent' : '#334155',
+                            color: reportPage === totalReportPages ? '#64748b' : 'white',
+                            border: '1px solid #475569',
+                            padding: '6px 12px',
+                            borderRadius: '6px',
+                            cursor: reportPage === totalReportPages ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                          Next
+                      </button>
+                  </div>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* CREATE MODAL */}
@@ -665,8 +865,6 @@ export default function AgentsManagement() {
                                         .filter(o => payoutManager.showHistory ? o.payout_status === 'paid' : o.payout_status === 'unpaid')
                                         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                                         .map(order => {
-                                            const daysOld = Math.floor((new Date() - new Date(order.created_at)) / (1000 * 60 * 60 * 24));
-                                            const isRecent = daysOld < 7;
                                             const customerName = order.customers?.full_name || 'Unknown Customer';
                                             
                                             return (
@@ -680,11 +878,6 @@ export default function AgentsManagement() {
                                                     </td>
                                                     <td style={{padding:'8px', color:'#cbd5e1'}}>
                                                         {new Date(order.created_at).toLocaleDateString()}
-                                                        {!payoutManager.showHistory && isRecent && (
-                                                            <span title="Less than 7 days old (Grace Period)" style={{marginLeft:'6px', fontSize:'10px', background:'#fbbf24', color:'black', padding:'1px 4px', borderRadius:'4px', cursor:'help'}}>
-                                                                ⚠️ {daysOld}d
-                                                            </span>
-                                                        )}
                                                     </td>
                                                     <td style={{padding:'8px'}}>
                                                         <div style={{fontWeight:'500', color:'white', fontSize:'13px'}}>{customerName}</div>
