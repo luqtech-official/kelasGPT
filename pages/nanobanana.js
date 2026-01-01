@@ -9,6 +9,13 @@ import { getProductSettings } from "../lib/settings";
 import { getBlurDataURL } from "../lib/imagekit";
 import { trackViewContent } from "../lib/facebook-pixel";
 
+// --- Swiper Imports ---
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 // --- Icons ---
 const CheckIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -49,6 +56,70 @@ const DollarIcon = (props) => (
     </svg>
 );
 
+const TripodSlider = () => {
+  const images = [
+    'nanobanana-tripod-after-1',
+    'nanobanana-tripod-after-2',
+    'nanobanana-tripod-after-3',
+    'nanobanana-tripod-after-4',
+  ];
+
+  return (
+    <div className={styles.comparisonCard} style={{marginTop: '4rem'}}>
+        <div className={styles.comparisonHeader}>
+            <h3>Creative Iterations: Product Showcase</h3>
+            <p>&quot;Satu produk, pelbagai mood. Lihat bagaimana satu gambar tripod biasa boleh diubah suai menjadi pelbagai gaya visual komersial.&quot;</p>
+        </div>
+        <div className={styles.comparisonTwoCol}>
+            {/* Before Image */}
+            <div className={styles.imageContainer}>
+                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: RAW PHOTO</div>
+                <Image
+                    src="nanobanana-tripod-before"
+                    alt="Original Tripod"
+                    width={500}
+                    height={500}
+                    style={{width: '100%', height: 'auto', display: 'block'}}
+                />
+            </div>
+
+            {/* Swiper Slider */}
+            <div style={{ width: '100%', overflow: 'hidden', borderRadius: '12px', minHeight: '100%' }}>
+                <Swiper
+                    modules={[Navigation, Pagination, Autoplay]}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true }}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
+                    style={{ 
+                        '--swiper-theme-color': '#ff6b35', 
+                        '--swiper-navigation-size': '20px',
+                        paddingBottom: '30px',
+                        height: '100%'
+                    }}
+                >
+                    {images.map((img, index) => (
+                         <SwiperSlide key={index}>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>VARIATION {index + 1}</div>
+                                <Image
+                                    src={img}
+                                    alt={`Tripod Variation ${index + 1}`}
+                                    width={500}
+                                    height={500}
+                                    style={{width: '100%', height: 'auto', display: 'block'}}
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </div>
+    </div>
+  );
+};
+
 export default function Home({ productSettings }) {
   const [visitorId, setVisitorId] = useState(null);
   const [checkoutUrl, setCheckoutUrl] = useState('/checkout');
@@ -82,7 +153,7 @@ export default function Home({ productSettings }) {
   return (
     <div className={styles.pageWrapper}>
       <Head>
-        <title>Teknik Prompting Gambar AI - Panduan Nano Banana Pro</title>
+        <title>Teknik Prompting Gambar AI - Panduan Lengkap Zero to Mastery</title>
         <meta name="description" content="Kuasai teknik Prompt Keyword untuk hasilkan gambar AI yang tepat, tajam, dan memukau. Panduan lengkap dari Zero ke Pro." />
         <meta property="og:title" content="Teknik Prompting Gambar AI - Zero to Mastery" />
         <meta property="og:image" content="/og-image-nanobanana.png" />
@@ -104,7 +175,7 @@ export default function Home({ productSettings }) {
           <div className={styles.container}>
             <div className={styles.heroContent}>
               <div className={styles.heroPill}>
-                <span className={styles.heroPillText}>EDISI DIKEMASKINI 2026 • NANO BANANA PRO</span>
+                <span className={styles.heroPillText}>TEKNIK MENULIS PROMPT • DARI ZERO KE MASTERY</span>
               </div>
               
               <h1 className={styles.heroTitle}>
@@ -113,7 +184,7 @@ export default function Home({ productSettings }) {
               </h1>
               
               <p className={styles.heroSubTitle}>
-                Jangan biarkan AI mengagak apa yang anda mahu. Kuasai <span className={styles.highlight}>&apos;Prompt Keyword&apos;</span> yang tepat untuk hasilkan visual gred professional, konsisten, dan menuruti arahan.
+                Lupakan &apos;teka-teki&apos;. Guna strategi <span className={styles.highlight}>&apos;Prompt Keyword&apos;</span> ini untuk PAKSA AI hasilkan gambar gred-studio yang TEPAT, KONSISTEN &amp; MEMUKAU. Setiap masa. Tanpa gagal.
               </p>
 
               <div className={styles.heroVisualWrapper}>
@@ -154,7 +225,7 @@ export default function Home({ productSettings }) {
                             Masalahnya bukan imaginasi anda. Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;.
                         </div>
                         <p>Dia tak faham bahasa bunga-bunga. Dia faham <strong>KEYWORD</strong>. Dia perlukan arahan teknikal yang spesifik tentang lighting, sudut kamera, dan gaya visual.</p>
-                        <p>Buku <strong>Nano Banana Pro</strong> ini bukan koleksi prompt untuk dihafal. Ia adalah manual teknikal untuk anda bercakap dalam bahasa yang AI faham sepenuhnya.</p>
+                        <p><strong>Manual strategi</strong> ini bukan koleksi prompt untuk dihafal. Ia adalah &apos;blueprint&apos; teknikal untuk anda bercakap dalam bahasa yang AI faham sepenuhnya.</p>
                     </div>
                 </div>
             </div>
@@ -303,7 +374,43 @@ export default function Home({ productSettings }) {
                             </div>
                         </div>
                     </div>
+
+                    {/* Case Study 3: Baby Car Seat */}
+                    <div className={styles.comparisonCard}>
+                        <div className={styles.comparisonHeader}>
+                            <h3>Case Study 3: Product Cleanup &amp; Revamp</h3>
+                            <p>&quot;Gambar asal kusam dan &apos;messy&apos;? AI boleh bersihkan background, betulkan texture, dan jadikan ia nampak baru keluar kotak.&quot;</p>
+                        </div>
+                        <div className={styles.comparisonImages}>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: DULL &amp; USED</div>
+                                <Image 
+                                    src="nanobanana-baby-car-seat-before" 
+                                    alt="Original Baby Car Seat" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                />
+                            </div>
+                            <div className={styles.arrowDivider}>
+                                <ArrowRightIcon width={40} height={40} />
+                            </div>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER: CLEAN &amp; NEW</div>
+                                <Image 
+                                    src="nanobanana-baby-car-seat-after" 
+                                    alt="AI Enhanced Baby Car Seat" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                {/* Tripod Slider Showcase */}
+                <TripodSlider />
             </div>
         </section>
 
@@ -394,7 +501,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.pricingTicket}>
                     <div className={styles.ticketHeader}>
                         <span className={styles.monoLabel} style={{color: '#000'}}>ACCESS PASS</span>
-                        <h2>NANO BANANA PRO</h2>
+                        <h2>TEKNIK PROMPTING GAMBAR AI</h2>
                     </div>
                     
                     <div style={{textAlign: 'center', marginBottom: '2rem'}}>
@@ -411,9 +518,17 @@ export default function Home({ productSettings }) {
 
                     <div className={styles.valueStack}>
                         <div className={styles.stackItem}>
-                            <div className={styles.stackIcon}><BookIcon /></div>
+                            <div className={styles.stackIcon} style={{ width: '50px', marginRight: '10px' }}>
+                                <Image 
+                                    src="nanobanana-book-cover" 
+                                    alt="Teknik Prompting Gambar AI Book Cover" 
+                                    width={50} 
+                                    height={70} 
+                                    style={{ width: '100%', height: 'auto', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }} 
+                                />
+                            </div>
                             <div className={styles.stackText}>
-                                <strong>Ebook Nano Banana Pro (PDF)</strong>
+                                <strong>Ebook Teknik Prompting Gambar AI (PDF)</strong>
                                 <span>189 Muka Surat. Padat dengan contoh visual & keyword.</span>
                             </div>
                         </div>
@@ -556,7 +671,7 @@ export async function getStaticProps() {
     return {
       props: {
         productSettings: {
-          productName: 'KelasGPT - Nano Banana Pro',
+          productName: 'KelasGPT - Teknik Prompting Gambar AI',
           productPrice: 37.00,
           baseproductprice: 99.00,
           allowdiscount: true,

@@ -463,8 +463,15 @@
     align-items: center;
 }
 
+.comparisonTwoCol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
 @media (max-width: 768px) {
-    .comparisonImages {
+    .comparisonImages, .comparisonTwoCol {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
