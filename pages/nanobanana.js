@@ -578,7 +578,7 @@ export default function Home({ productSettings }) {
                                 <div className={`${styles.imageLabel} ${styles.labelAfter}`}>FINAL BRANDED DESIGN</div>
                                 <Image 
                                     src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_After.png" 
-                                    alt="Final AI-Enhanced Branded Design" 
+                                    alt="Final AI Enhanced Branded Design" 
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
