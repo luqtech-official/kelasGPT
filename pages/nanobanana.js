@@ -69,8 +69,8 @@ const ShowcaseTripod = () => {
   return (
     <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
         <div className={styles.comparisonHeader}>
-            <h3>Cara buat high converting product image yang berkualiti dengan KV-system workflow</h3>
-            <p>&quot;Gunakan workflow KV-system untuk tukar satu gambar tripod &apos;biasa-biasa&apos; kepada pelbagai variasi iklan komersial gred-studio dalam beberapa saat.&quot;</p>
+            <h3>Gambar produk yang <span className={styles.blueEmphasis}>Highly Converting!</span><br/>5 Minit je bila guna workflow Key-Visual</h3>
+            <p>&quot;Gunakan workflow KV system untuk tukar satu gambar produk anda yang &apos;biasa-biasa&apos; kepada pelbagai variasi studio-grade key visual.&quot;</p>
         </div>
         <div className={styles.comparisonTwoCol}>
             {/* Before Image */}
@@ -136,7 +136,8 @@ const ShowcaseCreative = () => {
   return (
     <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
         <div className={styles.comparisonHeader}>
-            <h3>Anda cuma perlukan prompting method dan workflow yang betul, dan limit anda hanyalah imaginasi anda sendiri!</h3>
+            <h3>Idea anda bercambah dengan sendirinya,<br/>Bila ada<br/><span className={styles.blueEmphasis}>Prompting Workflow</span> yang betul.</h3>
+            <p><br/>&quot;Edit meme sendiri just for fun. Product exploded view untuk pitch deck. Cinematic shots untuk hook social content. Knolling photography untuk feed aesthetic.&quot;<br/><br/><strong>Apa yang anda boleh bayang, anda boleh buat!</strong></p>
         </div>
         
         <div style={{ padding: '0 1rem' }}>
@@ -266,7 +267,7 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- Pain Points / Noise Section --- */}
-        <section className={styles.noiseSection}>
+        <section className={`${styles.noiseSection} ${styles.lightSection}`}>
             <div className={styles.container}>
                 <div className={styles.noiseContainer}>
                     <div className={styles.sectionHeader} style={{textAlign: 'left', margin: 0}}>
@@ -291,9 +292,9 @@ export default function Home({ productSettings }) {
         <section className={styles.gallerySection}>
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
-                    <span className={styles.monoLabel}>POSSIBILITIES</span>
+                    {/* <span className={styles.monoLabel}>POSSIBILITIES</span> */}
                     <h2>Apa Yang Bakal Anda Kuasai?</h2>
-                    <p>Dari muka surat 34 hingga 85, kita akan bedah siasat teknik-teknik ini:</p>
+                    <p>Ini bukanlah sekadar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.blueEmphasis}>Proven Teknik dan Workflow</span> untuk hasilkan prompt gambar berkualiti yang anda nak, dengan sangat mudah!</p>
                 </div>
 
                 {/* Showcase 1: Tripod / Product */}
@@ -302,39 +303,10 @@ export default function Home({ productSettings }) {
                 {/* Showcase 2: Food Presentation */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Improve presentation gambar makanan yang real, walaupun tak pandai setup background</h3>
+                        <h3>Tunjuk<br/><span className={styles.blueEmphasis}>GAMBAR REAL</span><br/>makanan anda,<br/>Tapi dengan <span className={styles.blueEmphasis}>Editorial Quality!</span></h3>
                     </div>
                     <div className={styles.comparisonGrid} style={{gap: '2rem'}}>
                         {/* Food Item 1 */}
-                        <div className={styles.comparisonTwoCol}>
-                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
-                                <Image 
-                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_Before.jpg" 
-                                    alt="Nasi Kandar Before" 
-                                    width={500} 
-                                    height={500} 
-                                    style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
-                                    placeholder="blur"
-                                    blurDataURL={getBlurDataURL('nasi-before')}
-                                />
-                            </div>
-                            <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER</div>
-                                <Image 
-                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_After.png" 
-                                    alt="Nasi Kandar After" 
-                                    width={500} 
-                                    height={500} 
-                                    style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
-                                    placeholder="blur"
-                                    blurDataURL={getBlurDataURL('nasi-after')}
-                                />
-                            </div>
-                        </div>
-                         {/* Food Item 2 */}
                          <div className={styles.comparisonTwoCol}>
                              <div className={styles.imageContainer}>
                                 <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
@@ -363,13 +335,42 @@ export default function Home({ productSettings }) {
                                 />
                             </div>
                         </div>
+                         {/* Food Item 2 */}
+                         {/* <div className={styles.comparisonTwoCol}>
+                             <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_Before.jpg" 
+                                    alt="Nasi Kandar Before" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-before')}
+                                />
+                            </div>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_After.png" 
+                                    alt="Nasi Kandar After" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-after')}
+                                />
+                            </div>
+                        </div> */}
                     </div>
                 </div>
 
                 {/* Showcase 3: Visual Aids / Infographics */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Kadang-kadang anda perlukan visual aid untuk bantu pembelajaran</h3>
+                        <h3>Dari <span className={styles.blueEmphasis}>Magazine-Style</span> infographic untuk social media,<br/>Sampailah Study Notes Yang <span className={styles.blueEmphasis}>Buat Anak Semangat Nak Study.</span></h3>
                     </div>
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
@@ -414,7 +415,7 @@ export default function Home({ productSettings }) {
                 {/* Showcase 4: Beautiful Portraits */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Atau Kadang-kadang, anda cuma mahukan gambar yang cantik untuk diri anda</h3>
+                        <h3>Tak perlu jadi photogenic untuk dapatkan gambar anda yang <span className={styles.blueEmphasis}>Insta-Worthy!</span></h3>
                     </div>
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
@@ -427,6 +428,18 @@ export default function Home({ productSettings }) {
                                 sizes="(max-width: 768px) 100vw, 300px"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('woman-chiaro')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Woman_birthday.png" 
+                                alt="Woman Birthday" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('woman-bday')}
                              />
                          </div>
                          <div className={styles.imageContainer}>
@@ -453,18 +466,6 @@ export default function Home({ productSettings }) {
                                 blurDataURL={getBlurDataURL('man-cinematic')}
                              />
                          </div>
-                         <div className={styles.imageContainer}>
-                             <Image 
-                                src="KelasGPT_NanoBanana/Woman_birthday.png" 
-                                alt="Woman Birthday" 
-                                width={400} 
-                                height={500} 
-                                style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
-                                placeholder="blur"
-                                blurDataURL={getBlurDataURL('woman-bday')}
-                             />
-                         </div>
                     </div>
                 </div>
 
@@ -472,91 +473,8 @@ export default function Home({ productSettings }) {
                 <ShowcaseCreative />
 
                 {/* Bento Grid: Possibilities */}
-                <div className={styles.bentoGrid} style={{marginTop: '4rem'}}>
-                    {/* Item: Product Photography */}
-                    <div className={`${styles.bentoCard} ${styles.span6}`}>
-                        <div className={styles.bentoImageArea}>
-                            <Image 
-                                src="nanobanana-food" 
-                                alt="Food Photography" 
-                                width={600} 
-                                height={400} 
-                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
-                                sizes="(max-width: 768px) 100vw, 500px"
-                                placeholder="blur"
-                                blurDataURL={getBlurDataURL('nanobanana-food')}
-                            />
-                            <div className={styles.imageOverlay}>Showcase No.24 & No.26</div>
-                        </div>
-                        <div className={styles.bentoContent}>
-                            <h4>Commercial Food Photography</h4>
-                            <p>Tak payah upah photographer mahal. Belajar keyword untuk lighting <em>&quot;Gourmet&quot;</em> dan texture makanan yang nampak menyelerakan.</p>
-                        </div>
-                    </div>
+                {/* This bento grid section has been removed by the user */}
 
-                    {/* Item: Cinematic Portrait */}
-                    <div className={`${styles.bentoCard} ${styles.span6}`}>
-                        <div className={styles.bentoImageArea}>
-                            <Image 
-                                src="nanobanana-woman-after" 
-                                alt="Cinematic Portrait" 
-                                width={600} 
-                                height={400} 
-                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
-                                sizes="(max-width: 768px) 100vw, 500px"
-                                placeholder="blur"
-                                blurDataURL={getBlurDataURL('nanobanana-woman-after')}
-                            />
-                            <div className={styles.imageOverlay}>Showcase No.10 & Case Study 1</div>
-                        </div>
-                        <div className={styles.bentoContent}>
-                            <h4>Cinematic Portraits</h4>
-                            <p>Kuasai teknik <em>Emotionally Charged Portrait</em>. Belajar control mata, ekspresi mikro, dan lighting dramatik untuk potret yang &apos;hidup&apos;.</p>
-                        </div>
-                    </div>
-
-                    {/* Item: Infographic (Large) */}
-                    <div className={`${styles.bentoCard} ${styles.span12}`}>
-                        <div className={styles.bentoImageArea}>
-                            <Image 
-                                src="nanobanana-infographic-kids" 
-                                alt="Educational Infographic (Kids Poster)" 
-                                width={1000} 
-                                height={500} 
-                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
-                                sizes="100vw"
-                                placeholder="blur"
-                                blurDataURL={getBlurDataURL('nanobanana-infographic-kids')}
-                            />
-                            <div className={styles.imageOverlay}>Showcase No.20 & Case Study 2</div>
-                        </div>
-                        <div className={styles.bentoContent}>
-                            <h4>Educational Infographics & Posters</h4>
-                            <p>Bukan sekadar gambar cantik. Belajar cara susun maklumat (Information Architecture) menggunakan AI untuk hasilkan poster yang informatif, tepat, dan nampak professional.</p>
-                        </div>
-                    </div>
-
-                    {/* Item: Consistent Characters */}
-                    <div className={`${styles.bentoCard} ${styles.span4}`}>
-                        <div className={styles.bentoIcon}><TargetIcon /></div>
-                        <h4>Face & Pose Transfer</h4>
-                        <p>Nak kekalkan muka sama dalam scene berbeza? Teknik Module 2 & 3 akan ajar caranya.</p>
-                    </div>
-
-                    {/* Item: Quick Fixes */}
-                    <div className={`${styles.bentoCard} ${styles.span4}`}>
-                        <div className={styles.bentoIcon}><RefreshIcon /></div>
-                        <h4>Quick Object Removal</h4>
-                        <p>Guna AI untuk buang orang kat background atau betulkan cacat cela dalam masa 5 saat.</p>
-                    </div>
-
-                    {/* Item: Style Transfer */}
-                    <div className={`${styles.bentoCard} ${styles.span4}`}>
-                        <div className={styles.bentoIcon}><CameraIcon /></div>
-                        <h4>Style Transfer</h4>
-                        <p>Tukar gambar selfie biasa jadi Anime, 3D style, atau lukisan tanpa hilang rupa asal anda.</p>
-                    </div>
-                </div>
 
                 {/* --- Deep Dive Transition --- */}
                 <div style={{margin: '6rem 0 4rem', textAlign: 'center', borderTop: '1px solid #222', paddingTop: '4rem'}}>
@@ -672,12 +590,12 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- The Core Philosophy: Mastery vs Copy-Paste --- */}
-        <section className={styles.coreSkillsSection}>
+        <section className={`${styles.coreSkillsSection} ${styles.lightSection}`}>
             <div className={styles.container}>
                 <div style={{textAlign: 'center', marginBottom: '4rem'}}>
                     <span className={styles.monoLabel}>THE ARCHITECT MINDSET</span>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: '800', color: '#fff', marginBottom: '1.5rem'}}>Henti Jadi &quot;Copy-Paster&quot;.<br />Mula Jadi &quot;The Creator&quot;.</h2>
-                    <p style={{color: '#888', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem'}}>
+                    <h2 style={{fontSize: '2.5rem', fontWeight: '800', color: '#111', marginBottom: '1.5rem'}}>Henti Jadi &quot;Copy-Paster&quot;.<br />Mula Jadi &quot;The Creator&quot;.</h2>
+                    <p style={{color: '#555', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem'}}>
                         Kebanyakan &apos;Prompt Pack&apos; di luar sana akan buat anda stuck bila anda nak tukar sikit rupa gambar. Buku ini ajar anda <strong>DNA</strong> di sebalik setiap gambar.
                     </p>
                 </div>
@@ -708,7 +626,7 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- Curriculum Breakdown (Fascinations) --- */}
-        <section className={styles.curriculumSection}>
+        <section className={`${styles.curriculumSection} ${styles.lightSection}`}>
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     <span className={styles.monoLabel}>ISI KANDUNGAN</span>
@@ -824,30 +742,30 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- New Section: Partner Program --- */}
-        <section className={styles.partnerSection} style={{padding: '6rem 0', background: 'linear-gradient(180deg, #0a0a0a 0%, #111 100%)', borderTop: '1px solid #222'}}>
+        <section className={`${styles.partnerSection} ${styles.lightSection}`} style={{padding: '6rem 0'}}>
             <div className={styles.container}>
                 <div style={{maxWidth: '800px', margin: '0 auto', textAlign: 'center'}}>
                     <div style={{display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'rgba(255, 107, 53, 0.1)', color: '#ff6b35', borderRadius: '50%', marginBottom: '1.5rem'}}>
                         <DollarIcon width={30} height={30} />
                     </div>
-                    <h2 style={{fontSize: '2.2rem', fontWeight: 800, marginBottom: '1rem', color: '#fff'}}>
+                    <h2 className={styles.partnerTitle} style={{fontSize: '2.2rem', fontWeight: 800, marginBottom: '1rem'}}>
                         <span style={{display: 'block', marginBottom: '1rem', color: 'var(--accent-color)'}}>Oopps, Sekejap!</span>
                         Anda Juga Akan Dapat Peluang Belajar AI Sambil Jana Pendapatan!!
                     </h2>
-                    <p style={{fontSize: '1.2rem', color: '#ccc', marginBottom: '3rem'}}>
+                    <p className={styles.partnerDesc} style={{fontSize: '1.2rem', marginBottom: '3rem'}}>
                         Kami tak nak anda &apos;menjual&apos;. Kami nak anda &apos;membantu&apos;. Sebab itu setiap pembeli akan dibekalkan dengan <strong>&apos;Senjata Rahsia&apos;</strong>:
                     </p>
 
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', textAlign: 'left'}}>
-                         <div style={{background: '#050505', padding: '2rem', borderRadius: '12px', border: '1px solid #333'}}>
+                         <div className={styles.partnerCard} style={{padding: '2rem', borderRadius: '12px'}}>
                             <h4 style={{fontSize: '3rem', fontWeight: 900, color: 'var(--accent-color)', marginBottom: '0.5rem', lineHeight: 1}}>20%</h4>
-                            <p style={{color: '#fff', fontWeight: 600, fontSize: '1.1rem'}}>Promo code unik setiap affiliate</p>
-                            <p style={{color: '#888', fontSize: '0.95rem'}}>Kawan anda tak perlu bayar harga penuh. Dengan code unik anda, mereka dapat <strong>Potongan 20%</strong> serta merta. Senang untuk mereka cakap &quot;YES!&quot; kepada recommendation anda.</p>
+                            <p style={{fontWeight: 600, fontSize: '1.1rem'}}>Promo code unik setiap affiliate</p>
+                            <p style={{fontSize: '0.95rem'}}>Kawan anda tak perlu bayar harga penuh. Dengan code unik anda, mereka dapat <strong>Potongan 20%</strong> serta merta. Senang untuk mereka cakap &quot;YES!&quot; kepada recommendation anda.</p>
                          </div>
-                         <div style={{background: '#050505', padding: '2rem', borderRadius: '12px', border: '1px solid #333'}}>
-                            <h4 style={{fontSize: '3rem', fontWeight: 900, color: '#fff', marginBottom: '0.5rem', lineHeight: 1}}>33%</h4>
-                            <p style={{color: '#fff', fontWeight: 600, fontSize: '1.1rem'}}>Commission Rate Yang Tinggi!!</p>
-                            <p style={{color: '#888', fontSize: '0.95rem'}}>Walaupun kawan anda dapat diskaun, anda tetap layak mendapat komisen tinggi <strong>33%</strong> untuk setiap jualan. Cukup 4 orang kawan guna code anda, pelaburan buku anda bukan sahaja balik modal, malah anda sudah pun mula menjana untung bersih!</p>
+                         <div className={styles.partnerCard} style={{padding: '2rem', borderRadius: '12px'}}>
+                            <h4 className={styles.partnerTitle} style={{fontSize: '3rem', fontWeight: 900, marginBottom: '0.5rem', lineHeight: 1}}>33%</h4>
+                            <p style={{fontWeight: 600, fontSize: '1.1rem'}}>Commission Rate Yang Tinggi!!</p>
+                            <p style={{fontSize: '0.95rem'}}>Walaupun kawan anda dapat diskaun, anda tetap layak mendapat komisen tinggi <strong>33%</strong> untuk setiap jualan. Cukup 4 orang kawan guna code anda, pelaburan buku anda bukan sahaja balik modal, malah anda sudah pun mula menjana untung bersih!</p>
                          </div>
                     </div>
                 </div>
@@ -858,7 +776,7 @@ export default function Home({ productSettings }) {
       </main>
       
       {/* --- Contact Support Section --- */}
-      <section className={styles.contactSection}>
+      <section className={`${styles.contactSection} ${styles.lightSection}`}>
         <div className={styles.container}>
           <div className={styles.contactContent}>
             <h3 className={styles.contactTitle}>Sokongan & Bantuan</h3>
@@ -895,7 +813,7 @@ export default function Home({ productSettings }) {
       </section>
 
       {/* --- Legal Footer --- */}
-      <footer className={styles.legalFooter}>
+      <footer className={`${styles.legalFooter} ${styles.lightSection}`}>
         <div className={styles.container}>
           <div className={styles.disclaimerContent}>
             <div className={styles.footerMeta}>

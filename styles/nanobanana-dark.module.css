@@ -9,6 +9,10 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    
+    /* CSS Variables scoped to this page */
+    --accent-color: #ff6b35;
+    --emphasis-blue: #3498db;
 }
   
 .container {
@@ -22,10 +26,14 @@
     display: block;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.8rem;
-    color: var(--accent-color, #ff6b35);
+    color: var(--emphasis-blue);
     letter-spacing: 2px;
     margin-bottom: 1rem;
     font-weight: 600;
+}
+
+.blueEmphasis {
+    color: var(--emphasis-blue);
 }
 
 .highlight {
@@ -52,6 +60,7 @@
     padding-top: 8rem;
     padding-bottom: 4rem;
     text-align: center;
+    background-color: #050505; /* Explicit Dark */
 }
 
 .heroContent {
@@ -114,10 +123,32 @@
     font-style: italic;
 }
 
-/* --- Noise / Problem Section --- */
+/* --- Light Mode Helper Class --- */
+.lightSection {
+    background-color: #f8f9fa !important;
+    color: #333 !important;
+    border-top: none !important;
+}
+
+.lightSection .sectionHeader h2 {
+    color: #111 !important;
+}
+
+.lightSection .sectionHeader p {
+    color: #666 !important;
+}
+
+.lightSection .benefitList li {
+    color: #444 !important;
+}
+
+.lightSection .benefitList li strong {
+    color: #000 !important;
+}
+
+/* --- Noise / Problem Section (Now Light) --- */
 .noiseSection {
     padding: 6rem 0;
-    border-top: 1px solid #222;
 }
 
 .noiseContainer {
@@ -132,6 +163,11 @@
     margin-bottom: 1.5rem;
 }
 
+/* Override for Light Mode Noise Section */
+.lightSection .noiseText p {
+    color: #444 !important;
+}
+
 .noiseHighlight {
     background: rgba(255, 107, 53, 0.1);
     border-left: 4px solid #ff6b35;
@@ -143,10 +179,17 @@
     border-radius: 0 10px 10px 0;
 }
 
+.lightSection .noiseHighlight {
+    background: #fff0eb;
+    color: #d35400;
+}
+
+
 /* --- Gallery / Bento Grid --- */
 .gallerySection {
     padding: 6rem 0;
     border-top: 1px solid #222;
+    background-color: #050505; /* Keep Dark */
 }
 
 .sectionHeader {
@@ -253,8 +296,6 @@
 /* --- Curriculum List --- */
 .curriculumSection {
     padding: 6rem 0;
-    background: #0a0a0a;
-    border-top: 1px solid #222;
 }
 
 .chapterList {
@@ -275,10 +316,19 @@
     padding-bottom: 0.5rem;
 }
 
+.lightSection .groupTitle {
+    color: #888;
+    border-bottom: 1px solid #ddd;
+}
+
 .groupDesc {
     color: #aaa;
     margin-bottom: 1.5rem;
     font-style: italic;
+}
+
+.lightSection .groupDesc {
+    color: #555;
 }
 
 .benefitList {
@@ -313,6 +363,7 @@
 .pricingSection {
     padding: 6rem 0;
     border-top: 1px solid #222;
+    background-color: #050505; /* Explicit Dark */
 }
 
 .pricingTicket {
@@ -601,8 +652,7 @@
 
 .contactContent {
     max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+    margin: 0 auto;    text-align: center;
 }
 
 .contactTitle {
@@ -791,8 +841,63 @@
 /* --- Core Pillars Section --- */
 .coreSkillsSection {
     padding: 6rem 0;
-    background: #050505;
-    border-top: 1px solid #222;
+}
+
+/* Light Mode Overrides for Skills Grid */
+.lightSection .skillCard {
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.lightSection .skillCard h3 {
+    color: #111;
+}
+
+.lightSection .skillCard p {
+    color: #555;
+}
+
+/* Light Mode Overrides for Partner Section */
+.lightSection .partnerCard {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+}
+
+.lightSection .partnerCard p {
+    color: #444 !important;
+}
+
+.lightSection .partnerTitle {
+    color: #111 !important;
+}
+
+.lightSection .partnerDesc {
+    color: #555 !important;
+}
+
+/* Light Mode Overrides for Contact Section */
+.lightSection.contactSection {
+    background-color: #f0f2f5 !important; /* Slightly different grey for depth */
+}
+
+.lightSection .contactTitle {
+    color: #111 !important;
+}
+
+.lightSection .contactMethod {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Light Mode Overrides for Footer */
+.lightSection.legalFooter {
+    background-color: #fff !important;
+    border-top: 1px solid #eee !important;
+}
+
+.lightSection .legalLink:hover {
+    color: var(--accent-color);
 }
 
 .skillsGrid {
