@@ -84,6 +84,7 @@ const ShowcaseTripod = () => {
                     width={500}
                     height={500}
                     style={{width: '100%', height: 'auto', display: 'block'}}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                 />
             </div>
 
@@ -113,6 +114,7 @@ const ShowcaseTripod = () => {
                                     width={500}
                                     height={500}
                                     style={{width: '100%', height: 'auto', display: 'block'}}
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                             </div>
                         </SwiperSlide>
@@ -258,6 +260,7 @@ export default function Home({ productSettings }) {
                         priority
                         placeholder="blur"
                         blurDataURL={getBlurDataURL('nanobanana-hero')}
+                        sizes="(max-width: 768px) 100vw, 800px"
                     />
                  </div>
                  <div className={styles.heroCaption}>
@@ -318,7 +321,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('maggi-before')}
                                 />
@@ -331,7 +334,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('food-analysis')}
                                 />
@@ -374,7 +377,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.comparisonHeader}>
                         <h3>Dari <span className={styles.blueEmphasis}>Magazine-Style</span> infographic untuk social media,<br/>Sampailah Study Notes Yang <span className={styles.blueEmphasis}>Buat Anak Semangat Nak Study.</span></h3>
                     </div>
-                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
                              <Image 
                                 src="KelasGPT_NanoBanana/Studygram%20Jantung.png" 
@@ -382,7 +385,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, 33vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('studygram-jantung')}
                              />
@@ -394,7 +397,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, 33vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('scientific-info')}
                              />
@@ -406,7 +409,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, 33vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('studygram-nucleus')}
                              />
@@ -419,7 +422,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.comparisonHeader}>
                         <h3>Tak perlu jadi photogenic untuk dapatkan gambar anda yang <span className={styles.blueEmphasis}>Insta-Worthy!</span></h3>
                     </div>
-                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
                              <Image 
                                 src="KelasGPT_NanoBanana/Woman_chiaschuro.png" 
@@ -427,7 +430,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('woman-chiaro')}
                              />
@@ -439,7 +442,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('woman-bday')}
                              />
@@ -451,7 +454,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('man-chiaro')}
                              />
@@ -463,7 +466,7 @@ export default function Home({ productSettings }) {
                                 width={400} 
                                 height={500} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 768px) 100vw, 300px"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('man-cinematic')}
                              />
@@ -503,7 +506,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('woman-before')}
                                 />
@@ -519,7 +522,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('woman-after')}
                                 />
@@ -541,7 +544,7 @@ export default function Home({ productSettings }) {
                                 width={1000} 
                                 height={600} 
                                 style={{width: '100%', height: 'auto', display: 'block'}} 
-                                sizes="(max-width: 1024px) 100vw, 800px"
+                                sizes="(max-width: 850px) 100vw, 800px"
                                 placeholder="blur"
                                 blurDataURL={getBlurDataURL('infographic-kids')}
                             />
@@ -563,7 +566,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('nasi-before')}
                                 />
@@ -579,7 +582,7 @@ export default function Home({ productSettings }) {
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
-                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     placeholder="blur"
                                     blurDataURL={getBlurDataURL('nasi-after')}
                                 />
@@ -702,6 +705,7 @@ export default function Home({ productSettings }) {
                                     width={50} 
                                     height={70} 
                                     style={{ width: '100%', height: 'auto', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }} 
+                                    sizes="100px"
                                 />
                             </div>
                             <div className={styles.stackText}>
