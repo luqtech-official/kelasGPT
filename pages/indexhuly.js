@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import { trackPageView, getOrCreateVisitorId } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
+import NextImage from "next/image";
 import styles from "@/styles/IndexHuly.module.css";
 import SocialProof from "@/components/SocialProof"; // Assuming this component exists and works
 import { getProductSettings, formatPrice } from "../lib/settings";
 import { getBlurDataURL, getImageSizes } from "../lib/imagekit";
+import imagekitLoader from "../lib/imagekit-loader";
 import { trackViewContent } from "../lib/facebook-pixel";
 // import { ResponsiveImage } from '../components/ResponsiveImage';
+
+const Image = (props) => <NextImage loader={imagekitLoader} {...props} />;
 
 // Swiper components removed - not used in this component
 

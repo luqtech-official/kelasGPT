@@ -1,9 +1,12 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import styles from '../styles/VideoListing.module.css';
 import { getBlurDataURL, getImageSizes } from '../lib/imagekit';
+import imagekitLoader from '../lib/imagekit-loader';
+
+const Image = (props) => <NextImage loader={imagekitLoader} {...props} />;
 
 export default function VideoListing() {
   const [selectedVideoForModal, setSelectedVideoForModal] = useState(null);

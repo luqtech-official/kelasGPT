@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { trackPageView, getOrCreateVisitorId } from '../lib/simpleTracking';
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
+import NextImage from "next/image";
 import styles from "@/styles/nanobanana-dark.module.css";
 import SocialProof from "@/components/SocialProof";
 import { getProductSettings } from "../lib/settings";
-import { getBlurDataURL } from "../lib/imagekit";
+import { getBlurDataURL, getGitImageUrl } from "../lib/gitimage";
 import { trackViewContent } from "../lib/facebook-pixel";
+
+const Image = ({src, ...props}) => <NextImage src={getGitImageUrl(src)} {...props} />;
 
 // --- Swiper Imports ---
 import { Swiper, SwiperSlide } from 'swiper/react';

@@ -17,12 +17,22 @@ const nextConfig = {
   // Environment variables are no longer exposed to the browser for security
   // Server-side code can still access process.env directly
   images: {
-    loader: 'custom',
-    loaderFile: './lib/imagekit-loader.js',
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'www.novalnet.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
         port: '',
         pathname: '/**',
       },
