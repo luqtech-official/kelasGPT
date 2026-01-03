@@ -56,26 +56,28 @@ const DollarIcon = (props) => (
     </svg>
 );
 
-const TripodSlider = () => {
+// --- Components ---
+
+const ShowcaseTripod = () => {
   const images = [
-    'nanobanana-tripod-after-1',
-    'nanobanana-tripod-after-2',
-    'nanobanana-tripod-after-3',
-    'nanobanana-tripod-after-4',
+    'KelasGPT_NanoBanana/Tripod_after_enhanced1.png',
+    'KelasGPT_NanoBanana/Tripod_after_enhanced2.png',
+    'KelasGPT_NanoBanana/Tripod_after_enhanced3.png',
+    'KelasGPT_NanoBanana/Tripod_after_enhanced4.png',
   ];
 
   return (
-    <div className={styles.comparisonCard} style={{marginTop: '4rem'}}>
+    <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
         <div className={styles.comparisonHeader}>
-            <h3>Creative Iterations: Product Showcase</h3>
-            <p>&quot;Satu produk, pelbagai mood. Lihat bagaimana satu gambar tripod biasa boleh diubah suai menjadi pelbagai gaya visual komersial.&quot;</p>
+            <h3>Cara buat high converting product image yang berkualiti dengan KV-system workflow</h3>
+            <p>&quot;Gunakan workflow KV-system untuk tukar satu gambar tripod &apos;biasa-biasa&apos; kepada pelbagai variasi iklan komersial gred-studio dalam beberapa saat.&quot;</p>
         </div>
         <div className={styles.comparisonTwoCol}>
             {/* Before Image */}
             <div className={styles.imageContainer}>
-                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: RAW PHOTO</div>
+                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: ORIGINAL</div>
                 <Image
-                    src="nanobanana-tripod-before"
+                    src="KelasGPT_NanoBanana/Tripod_before_enhanced.webp"
                     alt="Original Tripod"
                     width={500}
                     height={500}
@@ -102,7 +104,7 @@ const TripodSlider = () => {
                     {images.map((img, index) => (
                          <SwiperSlide key={index}>
                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>VARIATION {index + 1}</div>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER: VARIATION {index + 1}</div>
                                 <Image
                                     src={img}
                                     alt={`Tripod Variation ${index + 1}`}
@@ -120,17 +122,71 @@ const TripodSlider = () => {
   );
 };
 
+const ShowcaseCreative = () => {
+  const creativeImages = [
+    { src: 'KelasGPT_NanoBanana/meme_modified.png', alt: 'Meme Modification' },
+    { src: 'KelasGPT_NanoBanana/Gadget_Exploding_view.png', alt: 'Product Exploded View' },
+    { src: 'KelasGPT_NanoBanana/Posture_modified.png', alt: 'Posture Correction' },
+    { src: 'KelasGPT_NanoBanana/woman_with_rifle_cinematic_shot.png', alt: 'Cinematic Composition' },
+    { src: 'KelasGPT_NanoBanana/Kids_birthday.png', alt: 'Kids Event Photography' },
+    { src: 'KelasGPT_NanoBanana/Fun_couple_image.png', alt: 'Lifestyle Photography' },
+    { src: 'KelasGPT_NanoBanana/Knolling_image.png', alt: 'Knolling Photography' },
+  ];
+
+  return (
+    <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
+        <div className={styles.comparisonHeader}>
+            <h3>Anda cuma perlukan prompting method dan workflow yang betul, dan limit anda hanyalah imaginasi anda sendiri!</h3>
+        </div>
+        
+        <div style={{ padding: '0 1rem' }}>
+             <Swiper
+                modules={[Navigation, Pagination, Autoplay]}
+                spaceBetween={20}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }}
+                style={{ 
+                    '--swiper-theme-color': '#ff6b35', 
+                    '--swiper-navigation-size': '25px',
+                    paddingBottom: '40px',
+                    paddingTop: '10px'
+                }}
+            >
+                {creativeImages.map((item, index) => (
+                        <SwiperSlide key={index} style={{height: 'auto'}}>
+                        <div className={styles.imageContainer} style={{ height: '350px', position: 'relative' }}>
+                            <Image
+                                src={item.src}
+                                alt={item.alt}
+                                fill
+                                style={{objectFit: 'cover'}}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                            <div className={styles.imageOverlay} style={{bottom: '10px', left: '10px', right: 'auto', background: 'rgba(0,0,0,0.6)'}}>
+                                {item.alt}
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+    </div>
+  );
+};
+
 export default function Home({ productSettings }) {
   const [visitorId, setVisitorId] = useState(null);
   const [checkoutUrl, setCheckoutUrl] = useState('/checkout');
-
-  const calculateProgress = (total, left) => {
-    const numTotal = Number(total) || 0;
-    const numLeft = Number(left) || 0;
-    const claimed = numTotal - numLeft;
-    const percentage = numTotal > 0 ? (claimed / numTotal * 100) : 0;
-    return Math.max(0, Math.min(100, percentage));
-  };
 
   useEffect(() => {
     const id = getOrCreateVisitorId();
@@ -154,7 +210,7 @@ export default function Home({ productSettings }) {
     <div className={styles.pageWrapper}>
       <Head>
         <title>Teknik Prompting Gambar AI - Panduan Lengkap Zero to Mastery</title>
-        <meta name="description" content="Kuasai teknik Prompt Keyword untuk hasilkan gambar AI yang tepat, tajam, dan memukau. Panduan lengkap dari Zero ke Pro." />
+        <meta name="description" content="Kuasai teknik Prompt Keyword untuk hasilkan gambar AI yang tepat, tajam, dan memukau. Panduan lengkap dari Zero to Mastery." />
         <meta property="og:title" content="Teknik Prompting Gambar AI - Zero to Mastery" />
         <meta property="og:image" content="/og-image-nanobanana.png" />
         <meta name="theme-color" content="#050505"/>
@@ -219,8 +275,8 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <div className={styles.noiseText}>
-                        <p>Pernah tak anda tulis prompt panjang-panjang, detail gila, tapi bila tekan &quot;Generate&quot;...</p>
-                        <p>Gambar yang keluar: Jari ada 6, muka macam hantu, atau objek yang anda minta langsung tak wujud.</p>
+                        <p>Pernah tak anda tulis prompt panjang-panjang dan sangat detail, tapi bila tekan &quot;Generate&quot;...</p>
+                        <p>Gambar yang keluar: Tak macam yang anda expect, ada arahan yang dia tak ikut.</p>
                         <div className={styles.noiseHighlight}>
                             Masalahnya bukan imaginasi anda. Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;.
                         </div>
@@ -231,7 +287,7 @@ export default function Home({ productSettings }) {
             </div>
         </section>
 
-        {/* --- The Solution: Use Case Grid (Proof) --- */}
+        {/* --- SHOWCASES SECTION --- */}
         <section className={styles.gallerySection}>
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
@@ -240,11 +296,196 @@ export default function Home({ productSettings }) {
                     <p>Dari muka surat 34 hingga 85, kita akan bedah siasat teknik-teknik ini:</p>
                 </div>
 
-                <div className={styles.bentoGrid}>
+                {/* Showcase 1: Tripod / Product */}
+                <ShowcaseTripod />
+
+                {/* Showcase 2: Food Presentation */}
+                <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
+                    <div className={styles.comparisonHeader}>
+                        <h3>Improve presentation gambar makanan yang real, walaupun tak pandai setup background</h3>
+                    </div>
+                    <div className={styles.comparisonGrid} style={{gap: '2rem'}}>
+                        {/* Food Item 1 */}
+                        <div className={styles.comparisonTwoCol}>
+                             <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_Before.jpg" 
+                                    alt="Nasi Kandar Before" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-before')}
+                                />
+                            </div>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_After.png" 
+                                    alt="Nasi Kandar After" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-after')}
+                                />
+                            </div>
+                        </div>
+                         {/* Food Item 2 */}
+                         <div className={styles.comparisonTwoCol}>
+                             <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Maggi%20Goreng.jpg" 
+                                    alt="Maggi Goreng Before" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('maggi-before')}
+                                />
+                            </div>
+                            <div className={styles.imageContainer}>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER</div>
+                                <Image 
+                                    src="KelasGPT_NanoBanana/Premium%20Food%20Image%20Analysis.png" 
+                                    alt="Food Analysis After" 
+                                    width={500} 
+                                    height={500} 
+                                    style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('food-analysis')}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Showcase 3: Visual Aids / Infographics */}
+                <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
+                    <div className={styles.comparisonHeader}>
+                        <h3>Kadang-kadang anda perlukan visual aid untuk bantu pembelajaran</h3>
+                    </div>
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Studygram%20Jantung.png" 
+                                alt="Studygram Jantung" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('studygram-jantung')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Scientific%20Infographic%20Image.png" 
+                                alt="Scientific Infographic" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('scientific-info')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Studygram%20Nucleus.png" 
+                                alt="Studygram Nucleus" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('studygram-nucleus')}
+                             />
+                         </div>
+                    </div>
+                </div>
+
+                {/* Showcase 4: Beautiful Portraits */}
+                <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
+                    <div className={styles.comparisonHeader}>
+                        <h3>Atau Kadang-kadang, anda cuma mahukan gambar yang cantik untuk diri anda</h3>
+                    </div>
+                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem'}}>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Woman_chiaschuro.png" 
+                                alt="Woman Chiaroscuro" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('woman-chiaro')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Man_chiaschuro.png" 
+                                alt="Man Chiaroscuro" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('man-chiaro')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Man_cinematic.png" 
+                                alt="Man Cinematic" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('man-cinematic')}
+                             />
+                         </div>
+                         <div className={styles.imageContainer}>
+                             <Image 
+                                src="KelasGPT_NanoBanana/Woman_birthday.png" 
+                                alt="Woman Birthday" 
+                                width={400} 
+                                height={500} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 768px) 100vw, 300px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('woman-bday')}
+                             />
+                         </div>
+                    </div>
+                </div>
+
+                {/* Showcase 5: Creative Workflow Grid */}
+                <ShowcaseCreative />
+
+                {/* Bento Grid: Possibilities */}
+                <div className={styles.bentoGrid} style={{marginTop: '4rem'}}>
                     {/* Item: Product Photography */}
                     <div className={`${styles.bentoCard} ${styles.span6}`}>
                         <div className={styles.bentoImageArea}>
-                            <Image src="nanobanana-food" alt="Food Photography" width={600} height={400} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image 
+                                src="nanobanana-food" 
+                                alt="Food Photography" 
+                                width={600} 
+                                height={400} 
+                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
+                                sizes="(max-width: 768px) 100vw, 500px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('nanobanana-food')}
+                            />
                             <div className={styles.imageOverlay}>Showcase No.24 & No.26</div>
                         </div>
                         <div className={styles.bentoContent}>
@@ -256,7 +497,16 @@ export default function Home({ productSettings }) {
                     {/* Item: Cinematic Portrait */}
                     <div className={`${styles.bentoCard} ${styles.span6}`}>
                         <div className={styles.bentoImageArea}>
-                            <Image src="nanobanana-woman-after" alt="Cinematic Portrait" width={600} height={400} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image 
+                                src="nanobanana-woman-after" 
+                                alt="Cinematic Portrait" 
+                                width={600} 
+                                height={400} 
+                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
+                                sizes="(max-width: 768px) 100vw, 500px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('nanobanana-woman-after')}
+                            />
                             <div className={styles.imageOverlay}>Showcase No.10 & Case Study 1</div>
                         </div>
                         <div className={styles.bentoContent}>
@@ -268,7 +518,16 @@ export default function Home({ productSettings }) {
                     {/* Item: Infographic (Large) */}
                     <div className={`${styles.bentoCard} ${styles.span12}`}>
                         <div className={styles.bentoImageArea}>
-                            <Image src="nanobanana-infographic" alt="Educational Infographic" width={1000} height={500} style={{objectFit: 'cover', width: '100%', height: '100%'}} />
+                            <Image 
+                                src="nanobanana-infographic-kids" 
+                                alt="Educational Infographic (Kids Poster)" 
+                                width={1000} 
+                                height={500} 
+                                style={{objectFit: 'cover', width: '100%', height: '100%'}} 
+                                sizes="100vw"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('nanobanana-infographic-kids')}
+                            />
                             <div className={styles.imageOverlay}>Showcase No.20 & Case Study 2</div>
                         </div>
                         <div className={styles.bentoContent}>
@@ -301,116 +560,114 @@ export default function Home({ productSettings }) {
 
                 {/* --- Deep Dive Transition --- */}
                 <div style={{margin: '6rem 0 4rem', textAlign: 'center', borderTop: '1px solid #222', paddingTop: '4rem'}}>
-                    <span className={styles.monoLabel}>DEEP DIVE EVIDENCE</span>
-                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Lihat Beza &apos;Sebelum&apos; &amp; &apos;Selepas&apos;</h2>
+                    <span className={styles.monoLabel}>BEHIND THE SCENES</span>
+                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Bukan Sekadar &apos;Prompt Tiru&apos;</h2>
                     <p style={{color: '#888', maxWidth: '600px', margin: '0 auto'}}>
-                        Teknik dalam buku ini bukan tentang &apos;edit&apos; gambar. Ia tentang &apos;re-imagine&apos; potential gambar anda menggunakan keyword yang tepat.
+                        Buku ini bukan koleksi prompt. Ia adalah dokumentasi &apos;Thought Process&apos; saya—bagaimana saya membina satu imej dari kosong, melapiskan detail demi detail (layering), sehingga terhasilnya visual yang lengkap.
                     </p>
                 </div>
 
                 <div className={styles.comparisonGrid}>
-                    {/* Case Study 1: Food */}
+                    {/* Case Study 1: Portrait Layering */}
                     <div className={styles.comparisonCard}>
                         <div className={styles.comparisonHeader}>
-                            <h3>Case Study 1: Food Photography</h3>
-                            <p>&quot;AI tak tukar makanan. AI cuma ubah &apos;Presentation&apos;. Dari gambar kedai makan biasa ke iklan komersial bernilai ribuan ringgit.&quot;</p>
+                            <h3>Case Study 1: The AI Transformation</h3>
+                            <p>&quot;Lihat bagaimana foto potret biasa yang &apos;flat&apos; diubah menjadi karya agung sinematik. Saya bedah siasat teknik &apos;layering&apos; keyword untuk mengawal lighting dan emosi tanpa perlu photoshoot mahal.&quot;</p>
                         </div>
                         <div className={styles.comparisonImages}>
                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: ORIGINAL PHOTO</div>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE</div>
                                 <Image 
-                                    src="nanobanana-maggi-before" 
-                                    alt="Original Maggi Goreng" 
+                                    src="KelasGPT_NanoBanana/Woman%20Cinematic%20Bokeh%20Portrait_Before.png" 
+                                    alt="Original Portrait Photo" 
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('woman-before')}
                                 />
                             </div>
                             <div className={styles.arrowDivider}>
                                 <ArrowRightIcon width={40} height={40} />
                             </div>
                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER: AI ENHANCED</div>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER</div>
                                 <Image 
-                                    src="nanobanana-food" 
-                                    alt="AI Enhanced Food Photography" 
+                                    src="KelasGPT_NanoBanana/Woman%20Cinematic%20Bokeh%20Portrait_After.png" 
+                                    alt="Final AI Enhanced Result" 
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('woman-after')}
                                 />
                             </div>
                         </div>
                     </div>
 
-                    {/* Case Study 2: Portrait */}
+                    {/* Case Study 2: Infographic (Visual Style) */}
                     <div className={styles.comparisonCard}>
                         <div className={styles.comparisonHeader}>
-                            <h3>Case Study 2: Cinematic Portrait</h3>
-                            <p>&quot;Dari &apos;flat&apos; photo ke &apos;Cinematic Masterpiece&apos;. Kawal lighting, depth of field, dan mood dengan keyword yang betul.&quot;</p>
+                            <h3>Case Study 2: Visual Style Architecture</h3>
+                            <p>&quot;Menghasilkan Infografik yang &apos;readable&apos; dan cantik bukan nasib. Ia memerlukan struktur prompt yang spesifik. Lihat bagaimana saya menyusun &apos;Information Architecture&apos; di dalam prompt.&quot;</p>
                         </div>
-                        <div className={styles.comparisonImages}>
-                            <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: FLAT LIGHTING</div>
-                                <Image 
-                                    src="nanobanana-woman-before" 
-                                    alt="Original Woman Portrait" 
-                                    width={500} 
-                                    height={500} 
-                                    style={{width: '100%', height: 'auto', display: 'block'}} 
-                                />
-                            </div>
-                            <div className={styles.arrowDivider}>
-                                <ArrowRightIcon width={40} height={40} />
-                            </div>
-                            <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER: CINEMATIC LIGHTING</div>
-                                <Image 
-                                    src="nanobanana-woman-after" 
-                                    alt="AI Cinematic Portrait" 
-                                    width={500} 
-                                    height={500} 
-                                    style={{width: '100%', height: 'auto', display: 'block'}} 
-                                />
-                            </div>
+                        <div className={styles.imageContainer} style={{maxWidth: '800px', margin: '0 auto'}}>
+                            <div className={`${styles.imageLabel} ${styles.labelAfter}`} style={{background: '#2980b9', borderColor: '#2980b9'}}>FINAL OUTPUT</div>
+                            <Image 
+                                src="KelasGPT_NanoBanana/Case%20Study%202_Infographic%20for%20Kids.png" 
+                                alt="Detailed Infographic Result" 
+                                width={1000} 
+                                height={600} 
+                                style={{width: '100%', height: 'auto', display: 'block'}} 
+                                sizes="(max-width: 1024px) 100vw, 800px"
+                                placeholder="blur"
+                                blurDataURL={getBlurDataURL('infographic-kids')}
+                            />
                         </div>
                     </div>
 
-                    {/* Case Study 3: Baby Car Seat */}
+                    {/* Case Study 3: Meta Prompting (Nasi Kandar) */}
                     <div className={styles.comparisonCard}>
                         <div className={styles.comparisonHeader}>
-                            <h3>Case Study 3: Product Cleanup &amp; Revamp</h3>
-                            <p>&quot;Gambar asal kusam dan &apos;messy&apos;? AI boleh bersihkan background, betulkan texture, dan jadikan ia nampak baru keluar kotak.&quot;</p>
+                            <h3>Case Study 3: Meta-Prompting Brand Control</h3>
+                            <p>&quot;Macam mana nak paksa AI ikut &apos;Brand Identity&apos; anda? Saya tunjukkan workflow Meta-Prompting untuk transform rujukan kasar (original reference) kepada design Kad Raya yang professional dan &apos;on-brand&apos;.&quot;</p>
                         </div>
                         <div className={styles.comparisonImages}>
                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>BEFORE: DULL &amp; USED</div>
+                                <div className={`${styles.imageLabel} ${styles.labelBefore}`}>ORIGINAL REFERENCE</div>
                                 <Image 
-                                    src="nanobanana-baby-car-seat-before" 
-                                    alt="Original Baby Car Seat" 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_Before.jpg" 
+                                    alt="Original Reference Image" 
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-before')}
                                 />
                             </div>
                             <div className={styles.arrowDivider}>
                                 <ArrowRightIcon width={40} height={40} />
                             </div>
                             <div className={styles.imageContainer}>
-                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>AFTER: CLEAN &amp; NEW</div>
+                                <div className={`${styles.imageLabel} ${styles.labelAfter}`}>FINAL BRANDED DESIGN</div>
                                 <Image 
-                                    src="nanobanana-baby-car-seat-after" 
-                                    alt="AI Enhanced Baby Car Seat" 
+                                    src="KelasGPT_NanoBanana/Nasi%20Kandar%20Celebration%20Card_After.png" 
+                                    alt="Final AI-Enhanced Branded Design" 
                                     width={500} 
                                     height={500} 
                                     style={{width: '100%', height: 'auto', display: 'block'}} 
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                    placeholder="blur"
+                                    blurDataURL={getBlurDataURL('nasi-after')}
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Tripod Slider Showcase */}
-                <TripodSlider />
             </div>
         </section>
 
