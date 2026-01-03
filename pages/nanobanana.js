@@ -478,10 +478,10 @@ export default function Home({ productSettings }) {
 
                 {/* --- Deep Dive Transition --- */}
                 <div style={{margin: '6rem 0 4rem', textAlign: 'center', borderTop: '1px solid #222', paddingTop: '4rem'}}>
-                    <span className={styles.monoLabel}>BEHIND THE SCENES</span>
-                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Bukan Sekadar &apos;Prompt Tiru&apos;</h2>
+                    <span className={styles.monoLabel}>Special Case Studies</span>
+                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Bukan Sekadar <br/>&apos;Tiru Prompt&apos;</h2>
                     <p style={{color: '#888', maxWidth: '600px', margin: '0 auto'}}>
-                        Buku ini bukan koleksi prompt. Ia adalah dokumentasi &apos;Thought Process&apos; saya—bagaimana saya membina satu imej dari kosong, melapiskan detail demi detail (layering), sehingga terhasilnya visual yang lengkap.
+                        Tapi tiru &apos;Workflow dan Thought Process&apos; saya. Bagaimana saya membina satu prompt dari yang paling simple, layer detail demi detail, sehingga terhasilnya visual prompt yang lengkap.
                     </p>
                 </div>
 
@@ -490,7 +490,7 @@ export default function Home({ productSettings }) {
                     <div className={styles.comparisonCard}>
                         <div className={styles.comparisonHeader}>
                             <h3>Case Study 1: The AI Transformation</h3>
-                            <p>&quot;Lihat bagaimana foto potret biasa yang &apos;flat&apos; diubah menjadi karya agung sinematik. Saya bedah siasat teknik &apos;layering&apos; keyword untuk mengawal lighting dan emosi tanpa perlu photoshoot mahal.&quot;</p>
+                            <p>&quot;Lihat bagaimana foto potret biasa yang &apos;flat&apos; diubah menjadi potret ala poster filem. Bedah siasat teknik &apos;layering&apos; keyword untuk mengawal lighting dan emosi tanpa perlu photoshoot mahal.&quot;</p>
                         </div>
                         <div className={styles.comparisonImages}>
                             <div className={styles.imageContainer}>
@@ -549,8 +549,8 @@ export default function Home({ productSettings }) {
                     {/* Case Study 3: Meta Prompting (Nasi Kandar) */}
                     <div className={styles.comparisonCard}>
                         <div className={styles.comparisonHeader}>
-                            <h3>Case Study 3: Meta-Prompting Brand Control</h3>
-                            <p>&quot;Macam mana nak paksa AI ikut &apos;Brand Identity&apos; anda? Saya tunjukkan workflow Meta-Prompting untuk transform rujukan kasar (original reference) kepada design Kad Raya yang professional dan &apos;on-brand&apos;.&quot;</p>
+                            <h3>Case Study 3: Proses Meta-Prompting</h3>
+                            <p><br/>&quot;Macam mana nak suruh AI jadi &apos;Prompt Editor&apos; anda?<br/><br/>Tiru je workflow meta-prompting yang saya guna untuk transform gambar simple jadi (original reference) kepada design Kad Digital New Year yang cantik dan professional.&quot;</p>
                         </div>
                         <div className={styles.comparisonImages}>
                             <div className={styles.imageContainer}>
