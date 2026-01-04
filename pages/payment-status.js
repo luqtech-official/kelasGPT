@@ -392,7 +392,7 @@ export default function PaymentStatusPage() {
               
               <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
                 {status === 'success' && (
-                  <Link href="/videolisting" style={{
+                  <a href="https://drive.google.com/file/d/1EnNjxoEf-oACeWirjAM5fCmtmBYTyG3j/view?usp=sharing" target="_blank" rel="noopener noreferrer" style={{
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -410,7 +410,7 @@ export default function PaymentStatusPage() {
                     boxSizing: 'border-box'
                   }}>
                     Download eBook
-                  </Link>
+                  </a>
                 )}
                 
                 {status === 'failed' && (
