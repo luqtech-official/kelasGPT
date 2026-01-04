@@ -71,8 +71,8 @@ const ShowcaseTripod = () => {
   return (
     <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
         <div className={styles.comparisonHeader}>
-            <h3>Gambar produk yang <span className={styles.blueEmphasis}>Highly Converting!</span><br/>5 Minit je bila guna workflow Key-Visual</h3>
-            <p>&quot;Gunakan workflow KV system untuk tukar satu gambar produk anda yang &apos;biasa-biasa&apos; kepada pelbagai variasi studio-grade key visual.&quot;</p>
+            <h3>Gambar produk yang <br/><span className={styles.highlight}>Highly Converting!</span><br/>5 Minit je bila guna workflow Key-Visual</h3>
+            <p>&quot;Gunakan workflow KV system untuk tukar satu gambar produk anda yang &apos;biasa-biasa&apos; kepada pelbagai variasi Key-Visual bertaraf studio.&quot;</p>
         </div>
         <div className={styles.comparisonTwoCol}>
             {/* Before Image */}
@@ -140,7 +140,7 @@ const ShowcaseCreative = () => {
   return (
     <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
         <div className={styles.comparisonHeader}>
-            <h3>Idea anda bercambah dengan sendirinya,<br/>Bila ada<br/><span className={styles.blueEmphasis}>Prompting Workflow</span> yang betul.</h3>
+            <h3>Idea anda bercambah dengan sendirinya,<br/>Bila ada<br/><span className={styles.highlight}>Prompting Workflow</span> yang betul.</h3>
             <p><br/>&quot;Edit meme sendiri just for fun. Product exploded view untuk pitch deck. Cinematic shots untuk hook social content. Knolling photography untuk feed aesthetic.&quot;<br/><br/><strong>Apa yang anda boleh bayang, anda boleh buat!</strong></p>
         </div>
         
@@ -240,12 +240,14 @@ export default function Home({ productSettings }) {
               </div>
               
               <h1 className={styles.heroTitle}>
-                Belajar Hasilkan Gambar AI<br />
-                <span className={styles.heroEmphasis}>Yang Memukau</span>
+                Teknik Gambar AI<br />
+                <span className={styles.heroEmphasis}>Yang Memukau,</span>
+                <br/>Sekali Pandang, Nampak 
+                <span className={styles.heroEmphasis}> Real!</span>
               </h1>
               
               <p className={styles.heroSubTitle}>
-                Ramai ingat prompting AI senang. Taip je, dapat hasil. Tapi kenapa hasil awak <span className={styles.highlight}>&apos;biasa-biasa?&apos;</span>... Tapi orang lain dapat output yang <span className={styles.highlight}>Gempak, Viral??</span> Perbezaannya bukan tool, tapi <span className={styles.heroEmphasis} style={{fontWeight: 800, fontSize: '1.2em'}}>Teknik</span>.
+                Ramai ingat prompting AI senang.<br/>Taip je, dapat hasil. <br/>Tapi kenapa <strong>susah nak dapat result cantik, gempak,</strong> macam orang lain?
               </p>
 
               <div className={styles.heroVisualWrapper}>
@@ -264,7 +266,7 @@ export default function Home({ productSettings }) {
                     />
                  </div>
                  <div className={styles.heroCaption}>
-                    👆 AI yang sama, Model yang sama, 1-Minit yang sama.<br/>Hasil yang completely different!<br/>Bezanya? Teknik Prompting.
+                    👆 AI yang sama, Model yang sama, 1-Minit yang sama.<br/>Hasil yang sangat berbeza!<br/>Bezanya? Teknik Prompting.
                  </div>
               </div>
             </div>
@@ -281,12 +283,31 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <div className={styles.noiseText}>
-                        <p>Pernah tak anda tulis prompt panjang-panjang dan sangat detail, tapi bila tekan &quot;Generate&quot;...</p>
-                        <p>Gambar yang keluar: Tak macam yang anda expect, ada arahan yang dia tak ikut.</p>
+                        <p style={{ fontWeight: '800', fontSize: '1.2rem', color: '#D32F2F', marginBottom: '0.5rem' }}><br/>STOP WASTING YOUR TIME.</p>
+                        {/* Disable this line below because i dont like it. It make the impression that the apps im teaching will need to be paid. */}
+                        {/* <p style={{fontSize: '1.1rem', marginBottom: '1.5rem'}}>Setiap minit anda type prompt yang sia-sia = <strong>RM hilang dari poket anda.</strong></p>  */}
+                        
+                        <p>Bila anda tekan &quot;Generate&quot;, hasilnya bukan sekadar &quot;tak jadi&quot;, tapi:</p>
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
+                            <li style={{ marginBottom: '8px' }}>Muka model lansung tak sama macam yang anda upload</li>
+                            <li style={{ marginBottom: '8px' }}>Background yang anda nak sharp, jadi blur</li>
+                            <li style={{ marginBottom: '8px' }}>Lighting nampak pelik, buat gambar nampak buruk</li>
+                            <li style={{ marginBottom: '8px' }}>Paling teruk, tiba-tiba orang ada 3 tangan </li>
+                        </ul>
+
+                        <p><strong>Berapa kali dah anda:</strong></p>
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
+                            <li style={{ marginBottom: '8px' }}>Buang 2 jam cuba pelbagai prompt tapi hasil tetap teruk?</li>
+                            <li style={{ marginBottom: '8px' }}>Delete 50+ generated images sebab tak boleh pakai?</li>
+                            <li style={{ marginBottom: '8px' }}>Tengok competitor post gambar cantik, rasa jealous?</li>
+                            <li style={{ marginBottom: '8px' }}>Fikir &apos;maybe AI ni bukan untuk saya&apos;?</li>
+                        </ul>
+
                         <div className={styles.noiseHighlight}>
-                            Masalahnya bukan imaginasi anda. Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;.
+                            Kalau freelancer charge RM50/hour untuk design,<br/>anda dah <strong>RUGI RM100 setiap kali</strong> buang masa 2 jam trial & error.
                         </div>
-                        <p>Dia tak faham bahasa bunga-bunga. Dia faham <strong>KEYWORD</strong>. Dia perlukan arahan teknikal yang spesifik tentang lighting, sudut kamera, dan gaya visual.</p>
+
+                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda. Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;. Dia tak faham bahasa bunga-bunga. Dia faham <strong>KEYWORD</strong>.</p>
                         <p><strong>Manual strategi</strong> ini bukan koleksi prompt untuk dihafal. Ia adalah &apos;blueprint&apos; teknikal untuk anda bercakap dalam bahasa yang AI faham sepenuhnya.</p>
                     </div>
                 </div>
@@ -299,7 +320,7 @@ export default function Home({ productSettings }) {
                 <div className={styles.sectionHeader}>
                     {/* <span className={styles.monoLabel}>POSSIBILITIES</span> */}
                     <h2>Apa Yang Bakal Anda Kuasai?</h2>
-                    <p>Ini bukanlah sekadar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.blueEmphasis}>Proven Teknik dan Workflow</span> untuk hasilkan prompt gambar berkualiti yang anda nak, dengan sangat mudah!</p>
+                    <p>Ini bukanlah sekadar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan prompt gambar berkualiti yang anda nak, dengan sangat mudah!</p>
                 </div>
 
                 {/* Showcase 1: Tripod / Product */}
@@ -308,7 +329,7 @@ export default function Home({ productSettings }) {
                 {/* Showcase 2: Food Presentation */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Tunjuk<br/><span className={styles.blueEmphasis}>GAMBAR REAL</span><br/>makanan anda,<br/>Tapi dengan <span className={styles.blueEmphasis}>Editorial Quality!</span></h3>
+                        <h3>Tunjuk<br/><span className={styles.highlight}>GAMBAR REAL</span><br/>makanan anda,<br/>Tapi dengan <span className={styles.highlight}>Editorial Quality!</span></h3>
                     </div>
                     <div className={styles.comparisonGrid} style={{gap: '2rem'}}>
                         {/* Food Item 1 */}
@@ -375,7 +396,7 @@ export default function Home({ productSettings }) {
                 {/* Showcase 3: Visual Aids / Infographics */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Dari <span className={styles.blueEmphasis}>Magazine-Style</span> infographic untuk social media,<br/>Sampailah Study Notes Yang <span className={styles.blueEmphasis}>Buat Anak Semangat Nak Study.</span></h3>
+                        <h3>Dari <span className={styles.highlight}>Magazine-Style</span> infographic untuk social media,<br/>Sampailah Study Notes Yang <span className={styles.highlight}>Buat Anak Semangat Nak Study.</span></h3>
                     </div>
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
@@ -420,7 +441,7 @@ export default function Home({ productSettings }) {
                 {/* Showcase 4: Beautiful Portraits */}
                 <div className={styles.comparisonCard} style={{marginBottom: '4rem'}}>
                     <div className={styles.comparisonHeader}>
-                        <h3>Tak perlu jadi photogenic untuk dapatkan gambar anda yang <span className={styles.blueEmphasis}>Insta-Worthy!</span></h3>
+                        <h3>Tak perlu jadi photogenic untuk dapatkan gambar anda yang <span className={styles.highlight}>Insta-Worthy!</span></h3>
                     </div>
                     <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem'}}>
                          <div className={styles.imageContainer}>
@@ -486,7 +507,7 @@ export default function Home({ productSettings }) {
                     <span className={styles.monoLabel}>Special Case Studies</span>
                     <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Bukan Sekadar <br/>&apos;Tiru Prompt&apos;</h2>
                     <p style={{color: '#888', maxWidth: '600px', margin: '0 auto'}}>
-                        Tapi tiru &apos;Workflow dan Thought Process&apos; saya. Bagaimana saya membina satu prompt dari yang paling simple, layer detail demi detail, sehingga terhasilnya visual prompt yang lengkap.
+                        Tapi tiru <span className={styles.highlight}> &apos;Workflow dan Thought Process&apos;</span> saya. Bagaimana saya membina satu prompt dari yang paling simple, layer detail demi detail, sehingga terhasilnya visual prompt yang lengkap.
                     </p>
                 </div>
 
@@ -628,6 +649,109 @@ export default function Home({ productSettings }) {
                     </div>
                 </div>
             </div>
+        </section>
+
+        {/* --- Book Content Preview (Gary Halbert Style) --- */}
+        <section className={styles.gallerySection}>
+             <div className={styles.container}>
+                <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+                    <span className={styles.monoLabel}>NO SECRETS. NO GATEKEEPING.</span>
+                    <h2 style={{fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem'}}>Bukan Sekadar &quot;Teori&quot;.<br/>Ini Adalah <span className={styles.highlight}>Visual Encyclopedia.</span></h2>
+                    <p style={{maxWidth: '700px', margin: '0 auto', color: '#ccc', fontSize: '1.1rem', lineHeight: '1.6'}}>
+                        
+                        Dalam eBook ni, Tak ada apa pun yang saya simpan atau sorok daripada anda. 
+                        <br/><br/>
+                        208 mukasurat yang padat dengan visual, prompt, penjelasan, teknik dan workflow step-by-step.
+                        Ini adalah snapshot content sebenar dari dalam buku ini.
+                        <br/><br/>
+                        <span style={{color: 'var(--accent-color)', fontWeight: 'bold'}}>Zero Fluff. 100% Actionable.</span>
+                    </p>
+                </div>
+
+                {/* Snippets Grid */}
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                    gap: '1.5rem', 
+                    marginTop: '2rem',
+                    marginBottom: '4rem',
+                    position: 'relative',
+                    zIndex: '2'
+                }}>
+                    <div style={{ background: '#111', borderRadius: '12px', border: '1px solid #333', overflow: 'hidden' }}>
+                        <Image 
+                            src="nanobanana-snippet-1" 
+                            alt="Case Studies Snippet" 
+                            width={400} 
+                            height={500} 
+                            style={{width: '100%', height: 'auto', display: 'block'}}
+                        />
+                        <div style={{ padding: '1rem', fontSize: '0.85rem', color: '#888', borderTop: '1px solid #333' }}>
+                            <strong style={{ color: 'var(--accent-color)', display: 'block', marginBottom: '4px' }}>Muka Surat 169-170</strong>
+                            Dalam setiap case studies, saya tunjuk keyword apa saya tambah, dan kenapa saya tambah, step-by-step transformation.
+                        </div>
+                    </div>
+                    <div style={{ background: '#111', borderRadius: '12px', border: '1px solid #333', overflow: 'hidden' }}>
+                        <Image 
+                            src="nanobanana-snippet-2" 
+                            alt="Camera Angle Snippet" 
+                            width={400} 
+                            height={500} 
+                            style={{width: '100%', height: 'auto', display: 'block'}}
+                        />
+                        <div style={{ padding: '1rem', fontSize: '0.85rem', color: '#888', borderTop: '1px solid #333' }}>
+                            <strong style={{ color: 'var(--accent-color)', display: 'block', marginBottom: '4px' }}>Muka Surat 119-120</strong>
+                            Bila ada keyword yang degil, AI taknak ikut, saya tunjuk macam mana nak detailkan dengan betul supaya AI dengar arahan prompt anda.
+                        </div>
+                    </div>
+                    <div style={{ background: '#111', borderRadius: '12px', border: '1px solid #333', overflow: 'hidden' }}>
+                        <Image 
+                            src="nanobanana-snippet-3" 
+                            alt="Use Case Snippet" 
+                            width={400} 
+                            height={500} 
+                            style={{width: '100%', height: 'auto', display: 'block'}}
+                        />
+                        <div style={{ padding: '1rem', fontSize: '0.85rem', color: '#888', borderTop: '1px solid #333' }}>
+                            <strong style={{ color: 'var(--accent-color)', display: 'block', marginBottom: '4px' }}>Muka Surat 59-60</strong>
+                            Setiap gambar yang dihasilkan, saya kongsikan sekali prompt dan tips and tricks yang berkaitan.
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+                    
+                    <p style={{maxWidth: '700px', margin: '0 auto', color: '#ccc', fontSize: '1.1rem', lineHeight: '1.6'}}>
+                        
+                        Exact Overview 208 mukasurat yang <br/><span style={{color: 'var(--accent-color)', fontWeight: 'bold'}}>anda akan dapat!</span>
+                    </p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', position: 'relative', zIndex: '2' }}>
+                     <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid #333', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
+                        <Image 
+                            src="nanobanana-content-1" 
+                            alt="Book Content Preview Part 1" 
+                            width={1000} 
+                            height={1000} 
+                            style={{width: '100%', height: 'auto', display: 'block'}}
+                            placeholder="blur"
+                            blurDataURL={getBlurDataURL('content-1')}
+                        />
+                     </div>
+                     <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid #333', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
+                        <Image 
+                            src="nanobanana-content-2" 
+                            alt="Book Content Preview Part 2" 
+                            width={1000} 
+                            height={1000} 
+                            style={{width: '100%', height: 'auto', display: 'block'}} 
+                            placeholder="blur"
+                            blurDataURL={getBlurDataURL('content-2')}
+                        />
+                     </div>
+                </div>
+             </div>
         </section>
 
         {/* --- Curriculum Breakdown (Fascinations) --- */}

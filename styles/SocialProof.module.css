@@ -98,7 +98,7 @@
 }
 
 /* Mobile Responsive */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .socialProofContainer {
     /* Position at TOP */
     bottom: auto;
@@ -112,13 +112,14 @@
     width: 90%;
     max-width: 340px;
     
-    /* Mobile Hidden State: Slide DOWN from top slightly */
-    transform: translate(-50%, -20px);
+    /* Mobile Hidden State: Slide from Top-Left */
+    /* Starts off-screen to the left (-150%) and slightly above (-20px) */
+    transform: translate3d(-150%, -20px, 0);
   }
   
   .socialProofContainer.visible {
     /* Mobile Visible State */
-    transform: translate(-50%, 0);
+    transform: translate3d(-50%, 0, 0);
   }
   
   /* Make it smaller */
