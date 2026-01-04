@@ -236,7 +236,7 @@ export default function Home({ productSettings }) {
           <div className={styles.container}>
             <div className={styles.heroContent}>
               <div className={styles.heroPill}>
-                <span className={styles.heroPillText}>TEKNIK MENULIS PROMPT • DARI ZERO KE MASTERY</span>
+                <span className={styles.heroPillText}>• DARI ZERO KE MASTERY •</span>
               </div>
               
               <h1 className={styles.heroTitle}>
@@ -245,7 +245,7 @@ export default function Home({ productSettings }) {
               </h1>
               
               <p className={styles.heroSubTitle}>
-                Lupakan &apos;teka-teki&apos;. Guna strategi <span className={styles.highlight}>&apos;Prompt Keyword&apos;</span> ini untuk PAKSA AI hasilkan gambar gred-studio yang TEPAT, KONSISTEN &amp; MEMUKAU. Setiap masa. Tanpa gagal.
+                Ramai ingat prompting AI senang. Taip je, dapat hasil. Tapi kenapa hasil awak <span className={styles.highlight}>&apos;biasa-biasa?&apos;</span>... Tapi orang lain dapat output yang <span className={styles.highlight}>Gempak, Viral??</span> Perbezaannya bukan tool, tapi <span className={styles.heroEmphasis} style={{fontWeight: 800, fontSize: '1.2em'}}>Teknik</span>.
               </p>
 
               <div className={styles.heroVisualWrapper}>
@@ -264,7 +264,7 @@ export default function Home({ productSettings }) {
                     />
                  </div>
                  <div className={styles.heroCaption}>
-                    👆 Bukan sekadar gambar cantik. Ini adalah hasil kawalan penuh ke atas AI.
+                    👆 AI yang sama, Model yang sama, 1-Minit yang sama.<br/>Hasil yang completely different!<br/>Bezanya? Teknik Prompting.
                  </div>
               </div>
             </div>
