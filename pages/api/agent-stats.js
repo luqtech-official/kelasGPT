@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     const agentIds = agents.map(a => a.agent_id);
     const { data: allOrders, error: orderError } = await supabase
       .from('orders')
-      .select('agent_id, commission_earned, order_status')
+      .select('agent_id, commission_earned, order_status, payout_status')
       .in('agent_id', agentIds);
 
     if (orderError) throw orderError;
@@ -61,11 +61,20 @@ export default async function handler(req, res) {
       let pendingCount = 0;
       let failedCount = 0;
       let totalCommission = 0;
+      let commissionSettled = 0;
+      let commissionPending = 0;
 
       agentOrders.forEach(o => {
           if (o.order_status === 'paid') {
               paidCount++;
-              totalCommission += Number(o.commission_earned) || 10;
+              const comm = Number(o.commission_earned) || 10;
+              totalCommission += comm;
+              
+              if (o.payout_status === 'paid') {
+                  commissionSettled += comm;
+              } else {
+                  commissionPending += comm;
+              }
           } else if (o.order_status === 'pending') {
               pendingCount++;
           } else if (o.order_status === 'failed' || o.order_status === 'cancelled') {
@@ -78,7 +87,9 @@ export default async function handler(req, res) {
         paid: paidCount,
         pending: pendingCount,
         failed: failedCount,
-        totalCommission: totalCommission
+        totalCommission: totalCommission,
+        commissionSettled: commissionSettled,
+        commissionPending: commissionPending
       };
     });
 

@@ -1,146 +1,319 @@
 .container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
-  font-family: var(--font-inter), sans-serif;
-  color: #1f2937;
+  padding: 2rem 1rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #e2e8f0;
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #0f172a;
 }
 
+/* Header Section */
 .header {
   text-align: center;
   margin-bottom: 3rem;
+  padding-top: 2rem;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  color: #111827;
-  margin-bottom: 0.5rem;
+  color: #f8fafc;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
 }
 
 .subtitle {
-  color: #6b7280;
-  font-size: 1rem;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* Search Bar */
-.searchWrapper {
-  max-width: 500px;
+/* Search Section */
+.searchContainer {
+  max-width: 480px;
   margin: 0 auto 3rem;
-  position: relative;
+  background: #1e293b;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #334155;
+}
+
+.searchLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .searchInput {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 50px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #475569;
+  border-radius: 8px;
   transition: all 0.2s;
-  outline: none;
+  background: #0f172a;
+  color: #f1f5f9;
 }
 
 .searchInput:focus {
+  outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 4px 12px -1px rgba(59, 130, 246, 0.15);
+  background: #0f172a;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
-/* Stats Cards (Single Agent View) */
+.searchButton {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.searchButton:hover {
+  background: #2563eb;
+}
+
+.searchButton:disabled {
+  background: #475569;
+  cursor: not-allowed;
+  color: #94a3b8;
+}
+
+/* Dashboard View */
+.dashboard {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.welcomeBanner {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  border: 1px solid #334155;
+}
+
+.agentInfo h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  color: #f1f5f9;
+}
+
+.agentIdBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.refreshButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.refreshButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Stats Grid */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .statCard {
-  background: white;
+  background: #1e293b;
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  border-color: #475569;
+}
+
+/* Add subtle glow/gradient to cards */
+.cardCommission {
+    background: linear-gradient(to bottom right, #1e293b, #172554); /* Dark blue hint */
+}
+
+.cardPaid {
+    background: linear-gradient(to bottom right, #1e293b, #064e3b); /* Dark green hint */
+}
+
+.cardPending {
+    background: linear-gradient(to bottom right, #1e293b, #451a03); /* Dark amber hint */
+}
+
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardIcon {
+  font-size: 1.25rem;
+  opacity: 0.8;
+  background: rgba(255,255,255,0.05);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.cardValue {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.cardSubtext {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Analytics Section - Simplified for Actions */
+.analyticsGrid {
+  display: grid;
+  grid-template-columns: 1fr; /* Full width since we removed chart */
+  gap: 1.5rem;
+}
+
+.analyticsCard {
+  background: #1e293b;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  border: 1px solid #f3f4f6;
-  text-align: center;
+  border: 1px solid #334155;
 }
 
-.statValue {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0.5rem 0;
-  color: #111827;
+.analyticsTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #334155;
 }
 
-.statLabel {
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  color: #6b7280;
+/* Status Indicators */
+.statusSuccess {
+  color: #4ade80;
 }
 
-.statPaid { color: #059669; }
-.statPending { color: #d97706; }
-.statFailed { color: #dc2626; }
-
-/* Table (Admin View) */
-.tableWrapper {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
+.statusPending {
+  color: #fbbf24;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+.statusFailed {
+  color: #f87171;
 }
 
-.table th {
-  background: #f9fafb;
-  padding: 1rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  color: #4b5563;
-  border-bottom: 1px solid #e5e7eb;
+/* Responsive */
+@media (max-width: 768px) {
+  .welcomeBanner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
 }
 
-.table td {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
-  font-size: 0.95rem;
-}
-
-.table tr:last-child td {
-  border-bottom: none;
-}
-
-.table tr:hover {
-  background-color: #fcfcfc;
-}
-
-.agentBadge {
-  display: inline-block;
-  background: #eff6ff;
-  color: #1d4ed8;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .loader {
-  text-align: center;
-  padding: 2rem;
-  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: #94a3b8;
 }
 
-.emptyState {
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #334155;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.errorMessage {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
   text-align: center;
-  padding: 4rem 0;
-  color: #9ca3af;
 }

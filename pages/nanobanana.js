@@ -447,7 +447,7 @@ export default function Home({ productSettings }) {
                         <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
                             <li style={{ marginBottom: '8px' }}>Buang 2 jam cuba pelbagai prompt tapi hasil tetap teruk?</li>
                             <li style={{ marginBottom: '8px' }}>Delete 50+ generated images sebab tak boleh pakai?</li>
-                            <li style={{ marginBottom: '8px' }}>Tengok competitor post gambar cantik, rasa jealous?</li>
+                            <li style={{ marginBottom: '8px' }}>Tengok orang lain post gambar cantik, rasa jealous?</li>
                             <li style={{ marginBottom: '8px' }}>Fikir &apos;maybe AI ni bukan untuk saya&apos;?</li>
                         </ul>
 
@@ -455,8 +455,8 @@ export default function Home({ productSettings }) {
                             Kalau freelancer charge RM50/hour untuk design,<br/>anda dah <strong>RUGI RM100 setiap kali</strong> buang masa 2 jam trial & error.
                         </div>
 
-                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda. Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;. Dia tak faham bahasa bunga-bunga. Dia faham <strong>KEYWORD</strong>.</p>
-                        <p><strong>Manual strategi</strong> ini bukan koleksi prompt untuk dihafal. Ia adalah &apos;blueprint&apos; teknikal untuk anda bercakap dalam bahasa yang AI faham sepenuhnya.</p>
+                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda.<br/><br/>Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;. Dia tak faham bahasa manusia macam kita faham bahasa manusia. Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
+                        <p>Selagi mana anda tahu teknik menulis supaya AI faham keyword apa yang dia patut utamakan, ada banyak benda yang anda boleh buat dan hasilkan.</p>
                     </div>
                 </div>
             </div>
@@ -467,7 +467,7 @@ export default function Home({ productSettings }) {
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     {/* <span className={styles.monoLabel}>POSSIBILITIES</span> */}
-                    <h2>Apa Yang Bakal Anda Kuasai?</h2>
+                    <h2>Apa Yang Boleh Anda Buat Bila Tahu Cara Prompt Yang Betul?</h2>
                     <p>Ini bukanlah sekadar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan prompt gambar berkualiti yang anda nak, dengan sangat mudah!</p>
                 </div>
 
