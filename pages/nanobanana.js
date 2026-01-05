@@ -77,8 +77,122 @@ const LinkIcon = (props) => (
     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
   </svg>
 );
+const ChevronDownIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"></polyline></svg>
+);
 
 // --- Components ---
+
+const FAQSection = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+    const faqs = [
+    {
+      question: "Perlu Subscribe apa-apa apps ke?",
+      answer: (
+        <>
+          Tak perlu. ChatGPT, Gemini dan Grok memberikan daily free quota yang mencukupi.
+          <br /><br />
+          Anda boleh menggunakan Nano Banana untuk menghasilkan 30 gambar SEHARI,
+          dengan free plan dari Gemini.
+          <br /><br />
+          Sekiranya itu tidak mencukupi, Plan ChatGPT-Go atau Google Workspace untuk Gemini
+          pun lebih dari mencukupi dengan yuran di bawah RM50 sebulan.
+        </>
+      ),
+    },
+    {
+      question: "Format eBook ni apa?",
+      answer: (
+        <>
+          Ia adalah Digital Ebook dalam format PDF.
+          <br /><br />
+          Selepas pembayaran, anda akan dibawa kepada link download.
+          <br /><br />
+          Salinan link download juga akan terus ke email anda.
+          <br /><br />
+          Anda boleh baca di Smartphone, Tablet atau Laptop.
+        </>
+      ),
+    },
+    {
+      question: "Kalau saya tak pandai IT boleh ke?",
+      answer: (
+        <>
+          Boleh sangat!
+          <br /><br />
+          Panduan ini disusun khas untuk beginner (Zero),
+          sampailah mahir teknik-teknik yang lebih advance.
+          <br /><br />
+          Bahasa yang digunakan adalah Bahasa Melayu santai
+          dan step-by-step yang mudah diikuti.
+        </>
+      ),
+    },
+    {
+      question: "Prompt ni untuk ChatGPT je ke?",
+      answer: (
+        <>
+          Fokus utama case study dalam buku ini adalah menggunakan Gemini (Nano Banana).
+          <br /><br />
+          TAPI itu hanyalah atas dasar personal preference pengarang
+          (plus Gemini ada daily free quota yang sangat banyak).
+          <br /><br />
+          Teknik, Workflow dan Prompt yang diberikan boleh digunakan bersama
+          mana-mana platform AI utama seperti ChatGPT, Gemini dan Grok.
+        </>
+      ),
+    },
+    {
+      question: "Tak Faham lah, Gemini tu apa? Nano Banana Apa Pula? Apa Beza Dengan ChatGPT?",
+      answer: (
+        <>
+          Gemini ialah AI keluaran Google, sementara ChatGPT ialah AI keluaran syarikat OpenAI.
+          <br /><br />
+          Ianya ialah aplikasi yang sama, iaitu Aplikasi Generative AI, cuma mereka saling bersaing satu sama lain kerana dihasilkan oleh dua company yang berbeza.
+          <br /><br />
+          Nano banana pula cumalah nama model di dalam applikasi Gemini, sebagaimana ChatGPT mempunya pelbagai model seperti GPT-4o, GPT 4.1,  GPT-5.2 dan sebagainya.
+          <br /><br />
+          Penjelasan lebih jelas diberikan didalam buku, serta link untuk akses dan install setiap aplikasi ini.
+        </>
+      ),
+    },
+  ];
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  }
+
+  return (
+    <section className={`${styles.lightSection}`} style={{padding: '4rem 0', borderTop: '1px solid #e0e0e0'}}>
+      <div className={styles.container}>
+        <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+           <h2 style={{fontSize: '2rem', fontWeight: '800', color: '#111'}}>Soalan Lazim (FAQ)</h2>
+        </div>
+        <div style={{maxWidth: '800px', margin: '0 auto'}}>
+          {faqs.map((faq, index) => (
+             <div 
+                key={index} 
+                className={`${styles.accordionGroup} ${openIndex === index ? styles.accordionOpen : ''}`}
+             >
+                <div className={styles.accordionHeader} onClick={() => toggleFAQ(index)}>
+                   <div className={styles.accordionTitle}>{faq.question}</div>
+                   <div className={styles.accordionIcon}>
+                      <ChevronDownIcon />
+                   </div>
+                </div>
+                <div className={styles.accordionContent}>
+                   <div className={styles.accordionContentInner}>
+                      <p style={{color: '#555', lineHeight: '1.6'}}>{faq.answer}</p>
+                   </div>
+                </div>
+             </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const ShowcaseTripod = () => {
   const images = [
@@ -275,7 +389,8 @@ export default function Home({ productSettings }) {
               <h1 className={styles.heroTitle}>
                 Teknik Gambar AI<br />
                 <span className={styles.heroEmphasis}>Yang Memukau,</span>
-                <br/>Sekali Pandang, Nampak 
+                <span className={styles.heroDivider}></span>
+                Sekali Pandang, Nampak 
                 <span className={styles.heroEmphasis}> Real!</span>
               </h1>
               
@@ -861,8 +976,8 @@ export default function Home({ productSettings }) {
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     <span className={styles.monoLabel}>ISI KANDUNGAN</span>
-                    <h2>Panduan Lengkap: Dari Zero ke Pro</h2>
-                    <p>Buku ini direka khas untuk orang yang tiada background teknikal dan AI, dari asas hingga mahir</p>
+                    <h2>Berapa Nilai eBook Ni?</h2>
+                    <p>Persoalan yang lebih baik, Berapa nilai investment yang anda sanggup laburkan untuk belajar semua ini?</p>
                 </div>
 
                 <div className={styles.courseOutline}>
@@ -881,12 +996,12 @@ export default function Home({ productSettings }) {
                         {expandedModules.phase1 && (
                             <div className={styles.moduleContent}>
                                 <div className={styles.subModule}>
-                                    <strong>Asas Prompt Gambar AI:</strong>
-                                    <p>Faham struktur ayat yang AI tak boleh tolak. Belajar cara komunikasi dengan model AI.</p>
+                                    <strong>Platform Familiarization:</strong>
+                                    <p>Belajar cara akses platform Generative AI, dan kenali model-model AI utama untuk penghasilan gambar.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>3 Prinsip &apos;Image Prompt Engineering&apos;:</strong>
-                                    <p>Rahsia untuk dapat result konsisten setiap kali generate.</p>
+                                    <strong>Asas Prompt Gambar AI:</strong>
+                                    <p>Faham struktur ayat yang AI tak boleh tolak. Belajar cara komunikasi dengan model AI.</p>
                                 </div>
                                 <div className={styles.subModule}>
                                     <strong>Generate Gambar Pertama:</strong>
@@ -911,20 +1026,20 @@ export default function Home({ productSettings }) {
                         {expandedModules.phase2 && (
                             <div className={styles.moduleContent}>
                                 <div className={styles.subModule}>
-                                    <strong>Camera Angle Vocabulary:</strong>
-                                    <p>Low angle, wide shot, macro lens. Tahu bila nak guna untuk impak maksima dalam visual anda.</p>
+                                    <strong>3 Prinsip &apos;Image Prompt Engineering&apos;:</strong>
+                                    <p>Rahsia untuk dapat result konsisten setiap kali generate.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>Lighting Mastery:</strong>
-                                    <p>Cara &apos;set up&apos; lampu dalam AI (Rim lighting, Volumetric fog, Softbox lighting) untuk mood yang berbeza.</p>
+                                    <strong>Cara menulis Prompt Details:</strong>
+                                    <p>Belajar cara menulis dengan struktur prompt yang betul, Layer demi Layer.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>Depth of Field (DoF):</strong>
-                                    <p>Kawal background blur (bokeh) macam pro photographer untuk fokus pada subjek utama.</p>
+                                    <strong>Cara Menulis Technical Section:</strong>
+                                    <p>Belajar cara mengawal Aspect Ratio, Depth of Field, Lighting, Camera Angle, Dan apa nak buat bila AI tak dengar arahan</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>Aspect Ratio:</strong>
-                                    <p>Setting saiz gambar yang betul untuk Instagram, YouTube, atau Print supaya tak terpotong.</p>
+                                    <strong>Belajar Asas Meta Prompting</strong>
+                                    <p>Teknik utama prompting gambar yang wajib anda kuasai. Biar AI buat kerja berat untuk anda, dengan workflow yang betul.</p>
                                 </div>
                             </div>
                         )}
@@ -945,20 +1060,50 @@ export default function Home({ productSettings }) {
                         {expandedModules.phase3 && (
                             <div className={styles.moduleContent}>
                                 <div className={styles.subModule}>
+                                    <strong>Meta Prompting: Prompt Segmentation</strong>
+                                    <p>Tips dan Tricks untuk Meta-prompting macam pro.</p>
+                                </div>
+                                <div className={styles.subModule}>
                                     <strong>Teknik Editing & Debugging:</strong>
-                                    <p>Apa nak buat bila AI degil? Teknik &apos;Inpainting&apos; dan &apos;Outpainting&apos; untuk betulkan gambar rosak.</p>
+                                    <p>Prompt Contradiction, Prompt Interpretation, Expanding Prompt Details. Belajar cara AI berfikir dan cara nak betulkan prompt yang tak menjadi dengan lebih berkesan.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>Meta Prompting:</strong>
-                                    <p>Cara suruh AI tulis prompt untuk anda (Jimat masa!). Biar AI buat kerja berat untuk anda.</p>
+                                    <strong>Prompt Template Workflow:</strong>
+                                    <p>Berhenti menagih prompt dari orang lain, Belajar teknik untuk image prompt reversal, dan cara bina template anda sendiri untuk digunakan berulang kali.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>JSON Prompting vs Natural Language:</strong>
-                                    <p>Bila nak guna kod, bila nak guna ayat biasa untuk kawalan yang lebih spesifik.</p>
+                                    <strong>Case Study: Bedah Siasat Prompting Workflow </strong>
+                                    <p>Kita bedah prompt untuk Infographic Poster dan Personal Portrait Photography, dan lihat dengan detail &apos;Thought-Process&apos; saya ketika merangka dan menulis prompt tersebut.</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Part 4 */}
+                    <div className={styles.moduleCard}>
+                        <div className={`${styles.moduleHeader} ${expandedModules.phase4 ? styles.expanded : ''}`} onClick={() => toggleModule('phase4')}>
+                            <div className={styles.moduleTitle}>
+                                <span className={styles.moduleNumber}>PART 4 | EXTRA</span>
+                                <h3>Bonus & Extra Module</h3>
+                                <div className={styles.modulePrice}>Nilai: RM 49</div>
+                            </div>
+                            <div className={`${styles.expandIcon} ${expandedModules.phase4 ? styles.expanded : ''}`}>
+                                <ArrowRightIcon />
+                            </div>
+                        </div>
+                        {expandedModules.phase4 && (
+                            <div className={styles.moduleContent}>
+                                <div className={styles.subModule}>
+                                    <strong>Ecom Product Prompt Generator:</strong>
+                                    <p>Template prompt siap guna untuk seller atau affiliate e-commerce. Tukar apa sahaja produk anda kepada &apos;Key Visual&apos; dengan background dan lighting studio tanpa sebarang kos.</p>
                                 </div>
                                 <div className={styles.subModule}>
-                                    <strong>Case Study Bedah Siasat:</strong>
-                                    <p>Kita bedah prompt untuk Infographic Poster dan Nature Photography satu per satu untuk faham struktur.</p>
+                                    <strong>29 Different Use Cases:</strong>
+                                    <p>Koleksi 29 &apos;Real-World Application&apos; yang berbeza untuk Inspirasi. Dari edit gambar buang objek, Outfit Try-on, Food Photography, sehinggalah ke Scientific Infographic dan Image Analysis.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>JSON Prompting VS Natural Language:</strong>
+                                    <p>JSON tu apa? Perlu ke balajar kalau nak power AI prompting. Buku ini akan menjawab semua persoalan anda.</p>
                                 </div>
                             </div>
                         )}
@@ -978,10 +1123,14 @@ export default function Home({ productSettings }) {
                             <span>Part 3: Advanced</span>
                             <span>RM89</span>
                         </div>
+                        <div className={styles.vsRow}>
+                            <span>Part 4: Bonus & Extra</span>
+                            <span>RM49</span>
+                        </div>
                         <div className={styles.vsDivider}></div>
                          <div className={styles.vsTotalRow}>
                             <span>TOTAL</span>
-                            <span>RM155</span>
+                            <span>RM204</span>
                         </div>
                         <div className={styles.vsExplainer}>
                             Ini adalah cost sebenar kalau anda nak invest untuk skillset ini satu per satu dari sumber berbeza.
@@ -991,7 +1140,7 @@ export default function Home({ productSettings }) {
 
                 <div className={styles.courseOutlineCTA}>
                      <p>Ada sebab buku ini dipanggil Panduan Lengkap Zero to Mastery.</p>
-                     <p>Untuk dapatkan AI Skillset macam ni,<br/><span className={styles.ctaEmphasis}>Investment</span> RM 155 untuk <span className={styles.ctaEmphasis}>SELF IMPROVEMENT</span>, seriously sangat <span className={styles.ctaEmphasis}>BERBALOI..</span></p>
+                     <p>Untuk dapatkan AI Skillset macam ni,<br/><span className={styles.ctaEmphasis}>Investment</span> RM 204 untuk <span className={styles.ctaEmphasis}>SELF IMPROVEMENT</span>, seriously sangat <span className={styles.ctaEmphasis}>BERBALOI..</span></p>
                 </div>
             </div>
         </section>
@@ -1011,24 +1160,24 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <div className={styles.priceDisplay}>
-                        <div className={styles.originalPrice}>RM 155</div>
+                        <div className={styles.originalPrice}>RM 204</div>
                         <div className={styles.currentPrice}>
                             <span className={styles.currency}>RM</span>
                             <span className={styles.amount}>37</span>
                             <span className={styles.period}>SAHAJA</span>
                         </div>
                         <div className={styles.savings}>
-                            <br/>Anda Dapat Jimat RM 118!
+                            <br/>Anda Dapat Jimat RM 167!
                         </div>
                     </div>
                     
                     <div className={styles.priceIncludes}>
                         <h3>Ini Yang Anda Akan Dapat:</h3>
                         <ul>
-                            <li><CheckCircleIcon className={styles.checkIcon} />The 208-Page Visual Encyclopedia</li>
-                            <li><CheckCircleIcon className={styles.checkIcon} />&quot;Inflation-Proof&quot; Upgrade Rights</li>
-                            <li><CheckCircleIcon className={styles.checkIcon} />Bonus: Copy-Paste &quot;Cheat Codes&quot;</li>
-                            <li><CheckCircleIcon className={styles.checkIcon} />Instant Access selepas pembayaran</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Prompt dan Visual Encyclopedia dengan 208 Mukasurat </li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Master &quot;Bahasa AI&quot; - tahu exactly apa nak tulis untuk dapat result yang hebat</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Prompt, Teknik, Workflow, Templates untuk bantu anda kuasai buku ini sepenuhnya</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Free Lifetime update untuk setiap versi buku yang baru dikeluarkan.</li>
                         </ul>
                     </div>
                     
@@ -1053,7 +1202,7 @@ export default function Home({ productSettings }) {
                                 className={styles.securePaymentLogo}
                                 />
                         </div>
-                        <p className={styles.ctaSubtext}>Instant Access • Sekali Bayar • Tiada yuran tersembunyi</p>
+                        <p className={styles.ctaSubtext}>Instant Donwload • Sekali Bayar • Tiada caj tersembunyi</p>
                     </div>
                     
                     <div className={styles.urgencyNote}>
@@ -1076,19 +1225,20 @@ export default function Home({ productSettings }) {
                         Belajar AI Sambil<br/>Jana Pendapatan!!
                     </h2>
                     <p className={styles.partnerDesc} style={{fontSize: '1.2rem', marginBottom: '3rem'}}>
-                        Saya tak nak anda &apos;menjual&apos;. Saya nak anda &apos;membantu dan berkongsi&apos;.<br/><br/>Sebab itu setiap pembeli yang nak jadi ejen affiliate KelasGPT akan dibekalkan dengan <strong>&apos;Senjata Rahsia&apos;</strong>:
+                        <br/><br/>Setiap pembaca yang berminat, boleh daftar untuk menjadi ejen affiliate KelasGPT.com
+                        <br/><br/>Dan saya tak nak anda &apos;menjual&apos;. Saya nak anda &apos;bantu dan berkongsi&apos;.<br/><br/>Sebab itu setiap pembeli yang nak jadi ejen affiliate KelasGPT akan dibekalkan dengan <strong>&apos;Senjata Rahsia&apos;</strong>:
                     </p>
 
                     <div className={styles.partnerGrid}>
                          <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
                             <h4 className={styles.partnerBigStat}>20%</h4>
                             <p className={styles.partnerStatTitle}>Promo code unik setiap affiliate</p>
-                            <p className={styles.partnerStatDesc}><br/>Kenalan anda tak perlu bayar harga penuh. Dengan code unik anda, mereka akan dapat <strong>Potongan 20%</strong> serta merta. Senang untuk mereka cakap <strong>&quot;YES!&quot;</strong> kepada recommendation anda.</p>
+                            <p className={styles.partnerStatDesc}><br/>Pelanggan yang disarankan anda tak perlu bayar harga penuh. Dengan code diskaun unik anda, mereka akan dapat <strong>Potongan 20%</strong> serta merta.<br/><br/>Senang untuk mereka cakap <strong>&quot;YES!&quot;</strong> kepada recommendation anda.</p>
                          </div>
                          <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
                             <h4 className={styles.partnerBigStat} style={{marginBottom: '0.5rem', lineHeight: 1}}>33%</h4>
                             <p className={styles.partnerStatTitle}>Commission Rate Yang Tinggi!!</p>
-                            <p className={styles.partnerStatDesc}><br/>Walaupun kawan anda dapat diskaun, anda tetap layak mendapat komisen setinggi <strong>33%</strong> untuk setiap jualan. <br/><br/>Anda hanya perlukan 4 orang sahaja gunakan code anda, pelaburan buku anda bukan je dah balik modal, malah anda dah pun dapat jana keuntungan bersih!</p>
+                            <p className={styles.partnerStatDesc}><br/>Walaupun pelanggan yang disarankan anda dapat diskaun, anda tetap layak mendapat komisen setinggi <strong>33%</strong> untuk setiap jualan. <br/><br/>Untuk low-ticket product, komisyen <strong>RM 10 per SALE</strong>, actually is a crazy offer! <br/><br/>Plus, setiap jualan yang anda dapat adalah <strong>EXTRA BONUS</strong>, on top of skill prompting gambar AI yang anda dah belajar!</p>
                          </div>
                          <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
                             <div className={styles.partnerBigStat} style={{ display: 'flex', alignItems: 'center', height: '3rem', marginBottom: '0.5rem' }}>
@@ -1098,6 +1248,29 @@ export default function Home({ productSettings }) {
                             <p className={styles.partnerStatDesc}><br/><strong>Anda tak perlu website sendiri.</strong> Cukup sekadar kongsikan link <code>KelasGPT.com</code> BERSAMA kod diskaun anda.<br/><br/>Sistem kami akan uruskan jualan, bayaran, akses produk dan customer support sepenuhnya.</p>
                          </div>
                     </div>
+                    <div className={styles.ctaSection}>
+                        <Link href={checkoutUrl} className={styles.mainCTA}>
+                            Saya Nak Dapatkan Sekarang
+                        </Link>
+                        {/* The main container for the secure payment text and icons */}
+                        <div className={styles.securePaymentText}>
+                            {/* Checkmark icon indicating security */}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={styles.securePaymentIcon} viewBox="0 0 16 16">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"></path>
+                            </svg>
+                            <span> Secure payment via  </span>
+                            {/* FPX payment logo  */}
+                                <Image 
+                                src="https://www.novalnet.com/wp-content/uploads/2021/06/fpx-logo.svg"
+                                alt="FPX Payment Logo"
+                                width={600} 
+                                height={12}
+                                loading="lazy"
+                                className={styles.securePaymentLogo}
+                                />
+                        </div>
+                        <p className={styles.ctaSubtext}>Instant Donwload • Sekali Bayar • Tiada caj tersembunyi</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1105,6 +1278,9 @@ export default function Home({ productSettings }) {
 
       </main>
       
+      {/* --- FAQ Section --- */}
+      <FAQSection />
+
       {/* --- Contact Support Section --- */}
       <section className={`${styles.contactSection} ${styles.lightSection}`}>
         <div className={styles.container}>
