@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       .eq('is_active', true);
 
     if (agentId) {
-      query = query.eq('agent_id', agentId.toUpperCase().trim());
+      query = query.ilike('agent_id', agentId.trim());
     }
 
     const { data: agents, error: agentError } = await query;

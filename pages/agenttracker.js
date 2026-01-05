@@ -127,7 +127,7 @@ export default function AgentTracker() {
     setErrorMsg('');
     
     try {
-      const res = await fetch(`/api/agent-stats?agentId=${encodeURIComponent(agentId)}`);
+      const res = await fetch(`/api/agent-stats?agentId=${encodeURIComponent(agentId)}&_t=${Date.now()}`);
       
       if (res.status === 429) {
         setErrorMsg("You're searching too fast! Please take a break and wait a minute.");
