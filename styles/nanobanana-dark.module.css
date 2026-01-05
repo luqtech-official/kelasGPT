@@ -13,6 +13,7 @@
     /* CSS Variables scoped to this page */
     --accent-color: #ff6b35;
     --emphasis-blue: #3498db;
+    --trust-blue: #0066ff;
 }
   
 .container {
@@ -978,4 +979,859 @@
     line-height: 1.5;
     margin: 0;
     font-style: italic;
+}
+
+/* --- Refactored Reality Check Section --- */
+.realitySection {
+    padding: 6rem 0 2rem 0;
+    background-color: #fff !important;
+}
+
+.realityLabel {
+    color: #d35400;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.realityHeading {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    color: #111;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.realityContent {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.realityIntro {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.textRed {
+    color: #c0392b;
+}
+
+.textUnderline {
+    color: #111;
+    text-decoration: underline;
+}
+
+.realityBox {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 2px dashed #ccc;
+    margin-bottom: 2.5rem;
+}
+
+.realityBoxHeader {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.realityList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.realityItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #444;
+}
+
+.iconCheck {
+    color: #27ae60;
+    flex-shrink: 0;
+}
+
+.realityStatementWrapper {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.realityStatementSmall {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111;
+    margin-bottom: 0.5rem;
+}
+
+.realityStatementGrey {
+    color: #95a5a6;
+}
+
+.realityStatementBig {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.realityStatementUnderline {
+    text-decoration: underline;
+}
+
+.realityQuoteBox {
+    border-left: 4px solid var(--accent-color);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #555;
+    background: #fff8f5;
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+}
+
+.realityQuoteText {
+    margin-bottom: 0;
+}
+
+
+/* --- Refactored Book Reveal Section --- */
+.bookRevealTitle {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(180deg, #fff 0%, #ccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bookRevealSubtitle {
+    font-size: clamp(0.8rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(180deg, #fff 0%, #ccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bookRevealGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(circle, rgba(255,107,53,0.2) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0;
+    filter: blur(50px);
+}
+
+.bookRevealImage {
+    position: relative;
+    z-index: 1;
+    transform: scale(1.02);
+}
+
+.bookRevealDisclaimer {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+
+/* --- Refactored Partner Section --- */
+.partnerSectionPadding {
+    padding: 6rem 0;
+}
+
+.partnerIconCircle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 102, 255, 0.1);
+    color: var(--trust-blue);
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+}
+
+.partnerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    text-align: left;
+}
+
+.partnerCardStyle {
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.partnerBigStat {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--trust-blue);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.partnerStatTitle {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #111; /* Explicit for light mode section */
+}
+
+.partnerStatDesc {
+    font-size: 0.95rem;
+    color: #444; /* Explicit for light mode section */
+}
+
+
+.realityDivider {
+    width: 60px;
+    height: 3px;
+    background: #ddd;
+    margin: 1.5rem auto;
+    border-radius: 2px;
+}
+
+
+/* --- Segue Section --- */
+.segueContainer {
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    text-align: center;
+}
+
+.segueTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.segueTitle::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--accent-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.segueText {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.segueHighlight {
+    font-weight: 700;
+    color: #111;
+}
+
+
+/* --- New Accordion Styles (Added 2026) --- */
+.accordionGroup {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.accordionHeader:hover {
+    background: #f9f9f9;
+}
+
+.accordionTitleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.accordionTitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.marketValueTag {
+    color: #888;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.accordionIcon {
+    width: 24px;
+    height: 24px;
+    color: #ccc;
+    transition: transform 0.3s ease;
+}
+
+.accordionContent {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+}
+
+.accordionContentInner {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    border-top: none;
+}
+
+/* State: Open */
+.accordionOpen .accordionContent {
+    max-height: 800px; /* Arbitrary large height to allow expansion */
+}
+
+.accordionOpen .accordionHeader {
+    background: #f8f9fa;
+}
+
+.accordionOpen .accordionIcon {
+    transform: rotate(180deg);
+    color: var(--accent-color);
+}
+
+/* --- Value Stack Box --- */
+/* (Previous styles removed/overwritten by the new block below) */
+
+
+/* --- Updated Pricing Card (Based on Pricingcardsample1) --- */
+.pricingCard {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(168, 82, 63, 0.15);
+    overflow: hidden;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #2C2C2C;
+    border: 3px solid #CD8B76;
+}
+
+.pricingCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #CD8B76, #d63031, #4A7C59);
+}
+
+.pricingHeader {
+    text-align: center;
+    padding: 2.5rem 2rem 1.5rem 2rem;
+    background: #FBF8F5;
+}
+
+.pricingHeader h2 {
+    font-size: 2rem;
+    color: #2C2C2C;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.priceDisplay {
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+}
+
+.originalPrice {
+    font-size: 1.2rem;
+    color: #6B5B57;
+    text-decoration: line-through;
+    margin-bottom: 0.5rem;
+}
+
+.currentPrice {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 1rem 0;
+}
+
+.currency {
+    font-size: 1.8rem;
+    color: #A8523F;
+    font-weight: 700;
+    margin-right: 0.2rem;
+}
+
+.amount {
+    font-size: 4rem;
+    color: #A8523F;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.period {
+    font-size: 1rem;
+    color: #6B5B57;
+    margin-left: 0.5rem;
+}
+
+.savings {
+    color: #d63031;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.priceIncludes {
+    padding: 2rem;
+    background: #FBF8F5;
+    border-top: 1px solid #E8C5B8;
+}
+
+.priceIncludes h3 {
+    text-align: center;
+    color: #A8523F;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.priceIncludes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.priceIncludes li {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 0;
+    font-size: 1rem;
+    color: #2C2C2C;
+    line-height: 1.4;
+}
+
+.checkIcon {
+    width: 20px;
+    height: 20px;
+    color: #4A7C59;
+    margin-right: 0.8rem;
+    flex-shrink: 0;
+}
+
+.ctaSection {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    background: #fff;
+}
+
+@keyframes smooth-pulse-red {
+ 0% {
+  transform: scale(1);
+  box-shadow: 0 8px 20px rgba(214, 48, 49, 0.3);
+ }
+ 50% {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(214, 48, 49, 0.5);
+ }
+ 100% {
+  transform: scale(1);
+  box-shadow: 0 8px 20px rgba(214, 48, 49, 0.3);
+ }
+}
+
+.mainCTA {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d63031, #e74c3c);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1.2rem 2.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(214, 48, 49, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    animation: smooth-pulse-red 1.5s infinite ease-in-out;
+}
+
+.mainCTA::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.mainCTA:hover::before {
+  left: 100%;
+}
+
+.mainCTA:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(214, 48, 49, 0.4);
+    background: linear-gradient(135deg, #e74c3c, #d63031);
+}
+
+.ctaIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.8rem;
+}
+
+.ctaSubtext {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #6B5B57;
+    font-style: italic;
+}
+
+.urgencyNote {
+    padding: 1.5rem 2rem;
+    background: #FBF8F5;
+    text-align: center;
+    color: #A8523F;
+    border-top: 1px solid #E8C5B8;
+}
+
+.urgencyNote p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #A8523F;
+}
+
+/* ==========================================================================
+   ADDED: Course Outline Styles (Adapted for Light Terra Theme)
+   ========================================================================== */
+.courseOutlineSection {
+  background: #FBF8F5; /* Very light terra */
+  position: relative;
+  padding: 6rem 0;
+  border-top: 1px solid #E8C5B8;
+  color: #333;
+}
+
+.courseOutlineSection .sectionHeader h2 {
+  color: #111;
+}
+
+.courseOutlineSection .sectionHeader p {
+  color: #666;
+}
+
+.courseOutlineSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #CD8B76, transparent);
+  opacity: 0.6;
+}
+
+.courseOutline {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.moduleCard {
+  background: #ffffff; /* White card */
+  border: 1px solid #E8C5B8; /* Terra light border */
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(168, 82, 63, 0.05);
+}
+
+.moduleCard:hover {
+    border-color: #CD8B76;
+    box-shadow: 0 6px 20px rgba(168, 82, 63, 0.1);
+}
+
+.moduleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  cursor: pointer;
+  background: #F9F7F4; /* Terra bg */
+  transition: background-color 0.3s ease;
+}
+
+.moduleHeader:hover {
+    background: #F1EBE4;
+}
+
+.moduleHeader.expanded {
+  background: #E8C5B8; /* Terra light expanded */
+  border-bottom: 1px solid #E8C5B8;
+}
+
+.moduleTitle {
+  flex: 1;
+}
+
+.moduleNumber {
+  display: block;
+  color: #A8523F;
+  background: transparent;
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.moduleTitle h3 {
+  font-size: 1.3rem;
+  color: #2C2C2C; /* Dark text */
+  margin: 0;
+  line-height: 1.3;
+}
+
+.exclusiveLabel {
+  display: inline-block;
+  background: #CD8B76;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  margin: 0.2rem 0 0.6rem 0;
+  letter-spacing: 0.5px;
+}
+
+.modulePrice {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #8B6F47;
+  margin-top: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(168, 82, 63, 0.08);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.expandIcon {
+  width: 24px;
+  height: 24px;
+  color: #A8523F;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.expandIcon.expanded {
+  transform: rotate(90deg);
+  color: #fff;
+}
+
+.moduleContent {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  background: #ffffff;
+}
+
+.subModule {
+  padding: 1rem 0;
+  border-bottom: 1px solid #F9F7F4;
+}
+
+.subModule:last-child {
+  border-bottom: none;
+}
+
+.subModule strong {
+  display: block;
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.subModule p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.courseOutlineTotal {
+  max-width: 700px;
+  margin: 3rem auto 0 auto;
+  background: #A8523F; /* Terra dark for contrast at bottom */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.totalLine {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 2rem;
+}
+
+.totalContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.totalContent h3 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #fff;
+}
+
+.totalPrice {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.courseOutlineCTA {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #F9F7F4;
+  border-radius: 12px;
+  border: 1px solid #E8C5B8;
+}
+
+.courseOutlineCTA p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.courseOutlineCTA p:last-child {
+  margin-bottom: 0;
+  color: #A8523F;
+}
+
+/* --- New Value Stack Box (Clean Box Design) --- */
+.valueStackBoxNew {
+    background: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-top: 4rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #333;
+    position: relative;
+    box-shadow: none; /* Removed shadow for flat look */
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.vsHeader {
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #111;
+    letter-spacing: -0.5px;
+    font-family: var(--font-inter, sans-serif);
+}
+
+.vsRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    color: #555;
+    padding: 0 1rem; /* Indentation */
+}
+
+.vsDivider {
+    height: 1px;
+    background: #333;
+    margin: 1.5rem 1rem;
+}
+
+.vsTotalRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #A8523F; /* Stronger Terra Color */
+    margin-bottom: 2rem;
+}
+
+.vsExplainer {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 1rem;
+    font-family: var(--font-inter, sans-serif); /* Switch back to sans for readability */
+    font-style: italic;
+}
+
+.courseOutlineCTA {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 2rem 1rem;
+  background: transparent;
+  border: none;
+}
+
+.ctaEmphasis {
+    font-weight: 800;
+    color: #A8523F;
 }

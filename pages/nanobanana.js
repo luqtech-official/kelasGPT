@@ -19,6 +19,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // --- Icons ---
+const CheckCircleIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+  </svg>
+);
+const RocketIcon = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.3.05-3.1S5.21 15.66 4.5 16.5z"/>
+        <path d="M19 3c-1.5 1.5-3 4.5-3 9s1.5 7.5 3 9c1.5-1.5 3-4.5 3-9s-1.5-7.5-3-9zM9.5 14.5c1.26-1.5 5-2 5-2s-.5 3.74-2 5c-.84.71-2.3.7-3.1.05s-.9-2.35.05-3.1z"/>
+        <path d="M15 3s-3 3-6 6"/>
+    </svg>
+);
+
 const CheckIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="20 6 9 17 4 12"></polyline></svg>
 );
@@ -56,6 +70,12 @@ const DollarIcon = (props) => (
         <line x1="12" y1="1" x2="12" y2="23"></line>
         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
     </svg>
+);
+const LinkIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
 );
 
 // --- Components ---
@@ -191,7 +211,20 @@ const ShowcaseCreative = () => {
 
 export default function Home({ productSettings }) {
   const [visitorId, setVisitorId] = useState(null);
+  const [openAccordion, setOpenAccordion] = useState(0);
   const [checkoutUrl, setCheckoutUrl] = useState('/checkout');
+  const [expandedModules, setExpandedModules] = useState({});
+
+  const toggleModule = (moduleId) => {
+    setExpandedModules(prev => {
+      const isCurrentlyExpanded = prev[moduleId];
+      if (isCurrentlyExpanded) {
+        return { ...prev, [moduleId]: false };
+      } else {
+        return { [moduleId]: true };
+      }
+    });
+  };
 
   useEffect(() => {
     const id = getOrCreateVisitorId();
@@ -615,37 +648,69 @@ export default function Home({ productSettings }) {
             </div>
         </section>
 
-        {/* --- The Core Philosophy: Mastery vs Copy-Paste --- */}
-        <section className={`${styles.coreSkillsSection} ${styles.lightSection}`}>
+        {/* --- The Reality Check: Practicality vs Artistry --- */}
+        <section className={`${styles.coreSkillsSection} ${styles.lightSection} ${styles.realitySection}`}>
             <div className={styles.container}>
-                <div style={{textAlign: 'center', marginBottom: '4rem'}}>
-                    <span className={styles.monoLabel}>THE ARCHITECT MINDSET</span>
-                    <h2 style={{fontSize: '2.5rem', fontWeight: '800', color: '#111', marginBottom: '1.5rem'}}>Henti Jadi &quot;Copy-Paster&quot;.<br />Mula Jadi &quot;The Creator&quot;.</h2>
-                    <p style={{color: '#555', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem'}}>
-                        Kebanyakan &apos;Prompt Pack&apos; di luar sana akan buat anda stuck bila anda nak tukar sikit rupa gambar. Buku ini ajar anda <strong>DNA</strong> di sebalik setiap gambar.
-                    </p>
+                <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                     <span className={`${styles.monoLabel} ${styles.realityLabel}`}>REALITI CHECK</span>
+                     <h2 className={styles.realityHeading}>
+                        Jom Kita Jujur Sekejap.
+                     </h2>
                 </div>
 
-                <div className={styles.skillsGrid}>
-                    {/* Skill 1 */}
-                    <div className={styles.skillCard}>
-                        <div className={styles.skillIcon}><TargetIcon /></div>
-                        <h3>The Descriptive Shortcut</h3>
-                        <p>Belajar cara paling mudah untuk tulis prompt yang sangat descriptive dan padat tanpa perlu pening kepala fikir grammar. AI akan faham tepat apa yang ada dalam kepala anda.</p>
+                <div className={styles.realityContent}>
+                    <p className={styles.realityIntro}>
+                        Buku ini <strong className={styles.textRed}>BUKAN</strong> mengajar anda menjadi artis untuk berkarya.
+                        <br/><br/>
+                        Tapi teknik praktikal untuk hasilkan gambar yang anda <strong className={styles.textUnderline}>BOLEH GUNA</strong>,<br/> dengan cepat.
+                    </p>
+
+                    <div className={styles.realityBox}>
+                        <p className={styles.realityBoxHeader}>Sebab dalam realiti,<br/>anda cuma nak..</p>
+                        <ul className={styles.realityList}>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Profile picture yang lagi cantik.
+                             </li>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Worksheet untuk anak mewarna.
+                             </li>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Quick Content untuk post social media.
+                             </li>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Simple infographic untuk visual aid.
+                             </li>
+                        </ul>
                     </div>
 
-                    {/* Skill 2 */}
-                    <div className={styles.skillCard}>
-                        <div className={styles.skillIcon}><RefreshIcon /></div>
-                        <h3>Custom Template Engine</h3>
-                        <p>Jangan bazir masa tulis prompt baru setiap kali. Saya ajar cara bina <strong>Prompt Template</strong> anda sendiri. Tukar satu keyword, dapat hasil berbeza yang tetap konsisten dengan style anda.</p>
+                    <div className={styles.realityStatementWrapper}>
+                        <h3 className={styles.realityStatementSmall}>
+                            Anda tak perlukan <span className={styles.realityStatementGrey}>Masterpiece.</span>
+                        </h3>
+                        <div className={styles.realityDivider}></div>
+                        <h3 className={styles.realityStatementBig}>
+                            Anda perlukan <span className={styles.realityStatementUnderline}>HASIL.</span>
+                        </h3>
                     </div>
 
-                    {/* Skill 3 */}
-                    <div className={styles.skillCard}>
-                        <div className={styles.skillIcon}><CameraIcon /></div>
-                        <h3>The Style Decoder</h3>
-                        <p>Nampak gambar gempak kat Pinterest atau Instagram? Guna teknik <strong>Reverse Engineering</strong> yang saya ajar untuk &quot;bedah&quot; gambar tu dan hasilkan prompt rahsia untuk recreate style yang sama.</p>
+                    <div className={styles.realityQuoteBox}>
+                        <p style={{marginBottom: 0}}>
+                            &quot;AI bukan untuk ganti artist yang melukis dengan jiwa.<br/><br/>
+                            Tapi alat untuk tolong <strong>ANDA</strong> dapatkan visual yang anda perlukan, <strong>SEKARANG !!</strong> <br/>
+                            <br/>Tanpa mahir Photoshop.<br/>Tanpa hire designer.<br/>Tanpa buang masa.&quot;
+                        </p>
+                    </div>
+
+                    {/* --- Segue to Product --- */}
+                    <div className={styles.segueContainer} style={{marginTop: '5rem'}}>
+                        <h3 className={styles.segueTitle}>Dan sebab itulah buku ini ditulis..</h3>
+                        <div className={styles.segueText}>
+                            <p style={{marginBottom: '1.5rem'}}>Untuk bagi anda kebolehan untuk hasilkan gambar yang anda tak tahu nak buat macam mana sebelum ni.</p>
+                            
+                            <p style={{marginTop: '1.5rem', fontWeight: 800, color: 'var(--accent-color)', fontSize: '1.4rem'}}>
+                                Cepat. Percuma. Buat Sendiri.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -654,6 +719,43 @@ export default function Home({ productSettings }) {
         {/* --- Book Content Preview (Gary Halbert Style) --- */}
         <section className={styles.gallerySection}>
              <div className={styles.container}>
+                
+                {/* --- BOOK REVEAL START --- */}
+                <div style={{textAlign: 'center', marginBottom: '5rem', position: 'relative'}}>
+                     <span className={styles.monoLabel} style={{color: 'var(--accent-color)', letterSpacing: '2px'}}>KelasGPT OFFICIAL GUIDEBOOK</span>
+                     <h2 className={styles.bookRevealTitle}>
+                        Teknik Prompting<br/>Gambar AI
+                     </h2>
+                     <h3 className={styles.realityStatementGrey}>
+                        Dari Zero to Mastery<br/><br/><br/>
+                     </h3>
+                     <div style={{maxWidth: '850px', margin: '0 auto', position: 'relative'}}>
+                        {/* Glow Effect */}
+                        <div className={styles.bookRevealGlow}></div>
+                        
+                        <div className={styles.bookRevealImage}>
+                             <Image 
+                                src="001_eBook_Mockup.png"
+                                alt="Buku Teknik Prompting Gambar AI"
+                                width={1000}
+                                height={800}
+                                style={{
+                                    width: '100%', 
+                                    height: 'auto', 
+                                    display: 'block',
+                                    filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.5))'
+                                }}
+                                priority
+                             />
+                        </div>
+                     </div>
+                     
+                     <p className={styles.bookRevealDisclaimer}>
+                        &quot;Buku Digital ini adalah dalam format PDF dengan <strong style={{color: '#fff'}}>INSTANT ACCESS</strong>. Tiada hardcopy disediakan&quot;
+                     </p>
+                </div>
+                {/* --- BOOK REVEAL END --- */}
+
                 <div style={{textAlign: 'center', marginBottom: '3rem'}}>
                     <span className={styles.monoLabel}>NO SECRETS. NO GATEKEEPING.</span>
                     <h2 style={{fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem'}}>Bukan Sekadar &quot;Teori&quot;.<br/>Ini Adalah <span className={styles.highlight}>Visual Encyclopedia.</span></h2>
@@ -723,7 +825,7 @@ export default function Home({ productSettings }) {
                     
                     <p style={{maxWidth: '700px', margin: '0 auto', color: '#ccc', fontSize: '1.1rem', lineHeight: '1.6'}}>
                         
-                        Exact Overview 208 mukasurat yang <br/><span style={{color: 'var(--accent-color)', fontWeight: 'bold'}}>anda akan dapat!</span>
+                        Complete Overview 208 mukasurat yang <span style={{color: 'var(--accent-color)', fontWeight: 'bold'}}>anda akan dapat!</span>
                     </p>
                 </div>
 
@@ -755,46 +857,141 @@ export default function Home({ productSettings }) {
         </section>
 
         {/* --- Curriculum Breakdown (Fascinations) --- */}
-        <section className={`${styles.curriculumSection} ${styles.lightSection}`}>
+        <section className={styles.courseOutlineSection}>
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     <span className={styles.monoLabel}>ISI KANDUNGAN</span>
-                    <h2>Toolkit Lengkap: Dari Zero ke Pro</h2>
+                    <h2>Panduan Lengkap: Dari Zero ke Pro</h2>
+                    <p>Buku ini direka khas untuk orang yang tiada background teknikal dan AI, dari asas hingga mahir</p>
                 </div>
 
-                <div className={styles.chapterList}>
-                    {/* Beginner Phase */}
-                    <div className={styles.chapterGroup}>
-                        <h3 className={styles.groupTitle}>PHASE 1: THE FOUNDATION</h3>
-                        <ul className={styles.benefitList}>
-                            <li><strong>Asas Prompt Gambar AI:</strong> Faham struktur ayat yang AI tak boleh tolak.</li>
-                            <li><strong>3 Prinsip &apos;Image Prompt Engineering&apos;:</strong> Rahsia untuk dapat result konsisten setiap kali generate.</li>
-                            <li><strong>Generate Gambar Pertama:</strong> Step-by-step walkthrough untuk yang baru nak mula.</li>
-                        </ul>
+                <div className={styles.courseOutline}>
+                    {/* Phase 1 */}
+                    <div className={styles.moduleCard}>
+                        <div className={`${styles.moduleHeader} ${expandedModules.phase1 ? styles.expanded : ''}`} onClick={() => toggleModule('phase1')}>
+                            <div className={styles.moduleTitle}>
+                                <span className={styles.moduleNumber}>PART 1 | FOUNDATION</span>
+                                <h3>Asas Prompting & Struktur</h3>
+                                <div className={styles.modulePrice}>Nilai: RM 17</div>
+                            </div>
+                            <div className={`${styles.expandIcon} ${expandedModules.phase1 ? styles.expanded : ''}`}>
+                                <ArrowRightIcon />
+                            </div>
+                        </div>
+                        {expandedModules.phase1 && (
+                            <div className={styles.moduleContent}>
+                                <div className={styles.subModule}>
+                                    <strong>Asas Prompt Gambar AI:</strong>
+                                    <p>Faham struktur ayat yang AI tak boleh tolak. Belajar cara komunikasi dengan model AI.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>3 Prinsip &apos;Image Prompt Engineering&apos;:</strong>
+                                    <p>Rahsia untuk dapat result konsisten setiap kali generate.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Generate Gambar Pertama:</strong>
+                                    <p>Step-by-step walkthrough untuk yang baru nak mula, dari akaun kosong hingga gambar pertama.</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Technical Phase */}
-                    <div className={styles.chapterGroup}>
-                        <h3 className={styles.groupTitle} style={{color: 'var(--accent-color)'}}>PHASE 2: TECHNICAL MASTERY (Muka Surat 86-117)</h3>
-                        <p className={styles.groupDesc}>Inilah beza &apos;User Biasa&apos; dengan &apos;Prompt Engineer&apos;. Anda akan belajar bahasa teknikal fotografi:</p>
-                        <ul className={styles.benefitList}>
-                            <li><strong>Camera Angle Vocabulary:</strong> Low angle, wide shot, macro lens. Tahu bila nak guna untuk impak maksima.</li>
-                            <li><strong>Lighting Mastery:</strong> Cara &apos;set up&apos; lampu dalam AI (Rim lighting, Volumetric fog, Softbox lighting).</li>
-                            <li><strong>Depth of Field (DoF):</strong> Kawal background blur (bokeh) macam pro photographer.</li>
-                            <li><strong>Aspect Ratio:</strong> Setting saiz gambar yang betul untuk Instagram, YouTube, atau Print.</li>
-                        </ul>
+                    {/* Phase 2 */}
+                    <div className={styles.moduleCard}>
+                        <div className={`${styles.moduleHeader} ${expandedModules.phase2 ? styles.expanded : ''}`} onClick={() => toggleModule('phase2')}>
+                            <div className={styles.moduleTitle}>
+                                <span className={styles.moduleNumber}>PART 2 | TECHNICAL</span>
+                                <h3>Kawalan Kamera & Lighting</h3>
+                                <div className={styles.modulePrice}>Nilai: RM 49</div>
+                            </div>
+                             <div className={`${styles.expandIcon} ${expandedModules.phase2 ? styles.expanded : ''}`}>
+                                <ArrowRightIcon />
+                            </div>
+                        </div>
+                        {expandedModules.phase2 && (
+                            <div className={styles.moduleContent}>
+                                <div className={styles.subModule}>
+                                    <strong>Camera Angle Vocabulary:</strong>
+                                    <p>Low angle, wide shot, macro lens. Tahu bila nak guna untuk impak maksima dalam visual anda.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Lighting Mastery:</strong>
+                                    <p>Cara &apos;set up&apos; lampu dalam AI (Rim lighting, Volumetric fog, Softbox lighting) untuk mood yang berbeza.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Depth of Field (DoF):</strong>
+                                    <p>Kawal background blur (bokeh) macam pro photographer untuk fokus pada subjek utama.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Aspect Ratio:</strong>
+                                    <p>Setting saiz gambar yang betul untuk Instagram, YouTube, atau Print supaya tak terpotong.</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Advanced Phase */}
-                    <div className={styles.chapterGroup}>
-                        <h3 className={styles.groupTitle}>PHASE 3: ADVANCED WORKFLOW</h3>
-                        <ul className={styles.benefitList}>
-                            <li><strong>Teknik Editing &amp; Debugging:</strong> Apa nak buat bila AI degil? Teknik &apos;Inpainting&apos; dan &apos;Outpainting&apos; untuk betulkan gambar rosak.</li>
-                            <li><strong>Meta Prompting:</strong> Cara suruh AI tulis prompt untuk anda (Jimat masa!).</li>
-                            <li><strong>JSON Prompting vs Natural Language:</strong> Bila nak guna kod, bila nak guna ayat biasa.</li>
-                            <li><strong>Case Study Bedah Siasat:</strong> Kita bedah prompt untuk Infographic Poster dan Nature Photography satu per satu.</li>
-                        </ul>
+                    {/* Phase 3 */}
+                    <div className={styles.moduleCard}>
+                        <div className={`${styles.moduleHeader} ${expandedModules.phase3 ? styles.expanded : ''}`} onClick={() => toggleModule('phase3')}>
+                            <div className={styles.moduleTitle}>
+                                <span className={styles.moduleNumber}>PART 3 | Advance</span>
+                                <h3>Teknik Advanced & Prompting Workflow</h3>
+                                <div className={styles.modulePrice}>Nilai: RM 89</div>
+                            </div>
+                            <div className={`${styles.expandIcon} ${expandedModules.phase3 ? styles.expanded : ''}`}>
+                                <ArrowRightIcon />
+                            </div>
+                        </div>
+                        {expandedModules.phase3 && (
+                            <div className={styles.moduleContent}>
+                                <div className={styles.subModule}>
+                                    <strong>Teknik Editing & Debugging:</strong>
+                                    <p>Apa nak buat bila AI degil? Teknik &apos;Inpainting&apos; dan &apos;Outpainting&apos; untuk betulkan gambar rosak.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Meta Prompting:</strong>
+                                    <p>Cara suruh AI tulis prompt untuk anda (Jimat masa!). Biar AI buat kerja berat untuk anda.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>JSON Prompting vs Natural Language:</strong>
+                                    <p>Bila nak guna kod, bila nak guna ayat biasa untuk kawalan yang lebih spesifik.</p>
+                                </div>
+                                <div className={styles.subModule}>
+                                    <strong>Case Study Bedah Siasat:</strong>
+                                    <p>Kita bedah prompt untuk Infographic Poster dan Nature Photography satu per satu untuk faham struktur.</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
+                    
+                    <div className={styles.valueStackBoxNew}>
+                        <div className={styles.vsHeader}>Jumlah Nilai Keseluruhan</div>
+                        <div className={styles.vsRow}>
+                            <span>Part 1: Foundation</span>
+                            <span>RM17</span>
+                        </div>
+                        <div className={styles.vsRow}>
+                            <span>Part 2: Technical</span>
+                            <span>RM49</span>
+                        </div>
+                        <div className={styles.vsRow}>
+                            <span>Part 3: Advanced</span>
+                            <span>RM89</span>
+                        </div>
+                        <div className={styles.vsDivider}></div>
+                         <div className={styles.vsTotalRow}>
+                            <span>TOTAL</span>
+                            <span>RM155</span>
+                        </div>
+                        <div className={styles.vsExplainer}>
+                            Ini adalah cost sebenar kalau anda nak invest untuk skillset ini satu per satu dari sumber berbeza.
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles.courseOutlineCTA}>
+                     <p>Ada sebab buku ini dipanggil Panduan Lengkap Zero to Mastery.</p>
+                     <p>Untuk dapatkan AI Skillset macam ni,<br/><span className={styles.ctaEmphasis}>Investment</span> RM 155 untuk <span className={styles.ctaEmphasis}>SELF IMPROVEMENT</span>, seriously sangat <span className={styles.ctaEmphasis}>BERBALOI..</span></p>
                 </div>
             </div>
         </section>
@@ -802,100 +999,103 @@ export default function Home({ productSettings }) {
         {/* --- Pricing Ticket & Offer --- */}
         <section className={styles.pricingSection}>
             <div className={styles.container}>
-                <div className={styles.pricingTicket}>
-                    <div className={styles.ticketHeader}>
-                        <span className={styles.monoLabel} style={{color: '#000'}}>ACCESS PASS</span>
-                        <h2>TEKNIK PROMPTING GAMBAR AI</h2>
-                    </div>
-                    
-                    <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-                        <div className={styles.priceTag}>
-                            <span style={{fontSize: '2rem', verticalAlign: 'top'}}>RM</span>
-                            {productSettings.allowdiscount ? productSettings.baseproductprice : productSettings.productPrice}
-                        </div>
-                        {productSettings.allowdiscount && (
-                            <div className={styles.priceSub} style={{textDecoration: 'line-through'}}>
-                                Normal: RM {productSettings.baseproductprice}
-                            </div>
-                        )}
-                    </div>
-
-                    <div className={styles.valueStack}>
-                        <div className={styles.stackItem}>
-                            <div className={styles.stackIcon} style={{ width: '50px', marginRight: '10px' }}>
-                                <Image 
-                                    src="nanobanana-book-cover" 
-                                    alt="Teknik Prompting Gambar AI Book Cover" 
-                                    width={50} 
-                                    height={70} 
-                                    style={{ width: '100%', height: 'auto', borderRadius: '4px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }} 
-                                    sizes="100px"
-                                />
-                            </div>
-                            <div className={styles.stackText}>
-                                <strong>Ebook Teknik Prompting Gambar AI (PDF)</strong>
-                                <span>189 Muka Surat. Padat dengan contoh visual & keyword.</span>
-                            </div>
-                        </div>
-                        <div className={styles.stackItem}>
-                            <div className={styles.stackIcon}><RefreshIcon /></div>
-                            <div className={styles.stackText}>
-                                <strong>LIFETIME UPDATES <span className={styles.badge}>BERNILAI</span></strong>
-                                <span>Teknologi AI berubah cepat. Beli sekali, anda akan dapat update untuk versi v2, v3, dan seterusnya secara PERCUMA. Kami update content bila AI update feature.</span>
-                            </div>
-                        </div>
-                        <div className={styles.stackItem}>
-                            <div className={styles.stackIcon}><TargetIcon /></div>
-                            <div className={styles.stackText}>
-                                <strong>BONUS: Prompt Library</strong>
-                                <span>Koleksi &apos;Copy-Paste&apos; prompt yang dah proven untuk pelbagai style.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.reasonBox}>
-                        <h4>Kenapa Murah Sangat? (Jujur Cakap)</h4>
-                        <p>
-                            &quot;Sebab saya tak nak spend duit untuk Marketing/Ads - saya nak guna word-of-mouth je. Dengan cara ni, saya jimat beribu ringgit, jadi saya boleh pass &apos;penjimatan&apos; tu terus pada anda. Impian saya? Nak ramai orang bercakap pasal ebook ni. So saya minta, bila anda dah nampak result, tolong share dengan kawan yang anda rasa boleh dapat benefit dari ebook ni. Simple - kita sama-sama untung.&quot;
-                        </p>
-                    </div>
-
-                    <Link href={checkoutUrl} className={styles.buyButton}>
-                        DAPATKAN AKSES SEKARANG
-                    </Link>
-                    
-                    <p style={{textAlign: 'center', fontSize: '0.8rem', marginTop: '1rem', color: '#666'}}>
-                        Instant Digital Download (PDF) • Secure Payment
+                <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+                    <p style={{fontSize: '2.0rem', color: '#ccc', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6'}}>
+                        <strong>Tapi Saya Nak Bagi Offer Yang Lebih Baik..</strong>
                     </p>
+                </div>
+                
+                <div className={styles.pricingCard}>
+                    <div className={styles.pricingHeader}>
+                        <h3>Hari Ini, Anda Cuma Perlu Bayar...</h3>
+                    </div>
+                    
+                    <div className={styles.priceDisplay}>
+                        <div className={styles.originalPrice}>RM 155</div>
+                        <div className={styles.currentPrice}>
+                            <span className={styles.currency}>RM</span>
+                            <span className={styles.amount}>37</span>
+                            <span className={styles.period}>SAHAJA</span>
+                        </div>
+                        <div className={styles.savings}>
+                            <br/>Anda Dapat Jimat RM 118!
+                        </div>
+                    </div>
+                    
+                    <div className={styles.priceIncludes}>
+                        <h3>Ini Yang Anda Akan Dapat:</h3>
+                        <ul>
+                            <li><CheckCircleIcon className={styles.checkIcon} />The 208-Page Visual Encyclopedia</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />&quot;Inflation-Proof&quot; Upgrade Rights</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Bonus: Copy-Paste &quot;Cheat Codes&quot;</li>
+                            <li><CheckCircleIcon className={styles.checkIcon} />Instant Access selepas pembayaran</li>
+                        </ul>
+                    </div>
+                    
+                    <div className={styles.ctaSection}>
+                        <Link href={checkoutUrl} className={styles.mainCTA}>
+                            Saya Nak Dapatkan Sekarang
+                        </Link>
+                        {/* The main container for the secure payment text and icons */}
+                        <div className={styles.securePaymentText}>
+                            {/* Checkmark icon indicating security */}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={styles.securePaymentIcon} viewBox="0 0 16 16">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"></path>
+                            </svg>
+                            <span> Secure payment via  </span>
+                            {/* FPX payment logo  */}
+                                <Image 
+                                src="https://www.novalnet.com/wp-content/uploads/2021/06/fpx-logo.svg"
+                                alt="FPX Payment Logo"
+                                width={600} 
+                                height={12}
+                                loading="lazy"
+                                className={styles.securePaymentLogo}
+                                />
+                        </div>
+                        <p className={styles.ctaSubtext}>Instant Access • Sekali Bayar • Tiada yuran tersembunyi</p>
+                    </div>
+                    
+                    <div className={styles.urgencyNote}>
+                        <p><strong>Kenapa murah sangat?</strong>
+                        <br/><br/>Jujur cakap? <br/><br/>Sebab saya taknak spend banyak untuk Ads (jimat ~RM5k/bulan). Penjimatan tu saya pass pada anda. <br/><br/>Syaratnya?<br/><br/>Kalau anda happy dengan result, tolong recommend dekat kawan. Deal?</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         {/* --- New Section: Partner Program --- */}
-        <section className={`${styles.partnerSection} ${styles.lightSection}`} style={{padding: '6rem 0'}}>
+        <section className={`${styles.partnerSection} ${styles.lightSection} ${styles.partnerSectionPadding}`}>
             <div className={styles.container}>
                 <div style={{maxWidth: '800px', margin: '0 auto', textAlign: 'center'}}>
-                    <div style={{display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '60px', height: '60px', background: 'rgba(255, 107, 53, 0.1)', color: '#ff6b35', borderRadius: '50%', marginBottom: '1.5rem'}}>
+                    <div className={styles.partnerIconCircle}>
                         <DollarIcon width={30} height={30} />
                     </div>
                     <h2 className={styles.partnerTitle} style={{fontSize: '2.2rem', fontWeight: 800, marginBottom: '1rem'}}>
-                        <span style={{display: 'block', marginBottom: '1rem', color: 'var(--accent-color)'}}>Oopps, Sekejap!</span>
-                        Anda Juga Akan Dapat Peluang Belajar AI Sambil Jana Pendapatan!!
+                        <span style={{display: 'block', marginBottom: '1rem', color: 'var(--trust-blue)'}}>Oopps, Sekejap!</span>
+                        Belajar AI Sambil<br/>Jana Pendapatan!!
                     </h2>
                     <p className={styles.partnerDesc} style={{fontSize: '1.2rem', marginBottom: '3rem'}}>
-                        Kami tak nak anda &apos;menjual&apos;. Kami nak anda &apos;membantu&apos;. Sebab itu setiap pembeli akan dibekalkan dengan <strong>&apos;Senjata Rahsia&apos;</strong>:
+                        Saya tak nak anda &apos;menjual&apos;. Saya nak anda &apos;membantu dan berkongsi&apos;.<br/><br/>Sebab itu setiap pembeli yang nak jadi ejen affiliate KelasGPT akan dibekalkan dengan <strong>&apos;Senjata Rahsia&apos;</strong>:
                     </p>
 
-                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', textAlign: 'left'}}>
-                         <div className={styles.partnerCard} style={{padding: '2rem', borderRadius: '12px'}}>
-                            <h4 style={{fontSize: '3rem', fontWeight: 900, color: 'var(--accent-color)', marginBottom: '0.5rem', lineHeight: 1}}>20%</h4>
-                            <p style={{fontWeight: 600, fontSize: '1.1rem'}}>Promo code unik setiap affiliate</p>
-                            <p style={{fontSize: '0.95rem'}}>Kawan anda tak perlu bayar harga penuh. Dengan code unik anda, mereka dapat <strong>Potongan 20%</strong> serta merta. Senang untuk mereka cakap &quot;YES!&quot; kepada recommendation anda.</p>
+                    <div className={styles.partnerGrid}>
+                         <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
+                            <h4 className={styles.partnerBigStat}>20%</h4>
+                            <p className={styles.partnerStatTitle}>Promo code unik setiap affiliate</p>
+                            <p className={styles.partnerStatDesc}><br/>Kenalan anda tak perlu bayar harga penuh. Dengan code unik anda, mereka akan dapat <strong>Potongan 20%</strong> serta merta. Senang untuk mereka cakap <strong>&quot;YES!&quot;</strong> kepada recommendation anda.</p>
                          </div>
-                         <div className={styles.partnerCard} style={{padding: '2rem', borderRadius: '12px'}}>
-                            <h4 className={styles.partnerTitle} style={{fontSize: '3rem', fontWeight: 900, marginBottom: '0.5rem', lineHeight: 1}}>33%</h4>
-                            <p style={{fontWeight: 600, fontSize: '1.1rem'}}>Commission Rate Yang Tinggi!!</p>
-                            <p style={{fontSize: '0.95rem'}}>Walaupun kawan anda dapat diskaun, anda tetap layak mendapat komisen tinggi <strong>33%</strong> untuk setiap jualan. Cukup 4 orang kawan guna code anda, pelaburan buku anda bukan sahaja balik modal, malah anda sudah pun mula menjana untung bersih!</p>
+                         <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
+                            <h4 className={styles.partnerBigStat} style={{marginBottom: '0.5rem', lineHeight: 1}}>33%</h4>
+                            <p className={styles.partnerStatTitle}>Commission Rate Yang Tinggi!!</p>
+                            <p className={styles.partnerStatDesc}><br/>Walaupun kawan anda dapat diskaun, anda tetap layak mendapat komisen setinggi <strong>33%</strong> untuk setiap jualan. <br/><br/>Anda hanya perlukan 4 orang sahaja gunakan code anda, pelaburan buku anda bukan je dah balik modal, malah anda dah pun dapat jana keuntungan bersih!</p>
+                         </div>
+                         <div className={`${styles.partnerCard} ${styles.partnerCardStyle}`}>
+                            <div className={styles.partnerBigStat} style={{ display: 'flex', alignItems: 'center', height: '3rem', marginBottom: '0.5rem' }}>
+                                <LinkIcon width={48} height={48} />
+                            </div>
+                            <p className={styles.partnerStatTitle}>Sistem &lsquo;Auto-Pilot&rsquo;</p>
+                            <p className={styles.partnerStatDesc}><br/><strong>Anda tak perlu website sendiri.</strong> Cukup sekadar kongsikan link <code>KelasGPT.com</code> BERSAMA kod diskaun anda.<br/><br/>Sistem kami akan uruskan jualan, bayaran, akses produk dan customer support sepenuhnya.</p>
                          </div>
                     </div>
                 </div>
