@@ -172,6 +172,87 @@
     margin-bottom: 1.5rem;
 }
 
+.noiseIntro {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #D32F2F !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.painPointsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.painPointCard {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 1.25rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.painIcon {
+    color: #e74c3c;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.painPointCard p {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    color: #444 !important;
+    margin: 0 !important;
+}
+
+.questionSection {
+    margin: 3rem 0;
+}
+
+.questionHeading {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem !important;
+    color: #111 !important;
+}
+
+.questionList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.questionItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fdfdfd;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+}
+
+.questionIcon {
+    color: #7f8c8d;
+    width: 18px;
+    height: 18px;
+}
+
+.questionItem span {
+    font-size: 1rem;
+    color: #555;
+}
+
+.noiseOutro {
+    margin-top: 1.5rem !important;
+}
+
 /* Override for Light Mode Noise Section */
 .lightSection .noiseText p {
     color: #444;

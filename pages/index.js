@@ -80,6 +80,15 @@ const LinkIcon = (props) => (
 const ChevronDownIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9"></polyline></svg>
 );
+const AlertTriangleIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+);
+const XCircleIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+);
+const ClockIcon = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+);
 
 // --- Components ---
 
@@ -431,31 +440,56 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <div className={styles.noiseText}>
-                        <p style={{ fontWeight: '800', fontSize: '1.2rem', color: '#D32F2F', marginBottom: '0.5rem' }}><br/>HENTI BAZIRKAN MASA ANDA.</p>
-                        {/* Disable this line below because i dont like it. It make the impression that the apps im teaching will need to be paid. */}
-                        {/* <p style={{fontSize: '1.1rem', marginBottom: '1.5rem'}}>Setiap minit anda type prompt yang sia-sia = <strong>RM hilang dari poket anda.</strong></p>  */}
+                        <p className={styles.noiseIntro}><br/>HENTI BAZIRKAN MASA ANDA.</p>
                         
                         <p>Bila anda tekan &quot;Generate&quot;, hasilnya bukan sekadar tak jadi, tapi:</p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
-                            <li style={{ marginBottom: '8px' }}>Muka model lansung tak sama macam yang anda upload</li>
-                            <li style={{ marginBottom: '8px' }}>Background yang anda nak sharp, jadi blur</li>
-                            <li style={{ marginBottom: '8px' }}>Lighting nampak pelik, buat gambar nampak buruk</li>
-                            <li style={{ marginBottom: '8px' }}>Paling teruk, tiba-tiba gambar manusia ada 3 tangan </li>
-                        </ul>
+                        
+                        <div className={styles.painPointsGrid}>
+                            <div className={styles.painPointCard}>
+                                <XCircleIcon className={styles.painIcon} />
+                                <p>Muka model lansung tak sama macam yang anda upload</p>
+                            </div>
+                            <div className={styles.painPointCard}>
+                                <XCircleIcon className={styles.painIcon} />
+                                <p>Background yang anda nak sharp, jadi blur</p>
+                            </div>
+                            <div className={styles.painPointCard}>
+                                <XCircleIcon className={styles.painIcon} />
+                                <p>Lighting nampak pelik, buat gambar nampak buruk</p>
+                            </div>
+                            <div className={styles.painPointCard}>
+                                <XCircleIcon className={styles.painIcon} />
+                                <p>Paling teruk, tiba-tiba gambar manusia ada 3 tangan</p>
+                            </div>
+                        </div>
 
-                        <p><strong>Berapa kali dah anda:</strong></p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
-                            <li style={{ marginBottom: '8px' }}>Buang 2 jam cuba pelbagai prompt tapi hasil tetap teruk?</li>
-                            <li style={{ marginBottom: '8px' }}>Delete 50+ generated images sebab tak boleh pakai?</li>
-                            <li style={{ marginBottom: '8px' }}>Tengok orang lain post gambar cantik, rasa jealous?</li>
-                            <li style={{ marginBottom: '8px' }}>Fikir &apos;maybe AI ni bukan untuk saya&apos;?</li>
-                        </ul>
+                        <div className={styles.questionSection}>
+                            <p className={styles.questionHeading}>Berapa kali dah anda:</p>
+                            <div className={styles.questionList}>
+                                <div className={styles.questionItem}>
+                                    <ClockIcon className={styles.questionIcon} />
+                                    <span>Buang 2 jam cuba pelbagai prompt tapi hasil tetap teruk?</span>
+                                </div>
+                                <div className={styles.questionItem}>
+                                    <RefreshIcon className={styles.questionIcon} />
+                                    <span>Delete 50+ generated images sebab tak boleh pakai?</span>
+                                </div>
+                                <div className={styles.questionItem}>
+                                    <TargetIcon className={styles.questionIcon} />
+                                    <span>Tengok orang lain post gambar cantik, rasa jealous?</span>
+                                </div>
+                                <div className={styles.questionItem}>
+                                    <AlertTriangleIcon className={styles.questionIcon} />
+                                    <span>Fikir &apos;maybe AI ni bukan untuk saya&apos;?</span>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className={styles.noiseHighlight}>
                             Kalau freelancer charge RM50/hour untuk design,<br/>anda dah <strong>RUGI RM100 setiap kali</strong> buang masa 2 jam trial & error.
                         </div>
 
-                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda.<br/><br/>AI tak faham bahasa manusia macam kita faham bahasa manusia.<br/><br/>Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
+                        <p className={styles.noiseOutro}>Masalahnya bukan imaginasi anda.<br/><br/>AI tak faham bahasa manusia macam kita faham bahasa manusia.<br/><br/>Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
                         <p>Selagi mana anda tahu teknik menulis supaya AI faham keyword apa yang dia patut utamakan, ada banyak benda yang anda boleh buat dan hasilkan.<br/><br/>So..</p>
                     </div>
                 </div>
@@ -467,8 +501,8 @@ export default function Home({ productSettings }) {
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     {/* <span className={styles.monoLabel}>POSSIBILITIES</span> */}
-                    <h2>Nak Tak Balajar Buat Gambar Macam Ni?</h2>
-                    <p>Bukan sekadar belajar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan gambar berkualiti yang anda nak, dengan sangat mudah!</p>
+                    <h2>Nak Tak Belajar Buat Gambar Macam Ni?</h2>
+                    <p><br/>Bukan sekadar belajar prompt pack untuk anda Copy & Paste.<br/><br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan gambar berkualiti yang anda nak, dengan sangat mudah!</p>
                 </div>
 
                 {/* Showcase 1: Tripod / Product */}
@@ -1110,7 +1144,7 @@ export default function Home({ productSettings }) {
                                 </div>
                                 <div className={styles.subModule}>
                                     <strong>JSON Prompting VS Natural Language:</strong>
-                                    <p>JSON tu apa? Perlu ke balajar kalau nak power AI prompting. Buku ini akan menjawab semua persoalan anda.</p>
+                                    <p>JSON tu apa? Perlu ke belajar kalau nak power AI prompting. Buku ini akan menjawab semua persoalan anda.</p>
                                 </div>
                             </div>
                         )}
