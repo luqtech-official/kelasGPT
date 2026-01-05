@@ -431,16 +431,16 @@ export default function Home({ productSettings }) {
                     </div>
                     
                     <div className={styles.noiseText}>
-                        <p style={{ fontWeight: '800', fontSize: '1.2rem', color: '#D32F2F', marginBottom: '0.5rem' }}><br/>STOP WASTING YOUR TIME.</p>
+                        <p style={{ fontWeight: '800', fontSize: '1.2rem', color: '#D32F2F', marginBottom: '0.5rem' }}><br/>HENTI BAZIRKAN MASA ANDA.</p>
                         {/* Disable this line below because i dont like it. It make the impression that the apps im teaching will need to be paid. */}
                         {/* <p style={{fontSize: '1.1rem', marginBottom: '1.5rem'}}>Setiap minit anda type prompt yang sia-sia = <strong>RM hilang dari poket anda.</strong></p>  */}
                         
-                        <p>Bila anda tekan &quot;Generate&quot;, hasilnya bukan sekadar &quot;tak jadi&quot;, tapi:</p>
+                        <p>Bila anda tekan &quot;Generate&quot;, hasilnya bukan sekadar tak jadi, tapi:</p>
                         <ul style={{ listStyleType: 'disc', paddingLeft: '20px', marginBottom: '2rem', color: '#333' }}>
                             <li style={{ marginBottom: '8px' }}>Muka model lansung tak sama macam yang anda upload</li>
                             <li style={{ marginBottom: '8px' }}>Background yang anda nak sharp, jadi blur</li>
                             <li style={{ marginBottom: '8px' }}>Lighting nampak pelik, buat gambar nampak buruk</li>
-                            <li style={{ marginBottom: '8px' }}>Paling teruk, tiba-tiba orang ada 3 tangan </li>
+                            <li style={{ marginBottom: '8px' }}>Paling teruk, tiba-tiba gambar manusia ada 3 tangan </li>
                         </ul>
 
                         <p><strong>Berapa kali dah anda:</strong></p>
@@ -456,7 +456,7 @@ export default function Home({ productSettings }) {
                         </div>
 
                         <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda.<br/><br/>AI tak faham bahasa manusia macam kita faham bahasa manusia.<br/><br/>Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
-                        <p>Selagi mana anda tahu teknik menulis supaya AI faham keyword apa yang dia patut utamakan, ada banyak benda yang anda boleh buat dan hasilkan.</p>
+                        <p>Selagi mana anda tahu teknik menulis supaya AI faham keyword apa yang dia patut utamakan, ada banyak benda yang anda boleh buat dan hasilkan.<br/><br/>So..</p>
                     </div>
                 </div>
             </div>
@@ -467,8 +467,8 @@ export default function Home({ productSettings }) {
             <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                     {/* <span className={styles.monoLabel}>POSSIBILITIES</span> */}
-                    <h2>Apa Yang Boleh Anda Buat Bila Tahu Cara Prompt Yang Betul?</h2>
-                    <p>Ini bukanlah sekadar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan prompt gambar berkualiti yang anda nak, dengan sangat mudah!</p>
+                    <h2>Nak Tak Balajar Buat Gambar Macam Ni?</h2>
+                    <p>Bukan sekadar belajar prompt pack untuk anda Copy & Paste.<br/>Tapi <span className={styles.highlight}>Proven Teknik dan Workflow</span> untuk hasilkan gambar berkualiti yang anda nak, dengan sangat mudah!</p>
                 </div>
 
                 {/* Showcase 1: Tripod / Product */}
@@ -653,7 +653,7 @@ export default function Home({ productSettings }) {
                 {/* --- Deep Dive Transition --- */}
                 <div style={{margin: '6rem 0 4rem', textAlign: 'center', borderTop: '1px solid #222', paddingTop: '4rem'}}>
                     <span className={styles.monoLabel}>Special Case Studies</span>
-                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Bukan Sekadar <br/>&apos;Tiru Prompt&apos;</h2>
+                    <h2 style={{fontSize: '2rem', fontWeight: '800', marginBottom: '1rem'}}>Jangan Sekadar <br/>&apos;Tiru Prompt&apos;</h2>
                     <p style={{color: '#888', maxWidth: '600px', margin: '0 auto'}}>
                         Tapi tiru <span className={styles.highlight}> &apos;Workflow dan Thought Process&apos;</span> saya. Bagaimana saya membina satu prompt dari yang paling simple, layer detail demi detail, sehingga terhasilnya visual prompt yang lengkap.
                     </p>
@@ -769,13 +769,14 @@ export default function Home({ productSettings }) {
                 <div style={{textAlign: 'center', marginBottom: '2rem'}}>
                      <span className={`${styles.monoLabel} ${styles.realityLabel}`}>REALITI CHECK</span>
                      <h2 className={styles.realityHeading}>
-                        Jom Kita Jujur Sekejap.
+                        <br/>Boleh Ke Hasilkan <strong className={styles.textRed}>Visual Art Yang Ada Jiwa?</strong> 
                      </h2>
                 </div>
 
                 <div className={styles.realityContent}>
                     <p className={styles.realityIntro}>
-                        Buku ini <strong className={styles.textRed}>BUKAN</strong> mengajar anda menjadi artis untuk berkarya.
+                        Jom Kita Jujur Sekejap..
+                        <br/><br/>KelasGPT ni <strong className={styles.textRed}>BUKAN</strong> mengajar anda menjadi artis untuk berkarya.
                         <br/><br/>
                         Tapi teknik praktikal untuk hasilkan gambar yang anda <strong className={styles.textUnderline}>BOLEH GUNA</strong>,<br/> dengan cepat.
                     </p>
@@ -793,7 +794,13 @@ export default function Home({ productSettings }) {
                                 <span className={styles.iconCheck}>✔</span> Quick Content untuk post social media.
                              </li>
                              <li className={styles.realityItem}>
-                                <span className={styles.iconCheck}>✔</span> Simple infographic untuk visual aid.
+                                <span className={styles.iconCheck}>✔</span> Simple Infographic untuk visual aid.
+                             </li>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Bantu bina content untuk Affiliate..
+                             </li>
+                             <li className={styles.realityItem}>
+                                <span className={styles.iconCheck}>✔</span> Dan macam-macam lagi..
                              </li>
                         </ul>
                     </div>
@@ -872,11 +879,11 @@ export default function Home({ productSettings }) {
                 {/* --- BOOK REVEAL END --- */}
 
                 <div style={{textAlign: 'center', marginBottom: '3rem'}}>
-                    <span className={styles.monoLabel}>NO SECRETS. NO GATEKEEPING.</span>
+                    {/* <span className={styles.monoLabel}>NO SECRETS. NO GATEKEEPING.</span> */}
                     <h2 style={{fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem'}}>Bukan Sekadar &quot;Teori&quot;.<br/>Ini Adalah <span className={styles.highlight}>Visual Encyclopedia.</span></h2>
                     <p style={{maxWidth: '700px', margin: '0 auto', color: '#ccc', fontSize: '1.1rem', lineHeight: '1.6'}}>
                         
-                        Dalam eBook ni, Tak ada apa pun yang saya simpan atau sorok daripada anda. 
+                        <br/>Dalam eBook ni, tak ada apa pun yang saya simpan atau sorok daripada anda. 
                         <br/><br/>
                         208 mukasurat yang padat dengan visual, prompt, penjelasan, teknik dan workflow step-by-step.
                         Ini adalah snapshot content sebenar dari dalam buku ini.
@@ -1016,7 +1023,7 @@ export default function Home({ productSettings }) {
                         <div className={`${styles.moduleHeader} ${expandedModules.phase2 ? styles.expanded : ''}`} onClick={() => toggleModule('phase2')}>
                             <div className={styles.moduleTitle}>
                                 <span className={styles.moduleNumber}>PART 2 | TECHNICAL</span>
-                                <h3>Kawalan Kamera & Lighting</h3>
+                                <h3>Teknik Menulis Descriptive Prompting</h3>
                                 <div className={styles.modulePrice}>Nilai: RM 49</div>
                             </div>
                              <div className={`${styles.expandIcon} ${expandedModules.phase2 ? styles.expanded : ''}`}>
@@ -1027,7 +1034,7 @@ export default function Home({ productSettings }) {
                             <div className={styles.moduleContent}>
                                 <div className={styles.subModule}>
                                     <strong>3 Prinsip &apos;Image Prompt Engineering&apos;:</strong>
-                                    <p>Rahsia untuk dapat result konsisten setiap kali generate.</p>
+                                    <p>Rahsia untuk dapat result yang konsisten dengan setiap prompt yang anda guna.</p>
                                 </div>
                                 <div className={styles.subModule}>
                                     <strong>Cara menulis Prompt Details:</strong>
@@ -1035,7 +1042,7 @@ export default function Home({ productSettings }) {
                                 </div>
                                 <div className={styles.subModule}>
                                     <strong>Cara Menulis Technical Section:</strong>
-                                    <p>Belajar cara mengawal Aspect Ratio, Depth of Field, Lighting, Camera Angle, Dan apa nak buat bila AI tak dengar arahan</p>
+                                    <p>Belajar cara mengawal Aspect Ratio, Depth of Field, Lighting dan Camera Angle dalam prompt anda.. Dan apa nak buat bila AI tak dengar arahan</p>
                                 </div>
                                 <div className={styles.subModule}>
                                     <strong>Belajar Asas Meta Prompting</strong>
@@ -1139,8 +1146,8 @@ export default function Home({ productSettings }) {
                 </div>
 
                 <div className={styles.courseOutlineCTA}>
-                     <p>Ada sebab buku ini dipanggil Panduan Lengkap Zero to Mastery.</p>
-                     <p>Untuk dapatkan AI Skillset macam ni,<br/><span className={styles.ctaEmphasis}>Investment</span> RM 204 untuk <span className={styles.ctaEmphasis}>SELF IMPROVEMENT</span>, seriously sangat <span className={styles.ctaEmphasis}>BERBALOI..</span></p>
+                     <p>And ada sebab buku ini sebenarnya dipanggil Panduan Lengkap Zero to Mastery.</p>
+                     <p>Untuk dapatkan AI Skillset macam ni,<br/><span className={styles.ctaEmphasis}>Investment</span> hanya sebanyak RM 204 untuk skill yang anda boleh guna untuk <span className={styles.ctaEmphasis}>bermacam jenis tujuan..</span><br/><br/>Sejujurnya, sangat <span className={styles.ctaEmphasis}>BERBALOI..</span></p>
                 </div>
             </div>
         </section>

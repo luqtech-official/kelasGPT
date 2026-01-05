@@ -434,7 +434,7 @@ export default function Checkout({ productSettings }) {
                     <h3>{productSettings.productName}</h3>
                     <br></br>
                     <p>{productSettings.productDescription}</p>
-                    <p>Lifetime access to all modules.</p>
+                    <p>Instant Access to Download Link.</p>
                 </div>
                 <p className={styles.itemPrice}>{formattedbasePrice}</p>
             </div>
