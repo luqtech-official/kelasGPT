@@ -455,7 +455,7 @@ export default function Home({ productSettings }) {
                             Kalau freelancer charge RM50/hour untuk design,<br/>anda dah <strong>RUGI RM100 setiap kali</strong> buang masa 2 jam trial & error.
                         </div>
 
-                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda.<br/><br/>Masalahnya ialah AI tu ibarat &apos;Pelukis Buta&apos;. Dia tak faham bahasa manusia macam kita faham bahasa manusia. Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
+                        <p style={{ marginTop: '1.5rem' }}>Masalahnya bukan imaginasi anda.<br/><br/>AI tak faham bahasa manusia macam kita faham bahasa manusia.<br/><br/>Dia faham <strong>Keyword dan Context</strong> menggunakan algorithm dan probabilities.</p>
                         <p>Selagi mana anda tahu teknik menulis supaya AI faham keyword apa yang dia patut utamakan, ada banyak benda yang anda boleh buat dan hasilkan.</p>
                     </div>
                 </div>
