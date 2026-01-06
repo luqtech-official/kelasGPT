@@ -59,8 +59,26 @@ const nextConfig = {
         ],
       },
       {
-        // Strictly disable caching for admin and tracker pages to ensure UI and data freshness
-        source: '/(admin|agenttracker):path*',
+        // Strictly disable caching for admin routes
+        source: '/admin/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
+        ],
+      },
+      {
+        // Strictly disable caching for Agent Tracker (User)
+        source: '/agenttracker',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
+        ],
+      },
+      {
+        // Strictly disable caching for Agent Tracker (Super Admin)
+        source: '/agenttrackersp',
         headers: [
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
           { key: 'Pragma', value: 'no-cache' },
