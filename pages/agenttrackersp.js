@@ -13,8 +13,8 @@ export default function AgentTrackerSP() {
     setErrorMsg('');
     try {
       const url = agentId 
-        ? `/api/agent-stats?agentId=${encodeURIComponent(agentId)}`
-        : '/api/agent-stats';
+        ? `/api/agent-stats?agentId=${encodeURIComponent(agentId)}&_t=${Date.now()}`
+        : `/api/agent-stats?_t=${Date.now()}`;
       
       const res = await fetch(url);
       

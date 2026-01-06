@@ -59,10 +59,12 @@ const nextConfig = {
         ],
       },
       {
-        // Strictly disable caching for admin routes
-        source: '/admin/:path*',
+        // Strictly disable caching for admin and tracker pages to ensure UI and data freshness
+        source: '/(admin|agenttracker):path*',
         headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate' },
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
         ],
       },
       {
