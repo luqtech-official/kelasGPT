@@ -7,7 +7,11 @@ export default function Prompt345345() {
 
   // Placeholder prompt - minimalist yet complex enough to test the view
   const promptContent = `
-Based on the product images I provide, first outline the product's selling points and key parameters, then output a unified flagship store minimalist KV system (9:16). Finally, generate 10 complete prompt words for detail pages (bilingual in English and Malay, clean and atmospheric, with at least 5 detail close-ups). First, generate the Logo separately for use in the upper left corner of each subsequent poster, where the text layout style needs to be consistent, such as glass effect, 3D embossed effect, or other effects. Prompt reference as follows:
+Do Not Create An Image.
+Based on the product images I provide, first outline the product's selling points and key parameter for a unified flagship store minimalist KV system (9:16). 
+Then, generate 10 complete prompt words for detail pages (bilingual in English and Malay, clean and atmospheric, with at least 5 detail close-ups). 
+First, generate the Logo separately for use in the upper left corner of each subsequent poster, where the text layout style needs to be consistent, such as glass effect, 3D embossed effect, or other effects.
+Prompt reference as follows:
 00. LOGO Generation
 Prompt (English): Minimalist high-end fashion brand logo, vector style, clean geometric shapes. Brand name: ["SERI ANGGUN"]. Icon: Thin-line circular badge containing a single delicate leaf branch (negative space, modern, elegant). Color scheme: Deep moss gray-green (#2F3A33) paired with warm cream-white background (#F3EFE6) or transparent background. Font: High-end serif "SERI ANGGUN", with loose letter spacing. No gradients, no shadows, no 3D, no mockups, no watermarks.
 01. Poster 01 | [Product · Silk Slip Dress] Main KV (Hero)
