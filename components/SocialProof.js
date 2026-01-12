@@ -14,26 +14,13 @@ export default function SocialProof() {
   // This effect runs once when the component mounts to fetch the notification data.
   useEffect(() => {
     const fetchNotifications = async () => {
-      const primaryUrl = "https://raw.githubusercontent.com/luqtech-official/kelasgpt-public-resources/main/data/social_noti.json";
-      const fallbackUrl = "https://cdn.jsdelivr.net/gh/luqtech-official/kelasgpt-public-resources@main/data/social_noti.json";
-
       try {
-        // Try fetching from the primary source (GitHub Raw)
-        const res = await fetch(primaryUrl, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Primary fetch failed');
+        const res = await fetch('/api/social-proof');
+        if (!res.ok) throw new Error('Failed to fetch notifications');
         const data = await res.json();
         setNotifications(data);
       } catch (err) {
-        // If primary fails, try the fallback (jsDelivr)
-        console.warn('Primary source failed, trying fallback...', err);
-        try {
-          const resFallback = await fetch(fallbackUrl, { cache: 'no-store' });
-          if (!resFallback.ok) throw new Error('Fallback fetch failed');
-          const dataFallback = await resFallback.json();
-          setNotifications(dataFallback);
-        } catch (fallbackErr) {
-          console.error('Failed to load social notifications from both sources:', fallbackErr);
-        }
+        console.error('Failed to load social notifications:', err);
       }
     };
 

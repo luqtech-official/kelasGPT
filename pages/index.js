@@ -377,7 +377,8 @@ export default function Home({ productSettings }) {
         <meta name="theme-color" content="#050505"/>
       </Head>
 
-      <SocialProof />
+      {/* <SocialProof /> */}
+      {/* temporarily disabling SocialProof function, until more data coming in */}
 
       <main>
         {/* --- Navbar --- */}

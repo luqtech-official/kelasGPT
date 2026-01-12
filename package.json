@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
+    "@upstash/redis": "^1.36.1",
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.2",
     "chart.js": "^4.5.0",
